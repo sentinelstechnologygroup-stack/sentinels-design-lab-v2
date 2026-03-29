@@ -1,9 +1,11 @@
-"use client";
 // src/pages/StartProject.jsx
-import React, { useState } from "react";
+"use client";
+
+import React, { Suspense, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, ArrowLeft, CheckCircle2, Check } from "lucide-react";
 import { toast } from "sonner";
+import { useSearchParams } from "next/navigation";
 
 const STEPS = [
   {
@@ -72,50 +74,69 @@ const STEPS = [
   },
 ];
 
-export default function StartProject() {
-  const urlParams = new URLSearchParams(window.location.search);
-  const preService = urlParams.get("service") || "";
+function StartProjectInner() {
+  const searchParams = useSearchParams();
 
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState({
-    service: preService || "",
+    service: "",
     goal: "",
     budget: "",
     timeline: "",
   });
-  const [contact, setContact] = useState({ name: "", email: "", phone: "", businessName: "", notes: "" });
+  const [contact, setContact] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    businessName: "",
+    notes: "",
+  });
   const [submitted, setSubmitted] = useState(false);
   const [direction, setDirection] = useState(1);
 
+  useEffect(() => {
+    const preService = searchParams.get("service") || "";
+    if (preService) {
+      setAnswers((prev) => ({
+        ...prev,
+        service: preService,
+      }));
+    }
+  }, [searchParams]);
+
   const currentStep = STEPS[step];
   const totalSteps = STEPS.length;
-  const progress = ((step) / (totalSteps - 1)) * 100;
+  const progress = (step / (totalSteps - 1)) * 100;
 
   function selectOption(value) {
-    setAnswers(prev => ({ ...prev, [currentStep.id]: value }));
+    setAnswers((prev) => ({ ...prev, [currentStep.id]: value }));
+
     if (step < totalSteps - 1) {
       setTimeout(() => {
         setDirection(1);
-        setStep(s => s + 1);
+        setStep((s) => s + 1);
       }, 220);
     }
   }
 
   function goBack() {
     setDirection(-1);
-    setStep(s => s - 1);
+    setStep((s) => s - 1);
   }
 
   function handleContactChange(e) {
-    setContact(prev => ({ ...prev, [e.target.name]: e.target.value }));
+    const { name, value } = e.target;
+    setContact((prev) => ({ ...prev, [name]: value }));
   }
 
   function handleSubmit(e) {
     e.preventDefault();
+
     if (!contact.name || !contact.email) {
       toast.error("Please fill in your name and email.");
       return;
     }
+
     setSubmitted(true);
   }
 
@@ -136,31 +157,40 @@ export default function StartProject() {
           <div className="w-20 h-20 bg-primary/10 border border-primary/20 rounded-full flex items-center justify-center mx-auto mb-6">
             <CheckCircle2 className="w-10 h-10 text-primary" />
           </div>
-          <h1 className="font-heading text-3xl font-bold text-foreground mb-4">We've got your brief!</h1>
+
+          <h1 className="font-heading text-3xl font-bold text-foreground mb-4">
+            We've got your brief!
+          </h1>
+
           <p className="text-muted-foreground leading-relaxed mb-4">
-            Someone from our team will review your submission and follow up within one business day to schedule an intro call.
+            Someone from our team will review your submission and follow up within one business day
+            to schedule an intro call.
           </p>
 
-          {/* Summary */}
           <div className="text-left bg-card/60 border border-border/50 rounded-xl p-5 mb-6 space-y-2">
             {[
               { label: "Service", value: answers.service },
               { label: "Goal", value: answers.goal },
               { label: "Budget", value: answers.budget },
               { label: "Timeline", value: answers.timeline },
-            ].filter(i => i.value).map((item, i) => (
-              <div key={i} className="flex items-center gap-2 text-sm">
-                <Check className="w-3.5 h-3.5 text-primary shrink-0" />
-                <span className="text-muted-foreground">{item.label}:</span>
-                <span className="text-foreground font-medium">{item.value}</span>
-              </div>
-            ))}
+            ]
+              .filter((i) => i.value)
+              .map((item, i) => (
+                <div key={i} className="flex items-center gap-2 text-sm">
+                  <Check className="w-3.5 h-3.5 text-primary shrink-0" />
+                  <span className="text-muted-foreground">{item.label}:</span>
+                  <span className="text-foreground font-medium">{item.value}</span>
+                </div>
+              ))}
           </div>
 
           <p className="text-xs text-muted-foreground">
             Questions? Email us at{" "}
-            <a href="mailto:hello@sentinelsdesignlab.com" className="text-primary hover:underline">
-              hello@sentinelsdesignlab.com
+            <a
+              href="mailto:Info@SentinelsDesignLab.com"
+              className="text-primary hover:underline"
+            >
+              Info@SentinelsDesignLab.com
             </a>
           </p>
         </motion.div>
@@ -171,13 +201,14 @@ export default function StartProject() {
   return (
     <div className="min-h-screen pt-20 pb-24">
       <div className="max-w-2xl mx-auto px-4 sm:px-6">
-
-        {/* Progress bar */}
         <div className="mb-10 pt-8">
           <div className="flex items-center justify-between text-xs text-muted-foreground mb-3">
-            <span>Step {step + 1} of {totalSteps}</span>
+            <span>
+              Step {step + 1} of {totalSteps}
+            </span>
             <span>{Math.round(progress)}% complete</span>
           </div>
+
           <div className="h-1.5 bg-border/40 rounded-full overflow-hidden">
             <motion.div
               className="h-full bg-primary rounded-full"
@@ -198,7 +229,9 @@ export default function StartProject() {
             transition={{ duration: 0.28, ease: "easeInOut" }}
           >
             <div className="mb-8">
-              <h2 className="font-heading text-2xl sm:text-3xl font-bold text-foreground mb-2">{currentStep.title}</h2>
+              <h2 className="font-heading text-2xl sm:text-3xl font-bold text-foreground mb-2">
+                {currentStep.title}
+              </h2>
               <p className="text-muted-foreground">{currentStep.subtitle}</p>
             </div>
 
@@ -206,9 +239,11 @@ export default function StartProject() {
               <div className="grid sm:grid-cols-2 gap-3">
                 {currentStep.options.map((opt) => {
                   const selected = answers[currentStep.id] === opt.value;
+
                   return (
                     <button
                       key={opt.value}
+                      type="button"
                       onClick={() => selectOption(opt.value)}
                       className={`flex items-center gap-3 p-4 rounded-xl border text-left transition-all font-medium text-sm ${
                         selected
@@ -229,59 +264,94 @@ export default function StartProject() {
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-medium text-muted-foreground mb-1.5">Full Name <span className="text-primary">*</span></label>
+                    <label className="block text-xs font-medium text-muted-foreground mb-1.5">
+                      Full Name <span className="text-primary">*</span>
+                    </label>
                     <input
-                      type="text" name="name" value={contact.name} onChange={handleContactChange} required
+                      type="text"
+                      name="name"
+                      value={contact.name}
+                      onChange={handleContactChange}
+                      required
                       className="w-full bg-background border border-border/60 rounded-lg px-4 py-2.5 text-sm text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary/50 transition-colors"
                       placeholder="Jane Smith"
                     />
                   </div>
+
                   <div>
-                    <label className="block text-xs font-medium text-muted-foreground mb-1.5">Email Address <span className="text-primary">*</span></label>
+                    <label className="block text-xs font-medium text-muted-foreground mb-1.5">
+                      Email Address <span className="text-primary">*</span>
+                    </label>
                     <input
-                      type="email" name="email" value={contact.email} onChange={handleContactChange} required
+                      type="email"
+                      name="email"
+                      value={contact.email}
+                      onChange={handleContactChange}
+                      required
                       className="w-full bg-background border border-border/60 rounded-lg px-4 py-2.5 text-sm text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary/50 transition-colors"
                       placeholder="jane@company.com"
                     />
                   </div>
+
                   <div>
-                    <label className="block text-xs font-medium text-muted-foreground mb-1.5">Phone Number</label>
+                    <label className="block text-xs font-medium text-muted-foreground mb-1.5">
+                      Phone Number
+                    </label>
                     <input
-                      type="tel" name="phone" value={contact.phone} onChange={handleContactChange}
+                      type="tel"
+                      name="phone"
+                      value={contact.phone}
+                      onChange={handleContactChange}
                       className="w-full bg-background border border-border/60 rounded-lg px-4 py-2.5 text-sm text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary/50 transition-colors"
                       placeholder="+1 (555) 000-0000"
                     />
                   </div>
+
                   <div>
-                    <label className="block text-xs font-medium text-muted-foreground mb-1.5">Business Name</label>
+                    <label className="block text-xs font-medium text-muted-foreground mb-1.5">
+                      Business Name
+                    </label>
                     <input
-                      type="text" name="businessName" value={contact.businessName} onChange={handleContactChange}
+                      type="text"
+                      name="businessName"
+                      value={contact.businessName}
+                      onChange={handleContactChange}
                       className="w-full bg-background border border-border/60 rounded-lg px-4 py-2.5 text-sm text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary/50 transition-colors"
                       placeholder="Acme Inc."
                     />
                   </div>
                 </div>
+
                 <div>
-                  <label className="block text-xs font-medium text-muted-foreground mb-1.5">Anything else we should know?</label>
+                  <label className="block text-xs font-medium text-muted-foreground mb-1.5">
+                    Anything else we should know?
+                  </label>
                   <textarea
-                    name="notes" value={contact.notes} onChange={handleContactChange} rows={4}
+                    name="notes"
+                    value={contact.notes}
+                    onChange={handleContactChange}
+                    rows={4}
                     className="w-full bg-background border border-border/60 rounded-lg px-4 py-2.5 text-sm text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary/50 transition-colors resize-none"
                     placeholder="Tell us about your business, specific requirements, or any context that would help us understand your project..."
                   />
                 </div>
 
-                {/* Answer recap */}
                 <div className="bg-card/40 border border-border/30 rounded-xl p-4 flex flex-wrap gap-3">
                   {[
                     { label: answers.service },
                     { label: answers.goal },
                     { label: answers.budget },
                     { label: answers.timeline },
-                  ].filter(i => i.label).map((item, i) => (
-                    <span key={i} className="text-xs bg-primary/10 text-primary px-3 py-1 rounded-full font-medium flex items-center gap-1">
-                      <Check className="w-3 h-3" /> {item.label}
-                    </span>
-                  ))}
+                  ]
+                    .filter((i) => i.label)
+                    .map((item, i) => (
+                      <span
+                        key={i}
+                        className="text-xs bg-primary/10 text-primary px-3 py-1 rounded-full font-medium flex items-center gap-1"
+                      >
+                        <Check className="w-3 h-3" /> {item.label}
+                      </span>
+                    ))}
                 </div>
 
                 <button
@@ -290,6 +360,7 @@ export default function StartProject() {
                 >
                   Submit Project Brief <ArrowRight className="w-4 h-4" />
                 </button>
+
                 <p className="text-center text-xs text-muted-foreground">
                   We review every submission personally. You'll hear back within one business day.
                 </p>
@@ -298,24 +369,39 @@ export default function StartProject() {
           </motion.div>
         </AnimatePresence>
 
-        {/* Back button */}
-        {step > 0 && currentStep.type !== "form" && (
+        {step > 0 && (
           <button
+            type="button"
             onClick={goBack}
             className="mt-8 flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
           >
             <ArrowLeft className="w-4 h-4" /> Back
           </button>
         )}
-        {step > 0 && currentStep.type === "form" && (
-          <button
-            onClick={goBack}
-            className="mt-4 flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" /> Back
-          </button>
-        )}
       </div>
     </div>
+  );
+}
+
+function StartProjectFallback() {
+  return (
+    <div className="min-h-screen pt-20 pb-24">
+      <div className="max-w-2xl mx-auto px-4 sm:px-6">
+        <div className="mb-10 pt-8">
+          <div className="h-1.5 bg-border/40 rounded-full overflow-hidden" />
+        </div>
+        <div className="glass-card p-8">
+          <div className="text-sm text-muted-foreground">Loading project intake...</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default function StartProject() {
+  return (
+    <Suspense fallback={<StartProjectFallback />}>
+      <StartProjectInner />
+    </Suspense>
   );
 }
