@@ -187,10 +187,10 @@ function StartProjectInner() {
           <p className="text-xs text-muted-foreground">
             Questions? Email us at{" "}
             <a
-              href="mailto:Info@SentinelsDesignLab.com"
+              href="mailto:hello@sentinelsdesignlab.com"
               className="text-primary hover:underline"
             >
-              Info@SentinelsDesignLab.com
+              hello@sentinelsdesignlab.com
             </a>
           </p>
         </motion.div>
@@ -390,6 +390,7 @@ function StartProjectFallback() {
         <div className="mb-10 pt-8">
           <div className="h-1.5 bg-border/40 rounded-full overflow-hidden" />
         </div>
+
         <div className="glass-card p-8">
           <div className="text-sm text-muted-foreground">Loading project intake...</div>
         </div>

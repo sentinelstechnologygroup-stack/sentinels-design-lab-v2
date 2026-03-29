@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import PricingCard from "../components/shared/PricingCard";
 import CTASection from "../components/shared/CTASection";
