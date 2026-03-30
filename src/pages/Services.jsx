@@ -140,7 +140,7 @@ export default function Services() {
           <p className="text-muted-foreground max-w-xl mx-auto mb-7 text-sm leading-relaxed">
             We offer structured packages — Lite, Starter, Growth, and Authority — so you can choose the level of engagement that fits your stage and budget.
           </p>
-          <Link href="/packages" className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground px-7 py-3 rounded-lg font-semibold text-sm transition-all hover:shadow-lg hover:shadow-primary/20">
+          <Link href="/packages" className="inline-flex items-center gap-2 bg-primary hover:bg-primary text-primary-foreground px-7 py-3 rounded-lg font-semibold text-sm transition-all hover:shadow-lg hover:shadow-primary/20">
             View Packages <ArrowRight className="w-4 h-4" />
           </Link>
         </div>

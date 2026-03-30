@@ -358,7 +358,7 @@ export default function ROICalculator() {
 
         <Link
           href={`/start-project?service=${encodeURIComponent(selectedService)}`}
-          className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary py-4 text-sm font-bold text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-xl hover:shadow-primary/20"
+          className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary py-4 text-sm font-bold text-primary-foreground transition-all hover:bg-primary hover:shadow-xl hover:shadow-primary/20"
         >
           Get a Custom ROI Proposal
           <ArrowRight className="h-4 w-4" />

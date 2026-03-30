@@ -1,0 +1,659 @@
+/* src/index.css */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 222 47% 6%;
+    --foreground: 210 40% 98%;
+
+    --card: 222 47% 8%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222 47% 8%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 217 91% 60%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 217 33% 17%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217 33% 17%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 217 91% 60%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217 33% 18%;
+    --input: 217 33% 18%;
+    --ring: 217 91% 60%;
+
+    --radius: 1rem;
+
+    --blue-1: rgb(147, 197, 253);
+    --blue-2: rgb(96, 165, 250);
+    --blue-3: rgb(59, 130, 246);
+    --blue-4: rgb(37, 99, 235);
+
+    --amber-1: rgb(255, 243, 199);
+    --amber-2: rgb(252, 211, 77);
+    --amber-3: rgb(251, 191, 36);
+
+    --surface-soft: rgba(10, 17, 31, 0.84);
+    --surface-mid: rgba(9, 16, 30, 0.92);
+    --surface-heavy: rgba(7, 12, 24, 0.96);
+
+    --surface-stroke: rgba(255, 255, 255, 0.1);
+    --surface-stroke-soft: rgba(255, 255, 255, 0.08);
+
+    --surface-shadow: 0 18px 55px rgba(0, 0, 0, 0.24);
+    --surface-shadow-lg: 0 24px 70px rgba(0, 0, 0, 0.3);
+  }
+
+  * {
+    @apply border-border;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply font-sans text-foreground antialiased;
+    margin: 0;
+    min-height: 100vh;
+    background: transparent;
+    font-family: "Inter", sans-serif;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  .font-display,
+  .font-heading {
+    font-family: "Space Grotesk", "Inter", sans-serif;
+  }
+
+  p,
+  li,
+  a,
+  button,
+  input,
+  textarea,
+  select {
+    font-family: "Inter", sans-serif;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  button {
+    border: 0;
+    outline: none;
+  }
+}
+
+@layer components {
+  /* -------------------------------------------------
+     LAYOUT
+  ------------------------------------------------- */
+
+  .section-shell {
+    @apply mx-auto w-full max-w-7xl px-6 md:px-8 lg:px-10;
+  }
+
+  .section-gap {
+    @apply py-16 md:py-20 lg:py-24;
+  }
+
+  .content-shell {
+    @apply relative z-10;
+  }
+
+  /* -------------------------------------------------
+     SAFE SURFACES
+  ------------------------------------------------- */
+
+  .panel-safe,
+  .glass-card,
+  .content-card,
+  .section-card,
+  .info-card,
+  .stat-card,
+  .feature-card,
+  .process-card,
+  .service-card,
+  .package-card,
+  .pricing-card,
+  .review-card,
+  .faq-card,
+  .cta-card,
+  .contact-card,
+  .form-card,
+  .quote-card,
+  .case-study-card,
+  .benefit-card,
+  .testimonial-card {
+    @apply relative overflow-hidden rounded-[28px] border;
+    background: var(--surface-mid);
+    border-color: var(--surface-stroke);
+    box-shadow: var(--surface-shadow);
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+  }
+
+  .panel-safe-soft {
+    @apply relative overflow-hidden rounded-[24px] border;
+    background: var(--surface-soft);
+    border-color: var(--surface-stroke-soft);
+    box-shadow: 0 12px 38px rgba(0, 0, 0, 0.18);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+  }
+
+  .panel-safe-heavy,
+  .section-panel,
+  .section-panel-heavy,
+  .hero-panel,
+  .process-panel,
+  .pricing-panel,
+  .proof-panel {
+    @apply relative overflow-hidden border;
+    border-radius: 32px;
+    background: var(--surface-heavy);
+    border-color: var(--surface-stroke);
+    box-shadow: var(--surface-shadow-lg);
+    backdrop-filter: blur(26px);
+    -webkit-backdrop-filter: blur(26px);
+  }
+
+  .panel-safe::before,
+  .panel-safe-soft::before,
+  .panel-safe-heavy::before,
+  .glass-card::before,
+  .content-card::before,
+  .section-card::before,
+  .info-card::before,
+  .stat-card::before,
+  .feature-card::before,
+  .process-card::before,
+  .service-card::before,
+  .package-card::before,
+  .pricing-card::before,
+  .review-card::before,
+  .faq-card::before,
+  .cta-card::before,
+  .contact-card::before,
+  .form-card::before,
+  .quote-card::before,
+  .case-study-card::before,
+  .benefit-card::before,
+  .testimonial-card::before,
+  .section-panel::before,
+  .section-panel-heavy::before,
+  .hero-panel::before,
+  .process-panel::before,
+  .pricing-panel::before,
+  .proof-panel::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    background:
+      linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.06) 0%,
+        rgba(255, 255, 255, 0.018) 18%,
+        rgba(255, 255, 255, 0) 42%
+      );
+  }
+
+  .safe-card {
+    @apply p-5 md:p-6;
+  }
+
+  .safe-card-lg {
+    @apply p-6 md:p-8;
+  }
+
+  .safe-card-xl {
+    @apply p-6 md:p-8 lg:p-10;
+  }
+
+  .section-panel {
+    @apply px-5 py-6 md:px-7 md:py-8;
+  }
+
+  .section-panel-heavy {
+    @apply px-5 py-6 md:px-7 md:py-8 lg:px-10 lg:py-10;
+  }
+
+  .surface-subtle {
+    @apply rounded-[22px] border;
+    background: rgba(255, 255, 255, 0.045);
+    border-color: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+
+  .surface-stroke {
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  /* -------------------------------------------------
+     TYPOGRAPHY
+  ------------------------------------------------- */
+
+  .headline-xl {
+    @apply text-4xl font-semibold leading-tight md:text-5xl lg:text-6xl;
+  }
+
+  .headline-lg {
+    @apply text-3xl font-semibold leading-tight md:text-4xl lg:text-5xl;
+  }
+
+  .body-lg {
+    @apply text-base leading-8 md:text-lg;
+    color: rgba(255, 255, 255, 0.74);
+  }
+
+  .body-md {
+    @apply text-sm leading-7 md:text-base;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  /* -------------------------------------------------
+     ACCENT SYSTEM
+     BLUE = default UI/icon system
+     AMBER = eyebrow / bullet / star / explicit accent
+  ------------------------------------------------- */
+
+  .eyebrow,
+  .section-eyebrow,
+  .badge-eyebrow {
+    @apply inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.22em];
+    color: var(--amber-2);
+    background: rgba(251, 191, 36, 0.08);
+    border: 1px solid rgba(251, 191, 36, 0.14);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  }
+
+  .eyebrow svg,
+  .section-eyebrow svg,
+  .badge-eyebrow svg {
+    color: currentColor;
+    stroke: currentColor;
+    fill: none;
+  }
+
+  .accent-icon,
+  .icon-accent {
+    color: var(--amber-2);
+  }
+
+  .accent-icon-soft {
+    color: rgba(252, 211, 77, 0.92);
+  }
+
+  .accent-dot {
+    @apply inline-block h-2.5 w-2.5 rounded-full;
+    background: var(--amber-2);
+    box-shadow: 0 0 14px rgba(251, 191, 36, 0.45);
+  }
+
+  .accent-bullet,
+  .bullet-accent,
+  .list-bullet {
+    @apply inline-flex h-5 w-5 items-center justify-center rounded-full text-[10px] font-bold;
+    color: var(--amber-2);
+    background: rgba(251, 191, 36, 0.08);
+    border: 1px solid rgba(251, 191, 36, 0.16);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  }
+
+  .accent-bullet svg,
+  .bullet-accent svg,
+  .list-bullet svg {
+    color: currentColor;
+    stroke: currentColor;
+    fill: none;
+  }
+
+  .star-accent,
+  .rating-star,
+  .testimonial-star {
+    color: var(--amber-2);
+    fill: currentColor;
+  }
+
+  /* normal icon wrappers stay blue */
+  .accent-chip,
+  .icon-tile,
+  .feature-icon,
+  .process-icon,
+  .service-icon,
+  .package-icon,
+  .stat-icon,
+  .icon-button,
+  .icon-btn {
+    @apply inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border;
+    color: var(--blue-2);
+    background: rgba(10, 19, 36, 0.94);
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow:
+      0 10px 24px rgba(0, 0, 0, 0.24),
+      inset 0 1px 0 rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  .feature-icon svg,
+  .process-icon svg,
+  .service-icon svg,
+  .package-icon svg,
+  .stat-icon svg,
+  .icon-button svg,
+  .icon-btn svg,
+  .icon-tile svg,
+  .accent-chip svg {
+    color: currentColor;
+    stroke: currentColor;
+    fill: none;
+  }
+
+
+
+  /* -------------------------------------------------
+     PAGE CLEANUP UTILITIES
+  ------------------------------------------------- */
+
+  .surface-card {
+    @apply rounded-2xl border shadow-[0_16px_50px_rgba(0,0,0,0.22)] backdrop-blur-sm;
+    background: rgba(11, 18, 32, 0.9);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .surface-card-strong {
+    @apply rounded-[1.75rem] border shadow-[0_20px_60px_rgba(0,0,0,0.24)] backdrop-blur-sm;
+    background: rgba(12, 19, 34, 0.92);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .surface-chip {
+    @apply rounded-full border px-4 py-2 text-sm;
+    background: rgba(9, 16, 31, 0.92);
+    border-color: rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.86);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+
+  .surface-chip-sm {
+    @apply rounded-full border px-3 py-1.5 text-xs;
+    background: rgba(9, 16, 31, 0.92);
+    border-color: rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.86);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+
+  .surface-button {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg border px-8 py-3.5 text-sm font-semibold transition-all;
+    background: rgba(9, 16, 31, 0.94);
+    border-color: rgba(255,255,255,0.12);
+    color: rgb(255,255,255);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  .surface-button:hover {
+    border-color: rgba(96,165,250,0.28);
+    background: rgba(11, 20, 38, 0.98);
+  }
+
+  .icon-shell {
+    @apply inline-flex items-center justify-center rounded-xl border shrink-0;
+    width: 3rem;
+    height: 3rem;
+    background: rgba(9, 16, 31, 0.94);
+    border-color: rgba(255,255,255,0.1);
+    color: rgb(96,165,250);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  .icon-shell svg {
+    color: currentColor;
+    stroke: currentColor;
+    fill: none;
+  }
+
+  .icon-shell-accent {
+    @apply inline-flex items-center justify-center rounded-xl border shrink-0;
+    width: 3rem;
+    height: 3rem;
+    background: rgba(9, 16, 31, 0.94);
+    border-color: rgba(251,191,36,0.16);
+    color: rgb(252,211,77);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  .icon-shell-accent svg {
+    color: currentColor;
+    stroke: currentColor;
+    fill: none;
+  }
+
+  .form-field {
+    @apply w-full rounded-lg px-4 py-2.5 text-sm transition-colors;
+    background: rgba(20, 31, 54, 0.94);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: white;
+  }
+
+  .form-field::placeholder {
+    color: rgba(255,255,255,0.5);
+  }
+
+  .form-field:focus {
+    outline: none;
+    border-color: rgba(59,130,246,0.42);
+  }
+
+  /* -------------------------------------------------
+     BUTTONS
+  ------------------------------------------------- */
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition duration-200;
+    background: var(--blue-4);
+    color: rgb(255, 255, 255);
+    border: 1px solid rgba(37, 99, 235, 0.26);
+    box-shadow: 0 10px 28px rgba(37, 99, 235, 0.24);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-1px);
+    background: rgb(29, 78, 216);
+    box-shadow: 0 16px 36px rgba(37, 99, 235, 0.28);
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition duration-200;
+    color: rgb(255, 255, 255);
+    background: rgba(9, 16, 31, 0.94);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  .btn-secondary:hover {
+    transform: translateY(-1px);
+    background: rgba(11, 20, 38, 0.98);
+    border-color: rgba(255, 255, 255, 0.16);
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium transition duration-200;
+    color: rgba(255, 255, 255, 0.84);
+    background: rgba(9, 16, 31, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.18);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+
+  .btn-ghost:hover {
+    background: rgba(11, 20, 38, 0.96);
+    color: rgb(255, 255, 255);
+    border-color: rgba(255, 255, 255, 0.14);
+  }
+
+  /* -------------------------------------------------
+     PILLS / BADGES
+  ------------------------------------------------- */
+
+  .pill {
+    @apply inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-sm;
+    color: rgba(255, 255, 255, 0.88);
+    background: rgba(9, 16, 31, 0.94);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+
+  .pill-primary {
+    @apply inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-sm font-medium;
+    color: var(--blue-2);
+    background: rgba(37, 99, 235, 0.1);
+    border: 1px solid rgba(37, 99, 235, 0.18);
+  }
+
+  .pill-accent {
+    @apply inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-sm font-medium;
+    color: var(--amber-2);
+    background: rgba(251, 191, 36, 0.08);
+    border: 1px solid rgba(251, 191, 36, 0.16);
+  }
+
+  /* -------------------------------------------------
+     LINKS / SIGNALS
+  ------------------------------------------------- */
+
+  .link-primary,
+  .icon-primary {
+    color: var(--blue-2);
+  }
+
+  .link-primary:hover {
+    color: var(--blue-1);
+  }
+
+  .muted-divider {
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .card-hover {
+    @apply transition-all duration-300;
+  }
+
+  .card-hover:hover {
+    transform: translateY(-4px);
+    border-color: rgba(37, 99, 235, 0.24);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.28);
+  }
+
+  /* -------------------------------------------------
+     FORMS
+  ------------------------------------------------- */
+
+  form,
+  .contact-form,
+  .contact-card,
+  .form-card {
+    background: rgba(9, 16, 31, 0.94);
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: var(--surface-shadow);
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+  }
+
+  form input,
+  form select,
+  form textarea,
+  .contact-form input,
+  .contact-form select,
+  .contact-form textarea,
+  .form-card input,
+  .form-card select,
+  .form-card textarea {
+    background: rgba(20, 31, 54, 0.94);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: white;
+    box-shadow: none;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+
+  form input::placeholder,
+  form textarea::placeholder,
+  .contact-form input::placeholder,
+  .contact-form textarea::placeholder,
+  .form-card input::placeholder,
+  .form-card textarea::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  form input:focus,
+  form select:focus,
+  form textarea:focus,
+  .contact-form input:focus,
+  .contact-form select:focus,
+  .contact-form textarea:focus,
+  .form-card input:focus,
+  .form-card select:focus,
+  .form-card textarea:focus {
+    border-color: rgba(59, 130, 246, 0.42);
+    outline: none;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .bg-page-fade {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(3, 7, 18, 0.18) 0%,
+        rgba(3, 7, 18, 0.08) 30%,
+        rgba(3, 7, 18, 0.16) 100%
+      );
+  }
+
+  .font-display {
+    font-family: "Space Grotesk", "Inter", sans-serif;
+  }
+
+  .font-heading {
+    font-family: "Space Grotesk", "Inter", sans-serif;
+  }
+}

@@ -187,10 +187,10 @@ function StartProjectInner() {
           <p className="text-xs text-muted-foreground">
             Questions? Email us at{" "}
             <a
-              href="mailto:hello@sentinelsdesignlab.com"
+              href="mailto:Info@SentinelsDesignLab.com"
               className="text-primary hover:underline"
             >
-              hello@sentinelsdesignlab.com
+              Info@SentinelsDesignLab.com
             </a>
           </p>
         </motion.div>
@@ -356,7 +356,7 @@ function StartProjectInner() {
 
                 <button
                   type="submit"
-                  className="w-full flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground py-4 rounded-xl font-bold text-sm transition-all hover:shadow-xl hover:shadow-primary/20"
+                  className="w-full flex items-center justify-center gap-2 bg-primary hover:bg-primary text-primary-foreground py-4 rounded-xl font-bold text-sm transition-all hover:shadow-xl hover:shadow-primary/20"
                 >
                   Submit Project Brief <ArrowRight className="w-4 h-4" />
                 </button>
