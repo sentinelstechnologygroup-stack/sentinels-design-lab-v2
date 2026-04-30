@@ -1,6 +1,5 @@
-// app/services/seo/page.jsx
-import SEOServices from "@/pages/services/SEOServices";
+import { redirect } from "next/navigation";
 
 export default function Page() {
-  return <SEOServices />;
+  redirect("/services");
 }

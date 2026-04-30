@@ -1,6 +1,5 @@
-// app/services/illustration/page.jsx
-import Illustration from "@/pages/services/Illustration";
+import { redirect } from "next/navigation";
 
 export default function Page() {
-  return <Illustration />;
+  redirect("/services");
 }

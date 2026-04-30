@@ -1,6 +1,5 @@
-// app/start-project/page.jsx
-import StartProject from "@/pages/StartProject";
+import { redirect } from "next/navigation";
 
 export default function Page() {
-  return <StartProject />;
+  redirect("/contact?type=website-evaluation");
 }

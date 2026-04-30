@@ -1,11 +1,23 @@
-// app/layout.jsx
 import "../src/index.css";
 import Layout from "@/components/layout/Layout";
+import { seo } from "@/lib/siteData";
 
 export const metadata = {
-  title: "Sentinels Design Lab",
-  description:
-    "Sentinels Design Lab builds high-performance websites, automation systems, and AI-enabled digital infrastructure for serious businesses.",
+  metadataBase: new URL(seo.baseUrl),
+  title: seo.title,
+  description: seo.description,
+  openGraph: {
+    title: seo.title,
+    description: seo.description,
+    siteName: seo.siteName,
+    type: "website",
+    url: seo.baseUrl,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: seo.title,
+    description: seo.description,
+  },
 };
 
 export default function RootLayout({ children }) {

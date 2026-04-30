@@ -1,6 +1,5 @@
-// app/roi/page.jsx
-import RoiPage from "@/pages/Roi";
+import { redirect } from "next/navigation";
 
 export default function Page() {
-  return <RoiPage />;
+  redirect("/");
 }

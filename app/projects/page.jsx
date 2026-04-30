@@ -1,6 +1,5 @@
-// app/projects/page.jsx
-import Projects from "@/pages/Projects";
+import { redirect } from "next/navigation";
 
 export default function Page() {
-  return <Projects />;
+  redirect("/work");
 }

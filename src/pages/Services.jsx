@@ -1,182 +1,112 @@
-"use client";
-
-import React from "react";
-import Link from "next/link";
-import { motion } from "framer-motion";
-import {
-  Globe, Smartphone, Search, MousePointer, Palette,
-  ShoppingCart, Cpu, BarChart3, Server, ArrowRight
-} from "lucide-react";
-import CTASection from "../components/shared/CTASection";
-
-const services = [
-  {
-    icon: Globe,
-    title: "Website Design & Development",
-    desc: "Custom-built websites engineered for performance, clarity, and conversion — from single-page sites to multi-section platforms.",
-    path: "/services/website-design",
-    tag: "Core Service",
-  },
-  {
-    icon: Search,
-    title: "SEO Services",
-    desc: "Sustainable search visibility built on technical precision, content strategy, and authoritative link acquisition.",
-    path: "/services/seo",
-    tag: "Core Service",
-  },
-  {
-    icon: MousePointer,
-    title: "PPC / Paid Ads",
-    desc: "Google and Meta ad campaigns built around real conversion data — not vanity metrics. Every dollar is tracked.",
-    path: "/services/ppc",
-    tag: "Core Service",
-  },
-  {
-    icon: Palette,
-    title: "Branding & Identity",
-    desc: "Visual identity systems that communicate positioning clearly — logo, type, color, and brand guidelines built to last.",
-    path: "/services/branding",
-    tag: "Core Service",
-  },
-  {
-    icon: ShoppingCart,
-    title: "Ecommerce Development",
-    desc: "Online stores built on Shopify or WooCommerce, optimized for product discovery, mobile checkout, and repeat revenue.",
-    path: "/services/ecommerce",
-    tag: "Specialized",
-  },
-  {
-    icon: Smartphone,
-    title: "Custom App Development",
-    desc: "Web and mobile applications built from scratch — scalable architecture, clean APIs, and intuitive interfaces.",
-    path: "/services/custom-apps",
-    tag: "Specialized",
-  },
-  {
-    icon: BarChart3,
-    title: "Digital Marketing",
-    desc: "Full-funnel marketing execution across paid, organic, email, and social — tied to revenue outcomes, not reach.",
-    path: "/services/digital-marketing",
-    tag: "Specialized",
-  },
-  {
-    icon: Server,
-    title: "Hosting & Maintenance",
-    desc: "Managed hosting with proactive monitoring, security updates, performance tuning, and ongoing technical support.",
-    path: "/services/hosting",
-    tag: "Ongoing",
-  },
-];
-
-export default function Services() {
-  const core = services.filter(s => s.tag === "Core Service");
-  const specialized = services.filter(s => s.tag !== "Core Service");
-
-  return (
-    <div>
-      {/* Hero */}
-      <section className="relative pt-28 pb-0 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/8 via-transparent to-accent/5" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-          <div className="grid lg:grid-cols-2 gap-10 items-end">
-            <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="pb-12 lg:pb-16">
-              <span className="inline-block px-4 py-1.5 bg-primary/10 border border-primary/20 rounded-full text-xs font-semibold text-primary uppercase tracking-wider mb-6">
-                Services
-              </span>
-              <h1 className="font-heading text-4xl sm:text-5xl lg:text-[3.4rem] font-bold text-foreground leading-tight mb-4">
-                Everything Your Business Needs to <span className="text-primary">Grow Online</span>
-              </h1>
-              <p className="text-muted-foreground text-lg leading-relaxed max-w-xl">
-                We operate as a full-service digital partner — handling design, development, marketing, and infrastructure so you can focus on running your business.
-              </p>
-            </motion.div>
-            <motion.div initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.6, delay: 0.15 }} className="relative hidden lg:block">
-              <div className="absolute -inset-6 bg-primary/5 rounded-3xl blur-2xl" />
-              <img src="https://media.base44.com/images/public/69c84c79cf14625ad4e75595/49a9801d0_generated_image.png" alt="Our Services" className="relative w-full max-h-[420px] object-cover rounded-t-2xl border border-border/30 shadow-2xl shadow-black/30" />
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Core Services */}
-      <section className="pb-6">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="font-heading text-sm font-semibold text-muted-foreground uppercase tracking-widest mb-6">Core Services</h2>
-          <div className="grid md:grid-cols-2 gap-5">
-            {core.map((s, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.07 }}
-              >
-                <Link href={s.path} className="group flex gap-5 bg-card/60 border border-border/50 rounded-xl p-6 hover:border-primary/30 hover:bg-card/80 transition-all duration-300">
-                  <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-colors mt-0.5">
-                    <s.icon className="w-6 h-6 text-primary" />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="font-heading text-base font-semibold text-foreground mb-1.5">{s.title}</h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed">{s.desc}</p>
-                    <span className="inline-flex items-center gap-1 mt-3 text-sm text-primary font-medium group-hover:gap-2 transition-all">
-                      Learn more <ArrowRight className="w-3.5 h-3.5" />
-                    </span>
-                  </div>
-                </Link>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-
-      {/* Packages teaser */}
-      <section className="py-16 bg-card/30 border-y border-border/30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-muted-foreground text-sm uppercase tracking-widest mb-3">Not sure where to start?</p>
-          <h2 className="font-heading text-2xl sm:text-3xl font-bold text-foreground mb-4">
-            Browse Our Packaged Tiers
-          </h2>
-          <p className="text-muted-foreground max-w-xl mx-auto mb-7 text-sm leading-relaxed">
-            We offer structured packages — Lite, Starter, Growth, and Authority — so you can choose the level of engagement that fits your stage and budget.
-          </p>
-          <Link href="/packages" className="inline-flex items-center gap-2 bg-primary hover:bg-primary text-primary-foreground px-7 py-3 rounded-lg font-semibold text-sm transition-all hover:shadow-lg hover:shadow-primary/20">
-            View Packages <ArrowRight className="w-4 h-4" />
-          </Link>
-        </div>
-      </section>
-
-      {/* Specialized + Ongoing */}
-      <section className="py-10 pb-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="font-heading text-sm font-semibold text-muted-foreground uppercase tracking-widest mb-6">Specialized & Ongoing</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
-            {specialized.map((s, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.07 }}
-              >
-                <Link href={s.path} className="group block bg-card/60 border border-border/50 rounded-xl p-6 hover:border-primary/30 hover:bg-card/80 transition-all duration-300 h-full">
-                  <div className="w-11 h-11 bg-primary/10 rounded-xl flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
-                    <s.icon className="w-5 h-5 text-primary" />
-                  </div>
-                  <span className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">{s.tag}</span>
-                  <h3 className="font-heading text-sm font-semibold text-foreground mt-1 mb-2">{s.title}</h3>
-                  <p className="text-xs text-muted-foreground leading-relaxed">{s.desc}</p>
-                  <span className="inline-flex items-center gap-1 mt-4 text-xs text-primary font-medium group-hover:gap-2 transition-all">
-                    Details <ArrowRight className="w-3 h-3" />
-                  </span>
-                </Link>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <CTASection title="Ready to Get Started?" description="Tell us about your project and we'll put together a plan that fits your goals." />
-    </div>
-  );
-}
+     1|"use client";
+     2|
+     3|import Link from "next/link";
+     4|import { ArrowRight, CheckCircle2 } from "lucide-react";
+     5|import CTASection from "@/components/shared/CTASection";
+     6|import { primaryCta, servicesPage } from "@/lib/siteData";
+     7|
+     8|export default function Services() {
+     9|  return (
+    10|    <div>
+    11|      <section className="relative overflow-hidden pt-28">
+    12|        <div className="absolute inset-0 bg-gradient-to-br from-primary/8 via-transparent to-accent/5" />
+    13|        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    14|          <div className="grid items-end gap-10 lg:grid-cols-2">
+    15|            <div className="pb-12 lg:pb-16">
+    16|              <span className="eyebrow mb-6">Services</span>
+    17|              <h1 className="font-heading text-4xl font-bold leading-tight text-foreground sm:text-5xl lg:text-[3.4rem]">
+    18|                {servicesPage.heroTitle}
+    19|              </h1>
+    20|              <p className="mt-5 max-w-2xl text-lg leading-relaxed text-muted-foreground">
+    21|                {servicesPage.heroDescription}
+    22|              </p>
+    23|              <div className="mt-8 flex flex-wrap gap-4">
+    24|                <Link href={primaryCta.path} className="btn-primary px-7 py-3 text-sm">
+    25|                  {primaryCta.label}
+    26|                  <ArrowRight className="h-4 w-4" />
+    27|                </Link>
+    28|                <Link href="/pricing" className="btn-secondary px-7 py-3 text-sm">
+    29|                  View Pricing
+    30|                </Link>
+    31|              </div>
+    32|            </div>
+    33|            <div className="hidden lg:block">
+    34|              <div className="panel-safe-heavy p-8">
+    35|                <div className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Launch priority</div>
+    36|                <div className="mt-5 grid gap-3">
+    37|                  {servicesPage.launchPriority.map((item) => (
+    38|                    <div key={item} className="surface-subtle px-4 py-4 text-sm text-white/80">
+    39|                      {item}
+    40|                    </div>
+    41|                  ))}
+    42|                </div>
+    43|              </div>
+    44|            </div>
+    45|          </div>
+    46|        </div>
+    47|      </section>
+    48|
+    49|      <section className="py-20">
+    50|        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    51|          <div className="mb-14 text-center">
+    52|            <span className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Core Services</span>
+    53|            <h2 className="mt-3 font-heading text-3xl font-bold text-foreground sm:text-4xl">Broader capability, clear launch focus</h2>
+    54|          </div>
+    55|          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+    56|            {servicesPage.coreServices.map((service) => (
+    57|              <div key={service} className="panel-safe p-6">
+    58|                <h3 className="font-heading text-xl font-semibold text-foreground">{service}</h3>
+    59|              </div>
+    60|            ))}
+    61|          </div>
+    62|        </div>
+    63|      </section>
+    64|
+    65|      <section className="pb-20">
+    66|        <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
+    67|          <div className="panel-safe p-8">
+    68|            <div className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Launch priority services</div>
+    69|            <div className="mt-5 space-y-3">
+    70|              {servicesPage.launchPriority.map((item) => (
+    71|                <div key={item} className="flex items-start gap-3 rounded-2xl border border-white/8 bg-white/[0.03] px-4 py-4 text-sm text-white/80">
+    72|                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+    73|                  <span>{item}</span>
+    74|                </div>
+    75|              ))}
+    76|            </div>
+    77|          </div>
+    78|
+    79|          <div className="panel-safe p-8">
+    80|            <div className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Broader capability</div>
+    81|            <div className="mt-5 space-y-3">
+    82|              {servicesPage.broaderCapability.map((item) => (
+    83|                <div key={item} className="flex items-start gap-3 rounded-2xl border border-white/8 bg-white/[0.03] px-4 py-4 text-sm text-white/80">
+    84|                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+    85|                  <span>{item}</span>
+    86|                </div>
+    87|              ))}
+    88|            </div>
+    89|          </div>
+    90|        </div>
+    91|      </section>
+    92|
+    93|      <section className="pb-20">
+    94|        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    95|          <div className="panel-safe-heavy px-6 py-8 md:px-10 md:py-10">
+    96|            <div className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">What We Do Not Do</div>
+    97|            <div className="mt-6 grid gap-4 md:grid-cols-2">
+    98|              {servicesPage.notDo.map((item) => (
+    99|                <div key={item} className="surface-subtle px-4 py-4 text-sm text-white/80">
+   100|                  {item}
+   101|                </div>
+   102|              ))}
+   103|            </div>
+   104|          </div>
+   105|        </div>
+   106|      </section>
+   107|
+   108|      <CTASection />
+   109|    </div>
+   110|  );
+   111|}
+   112|

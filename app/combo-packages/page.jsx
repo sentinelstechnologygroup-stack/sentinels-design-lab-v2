@@ -1,6 +1,5 @@
-// app/combo-packages/page.jsx
-import ComboPackages from "@/pages/ComboPackages";
+import { redirect } from "next/navigation";
 
 export default function Page() {
-  return <ComboPackages />;
+  redirect("/pricing");
 }

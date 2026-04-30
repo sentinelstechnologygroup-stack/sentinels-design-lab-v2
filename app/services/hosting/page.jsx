@@ -1,6 +1,5 @@
-// app/services/hosting/page.jsx
-import Hosting from "@/pages/services/Hosting";
+import { redirect } from "next/navigation";
 
 export default function Page() {
-  return <Hosting />;
+  redirect("/services");
 }

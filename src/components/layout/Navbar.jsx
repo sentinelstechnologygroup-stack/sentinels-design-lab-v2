@@ -1,160 +1,71 @@
-// src/components/layout/Navbar.jsx
-"use client";
-
-import React, { useEffect, useRef, useState } from "react";
-import Link from "next/link";
-import { ChevronDown, Menu, X } from "lucide-react";
-import { BUSINESS, NAV_LINKS, CTA, SERVICES } from "@/lib/constants";
-
-export default function Navbar() {
-  const [open, setOpen] = useState(false);
-  const [servicesOpen, setServicesOpen] = useState(false);
-  const servicesRef = useRef(null);
-
-  useEffect(() => {
-    function handleClickOutside(event) {
-      if (servicesRef.current && !servicesRef.current.contains(event.target)) {
-        setServicesOpen(false);
-      }
-    }
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
-  return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-[#050816]/90 backdrop-blur-xl">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-        <Link href="/" className="text-lg font-semibold tracking-wide text-white">
-          {BUSINESS.name}
-        </Link>
-
-        <nav className="hidden items-center gap-6 md:flex">
-          {NAV_LINKS.map((item) => {
-            if (item.hasDropdown && item.path === "/services") {
-              return (
-                <div key={item.path} className="relative" ref={servicesRef}>
-                  <button
-                    type="button"
-                    className="inline-flex items-center gap-1 text-sm text-white/80 transition hover:text-white"
-                    onClick={() => setServicesOpen((v) => !v)}
-                    aria-expanded={servicesOpen}
-                    aria-haspopup="menu"
-                  >
-                    {item.label}
-                    <ChevronDown
-                      size={16}
-                      className={`transition ${servicesOpen ? "rotate-180" : ""}`}
-                    />
-                  </button>
-
-                  {servicesOpen && (
-                    <div className="panel-safe absolute left-0 top-full mt-3 w-[320px] p-3">
-                      <div className="grid gap-1">
-                        <Link
-                          href="/services"
-                          className="rounded-xl px-3 py-2 text-sm font-medium text-white transition hover:bg-white/5"
-                          onClick={() => setServicesOpen(false)}
-                        >
-                          All Services
-                        </Link>
-
-                        {SERVICES.map((service) => (
-                          <Link
-                            key={service.path}
-                            href={service.path}
-                            className="rounded-xl px-3 py-2 text-sm text-white/75 transition hover:bg-white/5 hover:text-white"
-                            onClick={() => setServicesOpen(false)}
-                          >
-                            {service.name}
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              );
-            }
-
-            return (
-              <Link
-                key={item.path}
-                href={item.path}
-                className="text-sm text-white/80 transition hover:text-white"
-              >
-                {item.label}
-              </Link>
-            );
-          })}
-
-          <Link href={CTA.primary.path} className="btn-primary">
-            {CTA.primary.label}
-          </Link>
-        </nav>
-
-        <button
-          type="button"
-          className="text-white md:hidden"
-          onClick={() => setOpen((v) => !v)}
-          aria-label="Toggle navigation"
-        >
-          {open ? <X size={22} /> : <Menu size={22} />}
-        </button>
-      </div>
-
-      {open && (
-        <div className="border-t border-white/10 bg-[#050816]/96 backdrop-blur-xl md:hidden">
-          <nav className="mx-auto flex max-w-7xl flex-col px-6 py-4">
-            {NAV_LINKS.map((item) => {
-              if (item.hasDropdown && item.path === "/services") {
-                return (
-                  <div key={item.path} className="py-1">
-                    <Link
-                      href="/services"
-                      className="py-3 text-sm font-medium text-white/90"
-                      onClick={() => setOpen(false)}
-                    >
-                      Services
-                    </Link>
-
-                    <div className="mb-2 ml-3 flex flex-col border-l border-white/10 pl-4">
-                      {SERVICES.map((service) => (
-                        <Link
-                          key={service.path}
-                          href={service.path}
-                          className="py-2 text-sm text-white/70 transition hover:text-white"
-                          onClick={() => setOpen(false)}
-                        >
-                          {service.name}
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                );
-              }
-
-              return (
-                <Link
-                  key={item.path}
-                  href={item.path}
-                  className="py-3 text-sm text-white/80 transition hover:text-white"
-                  onClick={() => setOpen(false)}
-                >
-                  {item.label}
-                </Link>
-              );
-            })}
-
-            <Link
-              href={CTA.primary.path}
-              className="btn-primary mt-3 w-fit"
-              onClick={() => setOpen(false)}
-            >
-              {CTA.primary.label}
-            </Link>
-          </nav>
-        </div>
-      )}
-    </header>
-  );
-}
+     1|"use client";
+     2|
+     3|import React, { useState } from "react";
+     4|import Link from "next/link";
+     5|import { Menu, X } from "lucide-react";
+     6|import { BUSINESS, NAV_LINKS, CTA } from "@/lib/constants";
+     7|
+     8|export default function Navbar() {
+     9|  const [open, setOpen] = useState(false);
+    10|
+    11|  return (
+    12|    <header className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-[#050816]/90 backdrop-blur-xl">
+    13|      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+    14|        <Link href="/" className="text-lg font-semibold tracking-wide text-white">
+    15|          {BUSINESS.name}
+    16|        </Link>
+    17|
+    18|        <nav className="hidden items-center gap-6 md:flex">
+    19|          {NAV_LINKS.map((item) => (
+    20|            <Link
+    21|              key={item.path}
+    22|              href={item.path}
+    23|              className="text-sm text-white/80 transition hover:text-white"
+    24|            >
+    25|              {item.label}
+    26|            </Link>
+    27|          ))}
+    28|
+    29|          <Link href={CTA.primary.path} className="btn-primary text-sm">
+    30|            {CTA.primary.label}
+    31|          </Link>
+    32|        </nav>
+    33|
+    34|        <button
+    35|          type="button"
+    36|          className="text-white md:hidden"
+    37|          onClick={() => setOpen((v) => !v)}
+    38|          aria-label="Toggle navigation"
+    39|        >
+    40|          {open ? <X size={22} /> : <Menu size={22} />}
+    41|        </button>
+    42|      </div>
+    43|
+    44|      {open && (
+    45|        <div className="border-t border-white/10 bg-[#050816]/96 backdrop-blur-xl md:hidden">
+    46|          <nav className="mx-auto flex max-w-7xl flex-col px-6 py-4">
+    47|            {NAV_LINKS.map((item) => (
+    48|              <Link
+    49|                key={item.path}
+    50|                href={item.path}
+    51|                className="py-3 text-sm text-white/80 transition hover:text-white"
+    52|                onClick={() => setOpen(false)}
+    53|              >
+    54|                {item.label}
+    55|              </Link>
+    56|            ))}
+    57|
+    58|            <Link
+    59|              href={CTA.primary.path}
+    60|              className="btn-primary mt-3 w-fit text-sm"
+    61|              onClick={() => setOpen(false)}
+    62|            >
+    63|              {CTA.primary.label}
+    64|            </Link>
+    65|          </nav>
+    66|        </div>
+    67|      )}
+    68|    </header>
+    69|  );
+    70|}
+    71|
