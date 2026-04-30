@@ -22,6 +22,18 @@ const initialForm = {
   message: "",
 };
 
+function mapServiceToProjectType(service) {
+  if (!service) return "";
+  const normalized = service.toLowerCase();
+
+  if (normalized.includes("custom digital")) return "Custom digital system";
+  if (normalized.includes("portal") || normalized.includes("dashboard")) return "Portal or dashboard";
+  if (normalized.includes("automation") || normalized.includes("integration")) return "Automation or integration";
+  if (normalized.includes("website")) return "Website redesign";
+
+  return "";
+}
+
 export default function Contact() {
   const [form, setForm] = useState(initialForm);
   const [submitted, setSubmitted] = useState(false);
@@ -30,15 +42,25 @@ export default function Contact() {
     if (typeof window === "undefined") return;
     const params = new URLSearchParams(window.location.search);
     const type = params.get("type");
-    if (type === "website-evaluation") {
-      setForm((prev) => ({
-        ...prev,
-        projectType: prev.projectType || "Website redesign",
-        message:
-          prev.message ||
-          "I would like a website evaluation and a recommendation on the clearest next step.",
-      }));
-    }
+    const service = params.get("service");
+    const message = params.get("message");
+    const mappedProjectType = mapServiceToProjectType(service);
+
+    setForm((prev) => ({
+      ...prev,
+      projectType:
+        prev.projectType ||
+        mappedProjectType ||
+        (type === "website-evaluation" ? "Website redesign" : ""),
+      message:
+        prev.message ||
+        message ||
+        (service
+          ? `I’m interested in the ${service} package and would like a website evaluation to confirm the best next step.`
+          : type === "website-evaluation"
+            ? "I would like a website evaluation and a recommendation on the clearest next step."
+            : ""),
+    }));
   }, []);
 
   const handleChange = (event) => {

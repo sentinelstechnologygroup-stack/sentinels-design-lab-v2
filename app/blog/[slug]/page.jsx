@@ -4,16 +4,16 @@ import CTASection from "@/components/shared/CTASection";
 import { blogPosts } from "@/lib/siteData";
 import { pageMetadata } from "@/lib/metadata";
 
-export async function generateStaticParams() {
+export function generateStaticParams() {
   return blogPosts.map((post) => ({ slug: post.slug }));
 }
 
-export async function generateMetadata({ params }) {
-  const { slug } = await params;
-  const post = blogPosts.find((item) => item.slug === slug);
+export function generateMetadata({ params }) {
+  const post = blogPosts.find((item) => item.slug === params.slug);
   if (!post) {
     return pageMetadata("Blog | Sentinels Design Lab", "SDL articles and insights.", "/blog");
   }
+
   return pageMetadata(
     `${post.title} | Sentinels Design Lab`,
     post.excerpt,
@@ -21,9 +21,8 @@ export async function generateMetadata({ params }) {
   );
 }
 
-export default async function Page({ params }) {
-  const { slug } = await params;
-  const post = blogPosts.find((item) => item.slug === slug);
+export default function Page({ params }) {
+  const post = blogPosts.find((item) => item.slug === params.slug);
 
   if (!post) {
     notFound();
