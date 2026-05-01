@@ -1,18 +1,26 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
-import { BUSINESS, NAV_LINKS, CTA } from "@/lib/constants";
+import { BUSINESS, NAV_LINKS, CTA, IMAGES } from "@/lib/constants";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-[#050816]/90 backdrop-blur-xl">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-        <Link href="/" className="text-lg font-semibold tracking-wide text-white">
-          {BUSINESS.name}
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-6 px-6 py-4">
+        <Link href="/" className="flex items-center" aria-label={`${BUSINESS.name} home`}>
+          <Image
+            src={IMAGES.logo}
+            alt={`${BUSINESS.name} logo`}
+            width={779}
+            height={442}
+            priority
+            className="h-12 w-auto md:h-14"
+          />
         </Link>
 
         <nav className="hidden items-center gap-6 md:flex">

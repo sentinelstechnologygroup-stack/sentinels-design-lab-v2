@@ -31,7 +31,7 @@ export const CTA = {
 };
 
 export const IMAGES = {
-  logo: "/images/logo/logo.png",
+  logo: "/images/logo/logo-mark.png",
 };
 
 export const FORM_ENDPOINT = "";
