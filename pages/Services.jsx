@@ -93,6 +93,32 @@ export default function Services() {
       <section className="pb-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="panel-safe-heavy px-6 py-8 md:px-10 md:py-10">
+            <div className="grid gap-8 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-start">
+              <div>
+                <div className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">New service</div>
+                <h2 className="mt-3 font-heading text-3xl font-bold text-foreground sm:text-4xl">
+                  {servicesPage.middlewareService.title}
+                </h2>
+                <p className="mt-4 max-w-2xl text-sm leading-7 text-muted-foreground">
+                  {servicesPage.middlewareService.description}
+                </p>
+              </div>
+              <div className="grid gap-3">
+                {servicesPage.middlewareService.points.map((item) => (
+                  <div key={item} className="flex items-start gap-3 rounded-2xl border border-white/8 bg-white/[0.03] px-4 py-4 text-sm text-white/80">
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                    <span>{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="pb-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="panel-safe-heavy px-6 py-8 md:px-10 md:py-10">
             <div className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">What We Do Not Do</div>
             <div className="mt-6 grid gap-4 md:grid-cols-2">
               {servicesPage.notDo.map((item) => (
