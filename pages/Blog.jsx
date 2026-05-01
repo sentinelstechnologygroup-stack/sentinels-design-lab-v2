@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import CTASection from "@/components/shared/CTASection";
 import { blogCategories, blogPosts } from "@/lib/siteData";
 
@@ -28,7 +29,18 @@ export default function BlogPage() {
       <section className="section-shell pb-24">
         <div className="grid gap-6 md:grid-cols-2">
           {blogPosts.map((post) => (
-            <article key={post.slug} className="panel-safe p-6 md:p-8">
+            <article key={post.slug} className="panel-safe overflow-hidden p-4 md:p-5">
+              {post.thumbnailImage ? (
+                <div className="relative mb-5 aspect-square overflow-hidden rounded-[20px] border border-white/10 bg-[#09111f]">
+                  <Image
+                    src={post.thumbnailImage}
+                    alt={post.thumbnailImageAlt || post.title}
+                    fill
+                    sizes="(min-width: 768px) 50vw, 100vw"
+                    className="object-cover"
+                  />
+                </div>
+              ) : null}
               <div className="text-xs uppercase tracking-[0.18em] text-primary">{post.category}</div>
               <h2 className="mt-4 text-2xl font-semibold text-white">{post.title}</h2>
               <div className="mt-3 text-sm text-white/45">{post.date} • {post.readTime}</div>

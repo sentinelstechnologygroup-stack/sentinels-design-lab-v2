@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import CTASection from "@/components/shared/CTASection";
 import { blogPosts } from "@/lib/siteData";
@@ -18,6 +19,7 @@ export function generateMetadata({ params }) {
     `${post.title} | Sentinels Design Lab`,
     post.excerpt,
     `/blog/${post.slug}`,
+    post.heroImage,
   );
 }
 
@@ -40,6 +42,21 @@ export default function Page({ params }) {
           <div className="mt-4 text-sm text-white/45">{post.date} • {post.readTime}</div>
           <p className="mt-6 text-lg leading-8 text-white/70">{post.excerpt}</p>
         </div>
+
+        {post.heroImage ? (
+          <div className="mt-10 max-w-5xl">
+            <div className="relative aspect-[16/9] overflow-hidden rounded-[28px] border border-white/10 bg-[#09111f] shadow-2xl shadow-black/30">
+              <Image
+                src={post.heroImage}
+                alt={post.heroImageAlt || post.title}
+                fill
+                priority
+                sizes="(min-width: 1280px) 1120px, (min-width: 768px) 90vw, 100vw"
+                className="object-cover"
+              />
+            </div>
+          </div>
+        ) : null}
       </section>
 
       <section className="section-shell pb-24">

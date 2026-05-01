@@ -1,23 +1,26 @@
-     1|import { seo } from "./siteData";
-     2|
-     3|export function pageMetadata(title, description, path = "/") {
-     4|  const url = `${seo.baseUrl}${path}`;
-     5|  return {
-     6|    title,
-     7|    description,
-     8|    alternates: { canonical: url },
-     9|    openGraph: {
-    10|      title,
-    11|      description,
-    12|      url,
-    13|      siteName: seo.siteName,
-    14|      type: "website",
-    15|    },
-    16|    twitter: {
-    17|      card: "summary_large_image",
-    18|      title,
-    19|      description,
-    20|    },
-    21|  };
-    22|}
-    23|
+import { seo } from "./siteData";
+
+export function pageMetadata(title, description, path = "/", imagePath) {
+  const url = `${seo.baseUrl}${path}`;
+  const image = imagePath ? `${seo.baseUrl}${imagePath}` : undefined;
+
+  return {
+    title,
+    description,
+    alternates: { canonical: url },
+    openGraph: {
+      title,
+      description,
+      url,
+      siteName: seo.siteName,
+      type: "website",
+      images: image ? [{ url: image }] : undefined,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: image ? [image] : undefined,
+    },
+  };
+}
