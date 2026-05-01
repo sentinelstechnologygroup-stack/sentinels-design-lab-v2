@@ -35,7 +35,7 @@ export default function Pricing() {
                 Public website pricing that still leaves room for custom digital builds
               </h1>
               <p className="mt-5 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-                Website packages are starting points. Custom portals, dashboards, automations, integrations, and application builds are scoped separately after discovery.
+                Website packages are starting points. The packages below cover website redesign work. SEO, PPC, branding, ecommerce, hosting, maintenance, automation, dashboards, portals, and custom digital systems are quoted separately based on scope.
               </p>
             </div>
             <div className="panel-safe-heavy p-7 md:p-8">

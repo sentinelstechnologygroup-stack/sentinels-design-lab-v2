@@ -20,6 +20,9 @@ export default function Services() {
               <p className="mt-5 max-w-2xl text-lg leading-relaxed text-muted-foreground">
                 {servicesPage.heroDescription}
               </p>
+              <p className="mt-4 max-w-3xl text-sm leading-7 text-muted-foreground">
+                Website redesign packages start at published pricing. SEO, PPC, branding, ecommerce, hosting, automations, dashboards, portals, and custom systems are scoped separately after evaluation.
+              </p>
               <div className="mt-8 flex flex-wrap gap-4">
                 <Link href={primaryCta.path} className="btn-primary px-7 py-3 text-sm">
                   {primaryCta.label}

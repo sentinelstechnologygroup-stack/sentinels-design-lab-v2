@@ -26,6 +26,10 @@ export default function Navbar() {
             </Link>
           ))}
 
+          <a href={BUSINESS.phoneHref} className="text-sm text-white/80 transition hover:text-white">
+            {BUSINESS.phone}
+          </a>
+
           <Link href={CTA.primary.path} className="btn-primary text-sm">
             {CTA.primary.label}
           </Link>
@@ -54,6 +58,14 @@ export default function Navbar() {
                 {item.label}
               </Link>
             ))}
+
+            <a
+              href={BUSINESS.phoneHref}
+              className="py-3 text-sm text-white/80 transition hover:text-white"
+              onClick={() => setOpen(false)}
+            >
+              {BUSINESS.phone}
+            </a>
 
             <Link
               href={CTA.primary.path}
