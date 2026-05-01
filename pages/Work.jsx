@@ -12,37 +12,21 @@ function ProjectMedia({ project }) {
   }
 
   return (
-    <div className={`mt-7 grid gap-4 ${project.media.length > 1 ? "md:grid-cols-2" : ""}`}>
-      {project.media.slice(0, 2).map((item) => {
-        if (item.kind === "image") {
-          return (
-            <div key={`${project.slug}-${item.label}`} className="surface-subtle overflow-hidden p-3">
-              <div className="mb-3 px-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-white/50">
-                {item.label}
-              </div>
-              <div className="relative aspect-[16/10] overflow-hidden rounded-[20px] border border-white/10 bg-[#09111f]">
-                <Image
-                  src={item.src}
-                  alt={item.alt}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  className="object-cover object-top"
-                />
-              </div>
-            </div>
-          );
-        }
-
-        return (
-          <div key={`${project.slug}-${item.label}`} className="surface-subtle p-5 md:p-6">
-            <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/45">{item.label}</div>
-            <div className="mt-4 rounded-2xl border border-white/10 bg-[#09111f] px-4 py-4 text-sm text-white/72">
-              <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-primary/80">{item.title}</div>
-              <div className="mt-3 leading-7">{item.body}</div>
-            </div>
+    <div className={`mt-6 grid gap-4 ${project.media.length > 1 ? "md:grid-cols-2" : ""}`}>
+      {project.media.slice(0, 2).map((item) => (
+        <div key={`${project.slug}-${item.label}`} className="overflow-hidden rounded-[24px] border border-white/10 bg-[#0a1220] p-3">
+          <div className="mb-3 px-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-white/50">{item.label}</div>
+          <div className="relative aspect-[16/10] overflow-hidden rounded-[18px] border border-white/10 bg-[#09111f]">
+            <Image
+              src={item.src}
+              alt={item.alt}
+              fill
+              sizes="(max-width: 768px) 100vw, 50vw"
+              className="object-cover object-top"
+            />
           </div>
-        );
-      })}
+        </div>
+      ))}
     </div>
   );
 }
@@ -60,7 +44,20 @@ function Badge({ children, tone = "neutral" }) {
   );
 }
 
-function WorkCard({ project }) {
+function BulletList({ items }) {
+  return (
+    <ul className="mt-4 space-y-3 text-sm leading-7 text-muted-foreground">
+      {items.map((item) => (
+        <li key={item} className="flex gap-3">
+          <span className="mt-[0.65rem] h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
+          <span>{item}</span>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function WebsiteWorkCard({ project }) {
   return (
     <article className="panel-safe flex h-full flex-col overflow-hidden p-6 md:p-8">
       <div className="flex flex-wrap items-start justify-between gap-4">
@@ -76,25 +73,19 @@ function WorkCard({ project }) {
 
       <ProjectMedia project={project} />
 
-      <div className="mt-7 grid gap-4 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
-        <div className="surface-subtle px-5 py-5 md:px-6">
-          <div className="text-sm font-semibold uppercase tracking-[0.18em] text-white/50">{project.overviewLabel}</div>
-          <p className="mt-3 text-sm leading-7 text-muted-foreground">{project.overview}</p>
+      <div className="mt-7 space-y-7">
+        <div>
+          <div className="text-sm font-semibold uppercase tracking-[0.18em] text-white/55">Key Improvements</div>
+          <BulletList items={project.keyImprovements} />
         </div>
 
-        <div className="surface-subtle px-5 py-5 md:px-6">
-          <div className="text-sm font-semibold uppercase tracking-[0.18em] text-white/50">{project.detailLabel}</div>
-          <div className="mt-4 grid gap-3 sm:grid-cols-2">
-            {project.detailItems.map((item) => (
-              <div key={item} className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-4 text-sm text-white/80">
-                {item}
-              </div>
-            ))}
-          </div>
+        <div>
+          <div className="text-sm font-semibold uppercase tracking-[0.18em] text-white/55">Scope & Deliverables</div>
+          <BulletList items={project.scopeDeliverables} />
         </div>
       </div>
 
-      <div className="mt-7 flex flex-wrap items-center gap-4 pt-1">
+      <div className="mt-8 flex flex-wrap items-center gap-4 pt-1">
         <Link
           href="/contact?type=website-evaluation"
           className="inline-flex items-center gap-2 text-sm font-medium text-primary transition hover:text-white"
@@ -111,6 +102,53 @@ function WorkCard({ project }) {
       </div>
     </article>
   );
+}
+
+function SystemWorkCard({ project }) {
+  return (
+    <article className="panel-safe flex h-full flex-col overflow-hidden p-6 md:p-8">
+      <div className="flex flex-wrap items-start justify-between gap-4">
+        <div>
+          <div className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">{project.industry}</div>
+          <h3 className="mt-3 font-heading text-2xl font-bold text-foreground">{project.name}</h3>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          <Badge>{project.status}</Badge>
+          <Badge tone="primary">{project.projectType}</Badge>
+        </div>
+      </div>
+
+      <div className="mt-7 space-y-7">
+        <div>
+          <div className="text-sm font-semibold uppercase tracking-[0.18em] text-white/55">What it does</div>
+          <BulletList items={project.whatItDoes} />
+        </div>
+
+        <div>
+          <div className="text-sm font-semibold uppercase tracking-[0.18em] text-white/55">System role</div>
+          <BulletList items={project.systemRole} />
+        </div>
+      </div>
+
+      <div className="mt-8 flex flex-wrap items-center gap-4 pt-1">
+        <Link
+          href="/contact?type=website-evaluation"
+          className="inline-flex items-center gap-2 text-sm font-medium text-primary transition hover:text-white"
+        >
+          Request a website evaluation
+          <ArrowRight className="h-4 w-4" />
+        </Link>
+      </div>
+    </article>
+  );
+}
+
+function WorkCard({ project }) {
+  if (project.section === "digital-systems") {
+    return <SystemWorkCard project={project} />;
+  }
+
+  return <WebsiteWorkCard project={project} />;
 }
 
 export default function Work() {
@@ -139,10 +177,10 @@ export default function Work() {
         </div>
       </section>
 
-      <section className="pb-16 md:pb-20">
+      <section className="pb-20 md:pb-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="space-y-14">
-            {workSections.map((section) => {
+          <div className="space-y-20 md:space-y-24">
+            {workSections.map((section, index) => {
               const sectionProjects = workProjects.filter((project) => project.section === section.slug);
 
               if (!sectionProjects.length) {
@@ -150,8 +188,8 @@ export default function Work() {
               }
 
               return (
-                <div key={section.slug}>
-                  <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+                <div key={section.slug} className={index > 0 ? "pt-4 md:pt-8" : ""}>
+                  <div className="mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
                     <div>
                       <div className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">{section.title}</div>
                       <h2 className="mt-3 font-heading text-3xl font-bold text-foreground sm:text-[2.2rem]">{section.title}</h2>

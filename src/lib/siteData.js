@@ -294,17 +294,17 @@ export const workProjects = [
     industry: "Landscape design / construction",
     projectType: "Website Redesign",
     status: "Launch-ready rebuild",
-    overviewLabel: "Original issue",
-    overview:
-      "Original site had strong visual material but needed cleaner organization, improved gallery structure, simplified navigation, and a more modern presentation.",
-    detailLabel: "What SDL improved",
-    detailItems: [
-      "Rebuilt visual structure",
-      "Simplified galleries",
-      "Improved residential/commercial navigation",
-      "Strengthened mobile presentation",
-      "Improved contact path",
-      "Prepared site for launch review",
+    keyImprovements: [
+      "Cleaned up a visually strong but overextended original structure.",
+      "Simplified gallery flow and project browsing.",
+      "Improved residential and commercial path clarity.",
+      "Tightened mobile presentation and contact visibility.",
+    ],
+    scopeDeliverables: [
+      "Website redesign / modernization lane.",
+      "Updated visual hierarchy and page structure.",
+      "Sharper navigation and gallery organization.",
+      "Launch-review-ready presentation package.",
     ],
     media: [
       {
@@ -312,13 +312,6 @@ export const workProjects = [
         label: "Before — original site",
         src: "/images/work/eli-original-home.jpg",
         alt: "ELI Land Design original website homepage before SDL redesign",
-      },
-      {
-        kind: "text",
-        label: "Current / rebuilt presentation",
-        title: "Current SDL rebuild presentation on file",
-        body:
-          "Approved original-site imagery is paired with SDL's current rebuilt presentation evidence. Additional current visuals stay limited to approved materials only.",
       },
     ],
     liveLink: "",
@@ -330,17 +323,17 @@ export const workProjects = [
     industry: "Kitchen, bath, and remodeling",
     projectType: "Website Redesign",
     status: "Launch-ready rebuild",
-    overviewLabel: "Original issue",
-    overview:
-      "Original site needed modernization, clearer service presentation, stronger trust presentation, and a cleaner mobile experience.",
-    detailLabel: "What SDL improved",
-    detailItems: [
-      "Modernized page structure",
-      "Improved visual hierarchy",
-      "Clarified service and showroom presentation",
-      "Improved footer/navigation",
-      "Improved mobile usability",
-      "Completed launch-ready rebuild",
+    keyImprovements: [
+      "Replaced a dated, text-heavy presentation with a stronger premium feel.",
+      "Clarified service, showroom, and portfolio pathways.",
+      "Improved hierarchy for trust, offers, and project proof.",
+      "Cleaned up mobile usability and navigation behavior.",
+    ],
+    scopeDeliverables: [
+      "Website redesign / modernization lane.",
+      "Before and current visual proof pairing.",
+      "Refined homepage, service, and showroom positioning.",
+      "Current launch-ready rebuild on live domain.",
     ],
     media: [
       {
@@ -350,14 +343,13 @@ export const workProjects = [
         alt: "Premier Kitchens original website homepage before SDL redesign",
       },
       {
-        kind: "text",
-        label: "Current / rebuilt presentation",
-        title: "Current SDL rebuild presentation on file",
-        body:
-          "Original-site evidence is preserved here. Current rebuild visuals remain controlled so the work page stays clean and limited to approved presentation assets.",
+        kind: "image",
+        label: "Current — live site",
+        src: "/images/work/premier-current.jpg",
+        alt: "Premier Kitchens current live homepage after SDL rebuild",
       },
     ],
-    liveLink: "",
+    liveLink: "https://premierkitchens.us",
   },
   {
     slug: "my-buddys-mobile-detail",
@@ -366,27 +358,27 @@ export const workProjects = [
     industry: "Mobile auto detailing / local service",
     projectType: "New Website",
     status: "Professionalized launch build",
-    overviewLabel: "Project scope",
-    overview:
-      "New website build focused on stronger brand presentation, clearer service communication, and a more professional online presence.",
-    detailLabel: "What SDL delivered",
-    detailItems: [
-      "Improved brand presentation",
-      "Clarified service offer",
-      "Strengthened mobile-first layout",
-      "Improved contact and booking path",
-      "No fabricated before/after used for this new build",
+    keyImprovements: [
+      "Established a stronger first-impression brand presence from scratch.",
+      "Made services and value proposition easier to scan quickly.",
+      "Built a clearer mobile-first booking and contact path.",
+      "Added cleaner trust presentation for a local service audience.",
+    ],
+    scopeDeliverables: [
+      "New website build, not a before/after redesign case.",
+      "Homepage hero, services, reviews, and CTA structure.",
+      "Current live-site visual proof captured from production.",
+      "Lead-oriented layout tuned for local service conversion.",
     ],
     media: [
       {
-        kind: "text",
-        label: "Evidence basis",
-        title: "New website build",
-        body:
-          "This was positioned as new website work, so SDL is not using fake before/after visuals. Evidence is grounded in the delivered structure, mobile presentation, and booking path improvements.",
+        kind: "image",
+        label: "Current — live site",
+        src: "/images/work/mybuddys-current.jpg",
+        alt: "My Buddy's Mobile Detail current live homepage built by SDL",
       },
     ],
-    liveLink: "",
+    liveLink: "https://www.mybuddysmobiledetail.com",
   },
   {
     slug: "best-paint",
@@ -395,27 +387,27 @@ export const workProjects = [
     industry: "Painting services",
     projectType: "New Website",
     status: "Foundation build complete",
-    overviewLabel: "Project scope",
-    overview:
-      "New website build created to present painting services clearly, support trust on first impression, and give the business a cleaner estimate/contact path.",
-    detailLabel: "What SDL delivered",
-    detailItems: [
-      "New service-site structure",
-      "Clearer service presentation",
-      "Stronger trust and inquiry path",
-      "Cleaner mobile layout",
-      "No fabricated before/after used for this new build",
+    keyImprovements: [
+      "Created a clearer first-impression offer for painting and flooring work.",
+      "Improved trust signaling with a more controlled hero and CTA structure.",
+      "Made core services easier to scan at the top of the experience.",
+      "Strengthened estimate and contact pathways for service inquiries.",
+    ],
+    scopeDeliverables: [
+      "New website build, presented without fabricated legacy visuals.",
+      "Current live-site hero capture from production domain.",
+      "Homepage structure built around service clarity and conversion.",
+      "Foundation ready for broader page and content expansion.",
     ],
     media: [
       {
-        kind: "text",
-        label: "Evidence basis",
-        title: "New website build",
-        body:
-          "SDL kept this entry grounded in real delivery scope only. No fake legacy-state visuals are shown because this project is presented as new website work.",
+        kind: "image",
+        label: "Current — live site",
+        src: "/images/work/bestpaint-current.jpg",
+        alt: "Best Paint current live homepage built by SDL",
       },
     ],
-    liveLink: "",
+    liveLink: "https://bestsolutiondistribution.com",
   },
   {
     slug: "dadson-driver-app",
@@ -424,25 +416,17 @@ export const workProjects = [
     industry: "Operations / field logistics",
     projectType: "Internal App",
     status: "Internal build",
-    overviewLabel: "What it does",
-    overview:
-      "Driver-side internal app for operational use, with field-facing workflow support rather than public marketing presentation.",
-    detailLabel: "Evidence basis",
-    detailItems: [
-      "Internal app category",
-      "No fake before state shown",
-      "Screenshots withheld unless clean and safe for external presentation",
-      "Presented as systems capability, not client marketing work",
+    whatItDoes: [
+      "Supports driver-side operational workflows in the field.",
+      "Keeps task execution closer to the point of service delivery.",
+      "Reduces friction between dispatch context and driver action.",
     ],
-    media: [
-      {
-        kind: "text",
-        label: "Evidence panel",
-        title: "Text-only evidence",
-        body:
-          "Presented without screenshots to keep the work page clean and to avoid exposing internal operational views that are not ready for public display.",
-      },
+    systemRole: [
+      "Internal operations",
+      "Workflow control",
+      "Field execution visibility",
     ],
+    media: [],
     liveLink: "",
   },
   {
@@ -452,25 +436,17 @@ export const workProjects = [
     industry: "Operations / admin management",
     projectType: "Portal",
     status: "Internal build",
-    overviewLabel: "What it does",
-    overview:
-      "Admin-side portal for internal coordination, records, and operational oversight tied to the broader Dadson system stack.",
-    detailLabel: "Evidence basis",
-    detailItems: [
-      "Portal / dashboard capability",
-      "No fake before state shown",
-      "Screenshots limited to clean, safe, approved views only",
-      "Presented as real systems work, not decorative UI",
+    whatItDoes: [
+      "Provides admin-side coordination for records and oversight.",
+      "Supports internal management views tied to the Dadson workflow stack.",
+      "Centralizes operational handling away from scattered tools.",
     ],
-    media: [
-      {
-        kind: "text",
-        label: "Evidence panel",
-        title: "Text-only evidence",
-        body:
-          "This entry stays text-first unless a clean, externally safe portal screenshot is available. The goal is to show real systems capability without clutter or unsafe exposure.",
-      },
+    systemRole: [
+      "Admin visibility",
+      "Internal operations",
+      "Workflow control",
     ],
+    media: [],
     liveLink: "",
   },
   {
@@ -480,25 +456,17 @@ export const workProjects = [
     industry: "Painting operations",
     projectType: "System",
     status: "Internal build",
-    overviewLabel: "What it does",
-    overview:
-      "Internal system work centered on painting-service operations and controlled workflow support rather than a public-facing brochure experience.",
-    detailLabel: "Evidence basis",
-    detailItems: [
-      "System-focused delivery",
-      "No fake before state shown",
-      "Text-only proof used when screenshots are not presentation-safe",
-      "Included to reinforce SDL's full-stack operational capability",
+    whatItDoes: [
+      "Supports painting-service operations through a controlled internal system layer.",
+      "Organizes workflow logic beyond a simple marketing website.",
+      "Shows SDL capability in business-system execution, not just brochure work.",
     ],
-    media: [
-      {
-        kind: "text",
-        label: "Evidence panel",
-        title: "Text-only evidence",
-        body:
-          "Painter Pro is shown as real internal systems capability. The work page uses controlled text evidence unless a clean, safe screenshot is available for publication.",
-      },
+    systemRole: [
+      "Internal operations",
+      "Admin visibility",
+      "Workflow control",
     ],
+    media: [],
     liveLink: "",
   },
 ];
@@ -540,6 +508,14 @@ export const blogPosts = [
     category: "Website Redesign",
     date: "April 30, 2026",
     readTime: "6 min read",
+    heroImage: "/images/blog/why-outdated-websites-cost-local-businesses-leads-hero-real-a.webp",
+    heroImageAlt:
+      "Realistic small-business office scene with a laptop and phone showing a dated website impression and a missed mobile lead path.",
+    thumbnailImage: "/images/blog/why-outdated-websites-cost-local-businesses-leads-thumb-real-a.webp",
+    thumbnailImageAlt:
+      "Small-business workspace thumbnail suggesting an outdated website is costing trust and inquiries.",
+    backupHeroImage: "/images/blog/why-outdated-websites-cost-local-businesses-leads-hero-real-c.webp",
+    backupThumbnailImage: "/images/blog/why-outdated-websites-cost-local-businesses-leads-thumb-real-c.webp",
     excerpt:
       "An outdated website does not just look old. It slows down trust, creates confusion, and quietly leaks real business opportunities.",
     sections: [
@@ -572,6 +548,18 @@ export const blogPosts = [
     category: "WordPress Modernization",
     date: "April 30, 2026",
     readTime: "7 min read",
+    heroImage:
+      "/images/blog/why-we-rebuild-wordpress-sites-instead-of-maintaining-plugin-stacks-hero-real-a.webp",
+    heroImageAlt:
+      "Realistic modernization workstation with a cluttered legacy web interface on one screen and a cleaner rebuilt system on another.",
+    thumbnailImage:
+      "/images/blog/why-we-rebuild-wordpress-sites-instead-of-maintaining-plugin-stacks-thumb-real-a.webp",
+    thumbnailImageAlt:
+      "Editorial workstation thumbnail showing a legacy website stack being rebuilt into a cleaner modern setup.",
+    backupHeroImage:
+      "/images/blog/why-we-rebuild-wordpress-sites-instead-of-maintaining-plugin-stacks-hero-real-b.webp",
+    backupThumbnailImage:
+      "/images/blog/why-we-rebuild-wordpress-sites-instead-of-maintaining-plugin-stacks-thumb-real-b.webp",
     excerpt:
       "WordPress is often treated like the default solution. In practice, many businesses are better served by rebuilding into leaner, more controlled infrastructure.",
     sections: [
@@ -603,6 +591,14 @@ export const blogPosts = [
     category: "Local Business Websites",
     date: "April 30, 2026",
     readTime: "6 min read",
+    heroImage: "/images/blog/what-a-modern-service-business-website-needs-in-2026-hero-real-c.webp",
+    heroImageAlt:
+      "Realistic professional service-business workspace with a laptop and phone showing a clean modern website layout built for trust and action.",
+    thumbnailImage: "/images/blog/what-a-modern-service-business-website-needs-in-2026-thumb-real-c.webp",
+    thumbnailImageAlt:
+      "Editorial website thumbnail showing a modern service-business layout on mobile and desktop devices.",
+    backupHeroImage: "/images/blog/what-a-modern-service-business-website-needs-in-2026-hero-real-a.webp",
+    backupThumbnailImage: "/images/blog/what-a-modern-service-business-website-needs-in-2026-thumb-real-a.webp",
     excerpt:
       "A modern service-business site needs more than a homepage and phone number. It needs trust, clarity, mobile performance, and a real lead path.",
     sections: [
