@@ -1,6 +1,7 @@
 "use client";
 
 import CTASection from "@/components/shared/CTASection";
+import AboutTimeline from "@/components/shared/AboutTimeline";
 import { aboutSections, primaryCta } from "@/lib/siteData";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
@@ -88,21 +89,7 @@ export default function About() {
         </div>
       </section>
 
-      <section className="pb-20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="panel-safe p-8 md:p-10">
-            <div className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Timeline</div>
-            <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-              {aboutSections.timeline.map((item) => (
-                <div key={`${item.year}-${item.label}`} className="surface-subtle px-4 py-5">
-                  <div className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">{item.year}</div>
-                  <div className="mt-2 font-heading text-lg font-semibold text-foreground">{item.label}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+      <AboutTimeline items={aboutSections.timeline} />
 
       <CTASection />
     </div>

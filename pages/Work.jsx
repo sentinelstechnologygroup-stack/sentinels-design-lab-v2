@@ -118,6 +118,8 @@ function SystemWorkCard({ project }) {
         </div>
       </div>
 
+      <ProjectMedia project={project} />
+
       <div className="mt-7 space-y-7">
         <div>
           <div className="text-sm font-semibold uppercase tracking-[0.18em] text-white/55">What it does</div>
