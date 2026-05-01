@@ -35,13 +35,13 @@ function Hero({ badge, headline, highlight, subheadline, description, startingPr
             </p>
             <div className="flex flex-wrap gap-3">
               <Link
-                href="/start-project"
+                href="/contact"
                 className="inline-flex items-center gap-2 bg-primary hover:bg-primary text-primary-foreground px-7 py-3.5 rounded-lg font-semibold transition-all hover:shadow-lg hover:shadow-primary/25 text-sm"
               >
-                Start a Project <ArrowRight className="w-4 h-4" />
+                Get Website Evaluation <ArrowRight className="w-4 h-4" />
               </Link>
               <Link
-                href="/packages"
+                href="/pricing"
                 className="inline-flex items-center gap-2 border border-border hover:border-primary/50 text-foreground px-7 py-3.5 rounded-lg font-semibold transition-all hover:bg-secondary/50 text-sm"
               >
                 View Pricing <ChevronRight className="w-4 h-4" />
@@ -75,7 +75,7 @@ function Hero({ badge, headline, highlight, subheadline, description, startingPr
 /* ─── STATS BAR ─────────────────────────────────────────────────────────── */
 function StatsBar({ stats }) {
   return (
-    <section className="py-8 border-y border-border/30 bg-card/40">
+    <section className="py-8 border-y border-border/30 bg-transparent">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-3 md:grid-cols-6 gap-4 text-center">
           {stats.map((s, i) => (
@@ -93,7 +93,7 @@ function StatsBar({ stats }) {
 /* ─── ABOUT SECTION ─────────────────────────────────────────────────────── */
 function AboutSection({ title, highlight, body, bullets, differentiators }) {
   return (
-    <section className="py-20 bg-card/30">
+    <section className="py-20 bg-transparent">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div>
@@ -111,20 +111,20 @@ function AboutSection({ title, highlight, body, bullets, differentiators }) {
             </ul>
             <div className="mt-8 flex gap-3">
               <Link
-                href="/start-project"
+                href="/contact"
                 className="inline-flex items-center gap-2 bg-primary hover:bg-primary text-primary-foreground px-6 py-3 rounded-lg font-semibold text-sm transition-all hover:shadow-lg hover:shadow-primary/20"
               >
-                Start a Project <ArrowRight className="w-4 h-4" />
+                Get Website Evaluation <ArrowRight className="w-4 h-4" />
               </Link>
               <a
-                href="tel:+18555544057"
+                href="tel:+18324320224"
                 className="inline-flex items-center gap-2 border border-border hover:border-primary/40 text-foreground px-6 py-3 rounded-lg font-semibold text-sm transition-all hover:bg-secondary/50"
               >
                 <Phone className="w-4 h-4" /> Let's Chat
               </a>
             </div>
           </div>
-          <div className="bg-card border border-border/50 rounded-2xl p-8">
+          <div className="panel-safe p-8">
             <h3 className="font-heading font-semibold text-foreground mb-6 text-lg">What Sets Us Apart</h3>
             <div className="space-y-5">
               {differentiators.map((d, i) => (
@@ -163,7 +163,7 @@ function ServicesGrid({ subtitle, title, services }) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.07 }}
-              className="group bg-card/60 border border-border/50 rounded-xl p-7 hover:border-primary/30 hover:bg-card/80 transition-all"
+              className="group panel-safe p-7 hover:border-primary/30 hover:bg-card/80 transition-all"
             >
               <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-5 group-hover:bg-primary/20 transition-colors">
                 <s.icon className="w-6 h-6 text-primary" />
@@ -190,7 +190,7 @@ function PortfolioTabs({ subtitle, title, tabs }) {
   ];
 
   return (
-    <section className="py-20 bg-card/30">
+    <section className="py-20 bg-transparent">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-10">
           {subtitle && <span className="text-primary text-sm font-semibold uppercase tracking-wider">{subtitle}</span>}
@@ -264,7 +264,7 @@ function ProcessSteps({ subtitle, title, steps }) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className="relative bg-card/60 border border-border/50 rounded-xl p-7 hover:border-primary/30 transition-all"
+              className="relative panel-safe p-7 hover:border-primary/30 transition-all"
             >
               {i < steps.length - 1 && (
                 <div className="hidden lg:block absolute top-10 -right-3 z-10">
@@ -287,7 +287,7 @@ function ProcessSteps({ subtitle, title, steps }) {
 /* ─── PRICING SECTION ────────────────────────────────────────────────────── */
 function PricingSection({ subtitle, title, packages }) {
   return (
-    <section className="py-20 bg-card/30">
+    <section className="py-20 bg-transparent">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-14">
           {subtitle && <span className="text-primary text-sm font-semibold uppercase tracking-wider">{subtitle}</span>}
@@ -305,7 +305,7 @@ function PricingSection({ subtitle, title, packages }) {
               className={`relative rounded-xl border p-6 flex flex-col transition-all hover:shadow-xl hover:shadow-primary/5 ${
                 pkg.featured
                   ? "border-primary/40 bg-primary/5 shadow-lg shadow-primary/10"
-                  : "border-border/50 bg-card/60 hover:border-primary/20"
+                  : "panel-safe hover:border-primary/20"
               }`}
             >
               {pkg.featured && (
@@ -330,10 +330,10 @@ function PricingSection({ subtitle, title, packages }) {
                 ))}
               </ul>
               <Link
-                href="/start-project"
+                href="/contact"
                 className={`flex items-center justify-center gap-1.5 w-full py-2.5 rounded-lg font-semibold text-sm transition-all ${
                   pkg.featured
-                    ? "bg-primary hover:bg-primary text-primary-foreground hover:shadow-lg hover:shadow-primary/20"
+                    ? "bg-primary text-primary-foreground hover:bg-primary/90"
                     : "border border-border hover:border-primary/40 text-foreground hover:bg-secondary/50"
                 }`}
               >
@@ -364,7 +364,7 @@ function Testimonials({ subtitle, title, reviews }) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className="bg-card/60 border border-border/50 rounded-xl p-7 flex flex-col"
+              className="panel-safe p-7 flex flex-col"
             >
               <div className="flex items-start justify-between mb-4">
                 <Quote className="w-7 h-7 text-primary/30" />
@@ -390,7 +390,7 @@ function Testimonials({ subtitle, title, reviews }) {
 /* ─── TRUST BADGES ───────────────────────────────────────────────────────── */
 function TrustBadges({ badges }) {
   return (
-    <section className="py-14 border-y border-border/30 bg-card/20">
+    <section className="py-14 border-y border-border/30 bg-transparent">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <p className="text-center text-xs text-muted-foreground uppercase tracking-widest mb-8">
           Recognized on Leading Channels
