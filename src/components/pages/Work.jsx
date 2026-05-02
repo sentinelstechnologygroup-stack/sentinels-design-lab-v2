@@ -133,8 +133,10 @@ export default function Work() {
 
           <div className="mt-10 grid gap-8 xl:grid-cols-2">
             {websiteProjects.map((project) => {
-              const media = project.media?.[0];
               const proof = websiteProof[project.slug];
+              const allMedia = project.media?.length
+                ? project.media
+                : [{ src: "/images/blog/fallback-editorial.svg", alt: project.name, label: null }];
               return (
                 <ProofCaseCard
                   key={project.slug}
@@ -142,8 +144,7 @@ export default function Work() {
                   industry={project.industry}
                   projectType={project.projectType}
                   status={project.status}
-                  imageSrc={media?.src || "/images/blog/fallback-editorial.svg"}
-                  imageAlt={media?.alt || project.name}
+                  allMedia={allMedia}
                   liveLink={project.liveLink}
                   originalState={proof?.originalState || project.keyImprovements || []}
                   whatChanged={proof?.whatChanged || project.scopeDeliverables || []}

@@ -73,7 +73,7 @@ export default function Pricing() {
           <div className="panel-safe p-7 md:p-8 lg:p-10">
             <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
               <div>
-                <div className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">What affects price</div>
+                <div className="eyebrow mb-3">What affects price</div>
                 <p className="mt-3 max-w-2xl text-sm leading-7 text-muted-foreground">
                   The final price depends on content readiness, structural complexity, and how much system work sits behind the public website.
                 </p>

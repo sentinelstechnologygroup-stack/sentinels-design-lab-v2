@@ -69,9 +69,7 @@ export default function Services() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
           >
-            <span className="mb-6 inline-flex items-center gap-2 rounded-full border border-sky-400/25 bg-sky-400/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-primary">
-              Services
-            </span>
+            <span className="eyebrow mb-6">Services</span>
 
             <h1 className="mb-5 font-heading text-4xl font-bold leading-tight text-foreground sm:text-5xl lg:text-6xl">
               Websites and Digital Systems{" "}
@@ -112,7 +110,7 @@ export default function Services() {
       <section className="relative bg-transparent py-20">
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-14 text-center">
-            <span className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">
+            <span className="eyebrow mb-4">
               What We Do
             </span>
             <h2 className="mt-3 font-heading text-3xl font-bold text-foreground sm:text-4xl">
@@ -134,7 +132,7 @@ export default function Services() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.08 }}
-                  className="rounded-2xl border border-white/10 bg-[#0b1220]/82 p-7 shadow-[0_16px_50px_rgba(0,0,0,0.22)] backdrop-blur-sm"
+                  className="rounded-2xl border border-white/10 bg-[#0b1220]/92 p-7 shadow-[0_16px_50px_rgba(0,0,0,0.22)] backdrop-blur-sm"
                 >
                   <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-sky-400/10 ring-1 ring-white/8">
                     <Icon className="h-6 w-6 text-primary" />
@@ -156,7 +154,7 @@ export default function Services() {
       <section className="relative bg-transparent py-20">
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-14 text-center">
-            <span className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">
+            <span className="eyebrow mb-4">
               Who It's For
             </span>
             <h2 className="mt-3 font-heading text-3xl font-bold text-foreground sm:text-4xl">
@@ -177,7 +175,7 @@ export default function Services() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.08 }}
-                className="rounded-2xl border border-white/10 bg-[#0b1220]/80 p-6 shadow-[0_10px_30px_rgba(0,0,0,0.18)] backdrop-blur-sm"
+                className="rounded-2xl border border-white/10 bg-[#0b1220]/92 p-6 shadow-[0_10px_30px_rgba(0,0,0,0.18)] backdrop-blur-sm"
               >
                 <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-sky-400/10 ring-1 ring-white/8">
                   <item.icon className="h-5 w-5 text-primary" />
@@ -197,9 +195,9 @@ export default function Services() {
       {/* OUTCOMES */}
       <section className="relative bg-transparent py-20">
         <div className="relative mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          <div className="overflow-hidden rounded-[1.75rem] border border-white/10 bg-[#0c1322]/84 px-8 py-12 shadow-[0_20px_60px_rgba(0,0,0,0.24)] backdrop-blur-sm sm:px-12">
+          <div className="overflow-hidden rounded-[1.75rem] border border-white/10 bg-[#0c1322]/93 px-8 py-12 shadow-[0_20px_60px_rgba(0,0,0,0.24)] backdrop-blur-sm sm:px-12">
             <div className="mb-10 text-center">
-              <span className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">
+              <span className="eyebrow mb-4">
                 What You Get
               </span>
               <h2 className="mt-3 font-heading text-3xl font-bold text-foreground sm:text-4xl">
@@ -220,7 +218,7 @@ export default function Services() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.07 }}
-                  className="inline-flex items-start gap-3 rounded-xl border border-white/8 bg-white/[0.03] px-4 py-3.5 text-sm text-muted-foreground"
+                  className="inline-flex items-start gap-3 rounded-xl border border-white/8 bg-white/[0.07] px-4 py-3.5 text-sm text-muted-foreground"
                 >
                   <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
                   <span>{point}</span>
@@ -235,7 +233,7 @@ export default function Services() {
       <section className="relative bg-transparent py-20">
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-14 text-center">
-            <span className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">
+            <span className="eyebrow mb-4">
               How It Works
             </span>
             <h2 className="mt-3 font-heading text-3xl font-bold text-foreground sm:text-4xl">
@@ -255,7 +253,7 @@ export default function Services() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="rounded-2xl border border-white/10 bg-[#0b1220]/80 p-6 shadow-[0_10px_30px_rgba(0,0,0,0.18)] backdrop-blur-sm"
+                className="rounded-2xl border border-white/10 bg-[#0b1220]/92 p-6 shadow-[0_10px_30px_rgba(0,0,0,0.18)] backdrop-blur-sm"
               >
                 <span className="mb-4 inline-flex rounded-md bg-sky-400/10 px-2.5 py-1 text-xs font-bold text-primary ring-1 ring-primary/15">
                   {item.step}
@@ -275,9 +273,9 @@ export default function Services() {
       {/* WHAT WE DON'T DO */}
       <section className="relative bg-transparent py-20">
         <div className="relative mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-          <div className="rounded-[1.75rem] border border-white/10 bg-[#0c1322]/84 px-8 py-12 shadow-[0_20px_60px_rgba(0,0,0,0.24)] backdrop-blur-sm sm:px-12">
+          <div className="rounded-[1.75rem] border border-white/10 bg-[#0c1322]/93 px-8 py-12 shadow-[0_20px_60px_rgba(0,0,0,0.24)] backdrop-blur-sm sm:px-12">
             <div className="mb-8 text-center">
-              <span className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">
+              <span className="eyebrow mb-4">
                 Honest Positioning
               </span>
               <h2 className="mt-3 font-heading text-2xl font-bold text-foreground sm:text-3xl">
@@ -297,7 +295,7 @@ export default function Services() {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.07 }}
-                  className="flex w-full items-start gap-3 rounded-xl border border-white/8 bg-white/[0.03] px-4 py-3 text-sm text-muted-foreground"
+                  className="flex w-full items-start gap-3 rounded-xl border border-white/8 bg-white/[0.07] px-4 py-3 text-sm text-muted-foreground"
                 >
                   <XCircle className="mt-0.5 h-4 w-4 shrink-0 text-rose-400/70" />
                   <span>{item}</span>

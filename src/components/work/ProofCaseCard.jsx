@@ -20,12 +20,77 @@ function EvidenceList({ title, items = [] }) {
   );
 }
 
-export default function ProofCaseCard({ name, industry, projectType, status, imageSrc, imageAlt, liveLink, originalState = [], whatChanged = [], result = [], note }) {
+function ProofImage({ src, alt, label }) {
+  return (
+    <div className="flex-1 min-w-0">
+      <div className="relative aspect-[16/10] overflow-hidden rounded-xl border border-white/10 bg-[#09111f]">
+        <Image src={src} alt={alt} fill className="object-cover object-top" sizes="(min-width: 1280px) 25vw, 50vw" />
+      </div>
+      {label && (
+        <div className="mt-2 text-center text-xs font-semibold uppercase tracking-[0.16em] text-white/45">
+          {label}
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default function ProofCaseCard({
+  name,
+  industry,
+  projectType,
+  status,
+  imageSrc,
+  imageAlt,
+  allMedia,
+  liveLink,
+  originalState = [],
+  whatChanged = [],
+  result = [],
+  note,
+}) {
+  const media =
+    allMedia && allMedia.length > 0
+      ? allMedia
+      : imageSrc
+      ? [{ src: imageSrc, alt: imageAlt || name, label: null }]
+      : [];
+
+  const isBeforeAfter = media.length >= 2;
+
   return (
     <article className="overflow-hidden rounded-[28px] border border-white/10 bg-[#08101d] shadow-[0_26px_70px_rgba(0,0,0,0.3)]">
-      <div className="relative aspect-[16/10] border-b border-white/10 bg-[#09111f]">
-        <Image src={imageSrc} alt={imageAlt || name} fill className="object-cover object-top" sizes="(min-width: 1280px) 42vw, 100vw" />
-      </div>
+      {/* Image section */}
+      {isBeforeAfter ? (
+        <div className="border-b border-white/10 bg-[#09111f] p-4">
+          <div className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-white/40 text-center">
+            Before / After
+          </div>
+          <div className="flex gap-3">
+            {media.map((m, i) => (
+              <ProofImage key={i} src={m.src} alt={m.alt} label={m.label} />
+            ))}
+          </div>
+        </div>
+      ) : media.length === 1 ? (
+        <div className="relative aspect-[16/10] border-b border-white/10 bg-[#09111f]">
+          <Image
+            src={media[0].src}
+            alt={media[0].alt || name}
+            fill
+            className="object-cover object-top"
+            sizes="(min-width: 1280px) 42vw, 100vw"
+          />
+          {media[0].label && (
+            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#08101d]/90 to-transparent px-4 py-3">
+              <span className="text-xs font-semibold uppercase tracking-[0.16em] text-white/55">
+                {media[0].label}
+              </span>
+            </div>
+          )}
+        </div>
+      ) : null}
+
       <div className="p-6 md:p-8">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
@@ -38,7 +103,11 @@ export default function ProofCaseCard({ name, industry, projectType, status, ima
           </div>
         </div>
 
-        {note ? <p className="mt-4 rounded-2xl border border-amber-300/15 bg-amber-400/8 px-4 py-4 text-sm leading-7 text-amber-100/85">{note}</p> : null}
+        {note ? (
+          <p className="mt-4 rounded-2xl border border-amber-300/15 bg-amber-400/8 px-4 py-4 text-sm leading-7 text-amber-100/85">
+            {note}
+          </p>
+        ) : null}
 
         <div className="mt-8 grid gap-8 lg:grid-cols-3">
           <EvidenceList title="Original State" items={originalState} />
@@ -47,12 +116,18 @@ export default function ProofCaseCard({ name, industry, projectType, status, ima
         </div>
 
         <div className="mt-8 flex flex-wrap items-center gap-4">
-          <Link href="/contact?type=website-evaluation" className="inline-flex items-center gap-2 text-sm font-medium text-primary transition hover:text-white">
+          <Link
+            href="/contact?type=website-evaluation"
+            className="inline-flex items-center gap-2 text-sm font-medium text-primary transition hover:text-white"
+          >
             Request a website evaluation
             <ArrowRight className="h-4 w-4" />
           </Link>
           {liveLink ? (
-            <a href={liveLink} className="inline-flex items-center gap-2 text-sm font-medium text-white/70 transition hover:text-white">
+            <a
+              href={liveLink}
+              className="inline-flex items-center gap-2 text-sm font-medium text-white/70 transition hover:text-white"
+            >
               View live site
               <ExternalLink className="h-4 w-4" />
             </a>

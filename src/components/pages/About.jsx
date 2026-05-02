@@ -109,7 +109,7 @@ export default function About() {
               transition={{ duration: 0.6 }}
               className="pb-12 lg:pb-16"
             >
-              <span className="inline-block px-4 py-1.5 bg-primary/10 border border-primary/20 rounded-full text-xs font-semibold text-primary uppercase tracking-wider mb-6">
+              <span className="eyebrow mb-6">
                 About Us
               </span>
 
@@ -163,7 +163,7 @@ export default function About() {
       {/* Mission */}
       <section className="py-20 bg-card/30">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <span className="text-primary text-sm font-semibold uppercase tracking-wider">
+          <span className="eyebrow mb-4">
             Our Mission
           </span>
 
@@ -186,7 +186,7 @@ export default function About() {
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
-            <span className="text-primary text-sm font-semibold uppercase tracking-wider">
+            <span className="eyebrow mb-4">
               Core Values
             </span>
             <h2 className="font-heading text-3xl sm:text-4xl font-bold text-foreground mt-3">
@@ -225,7 +225,7 @@ export default function About() {
       <section className="py-24 bg-card/30 overflow-hidden">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <span className="text-primary text-sm font-semibold uppercase tracking-wider">
+            <span className="eyebrow mb-4">
               Our Journey
             </span>
 
@@ -342,7 +342,7 @@ export default function About() {
       <section className="py-20">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-14">
-            <span className="text-primary text-sm font-semibold uppercase tracking-wider">
+            <span className="eyebrow mb-4">
               Founder’s Philosophy
             </span>
             <h2 className="font-heading text-3xl sm:text-4xl font-bold text-foreground mt-3 mb-6">

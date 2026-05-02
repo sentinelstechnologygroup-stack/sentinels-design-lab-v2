@@ -13,9 +13,7 @@ export default function ServiceHero({ badge, title, highlight, description, imag
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
             {badge && (
-              <span className="inline-block px-4 py-1.5 bg-primary/10 border border-primary/20 rounded-full text-xs font-semibold text-primary uppercase tracking-wider mb-6">
-                {badge}
-              </span>
+              <span className="eyebrow mb-6">{badge}</span>
             )}
             <h1 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight mb-6">
               {title}{" "}

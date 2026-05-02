@@ -259,10 +259,10 @@ export const blogPosts = [
     "date": "May 1, 2026",
     "readTime": "8 min read",
     "excerpt": "Most contractors know their website needs work. The harder question is knowing what ‘done’ actually looks like — and what to demand from whoever builds it.",
-    "heroImage": "/images/blog/fallback-editorial.svg",
-    "heroImageAlt": "Website Redesign Checklist for Contractors and Home Service Companies editorial hero image",
-    "thumbnailImage": "/images/blog/fallback-editorial.svg",
-    "thumbnailImageAlt": "Website Redesign Checklist for Contractors and Home Service Companies editorial thumbnail",
+    "heroImage": "/images/blog/why-outdated-websites-cost-local-businesses-leads-hero-real-a.webp",
+    "heroImageAlt": "Contractor reviewing a website redesign checklist on a laptop at a job site office.",
+    "thumbnailImage": "/images/blog/why-outdated-websites-cost-local-businesses-leads-thumb-real-a.webp",
+    "thumbnailImageAlt": "Contractor website redesign checklist thumbnail — small business office workspace.",
     "sections": [
       {
         "heading": "Overview",
@@ -356,10 +356,10 @@ export const blogPosts = [
     "date": "May 1, 2026",
     "readTime": "9 min read",
     "excerpt": "HIPAA compliance conversations usually happen inside clinical systems. What gets overlooked more often than it should is the public-facing website, which can create HIPAA exposure in ways that are easy to miss and expensive to discover late.",
-    "heroImage": "/images/blog/fallback-editorial.svg",
-    "heroImageAlt": "When Does a Doctor’s Office Website Become a HIPAA Concern? editorial hero image",
-    "thumbnailImage": "/images/blog/fallback-editorial.svg",
-    "thumbnailImageAlt": "When Does a Doctor’s Office Website Become a HIPAA Concern? editorial thumbnail",
+    "heroImage": "/images/blog/what-a-modern-service-business-website-needs-in-2026-hero-real-a.webp",
+    "heroImageAlt": "Professional healthcare office workspace with a laptop showing a compliant website layout.",
+    "thumbnailImage": "/images/blog/what-a-modern-service-business-website-needs-in-2026-thumb-real-a.webp",
+    "thumbnailImageAlt": "Healthcare website HIPAA compliance thumbnail — professional services workspace.",
     "sections": [
       {
         "heading": "The Basic Framework: When Does HIPAA Apply to a Website?",
@@ -413,10 +413,10 @@ export const blogPosts = [
     "date": "May 1, 2026",
     "readTime": "6 min read",
     "excerpt": "Speed isn’t just a technical metric. It’s a signal your visitors are reading — consciously or not — about your business before they’ve read a single word of your copy.",
-    "heroImage": "/images/blog/fallback-editorial.svg",
-    "heroImageAlt": "Why Fast Websites Build More Trust editorial hero image",
-    "thumbnailImage": "/images/blog/fallback-editorial.svg",
-    "thumbnailImageAlt": "Why Fast Websites Build More Trust editorial thumbnail",
+    "heroImage": "/images/blog/what-a-modern-service-business-website-needs-in-2026-hero-real-b.webp",
+    "heroImageAlt": "Modern service business website on a desktop monitor showing fast load performance.",
+    "thumbnailImage": "/images/blog/what-a-modern-service-business-website-needs-in-2026-thumb-real-b.webp",
+    "thumbnailImageAlt": "Fast websites build trust thumbnail — modern web performance workspace.",
     "sections": [
       {
         "heading": "Overview",
@@ -480,10 +480,10 @@ export const blogPosts = [
     "date": "May 1, 2026",
     "readTime": "8 min read",
     "excerpt": "A well-built website is necessary. For most local service businesses trying to grow, it’s not sufficient.",
-    "heroImage": "/images/blog/fallback-editorial.svg",
-    "heroImageAlt": "When a Business Needs More Than a Website editorial hero image",
-    "thumbnailImage": "/images/blog/fallback-editorial.svg",
-    "thumbnailImageAlt": "When a Business Needs More Than a Website editorial thumbnail",
+    "heroImage": "/images/blog/why-outdated-websites-cost-local-businesses-leads-hero-real-b.webp",
+    "heroImageAlt": "Local service business owner at a desk reviewing digital strategy options beyond just a website.",
+    "thumbnailImage": "/images/blog/why-outdated-websites-cost-local-businesses-leads-thumb-real-b.webp",
+    "thumbnailImageAlt": "Business needs more than a website thumbnail — local service business growth workspace.",
     "sections": [
       {
         "heading": "Overview",
@@ -565,10 +565,10 @@ export const blogPosts = [
     "date": "May 1, 2026",
     "readTime": "8 min read",
     "excerpt": "Most growing businesses reach a breaking point where their stack of individual tools — each chosen for a specific problem — starts creating more problems than it solves.",
-    "heroImage": "/images/blog/fallback-editorial.svg",
-    "heroImageAlt": "Why Custom Digital Systems Beat Disconnected Tools editorial hero image",
-    "thumbnailImage": "/images/blog/fallback-editorial.svg",
-    "thumbnailImageAlt": "Why Custom Digital Systems Beat Disconnected Tools editorial thumbnail",
+    "heroImage": "/images/blog/why-we-rebuild-wordpress-sites-instead-of-maintaining-plugin-stacks-hero-real-a.webp",
+    "heroImageAlt": "Development workstation showing a connected digital system architecture replacing a stack of disconnected tools.",
+    "thumbnailImage": "/images/blog/why-we-rebuild-wordpress-sites-instead-of-maintaining-plugin-stacks-thumb-real-a.webp",
+    "thumbnailImageAlt": "Custom digital systems thumbnail — modern workstation with clean integrated stack.",
     "sections": [
       {
         "heading": "Overview",

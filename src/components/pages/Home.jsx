@@ -189,7 +189,7 @@ export default function Home() {
               transition={{ duration: 0.7 }}
               className="pb-10 lg:pb-16"
             >
-              <span className="mb-6 inline-flex items-center gap-2 rounded-full border border-sky-400/25 bg-sky-400/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-primary">
+              <span className="eyebrow mb-6">
                 <Sparkles className="h-3.5 w-3.5" />
                 Strategic Website Design for Real Businesses
               </span>
@@ -315,7 +315,7 @@ export default function Home() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.08 }}
-              className="rounded-xl border border-white/8 bg-[#0c1322]/78 px-4 py-4 text-sm font-medium text-foreground shadow-[0_8px_30px_rgba(0,0,0,0.14)] backdrop-blur-sm"
+              className="rounded-xl border border-white/8 bg-[#0c1322]/92 px-4 py-4 text-sm font-medium text-foreground shadow-[0_8px_30px_rgba(0,0,0,0.14)] backdrop-blur-sm"
             >
               {item}
             </motion.div>
@@ -327,7 +327,7 @@ export default function Home() {
       <section className="relative bg-transparent py-20">
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-14 text-center">
-            <span className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">
+            <span className="eyebrow mb-4">
               What We Do
             </span>
             <h2 className="mt-3 font-heading text-3xl font-bold text-foreground sm:text-4xl">
@@ -350,7 +350,7 @@ export default function Home() {
               >
                 <Link
                   href={service.path}
-                  className="group block h-full rounded-2xl border border-white/10 bg-[#0b1220]/82 p-7 shadow-[0_16px_50px_rgba(0,0,0,0.22)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-[0_20px_60px_rgba(0,0,0,0.28)]"
+                  className="group block h-full rounded-2xl border border-white/10 bg-[#0b1220]/92 p-7 shadow-[0_16px_50px_rgba(0,0,0,0.22)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-[0_20px_60px_rgba(0,0,0,0.28)]"
                 >
                   <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-sky-400/10 ring-1 ring-white/8 transition-all group-hover:bg-sky-400/15">
                     <service.icon className="h-6 w-6 text-primary" />
@@ -376,7 +376,7 @@ export default function Home() {
       {/* BEST FIT */}
       <section className="relative bg-transparent py-20">
         <div className="relative mx-auto max-w-5xl px-4 text-center sm:px-6 lg:px-8">
-          <span className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">
+          <span className="eyebrow mb-4">
             Best Fit
           </span>
           <h2 className="mb-5 mt-3 font-heading text-3xl font-bold text-foreground sm:text-4xl">
@@ -396,7 +396,7 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.08 }}
-                className="rounded-xl border border-white/10 bg-[#0b1220]/80 px-4 py-5 text-sm font-medium text-foreground shadow-[0_10px_30px_rgba(0,0,0,0.16)] backdrop-blur-sm"
+                className="rounded-xl border border-white/10 bg-[#0b1220]/92 px-4 py-5 text-sm font-medium text-foreground shadow-[0_10px_30px_rgba(0,0,0,0.16)] backdrop-blur-sm"
               >
                 {item}
               </motion.div>
@@ -410,7 +410,7 @@ export default function Home() {
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid items-center gap-16 lg:grid-cols-2">
             <div>
-              <span className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">
+              <span className="eyebrow mb-4">
                 Why Sentinels
               </span>
               <h2 className="mb-8 mt-3 font-heading text-3xl font-bold text-foreground sm:text-4xl">
@@ -489,7 +489,7 @@ export default function Home() {
                   ].map((item) => (
                     <div
                       key={item}
-                      className="inline-flex items-start gap-2 rounded-lg border border-white/8 bg-white/[0.03] px-3 py-3 text-sm text-muted-foreground"
+                      className="inline-flex items-start gap-2 rounded-lg border border-white/8 bg-white/[0.07] px-3 py-3 text-sm text-muted-foreground"
                     >
                       <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
                       <span>{item}</span>
@@ -505,8 +505,8 @@ export default function Home() {
       {/* ROI BRIDGE */}
       <section className="relative bg-transparent py-20">
         <div className="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
-          <div className="rounded-[1.75rem] border border-white/10 bg-[#0c1322]/84 px-6 py-12 shadow-[0_20px_60px_rgba(0,0,0,0.24)] backdrop-blur-sm sm:px-10">
-            <span className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">
+          <div className="rounded-[1.75rem] border border-white/10 bg-[#0c1322]/93 px-6 py-12 shadow-[0_20px_60px_rgba(0,0,0,0.24)] backdrop-blur-sm sm:px-10">
+            <span className="eyebrow mb-4">
               Investment Perspective
             </span>
             <h2 className="mb-5 mt-3 font-heading text-3xl font-bold text-foreground sm:text-4xl">
@@ -532,7 +532,7 @@ export default function Home() {
       <section className="relative bg-transparent py-20">
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-14 text-center">
-            <span className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">
+            <span className="eyebrow mb-4">
               Testimonials
             </span>
             <h2 className="mt-3 font-heading text-3xl font-bold text-foreground sm:text-4xl">
