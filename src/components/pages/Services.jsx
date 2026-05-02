@@ -4,179 +4,322 @@ import React from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import {
-  Globe, Smartphone, Search, MousePointer, Palette,
-  ShoppingCart, Cpu, BarChart3, Server, ArrowRight
+  Globe,
+  Search,
+  BarChart3,
+  LayoutDashboard,
+  Cpu,
+  Palette,
+  Wrench,
+  Store,
+  Building2,
+  CheckCircle2,
+  XCircle,
+  ArrowRight,
 } from "lucide-react";
 import CTASection from "@/components/shared/CTASection";
+import {
+  capabilityCards,
+  processSteps,
+  servicesPage,
+  opportunityPoints,
+} from "@/lib/siteData";
 
-const services = [
+const capabilityIconMap = {
+  "Website Redesigns": Globe,
+  "Custom Website Builds": Palette,
+  "SEO Foundation": Search,
+  "Lead Path Cleanup": BarChart3,
+  "Portals & Dashboards": LayoutDashboard,
+  "Automation & Integrations": Cpu,
+};
+
+const whoItIsFor = [
   {
-    icon: Globe,
-    title: "Website Design & Development",
-    desc: "Custom-built websites engineered for performance, clarity, and conversion — from single-page sites to multi-section platforms.",
-    path: "/services",
-    tag: "Core Service",
+    icon: Wrench,
+    label: "Contractors & Trades",
+    desc: "Roofing, plumbing, HVAC, electrical, landscaping — businesses that win work on trust and local reputation.",
   },
   {
-    icon: Search,
-    title: "SEO Services",
-    desc: "Sustainable search visibility built on technical precision, content strategy, and authoritative link acquisition.",
-    path: "/services",
-    tag: "Core Service",
+    icon: Store,
+    label: "Local Service Businesses",
+    desc: "Any service operator who needs a stronger first impression and a cleaner path from visitor to call or form.",
   },
   {
-    icon: MousePointer,
-    title: "PPC / Paid Ads",
-    desc: "Google and Meta ad campaigns built around real conversion data — not vanity metrics. Every dollar is tracked.",
-    path: "/services",
-    tag: "Core Service",
+    icon: Building2,
+    label: "Growing Small Businesses",
+    desc: "Teams that have outgrown a DIY site or WordPress and need something built for where they are actually going.",
   },
   {
-    icon: Palette,
-    title: "Branding & Identity",
-    desc: "Visual identity systems that communicate positioning clearly — logo, type, color, and brand guidelines built to last.",
-    path: "/services",
-    tag: "Core Service",
-  },
-  {
-    icon: ShoppingCart,
-    title: "Ecommerce Development",
-    desc: "Online stores built on Shopify or WooCommerce, optimized for product discovery, mobile checkout, and repeat revenue.",
-    path: "/services",
-    tag: "Specialized",
-  },
-  {
-    icon: Smartphone,
-    title: "Custom App Development",
-    desc: "Web and mobile applications built from scratch — scalable architecture, clean APIs, and intuitive interfaces.",
-    path: "/services",
-    tag: "Specialized",
-  },
-  {
-    icon: BarChart3,
-    title: "Digital Marketing",
-    desc: "Full-funnel marketing execution across paid, organic, email, and social — tied to revenue outcomes, not reach.",
-    path: "/services",
-    tag: "Specialized",
-  },
-  {
-    icon: Server,
-    title: "Hosting & Maintenance",
-    desc: "Managed hosting with proactive monitoring, security updates, performance tuning, and ongoing technical support.",
-    path: "/services",
-    tag: "Ongoing",
+    icon: Cpu,
+    label: "Operations-Forward Teams",
+    desc: "Businesses that need more than pages — portals, dashboards, and workflow systems that reduce manual overhead.",
   },
 ];
 
 export default function Services() {
-  const core = services.filter(s => s.tag === "Core Service");
-  const specialized = services.filter(s => s.tag !== "Core Service");
-
   return (
-    <div>
-      {/* Hero */}
-      <section className="relative pt-28 pb-0 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/8 via-transparent to-accent/5" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-          <div className="grid lg:grid-cols-2 gap-10 items-end">
-            <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="pb-12 lg:pb-16">
-              <span className="inline-block px-4 py-1.5 bg-primary/10 border border-primary/20 rounded-full text-xs font-semibold text-primary uppercase tracking-wider mb-6">
-                Services
+    <div className="relative overflow-hidden text-white">
+
+      {/* HERO */}
+      <section className="relative bg-transparent pb-8 pt-28">
+        <div className="relative mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 28 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7 }}
+          >
+            <span className="mb-6 inline-flex items-center gap-2 rounded-full border border-sky-400/25 bg-sky-400/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-primary">
+              Services
+            </span>
+
+            <h1 className="mb-5 font-heading text-4xl font-bold leading-tight text-foreground sm:text-5xl lg:text-6xl">
+              Websites and Digital Systems{" "}
+              <span className="text-primary">Built for Real Business</span>
+            </h1>
+
+            <p className="mx-auto mb-8 max-w-2xl text-lg leading-relaxed text-muted-foreground">
+              SDL designs and builds modern websites, web applications, portals,
+              dashboards, and digital systems for service businesses that need
+              more than a template — and more than decorative design.
+            </p>
+
+            <div className="mb-4 flex flex-wrap justify-center gap-4">
+              <Link
+                href="/contact?type=website-evaluation"
+                className="inline-flex items-center gap-2 rounded-lg bg-primary px-8 py-3.5 text-sm font-semibold text-slate-950 transition-all hover:scale-[1.01] hover:shadow-[0_10px_30px_rgba(56,189,248,0.20)]"
+              >
+                Get Website Evaluation
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+
+              <Link
+                href="/work"
+                className="inline-flex items-center gap-2 rounded-lg border border-primary/20 bg-sky-400/[0.06] px-8 py-3.5 text-sm font-semibold text-foreground transition-all hover:border-primary/40 hover:bg-sky-400/[0.10]"
+              >
+                View Our Work
+              </Link>
+            </div>
+
+            <p className="text-xs text-muted-foreground/70">
+              No commitment. Free evaluation.
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* WHAT WE DO */}
+      <section className="relative bg-transparent py-20">
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-14 text-center">
+            <span className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">
+              What We Do
+            </span>
+            <h2 className="mt-3 font-heading text-3xl font-bold text-foreground sm:text-4xl">
+              Core Service Areas
+            </h2>
+            <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
+              Every service is built around one goal: a stronger, cleaner
+              digital presence that earns trust and moves visitors toward action.
+            </p>
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {capabilityCards.map((card, i) => {
+              const Icon = capabilityIconMap[card.title] || Globe;
+              return (
+                <motion.div
+                  key={card.title}
+                  initial={{ opacity: 0, y: 18 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.08 }}
+                  className="rounded-2xl border border-white/10 bg-[#0b1220]/82 p-7 shadow-[0_16px_50px_rgba(0,0,0,0.22)] backdrop-blur-sm"
+                >
+                  <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-sky-400/10 ring-1 ring-white/8">
+                    <Icon className="h-6 w-6 text-primary" />
+                  </div>
+                  <h3 className="mb-2 font-heading text-lg font-semibold text-foreground">
+                    {card.title}
+                  </h3>
+                  <p className="text-sm leading-relaxed text-muted-foreground">
+                    {card.description}
+                  </p>
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* WHO IT'S FOR */}
+      <section className="relative bg-transparent py-20">
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-14 text-center">
+            <span className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">
+              Who It's For
+            </span>
+            <h2 className="mt-3 font-heading text-3xl font-bold text-foreground sm:text-4xl">
+              Built for Businesses That Need Real Results
+            </h2>
+            <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
+              SDL works best with businesses that need a stronger online
+              presence, clearer positioning, and a website that actively
+              supports lead flow.
+            </p>
+          </div>
+
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {whoItIsFor.map((item, i) => (
+              <motion.div
+                key={item.label}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.08 }}
+                className="rounded-2xl border border-white/10 bg-[#0b1220]/80 p-6 shadow-[0_10px_30px_rgba(0,0,0,0.18)] backdrop-blur-sm"
+              >
+                <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-sky-400/10 ring-1 ring-white/8">
+                  <item.icon className="h-5 w-5 text-primary" />
+                </div>
+                <h3 className="mb-2 font-heading text-sm font-semibold text-foreground">
+                  {item.label}
+                </h3>
+                <p className="text-sm leading-relaxed text-muted-foreground">
+                  {item.desc}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* OUTCOMES */}
+      <section className="relative bg-transparent py-20">
+        <div className="relative mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+          <div className="overflow-hidden rounded-[1.75rem] border border-white/10 bg-[#0c1322]/84 px-8 py-12 shadow-[0_20px_60px_rgba(0,0,0,0.24)] backdrop-blur-sm sm:px-12">
+            <div className="mb-10 text-center">
+              <span className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">
+                What You Get
               </span>
-              <h1 className="font-heading text-4xl sm:text-5xl lg:text-[3.4rem] font-bold text-foreground leading-tight mb-4">
-                Everything Your Business Needs to <span className="text-primary">Grow Online</span>
-              </h1>
-              <p className="text-muted-foreground text-lg leading-relaxed max-w-xl">
-                We operate as a full-service digital partner — handling design, development, marketing, and infrastructure so you can focus on running your business.
+              <h2 className="mt-3 font-heading text-3xl font-bold text-foreground sm:text-4xl">
+                What a Better Website Actually Does
+              </h2>
+              <p className="mx-auto mt-4 max-w-xl text-muted-foreground">
+                Every SDL engagement is built around outcomes that move the
+                business forward — not deliverables that just look good in a
+                preview.
               </p>
-            </motion.div>
-            <motion.div initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.6, delay: 0.15 }} className="relative hidden lg:block">
-              <div className="absolute -inset-6 bg-primary/5 rounded-3xl blur-2xl" />
-              <img src="https://media.base44.com/images/public/69c84c79cf14625ad4e75595/49a9801d0_generated_image.png" alt="Our Services" className="relative w-full max-h-[420px] object-cover rounded-t-2xl border border-border/30 shadow-2xl shadow-black/30" />
-            </motion.div>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              {opportunityPoints.map((point, i) => (
+                <motion.div
+                  key={point}
+                  initial={{ opacity: 0, y: 12 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.07 }}
+                  className="inline-flex items-start gap-3 rounded-xl border border-white/8 bg-white/[0.03] px-4 py-3.5 text-sm text-muted-foreground"
+                >
+                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                  <span>{point}</span>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Core Services */}
-      <section className="pb-6">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="font-heading text-sm font-semibold text-muted-foreground uppercase tracking-widest mb-6">Core Services</h2>
-          <div className="grid md:grid-cols-2 gap-5">
-            {core.map((s, i) => (
+      {/* PROCESS */}
+      <section className="relative bg-transparent py-20">
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-14 text-center">
+            <span className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">
+              How It Works
+            </span>
+            <h2 className="mt-3 font-heading text-3xl font-bold text-foreground sm:text-4xl">
+              A Structured Build Process From Day One
+            </h2>
+            <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
+              We start with an evaluation, not a quote. Every project is scoped
+              after we understand what the business actually needs.
+            </p>
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+            {processSteps.map((item, i) => (
               <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
+                key={item.step}
+                initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.07 }}
+                transition={{ delay: i * 0.1 }}
+                className="rounded-2xl border border-white/10 bg-[#0b1220]/80 p-6 shadow-[0_10px_30px_rgba(0,0,0,0.18)] backdrop-blur-sm"
               >
-                <Link href={s.path} className="group flex gap-5 bg-card/60 border border-border/50 rounded-xl p-6 hover:border-primary/30 hover:bg-card/80 transition-all duration-300">
-                  <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-colors mt-0.5">
-                    <s.icon className="w-6 h-6 text-primary" />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="font-heading text-base font-semibold text-foreground mb-1.5">{s.title}</h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed">{s.desc}</p>
-                    <span className="inline-flex items-center gap-1 mt-3 text-sm text-primary font-medium group-hover:gap-2 transition-all">
-                      Learn more <ArrowRight className="w-3.5 h-3.5" />
-                    </span>
-                  </div>
-                </Link>
+                <span className="mb-4 inline-flex rounded-md bg-sky-400/10 px-2.5 py-1 text-xs font-bold text-primary ring-1 ring-primary/15">
+                  {item.step}
+                </span>
+                <h3 className="mb-2 font-heading text-base font-semibold text-foreground">
+                  {item.title}
+                </h3>
+                <p className="text-sm leading-relaxed text-muted-foreground">
+                  {item.description}
+                </p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
+      {/* WHAT WE DON'T DO */}
+      <section className="relative bg-transparent py-20">
+        <div className="relative mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+          <div className="rounded-[1.75rem] border border-white/10 bg-[#0c1322]/84 px-8 py-12 shadow-[0_20px_60px_rgba(0,0,0,0.24)] backdrop-blur-sm sm:px-12">
+            <div className="mb-8 text-center">
+              <span className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">
+                Honest Positioning
+              </span>
+              <h2 className="mt-3 font-heading text-2xl font-bold text-foreground sm:text-3xl">
+                What SDL Does Not Do
+              </h2>
+              <p className="mx-auto mt-3 max-w-xl text-muted-foreground">
+                We believe in clear positioning. If it is not a good fit, we
+                will tell you that directly.
+              </p>
+            </div>
 
-      {/* Packages teaser */}
-      <section className="py-16 bg-card/30 border-y border-border/30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-muted-foreground text-sm uppercase tracking-widest mb-3">Not sure where to start?</p>
-          <h2 className="font-heading text-2xl sm:text-3xl font-bold text-foreground mb-4">
-            Browse Our Packaged Tiers
-          </h2>
-          <p className="text-muted-foreground max-w-xl mx-auto mb-7 text-sm leading-relaxed">
-            We offer structured packages — Lite, Starter, Growth, and Authority — so you can choose the level of engagement that fits your stage and budget.
-          </p>
-          <Link href="/pricing" className="inline-flex items-center gap-2 bg-primary hover:bg-primary text-primary-foreground px-7 py-3 rounded-lg font-semibold text-sm transition-all hover:shadow-lg hover:shadow-primary/20">
-            View Packages <ArrowRight className="w-4 h-4" />
-          </Link>
-        </div>
-      </section>
-
-      {/* Specialized + Ongoing */}
-      <section className="py-10 pb-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="font-heading text-sm font-semibold text-muted-foreground uppercase tracking-widest mb-6">Specialized & Ongoing</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
-            {specialized.map((s, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.07 }}
-              >
-                <Link href={s.path} className="group block bg-card/60 border border-border/50 rounded-xl p-6 hover:border-primary/30 hover:bg-card/80 transition-all duration-300 h-full">
-                  <div className="w-11 h-11 bg-primary/10 rounded-xl flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
-                    <s.icon className="w-5 h-5 text-primary" />
-                  </div>
-                  <span className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">{s.tag}</span>
-                  <h3 className="font-heading text-sm font-semibold text-foreground mt-1 mb-2">{s.title}</h3>
-                  <p className="text-xs text-muted-foreground leading-relaxed">{s.desc}</p>
-                  <span className="inline-flex items-center gap-1 mt-4 text-xs text-primary font-medium group-hover:gap-2 transition-all">
-                    Details <ArrowRight className="w-3 h-3" />
-                  </span>
-                </Link>
-              </motion.div>
-            ))}
+            <div className="space-y-3">
+              {servicesPage.notDo.map((item, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, x: -12 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.07 }}
+                  className="flex w-full items-start gap-3 rounded-xl border border-white/8 bg-white/[0.03] px-4 py-3 text-sm text-muted-foreground"
+                >
+                  <XCircle className="mt-0.5 h-4 w-4 shrink-0 text-rose-400/70" />
+                  <span>{item}</span>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      <CTASection title="Ready to Get Started?" description="Tell us about your project and we'll put together a plan that fits your goals." />
+      {/* CTA */}
+      <div className="relative">
+        <CTASection
+          eyebrow="Ready to Start"
+          title="If your website isn't working hard enough for your business, it's time to fix that."
+          description="Request a free website evaluation. We'll review what you have, identify the biggest gaps, and recommend the clearest next step — no commitment required."
+          primaryLabel="Get Website Evaluation"
+          primaryHref="/contact?type=website-evaluation"
+          secondaryLabel="View Pricing"
+          secondaryHref="/pricing"
+        />
+      </div>
     </div>
   );
 }
