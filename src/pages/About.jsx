@@ -1,95 +1,129 @@
 "use client";
 
 import CTASection from "@/components/shared/CTASection";
-import AboutTimeline from "@/components/shared/AboutTimeline";
-import { aboutSections, primaryCta } from "@/lib/siteData";
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import PageHero from "@/components/sections/PageHero";
+import TimelineStrip from "@/components/sections/TimelineStrip";
+import { primaryCta, aboutSections } from "@/lib/siteData";
+
+const timelineItems = aboutSections.timeline.map((item) => ({
+  ...item,
+  highlight: item.year === "2026",
+}));
+
+const whatWeBuild = [
+  "Modern websites",
+  "Website redesigns",
+  "Custom systems",
+  "Dashboards and portals",
+  "Automations and integrations",
+  "Lead-generation systems",
+];
+
+const whoWeHelp = [
+  "Businesses with outdated websites",
+  "Businesses outgrowing templates",
+  "Service companies needing stronger lead flow",
+  "Teams needing systems, dashboards, portals, or automation",
+];
+
+const process = ["evaluate", "scope", "build", "QA", "deploy", "support"];
 
 export default function About() {
   return (
     <div>
-      <section className="relative overflow-hidden pt-28">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/8 via-transparent to-accent/5" />
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid items-end gap-10 lg:grid-cols-2">
-            <div className="pb-12 lg:pb-16">
-              <span className="eyebrow mb-6">About</span>
-              <h1 className="font-heading text-4xl font-bold leading-tight text-foreground sm:text-5xl lg:text-[3.4rem]">
-                Full-stack digital solutions built for practical business use
-              </h1>
-              <p className="mt-5 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-                {aboutSections.whoWeAre}
-              </p>
-              <div className="mt-8 flex flex-wrap gap-4">
-                <Link href={primaryCta.path} className="btn-primary px-7 py-3 text-sm">
-                  {primaryCta.label}
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-                <Link href="/work" className="btn-secondary px-7 py-3 text-sm">
-                  View Work
-                </Link>
+      <PageHero
+        eyebrow="About"
+        title="Built from real work, not theory."
+        description="Sentinels Design Lab was built from hands-on experience fixing broken websites and rebuilding real business systems."
+        primaryCtaLabel={primaryCta.label}
+        primaryCtaHref={primaryCta.path}
+        secondaryCtaLabel="View Work"
+        secondaryCtaHref="/work"
+        imageSrc="/images/about/hero.png"
+        imageAlt="Digital systems visual representing SDL project delivery"
+      />
+
+      <section className="py-20 md:py-24">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid gap-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(280px,0.95fr)]">
+            <div>
+              <div className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Where this came from</div>
+              <h2 className="mt-3 font-heading text-3xl font-bold text-foreground sm:text-4xl">SDL didn’t start as an agency.</h2>
+              <div className="mt-6 space-y-5 text-lg leading-relaxed text-muted-foreground">
+                <p>It started by fixing broken websites, unreliable systems, and disconnected tools for real businesses that needed cleaner ways to operate.</p>
+                <p>That work turned into a repeatable delivery model built around practical execution instead of vague creative promises.</p>
+                <p className="text-white/80">{process.join(" → ")}</p>
               </div>
             </div>
-            <div className="hidden lg:block">
-              <img
-                src="/images/about/hero.png"
-                alt="Sentinels Design Lab"
-                className="rounded-t-2xl border border-border/30 shadow-2xl shadow-black/30"
-              />
+
+            <div className="grid gap-4">
+              <div className="rounded-[24px] border border-white/10 bg-white/[0.03] px-5 py-5 text-sm leading-7 text-white/72">
+                SDL’s operating model is built on trust, structure, and proof — not decorative layers that make the work look larger than it is.
+              </div>
+              <div className="rounded-[24px] border border-white/10 bg-white/[0.03] px-5 py-5 text-sm leading-7 text-white/72">
+                The goal is not to impress people with jargon. The goal is to make the business look more credible, convert more cleanly, and run more smoothly.
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="py-20">
-        <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
-          <div className="panel-safe p-8">
-            <div className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">What We Build</div>
-            <div className="mt-6 grid gap-3 sm:grid-cols-2">
-              {aboutSections.whatWeBuild.map((item) => (
-                <div key={item} className="surface-subtle px-4 py-4 text-sm text-white/80">
-                  {item}
-                </div>
-              ))}
+      <section className="pb-20 md:pb-24">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid gap-12 lg:grid-cols-2">
+            <div>
+              <div className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">What we build</div>
+              <h2 className="mt-3 font-heading text-3xl font-bold text-foreground sm:text-4xl">Practical digital work, kept focused.</h2>
+              <ul className="mt-8 space-y-4 text-base leading-7 text-white/78">
+                {whatWeBuild.map((item) => (
+                  <li key={item} className="border-b border-white/8 pb-4 last:border-b-0 last:pb-0">{item}</li>
+                ))}
+              </ul>
             </div>
-          </div>
 
-          <div className="panel-safe p-8">
-            <div className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Our Doctrine</div>
-            <p className="mt-4 text-sm leading-7 text-muted-foreground">{aboutSections.doctrine}</p>
-          </div>
-        </div>
-      </section>
-
-      <section className="pb-20">
-        <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
-          <div className="panel-safe p-8">
-            <div className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Who We Help</div>
-            <div className="mt-5 space-y-3">
-              {aboutSections.whoWeHelp.map((item) => (
-                <div key={item} className="surface-subtle px-4 py-4 text-sm text-white/80">
-                  {item}
+            <div>
+              <div className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Doctrine</div>
+              <h2 className="mt-3 font-heading text-3xl font-bold text-foreground sm:text-4xl">Lean builds. Controlled delivery.</h2>
+              <div className="mt-8 grid gap-8 md:grid-cols-2">
+                <div>
+                  <div className="text-sm font-semibold uppercase tracking-[0.18em] text-white/50">We build using</div>
+                  <ul className="mt-4 space-y-3 text-sm leading-7 text-white/72">
+                    <li>lean code</li>
+                    <li>controlled deployments</li>
+                    <li>managed infrastructure</li>
+                  </ul>
                 </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="panel-safe p-8">
-            <div className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">How We Work</div>
-            <div className="mt-6 grid gap-3 sm:grid-cols-2">
-              {aboutSections.howWeWork.map((item, index) => (
-                <div key={item} className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-5">
-                  <div className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">0{index + 1}</div>
-                  <div className="mt-2 font-heading text-xl font-semibold text-foreground">{item}</div>
+                <div>
+                  <div className="text-sm font-semibold uppercase tracking-[0.18em] text-white/50">We do not use</div>
+                  <ul className="mt-4 space-y-3 text-sm leading-7 text-white/72">
+                    <li>plugin stacks as the default answer</li>
+                    <li>bloated templates</li>
+                    <li>decorative-only features</li>
+                  </ul>
                 </div>
-              ))}
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <AboutTimeline items={aboutSections.timeline} />
+      <TimelineStrip items={timelineItems} />
+
+      <section className="pb-20 md:pb-24">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="max-w-4xl">
+            <div className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Who we help</div>
+            <h2 className="mt-3 font-heading text-3xl font-bold text-foreground sm:text-4xl">Businesses that have outgrown patchwork.</h2>
+          </div>
+          <div className="mt-8 grid gap-4 md:grid-cols-2">
+            {whoWeHelp.map((item) => (
+              <div key={item} className="rounded-[24px] border border-white/10 bg-white/[0.03] px-5 py-5 text-sm leading-7 text-white/72">
+                {item}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       <CTASection />
     </div>

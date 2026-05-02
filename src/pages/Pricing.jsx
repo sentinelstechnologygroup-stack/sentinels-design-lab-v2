@@ -3,6 +3,7 @@
 import CTASection from "@/components/shared/CTASection";
 import { pricingFactors, pricingPackages } from "@/lib/siteData";
 import PricingCard from "@/components/shared/PricingCard";
+import SystemDiagram from "@/components/visuals/SystemDiagram";
 
 const pricingNotes = [
   {
@@ -22,6 +23,13 @@ const pricingNotes = [
   },
 ];
 
+const pricingFlow = [
+  { label: "Evaluation" },
+  { label: "Scope" },
+  { label: "Website Package" },
+  { label: "Optional Systems" },
+];
+
 export default function Pricing() {
   return (
     <div>
@@ -38,7 +46,7 @@ export default function Pricing() {
                 Website packages are starting points. The packages below cover website redesign work. SEO, PPC, branding, ecommerce, hosting, maintenance, automation, dashboards, portals, and custom digital systems are quoted separately based on scope.
               </p>
             </div>
-            <div className="panel-safe-heavy p-7 md:p-8">
+            <div className="rounded-[30px] border border-white/10 bg-[#08101d] p-7 shadow-[0_24px_70px_rgba(0,0,0,0.3)] md:p-8">
               <div className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Important</div>
               <p className="mt-4 text-sm leading-7 text-muted-foreground">
                 SDL leads publicly with website evaluation, redesign, and build offers because that is the fastest path to real customers. Broader digital-system work is quoted after scope.
@@ -59,6 +67,12 @@ export default function Pricing() {
 
       <section className="pb-16 md:pb-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-10 max-w-4xl">
+            <div className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Pricing flow</div>
+            <div className="mt-5 max-w-4xl">
+              <SystemDiagram nodes={pricingFlow} />
+            </div>
+          </div>
           <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4 xl:items-stretch">
             {pricingPackages.map((item) => (
               <PricingCard

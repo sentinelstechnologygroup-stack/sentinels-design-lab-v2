@@ -381,15 +381,15 @@ export const workProjects = [
     liveLink: "https://www.mybuddysmobiledetail.com",
   },
   {
-    slug: "best-paint",
+    slug: "best-solutions-distribution",
     section: "website-work",
-    name: "Best Paint",
-    industry: "Painting services",
+    name: "Best Solutions Distribution",
+    industry: "Painting, flooring, and managed services",
     projectType: "New Website",
     status: "Foundation build complete",
     keyImprovements: [
-      "Created a clearer first-impression offer for painting and flooring work.",
-      "Improved trust signaling with a more controlled hero and CTA structure.",
+      "Created a clearer first-impression offer for painting, flooring, and managed service work.",
+      "Improved trust signaling with a stronger hero and CTA structure.",
       "Made core services easier to scan at the top of the experience.",
       "Strengthened estimate and contact pathways for service inquiries.",
     ],
@@ -404,7 +404,7 @@ export const workProjects = [
         kind: "image",
         label: "Current — live site",
         src: "/images/work/bestpaint-current.jpg",
-        alt: "Best Paint current live homepage built by SDL",
+        alt: "Best Solutions Distribution current live homepage built by SDL",
       },
     ],
     liveLink: "https://bestsolutiondistribution.com",
@@ -509,297 +509,15 @@ export const workSections = [
 
 export const internalSystems = [];
 
-export const blogCategories = [
-  "Website Redesign",
-  "WordPress Modernization",
-  "Local Business Websites",
-  "SEO Foundation",
-  "Website Security",
-  "Lead Generation",
-  "Digital Systems",
-  "Automation",
-  "Client Portals",
-  "Case Studies",
-];
-
-export const blogPosts = [
-  {
-    slug: "why-outdated-websites-cost-local-businesses-leads",
-    title: "Why Outdated Websites Cost Local Businesses Leads",
-    category: "Website Redesign",
-    date: "April 30, 2026",
-    readTime: "6 min read",
-    heroImage: "/images/blog/why-outdated-websites-cost-local-businesses-leads-hero-real-a.webp",
-    heroImageAlt:
-      "Realistic small-business office scene with a laptop and phone showing a dated website impression and a missed mobile lead path.",
-    thumbnailImage: "/images/blog/why-outdated-websites-cost-local-businesses-leads-thumb-real-a.webp",
-    thumbnailImageAlt:
-      "Small-business workspace thumbnail suggesting an outdated website is costing trust and inquiries.",
-    backupHeroImage: "/images/blog/why-outdated-websites-cost-local-businesses-leads-hero-real-c.webp",
-    backupThumbnailImage: "/images/blog/why-outdated-websites-cost-local-businesses-leads-thumb-real-c.webp",
-    excerpt:
-      "An outdated website does not just look old. It slows down trust, creates confusion, and quietly leaks real business opportunities.",
-    sections: [
-      {
-        heading: "An old website creates hesitation before you ever speak to a lead",
-        paragraphs: [
-          "Most buyers decide whether a business feels credible within seconds. If the site looks neglected, loads poorly, or makes basic information hard to find, trust drops before the conversation even starts.",
-          "That is especially expensive for service businesses competing against firms that may not be better operators, but look more current online.",
-        ],
-      },
-      {
-        heading: "The problem is usually clarity, not just aesthetics",
-        paragraphs: [
-          "Outdated websites tend to bury the offer, scatter calls to action, and make visitors work too hard to understand what the business actually does.",
-          "A redesign should simplify the message, strengthen proof, and make the next step obvious on both desktop and mobile.",
-        ],
-      },
-      {
-        heading: "Modernization is often the fastest sales wedge",
-        paragraphs: [
-          "For many businesses, the website is the easiest place to improve perception quickly. Better structure, cleaner messaging, and stronger lead paths can lift how the entire company is perceived.",
-          "That is why website evaluations and redesigns are often the right first move before broader system work.",
-        ],
-      },
-    ],
-  },
-  {
-    slug: "why-we-rebuild-wordpress-sites-instead-of-maintaining-plugin-stacks",
-    title: "Why We Rebuild WordPress Sites Instead of Maintaining Plugin Stacks",
-    category: "WordPress Modernization",
-    date: "April 30, 2026",
-    readTime: "7 min read",
-    heroImage:
-      "/images/blog/why-we-rebuild-wordpress-sites-instead-of-maintaining-plugin-stacks-hero-real-a.webp",
-    heroImageAlt:
-      "Realistic modernization workstation with a cluttered legacy web interface on one screen and a cleaner rebuilt system on another.",
-    thumbnailImage:
-      "/images/blog/why-we-rebuild-wordpress-sites-instead-of-maintaining-plugin-stacks-thumb-real-a.webp",
-    thumbnailImageAlt:
-      "Editorial workstation thumbnail showing a legacy website stack being rebuilt into a cleaner modern setup.",
-    backupHeroImage:
-      "/images/blog/why-we-rebuild-wordpress-sites-instead-of-maintaining-plugin-stacks-hero-real-b.webp",
-    backupThumbnailImage:
-      "/images/blog/why-we-rebuild-wordpress-sites-instead-of-maintaining-plugin-stacks-thumb-real-b.webp",
-    excerpt:
-      "WordPress is often treated like the default solution. In practice, many businesses are better served by rebuilding into leaner, more controlled infrastructure.",
-    sections: [
-      {
-        heading: "Plugin maintenance is rarely the long-term answer",
-        paragraphs: [
-          "Many WordPress sites become operationally fragile over time. They depend on layers of plugins, theme overrides, page builders, and hosting workarounds that make even simple changes risky.",
-          "That stack may keep the site alive, but it does not create a clean foundation for future growth.",
-        ],
-      },
-      {
-        heading: "Modernization changes the operating model",
-        paragraphs: [
-          "A rebuild into a lean modern stack gives the business clearer control over performance, deployments, security posture, and future extensibility.",
-          "It also creates a better path toward portals, dashboards, integrations, and custom workflows if the business grows past brochure-site needs.",
-        ],
-      },
-      {
-        heading: "We treat WordPress as a legacy platform to migrate away from",
-        paragraphs: [
-          "SDL does not position plugin maintenance as the permanent strategy. We use modernization as the wedge and build a cleaner system under stronger source-control and deployment discipline.",
-        ],
-      },
-    ],
-  },
-  {
-    slug: "what-a-modern-service-business-website-needs-in-2026",
-    title: "What a Modern Service Business Website Needs in 2026",
-    category: "Local Business Websites",
-    date: "April 30, 2026",
-    readTime: "6 min read",
-    heroImage: "/images/blog/what-a-modern-service-business-website-needs-in-2026-hero-real-c.webp",
-    heroImageAlt:
-      "Realistic professional service-business workspace with a laptop and phone showing a clean modern website layout built for trust and action.",
-    thumbnailImage: "/images/blog/what-a-modern-service-business-website-needs-in-2026-thumb-real-c.webp",
-    thumbnailImageAlt:
-      "Editorial website thumbnail showing a modern service-business layout on mobile and desktop devices.",
-    backupHeroImage: "/images/blog/what-a-modern-service-business-website-needs-in-2026-hero-real-a.webp",
-    backupThumbnailImage: "/images/blog/what-a-modern-service-business-website-needs-in-2026-thumb-real-a.webp",
-    excerpt:
-      "A modern service-business site needs more than a homepage and phone number. It needs trust, clarity, mobile performance, and a real lead path.",
-    sections: [
-      {
-        heading: "Clear positioning above the fold",
-        paragraphs: [
-          "Visitors should understand what the business does, who it helps, and what to do next without hunting for context.",
-        ],
-      },
-      {
-        heading: "Mobile-first usability",
-        paragraphs: [
-          "Most traffic will judge the site on a phone. Taps, forms, headings, spacing, and speed need to work there first.",
-        ],
-      },
-      {
-        heading: "Lead-path structure that reduces hesitation",
-        paragraphs: [
-          "A modern site needs proof, service clarity, contact options, and a friction-light next step. The job is not just to exist. The job is to make action easier.",
-        ],
-      },
-    ],
-  },
-  {
-    slug: "website-redesign-checklist-for-contractors-and-home-service-companies",
-    title: "Website Redesign Checklist for Contractors and Home Service Companies",
-    category: "Lead Generation",
-    date: "April 30, 2026",
-    readTime: "5 min read",
-    excerpt:
-      "If a contractor or home-service company is planning a redesign, these are the first issues worth fixing before adding anything fancy.",
-    sections: [
-      {
-        heading: "Start with structure, not decoration",
-        paragraphs: [
-          "Clarify services, service areas, proof, and contact flow before spending energy on visual extras.",
-        ],
-      },
-      {
-        heading: "Tighten trust signals",
-        paragraphs: [
-          "Licensing, process clarity, project visuals, and contact confidence matter more than buzzwords.",
-        ],
-      },
-      {
-        heading: "Make the phone and form path obvious",
-        paragraphs: [
-          "The next step should be visible on every critical page and work smoothly on mobile.",
-        ],
-      },
-    ],
-  },
-  {
-    slug: "when-does-a-doctors-office-website-become-a-hipaa-concern",
-    title: "When Does a Doctor’s Office Website Become a HIPAA Concern?",
-    category: "Website Security",
-    date: "April 30, 2026",
-    readTime: "6 min read",
-    excerpt:
-      "A public healthcare website is not automatically a HIPAA problem. The compliance issue appears when sensitive workflows and public marketing layers start mixing together.",
-    sections: [
-      {
-        heading: "Public content and sensitive workflows are not the same thing",
-        paragraphs: [
-          "A clinic website can safely present services, locations, bios, and contact information. The compliance boundary changes when patient-submitted information, portal functions, or sensitive intake starts moving through the same stack.",
-        ],
-      },
-      {
-        heading: "The risk appears when forms and systems blur together",
-        paragraphs: [
-          "If a website starts collecting protected health information or connecting into sensitive systems, the workflow needs separate review, vendor control, access control, and secure data handling.",
-        ],
-      },
-      {
-        heading: "The right answer is separation and review",
-        paragraphs: [
-          "SDL treats public-facing websites and PI/PHI-sensitive workflows as different layers. That separation helps businesses modernize responsibly without overstating what the public site should do.",
-        ],
-      },
-    ],
-  },
-  {
-    slug: "why-fast-websites-build-more-trust",
-    title: "Why Fast Websites Build More Trust",
-    category: "SEO Foundation",
-    date: "April 30, 2026",
-    readTime: "4 min read",
-    excerpt:
-      "Speed is not just technical polish. It is part of the trust signal that tells a visitor whether your business feels current, stable, and well-run.",
-    sections: [
-      {
-        heading: "Performance affects perception",
-        paragraphs: [
-          "Slow, unstable pages create doubt. Fast pages make the business feel more capable before a single call happens.",
-        ],
-      },
-      {
-        heading: "Performance supports conversion",
-        paragraphs: [
-          "The easier the site is to load and use, the easier it is for a visitor to keep moving toward action instead of dropping off.",
-        ],
-      },
-      {
-        heading: "Lean builds make future changes easier",
-        paragraphs: [
-          "Performance discipline is often a sign of healthier architecture overall, not just a faster homepage.",
-        ],
-      },
-    ],
-  },
-  {
-    slug: "when-a-business-needs-more-than-a-website-portals-dashboards-and-automation",
-    title: "When a Business Needs More Than a Website: Portals, Dashboards, and Automation",
-    category: "Digital Systems",
-    date: "April 30, 2026",
-    readTime: "7 min read",
-    excerpt:
-      "At some point, a better homepage is not enough. Businesses hit operational limits that require custom digital systems behind the public site.",
-    sections: [
-      {
-        heading: "The website is often only the front layer",
-        paragraphs: [
-          "As a company grows, the public site needs to connect to real workflows: intake, client access, internal reporting, approvals, and operations.",
-        ],
-      },
-      {
-        heading: "Portals and dashboards solve a different problem",
-        paragraphs: [
-          "They reduce operational friction, centralize information, and give teams or clients cleaner access to what they need without enterprise bloat.",
-        ],
-      },
-      {
-        heading: "This is where full-stack capability matters",
-        paragraphs: [
-          "SDL leads with redesigns and evaluations, but the broader capability includes building the underlying digital systems that a growing business eventually needs.",
-        ],
-      },
-    ],
-  },
-  {
-    slug: "why-custom-digital-systems-beat-disconnected-tools",
-    title: "Why Custom Digital Systems Beat Disconnected Tools",
-    category: "Automation",
-    date: "April 30, 2026",
-    readTime: "6 min read",
-    excerpt:
-      "Disconnected tools can get a business started, but they often create long-term friction, duplication, and hidden operational cost.",
-    sections: [
-      {
-        heading: "Fragmentation creates drag",
-        paragraphs: [
-          "When a business depends on too many partial tools, the team ends up translating information between systems instead of moving work forward.",
-        ],
-      },
-      {
-        heading: "Custom systems do not need to mean enterprise overhead",
-        paragraphs: [
-          "The right build can be practical, lean, and tightly scoped around the workflows that actually matter.",
-        ],
-      },
-      {
-        heading: "Better infrastructure supports scale",
-        paragraphs: [
-          "A cleaner digital system gives the business a stronger base for operations, reporting, and future automation instead of constant patchwork.",
-        ],
-      },
-    ],
-  },
-];
+export { blogCategories, blogPosts } from "./blogPosts";
 
 export const projectTypeOptions = [
   "Website redesign",
-  "New website",
-  "SEO foundation",
-  "Website rescue / cleanup",
+  "New website build",
   "Portal or dashboard",
   "Automation or integration",
   "Custom digital system",
-  "Ongoing website/system support",
-  "Not sure",
+  "Not sure yet",
 ];
 
 export const budgetOptions = [

@@ -1,231 +1,189 @@
 "use client";
 
-import Link from "next/link";
-import Image from "next/image";
-import { ArrowRight, ExternalLink } from "lucide-react";
 import CTASection from "@/components/shared/CTASection";
-import { internalSystems, workProjects, workSections } from "@/lib/siteData";
+import PageHero from "@/components/sections/PageHero";
+import ProofCaseCard from "@/components/work/ProofCaseCard";
+import SystemProofCard from "@/components/work/SystemProofCard";
+import { workProjects } from "@/lib/siteData";
 
-function ProjectMedia({ project }) {
-  if (!project.media?.length) {
-    return null;
-  }
+const websiteProof = {
+  "eli-land-design": {
+    originalState: [
+      "Strong visual intent but overextended structure that made the site harder to navigate.",
+      "Gallery flow and project browsing needed clearer organization.",
+      "Residential and commercial paths were not framed cleanly enough for trust.",
+    ],
+    whatChanged: [
+      "Rescoped the presentation around cleaner hierarchy and stronger service flow.",
+      "Reorganized navigation and gallery structure for easier scanning.",
+      "Prepared the rebuild as a staged modernization lane instead of forcing a fake finished-state story.",
+    ],
+    result: [
+      "The project now reads as a controlled staged rebuild instead of an ambiguous concept.",
+      "SDL can show the original-state proof honestly while clarifying the modernization direction.",
+      "The case study reflects real work without inventing an after-state that is not yet live.",
+    ],
+    note: "This project is shown as a staged rebuild / in-progress modernization lane. SDL is intentionally not presenting a fabricated after screenshot.",
+  },
+  "premier-kitchens": {
+    originalState: [
+      "The previous site felt dated and text-heavy for a premium remodeling business.",
+      "Service, showroom, and portfolio paths were not supporting trust as clearly as they should.",
+      "Mobile usability and navigation behavior created unnecessary friction.",
+    ],
+    whatChanged: [
+      "Rebuilt the experience around cleaner hierarchy and premium presentation.",
+      "Clarified how visitors move between services, showroom details, and project proof.",
+      "Tightened mobile behavior and the overall lead path.",
+    ],
+    result: [
+      "The current site presents the business with more authority and visual clarity.",
+      "Trust signals and project proof now support the sales conversation instead of getting buried.",
+      "The live domain reflects a more modern, controlled brand experience.",
+    ],
+  },
+  "my-buddys-mobile-detail": {
+    originalState: [
+      "The business needed a professional web presence instead of relying on scattered informal channels.",
+      "Service explanation and booking flow needed stronger structure from day one.",
+      "Trust presentation for a local service audience had to be built from scratch.",
+    ],
+    whatChanged: [
+      "Built a new lead-oriented website with clearer service messaging and CTA flow.",
+      "Structured the homepage around mobile-first contact and booking behavior.",
+      "Added a more credible presentation layer for a local detailing business.",
+    ],
+    result: [
+      "The business now has a real launch-ready web presence instead of a placeholder impression.",
+      "Visitors can understand the offer faster and move toward contact more cleanly.",
+      "The site gives the operator a more credible first impression in market.",
+    ],
+  },
+  "best-solutions-distribution": {
+    originalState: [
+      "The business needed a stronger first-impression site for painting, flooring, and managed services.",
+      "Service clarity and estimate flow needed to be visible immediately.",
+      "Trust signals had to be stronger at the top of the experience.",
+    ],
+    whatChanged: [
+      "Built a cleaner homepage structure around services, trust, and next-step action.",
+      "Strengthened hero messaging and estimate CTA placement.",
+      "Used a more polished visual system to support conversion instead of ambiguity.",
+    ],
+    result: [
+      "The site now reads as a credible local service company rather than a thin placeholder presence.",
+      "Core services are easier to scan and estimate intent is easier to act on.",
+      "The live homepage gives SDL a stronger proof asset for real service-business work.",
+    ],
+  },
+};
 
-  return (
-    <div className={`mt-6 grid gap-4 ${project.media.length > 1 ? "md:grid-cols-2" : ""}`}>
-      {project.media.slice(0, 2).map((item) => (
-        <div key={`${project.slug}-${item.label}`} className="overflow-hidden rounded-[24px] border border-white/10 bg-[#0a1220] p-3">
-          <div className="mb-3 px-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-white/50">{item.label}</div>
-          <div className="relative aspect-[16/10] overflow-hidden rounded-[18px] border border-white/10 bg-[#09111f]">
-            <Image
-              src={item.src}
-              alt={item.alt}
-              fill
-              sizes="(max-width: 768px) 100vw, 50vw"
-              className="object-cover object-top"
-            />
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function Badge({ children, tone = "neutral" }) {
-  const tones = {
-    neutral: "border-white/10 bg-white/[0.03] text-white/72",
-    primary: "border-primary/30 bg-primary/10 text-primary",
-  };
-
-  return (
-    <span className={`rounded-full border px-3 py-1 text-xs font-medium ${tones[tone] || tones.neutral}`}>
-      {children}
-    </span>
-  );
-}
-
-function BulletList({ items }) {
-  return (
-    <ul className="mt-4 space-y-3 text-sm leading-7 text-muted-foreground">
-      {items.map((item) => (
-        <li key={item} className="flex gap-3">
-          <span className="mt-[0.65rem] h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
-          <span>{item}</span>
-        </li>
-      ))}
-    </ul>
-  );
-}
-
-function WebsiteWorkCard({ project }) {
-  return (
-    <article className="panel-safe flex h-full flex-col overflow-hidden p-6 md:p-8">
-      <div className="flex flex-wrap items-start justify-between gap-4">
-        <div>
-          <div className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">{project.industry}</div>
-          <h3 className="mt-3 font-heading text-2xl font-bold text-foreground">{project.name}</h3>
-        </div>
-        <div className="flex flex-wrap gap-2">
-          <Badge>{project.status}</Badge>
-          <Badge tone="primary">{project.projectType}</Badge>
-        </div>
-      </div>
-
-      <ProjectMedia project={project} />
-
-      <div className="mt-7 space-y-7">
-        <div>
-          <div className="text-sm font-semibold uppercase tracking-[0.18em] text-white/55">Key Improvements</div>
-          <BulletList items={project.keyImprovements} />
-        </div>
-
-        <div>
-          <div className="text-sm font-semibold uppercase tracking-[0.18em] text-white/55">Scope & Deliverables</div>
-          <BulletList items={project.scopeDeliverables} />
-        </div>
-      </div>
-
-      <div className="mt-8 flex flex-wrap items-center gap-4 pt-1">
-        <Link
-          href="/contact?type=website-evaluation"
-          className="inline-flex items-center gap-2 text-sm font-medium text-primary transition hover:text-white"
-        >
-          Request a website evaluation
-          <ArrowRight className="h-4 w-4" />
-        </Link>
-        {project.liveLink ? (
-          <a href={project.liveLink} className="inline-flex items-center gap-2 text-sm font-medium text-white/70 transition hover:text-white">
-            View live site
-            <ExternalLink className="h-4 w-4" />
-          </a>
-        ) : null}
-      </div>
-    </article>
-  );
-}
-
-function SystemWorkCard({ project }) {
-  return (
-    <article className="panel-safe flex h-full flex-col overflow-hidden p-6 md:p-8">
-      <div className="flex flex-wrap items-start justify-between gap-4">
-        <div>
-          <div className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">{project.industry}</div>
-          <h3 className="mt-3 font-heading text-2xl font-bold text-foreground">{project.name}</h3>
-        </div>
-        <div className="flex flex-wrap gap-2">
-          <Badge>{project.status}</Badge>
-          <Badge tone="primary">{project.projectType}</Badge>
-        </div>
-      </div>
-
-      <ProjectMedia project={project} />
-
-      <div className="mt-7 space-y-7">
-        <div>
-          <div className="text-sm font-semibold uppercase tracking-[0.18em] text-white/55">What it does</div>
-          <BulletList items={project.whatItDoes} />
-        </div>
-
-        <div>
-          <div className="text-sm font-semibold uppercase tracking-[0.18em] text-white/55">System role</div>
-          <BulletList items={project.systemRole} />
-        </div>
-      </div>
-
-      <div className="mt-8 flex flex-wrap items-center gap-4 pt-1">
-        <Link
-          href="/contact?type=website-evaluation"
-          className="inline-flex items-center gap-2 text-sm font-medium text-primary transition hover:text-white"
-        >
-          Request a website evaluation
-          <ArrowRight className="h-4 w-4" />
-        </Link>
-      </div>
-    </article>
-  );
-}
-
-function WorkCard({ project }) {
-  if (project.section === "digital-systems") {
-    return <SystemWorkCard project={project} />;
-  }
-
-  return <WebsiteWorkCard project={project} />;
-}
+const systemProof = {
+  "dadson-driver-app": {
+    proofNotes: [
+      "Visual anchor shows a real workflow-oriented interface concept, not a text-only claim.",
+      "The system is framed as a field-operations tool with controlled workflow context.",
+      "SDL capability is demonstrated through operational product thinking, not just marketing pages.",
+    ],
+    confidentialityNote: "Visual is intentionally abstracted to protect internal workflow details while still showing that the system exists.",
+  },
+  "dadson-admin-portal": {
+    proofNotes: [
+      "Visual anchor supports the admin and oversight layer described in the case study.",
+      "The system is positioned as an internal coordination tool rather than decorative concept art.",
+      "Operational visibility and control are made concrete through the interface proof.",
+    ],
+    confidentialityNote: "Visual is intentionally abstracted to protect internal workflow details while still showing that the system exists.",
+  },
+  "painter-pro": {
+    proofNotes: [
+      "Visual anchor prevents the system from reading like a text-only idea.",
+      "The case study shows SDL capability in operations-oriented system design for service businesses.",
+      "The proof format keeps the system believable without overstating confidential internals.",
+    ],
+    confidentialityNote: "Visual is intentionally abstracted to protect internal workflow details while still showing that the system exists.",
+  },
+};
 
 export default function Work() {
+  const websiteProjects = workProjects.filter((project) => project.section === "website-work");
+  const systemProjects = workProjects.filter((project) => project.section === "digital-systems");
+
   return (
     <div>
-      <section className="relative overflow-hidden pt-28 pb-10 md:pb-14">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/8 via-transparent to-accent/5" />
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid items-end gap-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(320px,0.85fr)] lg:gap-10">
-            <div className="pb-4 lg:pb-6">
-              <span className="eyebrow mb-6">Work</span>
-              <h1 className="font-heading text-4xl font-bold leading-tight text-foreground sm:text-5xl lg:text-[3.4rem]">
-                Real modernization work. No fake case studies.
-              </h1>
-              <p className="mt-5 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-                A structured look at SDL website work and digital systems capability, kept intentionally grounded in real delivery and controlled evidence.
-              </p>
-            </div>
-            <div className="panel-safe-heavy p-7 md:p-8">
-              <div className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Proof standard</div>
-              <p className="mt-4 text-sm leading-7 text-muted-foreground">
-                SDL does not use fake testimonials, fake rankings, fake revenue lifts, invented case-study metrics, or fabricated before/after visuals. This page is intentionally grounded in real work only.
-              </p>
-            </div>
+      <PageHero
+        eyebrow="Work"
+        title="Real modernization work. Real system proof. No fake case studies."
+        description="SDL uses real screenshots, real system anchors, and plain-language delivery summaries instead of invented metrics, fabricated rankings, or decorative portfolio filler."
+        primaryCtaLabel="Get Website Evaluation"
+        primaryCtaHref="/contact?type=website-evaluation"
+        secondaryCtaLabel="Contact"
+        secondaryCtaHref="/contact"
+        imageSrc="/images/work/premier-current.jpg"
+        imageAlt="Premier Kitchens live website preview"
+      />
+
+      <section className="pb-20 md:pb-24">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="max-w-4xl">
+            <div className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Website Work</div>
+            <h2 className="mt-3 font-heading text-3xl font-bold text-foreground sm:text-4xl">Proof-driven website rebuilds and launch work</h2>
+            <p className="mt-4 text-lg leading-relaxed text-muted-foreground">Each project is shown with real context: what was wrong, what SDL changed, and what result the business now has — without fake metrics.</p>
+          </div>
+
+          <div className="mt-10 grid gap-8 xl:grid-cols-2">
+            {websiteProjects.map((project) => {
+              const media = project.media?.[0];
+              const proof = websiteProof[project.slug];
+              return (
+                <ProofCaseCard
+                  key={project.slug}
+                  name={project.name}
+                  industry={project.industry}
+                  projectType={project.projectType}
+                  status={project.status}
+                  imageSrc={media?.src || "/images/blog/fallback-editorial.svg"}
+                  imageAlt={media?.alt || project.name}
+                  liveLink={project.liveLink}
+                  originalState={proof?.originalState || project.keyImprovements || []}
+                  whatChanged={proof?.whatChanged || project.scopeDeliverables || []}
+                  result={proof?.result || project.keyImprovements || []}
+                  note={proof?.note}
+                />
+              );
+            })}
           </div>
         </div>
       </section>
 
       <section className="pb-20 md:pb-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="space-y-20 md:space-y-24">
-            {workSections.map((section, index) => {
-              const sectionProjects = workProjects.filter((project) => project.section === section.slug);
+          <div className="max-w-4xl">
+            <div className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Digital Systems</div>
+            <h2 className="mt-3 font-heading text-3xl font-bold text-foreground sm:text-4xl">Operational systems with visible proof</h2>
+            <p className="mt-4 text-lg leading-relaxed text-muted-foreground">Every system includes a visual anchor so the page demonstrates that the work exists instead of relying on text-only claims.</p>
+          </div>
 
-              if (!sectionProjects.length) {
-                return null;
-              }
-
+          <div className="mt-10 grid gap-8 xl:grid-cols-2">
+            {systemProjects.map((project) => {
+              const media = project.media?.[0];
+              const proof = systemProof[project.slug];
               return (
-                <div key={section.slug} className={index > 0 ? "pt-4 md:pt-8" : ""}>
-                  <div className="mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-                    <div>
-                      <div className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">{section.title}</div>
-                      <h2 className="mt-3 font-heading text-3xl font-bold text-foreground sm:text-[2.2rem]">{section.title}</h2>
-                      <p className="mt-3 max-w-3xl text-sm leading-7 text-muted-foreground">{section.description}</p>
-                    </div>
-                    <Badge>{sectionProjects.length} projects</Badge>
-                  </div>
-
-                  <div className="grid gap-6 xl:grid-cols-2">
-                    {sectionProjects.map((project) => (
-                      <WorkCard key={project.slug} project={project} />
-                    ))}
-                  </div>
-                </div>
+                <SystemProofCard
+                  key={project.slug}
+                  name={project.name}
+                  industry={project.industry}
+                  projectType={project.projectType}
+                  status={project.status}
+                  visualSrc={media?.src || "/images/blog/fallback-editorial.svg"}
+                  visualAlt={media?.alt || project.name}
+                  whatItDoes={project.whatItDoes || []}
+                  systemRole={project.systemRole || []}
+                  proofNotes={proof?.proofNotes || []}
+                  confidentialityNote={proof?.confidentialityNote}
+                />
               );
             })}
-
-            {internalSystems.length ? (
-              <div>
-                <div className="mb-8">
-                  <div className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Internal Systems / Product Lab</div>
-                  <h2 className="mt-3 font-heading text-3xl font-bold text-foreground sm:text-[2.2rem]">Internal Systems / Product Lab</h2>
-                  <p className="mt-3 max-w-3xl text-sm leading-7 text-muted-foreground">
-                    Clearly labeled internal systems that are not presented as client work.
-                  </p>
-                </div>
-
-                <div className="grid gap-6 xl:grid-cols-2">
-                  {internalSystems.map((project) => (
-                    <WorkCard key={project.slug} project={project} />
-                  ))}
-                </div>
-              </div>
-            ) : null}
           </div>
         </div>
       </section>

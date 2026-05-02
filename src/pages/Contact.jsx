@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { BUSINESS } from "@/lib/constants";
+import SystemDiagram from "@/components/visuals/SystemDiagram";
 import {
   budgetOptions,
   projectTypeOptions,
@@ -21,6 +22,12 @@ const initialForm = {
   timeline: "",
   message: "",
 };
+
+const nextStepNodes = [
+  { label: "Request" },
+  { label: "Review" },
+  { label: "Direction" },
+];
 
 function mapServiceToProjectType(service) {
   if (!service) return "";
@@ -124,6 +131,18 @@ export default function Contact() {
                     <div className="font-heading font-semibold text-foreground">{BUSINESS.address}</div>
                   </div>
                 </div>
+              </div>
+
+              <div className="mt-10 rounded-[28px] border border-white/10 bg-[#08101d] p-6 shadow-[0_22px_60px_rgba(0,0,0,0.28)]">
+                <div className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">What happens next</div>
+                <div className="mt-5">
+                  <SystemDiagram nodes={nextStepNodes} />
+                </div>
+                <ol className="mt-6 space-y-3 text-sm leading-7 text-white/72">
+                  <li>1. We review your request.</li>
+                  <li>2. We identify the best next step.</li>
+                  <li>3. We respond with scope direction or an evaluation path.</li>
+                </ol>
               </div>
             </div>
 
