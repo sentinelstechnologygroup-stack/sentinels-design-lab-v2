@@ -30,3 +30,7 @@ dist-ssr
 
 .env
 .vite
+
+# Windows metadata
+*:Zone.Identifier*
+src.zip
