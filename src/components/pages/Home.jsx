@@ -449,7 +449,7 @@ export default function Home() {
               viewport={{ once: true }}
               className="space-y-5"
             >
-              <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#0c1322]/82 p-7 shadow-[0_18px_55px_rgba(0,0,0,0.22)] backdrop-blur-sm">
+              <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#0c1322]/97 p-7 shadow-[0_18px_55px_rgba(0,0,0,0.22)] backdrop-blur-sm">
                 <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-primary/15 bg-sky-400/[0.07] px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-primary">
                   <ShieldCheck className="h-3.5 w-3.5" />
                   Our Process
