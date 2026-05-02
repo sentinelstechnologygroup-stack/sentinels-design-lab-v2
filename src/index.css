@@ -46,9 +46,9 @@
     --amber-2: rgb(252, 211, 77);
     --amber-3: rgb(251, 191, 36);
 
-    --surface-soft: rgba(10, 17, 31, 0.92);
-    --surface-mid: rgba(9, 16, 30, 0.95);
-    --surface-heavy: rgba(7, 12, 24, 0.97);
+    --surface-soft: rgba(10, 17, 31, 0.95);
+    --surface-mid: rgba(9, 16, 30, 0.97);
+    --surface-heavy: rgba(7, 12, 24, 0.988);
 
     --surface-stroke: rgba(255, 255, 255, 0.1);
     --surface-stroke-soft: rgba(255, 255, 255, 0.08);

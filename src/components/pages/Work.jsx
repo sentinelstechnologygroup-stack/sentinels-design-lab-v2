@@ -23,7 +23,7 @@ const websiteProof = {
       "SDL can show the original-state proof honestly while clarifying the modernization direction.",
       "The case study reflects real work without inventing an after-state that is not yet live.",
     ],
-    note: "This project is shown as a staged rebuild / in-progress modernization lane. SDL is intentionally not presenting a fabricated after screenshot.",
+    note: "Shown as an in-progress modernization. Both the original site and SDL's current rebuild preview are displayed. Final client launch approval is pending.",
   },
   "premier-kitchens": {
     originalState: [

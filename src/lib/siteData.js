@@ -313,6 +313,12 @@ export const workProjects = [
         src: "/images/work/eli-original-home.jpg",
         alt: "ELI Land Design original website homepage before SDL redesign",
       },
+      {
+        kind: "image",
+        label: "Current — rebuild preview",
+        src: "/images/work/eli-current.jpg",
+        alt: "ELI Land Design SDL rebuild preview — awaiting client launch approval",
+      },
     ],
     liveLink: "",
   },
@@ -403,7 +409,7 @@ export const workProjects = [
       {
         kind: "image",
         label: "Current — live site",
-        src: "/images/work/bestpaint-current.jpg",
+        src: "/images/work/bestsolution-current.jpg",
         alt: "Best Solutions Distribution current live homepage built by SDL",
       },
     ],
