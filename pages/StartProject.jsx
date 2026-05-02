@@ -1,5 +1,5 @@
-// src/pages/StartProject.jsx
 "use client";
+// src/pages/StartProject.jsx
 
 import React, { Suspense, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -167,7 +167,7 @@ function StartProjectInner() {
             to schedule an intro call.
           </p>
 
-          <div className="text-left surface-card p-5 mb-6 space-y-2">
+          <div className="text-left panel-safe p-5 mb-6 space-y-2">
             {[
               { label: "Service", value: answers.service },
               { label: "Goal", value: answers.goal },
@@ -248,7 +248,7 @@ function StartProjectInner() {
                       className={`flex items-center gap-3 p-4 rounded-xl border text-left transition-all font-medium text-sm ${
                         selected
                           ? "border-primary bg-primary/10 text-foreground shadow-lg shadow-primary/10"
-                          : "surface-card text-secondary-foreground hover:border-primary/30"
+                          : "pill text-secondary-foreground hover:border-primary/30"
                       }`}
                     >
                       <span className="text-xl w-7 shrink-0">{opt.emoji}</span>
@@ -273,7 +273,7 @@ function StartProjectInner() {
                       value={contact.name}
                       onChange={handleContactChange}
                       required
-                      className="form-field"
+                      className="w-full bg-background border border-border/60 rounded-lg px-4 py-2.5 text-sm text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary/50 transition-colors"
                       placeholder="Jane Smith"
                     />
                   </div>
@@ -288,7 +288,7 @@ function StartProjectInner() {
                       value={contact.email}
                       onChange={handleContactChange}
                       required
-                      className="form-field"
+                      className="w-full bg-background border border-border/60 rounded-lg px-4 py-2.5 text-sm text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary/50 transition-colors"
                       placeholder="jane@company.com"
                     />
                   </div>
@@ -302,7 +302,7 @@ function StartProjectInner() {
                       name="phone"
                       value={contact.phone}
                       onChange={handleContactChange}
-                      className="form-field"
+                      className="w-full bg-background border border-border/60 rounded-lg px-4 py-2.5 text-sm text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary/50 transition-colors"
                       placeholder="+1 (555) 000-0000"
                     />
                   </div>
@@ -316,7 +316,7 @@ function StartProjectInner() {
                       name="businessName"
                       value={contact.businessName}
                       onChange={handleContactChange}
-                      className="form-field"
+                      className="w-full bg-background border border-border/60 rounded-lg px-4 py-2.5 text-sm text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary/50 transition-colors"
                       placeholder="Acme Inc."
                     />
                   </div>
@@ -331,12 +331,12 @@ function StartProjectInner() {
                     value={contact.notes}
                     onChange={handleContactChange}
                     rows={4}
-                    className="form-field resize-none"
+                    className="w-full bg-background border border-border/60 rounded-lg px-4 py-2.5 text-sm text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary/50 transition-colors resize-none"
                     placeholder="Tell us about your business, specific requirements, or any context that would help us understand your project..."
                   />
                 </div>
 
-                <div className="surface-card p-4 flex flex-wrap gap-3">
+                <div className="bg-transparent border border-border/30 rounded-xl p-4 flex flex-wrap gap-3">
                   {[
                     { label: answers.service },
                     { label: answers.goal },

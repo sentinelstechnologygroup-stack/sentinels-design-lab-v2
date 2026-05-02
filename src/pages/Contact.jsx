@@ -1,5 +1,5 @@
-// src/pages/contact.jsx
 "use client";
+// src/pages/contact.jsx
 
 import React, { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";

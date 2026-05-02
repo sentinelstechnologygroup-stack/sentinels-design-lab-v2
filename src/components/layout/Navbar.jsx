@@ -1,5 +1,5 @@
-// src/components/layout/Navbar.jsx
 "use client";
+// src/components/layout/Navbar.jsx
 
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";

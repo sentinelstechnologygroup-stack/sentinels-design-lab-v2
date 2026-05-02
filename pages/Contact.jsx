@@ -1,5 +1,5 @@
-// src/pages/contact.jsx
 "use client";
+// src/pages/contact.jsx
 
 import React, { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
@@ -271,7 +271,7 @@ export default function Contact() {
             >
               <form
                 onSubmit={handleSubmit}
-                className="bg-card border border-border/50 rounded-2xl p-8 space-y-5"
+                className="panel-safe p-8 space-y-5"
               >
                 <h2 className="font-heading text-xl font-bold text-foreground mb-2">
                   Send Us a Message
@@ -288,7 +288,7 @@ export default function Contact() {
                       onChange={handleChange}
                       required
                       placeholder="Jane Smith"
-                      className="form-field"
+                      className="w-full bg-secondary/50 border border-border/50 rounded-lg px-4 py-2.5 text-sm text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary/50 transition-colors"
                     />
                   </div>
 
@@ -303,7 +303,7 @@ export default function Contact() {
                       onChange={handleChange}
                       required
                       placeholder="jane@company.com"
-                      className="form-field"
+                      className="w-full bg-secondary/50 border border-border/50 rounded-lg px-4 py-2.5 text-sm text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary/50 transition-colors"
                     />
                   </div>
                 </div>
@@ -318,7 +318,7 @@ export default function Contact() {
                       value={form.phone}
                       onChange={handleChange}
                       placeholder="+1 (555) 000-0000"
-                      className="form-field"
+                      className="w-full bg-secondary/50 border border-border/50 rounded-lg px-4 py-2.5 text-sm text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary/50 transition-colors"
                     />
                   </div>
 
@@ -330,7 +330,7 @@ export default function Contact() {
                       name="service"
                       value={form.service}
                       onChange={handleChange}
-                      className="form-field"
+                      className="w-full bg-secondary/50 border border-border/50 rounded-lg px-4 py-2.5 text-sm text-foreground focus:outline-none focus:border-primary/50 transition-colors"
                     >
                       <option value="">Select a service...</option>
                       {SERVICES.map((s) => (
@@ -353,7 +353,7 @@ export default function Contact() {
                     required
                     rows={5}
                     placeholder="Tell us about your project..."
-                    className="form-field resize-none"
+                    className="w-full bg-secondary/50 border border-border/50 rounded-lg px-4 py-2.5 text-sm text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary/50 transition-colors resize-none"
                   />
                 </div>
 

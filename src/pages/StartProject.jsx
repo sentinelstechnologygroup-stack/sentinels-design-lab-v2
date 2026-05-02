@@ -1,5 +1,5 @@
-// src/pages/StartProject.jsx
 "use client";
+// src/pages/StartProject.jsx
 
 import React, { Suspense, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";

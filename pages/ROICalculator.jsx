@@ -1,5 +1,5 @@
-// src/components/roi/ROICalculator.jsx
 "use client";
+// src/components/roi/ROICalculator.jsx
 
 import React, { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
@@ -90,7 +90,7 @@ function ResultCard({ icon: Icon, label, value, sub, accent = false }) {
       className={`rounded-xl border p-5 ${
         accent
           ? "border-primary/40 bg-primary/5"
-          : "surface-card"
+          : "panel-safe"
       }`}
     >
       <div className="mb-2 flex items-center gap-2">
@@ -175,7 +175,7 @@ export default function ROICalculator() {
         transition={{ delay: 0.15 }}
         className="space-y-8"
       >
-        <div className="surface-card p-6">
+        <div className="rounded-xl border panel-safe p-6">
           <h2 className="mb-4 text-sm font-semibold uppercase tracking-wider text-muted-foreground">
             Service Type
           </h2>
@@ -189,7 +189,7 @@ export default function ROICalculator() {
                 className={`flex items-center gap-3 rounded-lg border px-4 py-3 text-left text-sm font-medium transition-all ${
                   service === s.value
                     ? "border-primary bg-primary/10 text-foreground"
-                    : "surface-card text-muted-foreground hover:border-primary/30 hover:text-foreground"
+                    : "border-border/40 bg-background/50 text-muted-foreground hover:border-primary/30 hover:text-foreground"
                 }`}
               >
                 <div
@@ -203,7 +203,7 @@ export default function ROICalculator() {
           </div>
         </div>
 
-        <div className="space-y-7 surface-card p-6">
+        <div className="space-y-7 rounded-xl border panel-safe p-6">
           <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">
             Your Current Numbers
           </h2>
@@ -256,7 +256,7 @@ export default function ROICalculator() {
         transition={{ delay: 0.2 }}
         className="space-y-6"
       >
-        <div className="surface-card p-5 border-primary/20">
+        <div className="rounded-xl border border-primary/20 bg-primary/5 p-5">
           <div className="flex items-start gap-3">
             <Target className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
             <p className="text-sm leading-relaxed text-muted-foreground">
@@ -294,7 +294,7 @@ export default function ROICalculator() {
           />
         </div>
 
-        <div className="space-y-4 surface-card p-6">
+        <div className="space-y-4 rounded-xl border border-border/50 bg-card p-6">
           <h3 className="font-semibold text-foreground">
             Return on Investment Summary
           </h3>

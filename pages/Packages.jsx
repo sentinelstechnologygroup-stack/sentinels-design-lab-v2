@@ -1,5 +1,5 @@
-// src/pages/packages.jsx
 "use client";
+// src/pages/packages.jsx
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -511,13 +511,13 @@ export default function Packages() {
               </p>
 
               <div className="flex flex-wrap gap-3 text-sm text-white/70">
-                <div className="surface-chip">
+                <div className="pill px-4 py-2">
                   Clear tiers
                 </div>
-                <div className="surface-chip">
+                <div className="pill px-4 py-2">
                   Real deliverables
                 </div>
-                <div className="surface-chip">
+                <div className="pill px-4 py-2">
                   Flexible scope
                 </div>
               </div>
@@ -530,7 +530,7 @@ export default function Packages() {
               className="relative"
             >
               <div className="absolute -inset-4 rounded-[2rem] bg-primary/10 blur-2xl" />
-              <div className="relative overflow-hidden surface-card-strong">
+              <div className="relative overflow-hidden panel-safe-heavy">
                 <img
                   src={activeCopy.heroImage}
                   alt={activeCopy.heroAlt}
@@ -553,7 +553,7 @@ export default function Packages() {
                 className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all ${
                   active === cat.key
                     ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20"
-                    : "pill text-muted-foreground hover:text-foreground hover:border-primary/30"
+                    : "bg-card border border-border/50 text-muted-foreground hover:text-foreground hover:border-primary/30"
                 }`}
               >
                 {cat.label}
