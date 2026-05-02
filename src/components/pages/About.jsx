@@ -127,7 +127,7 @@ export default function About() {
 
               <div className="flex flex-wrap gap-4 mb-8">
                 <Link
-                  href="/projects"
+                  href="/work"
                   className="inline-flex items-center gap-2 bg-primary hover:bg-primary text-primary-foreground px-7 py-3 rounded-lg font-semibold transition-all hover:shadow-lg hover:shadow-primary/20 text-sm"
                 >
                   See Our Work <ArrowRight className="w-4 h-4" />
