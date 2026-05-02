@@ -7,3 +7,4 @@ _route-backup
 *.log
 *.zip
 *.Identifier
+.next
