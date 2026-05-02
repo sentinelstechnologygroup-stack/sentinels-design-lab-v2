@@ -14,7 +14,7 @@ import {
   ShieldCheck,
   Clock,
 } from "lucide-react";
-import CTASection from "../components/shared/CTASection";
+import CTASection from "@/components/shared/CTASection";
 
 const values = [
   {

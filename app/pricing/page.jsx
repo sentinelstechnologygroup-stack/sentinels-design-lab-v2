@@ -1,4 +1,4 @@
-import Pricing from "@/pages/Pricing";
+import Pricing from "@/components/pages/Pricing";
 import { pageMetadata } from "@/lib/metadata";
 
 export const metadata = pageMetadata(

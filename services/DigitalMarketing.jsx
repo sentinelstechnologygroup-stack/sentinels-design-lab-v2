@@ -12,7 +12,7 @@ export default function DigitalMarketing() {
       subheadline="Digital Marketing Consultants Offering Strategic Growth"
       description="Drive engagement, increase visibility, and maximize conversions with the best digital marketing agency — crafting hyper-targeted strategies that deliver 3-5x higher ROI than industry standards. We fuse advanced technology with human insight to dominate both paid and organic channels."
       startingPrice="$399.99/mo"
-      image="https://media.base44.com/images/public/69c84c79cf14625ad4e75595/f8ea4a4de_generated_be693b13.png"
+      image="https://media..com/images/public/69c84c79cf14625ad4e75595/f8ea4a4de_generated_be693b13.png"
       stats={[
         { value: "250+", label: "Campaigns Managed" },
         { value: "150+", label: "Specialists" },

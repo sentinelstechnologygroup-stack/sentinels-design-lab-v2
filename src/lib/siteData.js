@@ -498,3 +498,11 @@ export const workSections = [
     title: "Website Work",
     description:
       "Redesigns and new website launches built to clean up positioning, modernize presentation, and strengthen the path from trust to inquiry.",
+    },
+    {
+      slug: "digital-systems",
+      title: "Digital Systems",
+      description:
+        "Internal tools and operational systems designed to reduce manual work, improve visibility, and support controlled business execution.",
+    },
+  ];

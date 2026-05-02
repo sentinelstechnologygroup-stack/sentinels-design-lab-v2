@@ -12,7 +12,7 @@ export default function MarketingCollateral() {
       subheadline="Professional Print & Digital Design for Every Touchpoint"
       description="From brochures to digital assets, our marketing collateral ensures consistency, creativity, and brand excellence at every customer touchpoint. Every piece we design works strategically to reinforce your brand identity and guide prospects through your sales funnel."
       startingPrice="$99.99"
-      image="https://media.base44.com/images/public/69c84c79cf14625ad4e75595/96578bf09_generated_80a30810.png"
+      image="https://media..com/images/public/69c84c79cf14625ad4e75595/96578bf09_generated_80a30810.png"
       stats={[
         { value: "250+", label: "Brands Supported" },
         { value: "150+", label: "Designers" },

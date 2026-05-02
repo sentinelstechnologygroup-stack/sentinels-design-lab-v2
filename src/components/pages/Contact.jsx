@@ -5,7 +5,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { Phone, Mail, MapPin, ArrowRight, MessageSquare } from "lucide-react";
 import { toast } from "sonner";
-import { BUSINESS, FORM_ENDPOINT, SERVICES } from "../lib/constants";
+import { BUSINESS, FORM_ENDPOINT, SERVICES } from "@/lib/constants";
 
 const CONTACT_INFO = [
   { icon: Phone, label: "Call Us", value: BUSINESS.phone, href: BUSINESS.phoneHref },

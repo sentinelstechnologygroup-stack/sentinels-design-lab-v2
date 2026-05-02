@@ -12,7 +12,7 @@ export default function LogoDesign() {
       subheadline="Logo Design Services — Speaking Volumes Before You Read"
       description="First impressions matter. Let us design your logo with creativity and strategy, ensuring a powerful visual identity that captivates. We don't just create logos — we craft visual identities that become synonymous with excellence, blending market research, psychology, and artistic precision."
       startingPrice="$24.99"
-      image="https://media.base44.com/images/public/69c84c79cf14625ad4e75595/31edbfc49_generated_image.png"
+      image="https://media..com/images/public/69c84c79cf14625ad4e75595/31edbfc49_generated_image.png"
       stats={[
         { value: "250+", label: "Logos Designed" },
         { value: "150+", label: "Designers" },

@@ -7,7 +7,7 @@ import {
   Globe, Smartphone, Search, MousePointer, Palette,
   ShoppingCart, Cpu, BarChart3, Server, ArrowRight
 } from "lucide-react";
-import CTASection from "../components/shared/CTASection";
+import CTASection from "@/components/shared/CTASection";
 
 const services = [
   {

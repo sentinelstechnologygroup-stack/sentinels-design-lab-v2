@@ -1,4 +1,4 @@
-import Services from "@/pages/Services";
+import Services from "@/components/pages/Services";
 import { pageMetadata } from "@/lib/metadata";
 
 export const metadata = pageMetadata(

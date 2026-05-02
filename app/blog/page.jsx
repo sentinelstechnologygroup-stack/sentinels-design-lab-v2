@@ -1,4 +1,4 @@
-import BlogPage from "@/pages/Blog";
+import BlogPage from "@/components/pages/Blog";
 import { pageMetadata } from "@/lib/metadata";
 
 export const metadata = pageMetadata(

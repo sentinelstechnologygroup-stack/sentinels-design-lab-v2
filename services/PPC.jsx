@@ -120,7 +120,7 @@ export default function PPC() {
             >
               <div className="absolute -inset-6 bg-primary/5 rounded-3xl blur-2xl" />
               <img
-                src="https://media.base44.com/images/public/69c84c79cf14625ad4e75595/dc26e93bc_generated_image.png"
+                src="https://media..com/images/public/69c84c79cf14625ad4e75595/dc26e93bc_generated_image.png"
                 alt="PPC Advertising"
                 className="relative w-full max-h-[420px] object-cover rounded-t-2xl border border-border/30 shadow-2xl shadow-black/30"
               />

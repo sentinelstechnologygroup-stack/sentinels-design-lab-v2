@@ -12,7 +12,7 @@ export default function SEOServices() {
       subheadline="SEO Marketing Experts Offering Ranking and Search Engine Dominance"
       description="Maximize visibility with proven SEO services and strategies with optimized rankings, increased organic traffic, and lasting online impact. Our certified specialists have helped brands achieve 300%+ traffic growth even in competitive markets."
       startingPrice="$299.99/mo"
-      image="https://media.base44.com/images/public/69c84c79cf14625ad4e75595/dac7a80b3_generated_d3ba5320.png"
+      image="https://media..com/images/public/69c84c79cf14625ad4e75595/dac7a80b3_generated_d3ba5320.png"
       stats={[
         { value: "250+", label: "SEO Campaigns" },
         { value: "150+", label: "Specialists" },

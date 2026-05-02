@@ -21,7 +21,7 @@ import ServiceHero from "../../components/shared/ServiceHero";
 import CTASection from "../../components/shared/CTASection";
 
 const heroImage =
-  "https://media.base44.com/images/public/69c84c79cf14625ad4e75595/6f2fa4f8d_generated_864d12c3.png";
+  "https://media..com/images/public/69c84c79cf14625ad4e75595/6f2fa4f8d_generated_864d12c3.png";
 
 const stats = [
   { value: "700+", label: "Websites Hosted" },

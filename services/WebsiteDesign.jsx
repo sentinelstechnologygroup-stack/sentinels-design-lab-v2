@@ -12,7 +12,7 @@ export default function WebsiteDesign() {
       subheadline="Website Designs That Build Immersive Digital Experiences"
       description="Your website is more than pixels and code — it's your brand's digital heartbeat. As a leading web design agency, we craft immersive, high-performance platforms that captivate and convert. Enhance your website design with innovation, strategy, and seamless user experiences that set you apart."
       startingPrice="$249.99"
-      image="https://media.base44.com/images/public/69c84c79cf14625ad4e75595/5f9d23832_generated_9faca50c.png"
+      image="https://media..com/images/public/69c84c79cf14625ad4e75595/5f9d23832_generated_9faca50c.png"
       stats={[
         { value: "250+", label: "Websites Built" },
         { value: "150+", label: "Developers" },

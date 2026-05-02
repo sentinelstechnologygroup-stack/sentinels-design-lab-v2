@@ -1,4 +1,4 @@
-import Work from "@/pages/Work";
+import Work from "@/components/pages/Work";
 import { pageMetadata } from "@/lib/metadata";
 
 export const metadata = pageMetadata(

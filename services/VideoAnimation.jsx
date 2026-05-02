@@ -12,7 +12,7 @@ export default function VideoAnimation() {
       subheadline="Customized Video Animations That Captivate, Inspire & Convert"
       description="Transform ideas into stunning visuals with our animated video service, designed to captivate, inspire, and increase brand engagement. Our video animation team crafts motion graphics that simplify complex ideas, boost engagement by 300%, and drive action — from 2D explainers to 3D product demos."
       startingPrice="$149.99"
-      image="https://media.base44.com/images/public/69c84c79cf14625ad4e75595/4e504627e_generated_image.png"
+      image="https://media..com/images/public/69c84c79cf14625ad4e75595/4e504627e_generated_image.png"
       stats={[
         { value: "250+", label: "Videos Produced" },
         { value: "150+", label: "Animators" },

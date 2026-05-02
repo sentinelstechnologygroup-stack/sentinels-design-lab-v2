@@ -12,7 +12,7 @@ export default function CustomApps() {
       subheadline="Custom Mobile Apps That Innovate, Enhance, Dominate"
       description="Leverage our custom apps development expertise to create intuitive, high-performing mobile applications that engage users and drive results. From iOS to AR/VR, we build apps that boost engagement by 3x industry averages."
       startingPrice="$499.99"
-      image="https://media.base44.com/images/public/69c84c79cf14625ad4e75595/47a12a557_generated_image.png"
+      image="https://media..com/images/public/69c84c79cf14625ad4e75595/47a12a557_generated_image.png"
       stats={[
         { value: "250+", label: "Apps Developed" },
         { value: "150+", label: "Engineers" },

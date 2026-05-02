@@ -12,7 +12,7 @@ export default function Illustration() {
       subheadline="Illustration Designs That Visualize Imagination with Realistic Touch"
       description="Enhance your brand image with captivating 3D illustration design, blending artistry with innovation to craft unforgettable experiences. From stylized 2D graphics to immersive 3D finishes, our illustration services blend artistic mastery with strategic thinking — ensuring every stroke aligns with your brand narrative."
       startingPrice="$255.00"
-      image="https://media.base44.com/images/public/69c84c79cf14625ad4e75595/207170807_generated_image.png"
+      image="https://media..com/images/public/69c84c79cf14625ad4e75595/207170807_generated_image.png"
       stats={[
         { value: "250+", label: "Brands Served" },
         { value: "150+", label: "Illustrators" },

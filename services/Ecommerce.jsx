@@ -12,7 +12,7 @@ export default function Ecommerce() {
       subheadline="Specialized E-Commerce Web Design That Converts"
       description="Ready to build a website to sell products effortlessly? Our modern ecommerce solutions create visually stunning, high-performing online stores that maximize sales and ROI, enhance user experience, and keep customers coming back for more."
       startingPrice="$999.99"
-      image="https://media.base44.com/images/public/69c84c79cf14625ad4e75595/65d788a6d_generated_42abb4a6.png"
+      image="https://media..com/images/public/69c84c79cf14625ad4e75595/65d788a6d_generated_42abb4a6.png"
       stats={[
         { value: "200+", label: "Stores Launched" },
         { value: "150+", label: "Developers" },
