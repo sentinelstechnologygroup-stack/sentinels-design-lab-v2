@@ -1,6 +1,5 @@
-// app/reviews/page.jsx
-import Reviews from "@/pages/Reviews";
+import { redirect } from "next/navigation";
 
 export default function Page() {
-  return <Reviews />;
+  redirect("/");
 }

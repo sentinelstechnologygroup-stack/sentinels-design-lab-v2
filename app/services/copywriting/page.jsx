@@ -1,6 +1,5 @@
-// app/services/copywriting/page.jsx
-import Copywriting from "@/pages/services/Copywriting";
+import { redirect } from "next/navigation";
 
 export default function Page() {
-  return <Copywriting />;
+  redirect("/services");
 }

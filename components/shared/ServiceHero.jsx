@@ -13,7 +13,7 @@ export default function ServiceHero({ badge, title, highlight, description, imag
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
             {badge && (
-              <span className="inline-block px-4 py-1.5 bg-primary/10 border border-primary/20 rounded-full text-xs font-semibold text-primary uppercase tracking-wider mb-6">
+              <span className="eyebrow mb-6">
                 {badge}
               </span>
             )}
@@ -25,10 +25,10 @@ export default function ServiceHero({ badge, title, highlight, description, imag
               {description}
             </p>
             <div className="flex flex-wrap gap-4">
-              <Link href="/contact" className="inline-flex items-center gap-2 bg-primary hover:bg-primary text-primary-foreground px-7 py-3 rounded-lg font-semibold transition-all hover:shadow-lg hover:shadow-primary/20">
-                Get Started <ArrowRight className="w-4 h-4" />
+              <Link href="/contact" className="btn-primary px-7 py-3">
+                Get Website Evaluation <ArrowRight className="w-4 h-4" />
               </Link>
-              <Link href="/packages" className="inline-flex items-center gap-2 border border-border hover:border-primary/40 text-foreground px-7 py-3 rounded-lg font-semibold transition-all hover:bg-secondary/50">
+              <Link href="/pricing" className="inline-flex items-center gap-2 border border-border hover:border-primary/40 text-foreground px-7 py-3 rounded-lg font-semibold transition-all hover:bg-secondary/50">
                 View Pricing
               </Link>
             </div>

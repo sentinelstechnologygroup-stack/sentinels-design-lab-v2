@@ -1,6 +1,5 @@
-// app/services/digital-marketing/page.jsx
-import DigitalMarketing from "@/pages/services/DigitalMarketing";
+import { redirect } from "next/navigation";
 
 export default function Page() {
-  return <DigitalMarketing />;
+  redirect("/services");
 }

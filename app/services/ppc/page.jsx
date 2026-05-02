@@ -1,6 +1,5 @@
-// app/services/ppc/page.jsx
-import PPC from "@/pages/services/PPC";
+import { redirect } from "next/navigation";
 
 export default function Page() {
-  return <PPC />;
+  redirect("/services");
 }

@@ -1,93 +1,45 @@
 "use client";
 // src/components/layout/Navbar.jsx
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
-import { ChevronDown, Menu, X } from "lucide-react";
-import { BUSINESS, NAV_LINKS, CTA, SERVICES } from "@/lib/constants";
+import { Menu, X } from "lucide-react";
+import { BUSINESS, NAV_LINKS, CTA, IMAGES } from "@/lib/constants";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
-  const [servicesOpen, setServicesOpen] = useState(false);
-  const servicesRef = useRef(null);
-
-  useEffect(() => {
-    function handleClickOutside(event) {
-      if (servicesRef.current && !servicesRef.current.contains(event.target)) {
-        setServicesOpen(false);
-      }
-    }
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-[#050816]/90 backdrop-blur-xl">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-        <Link href="/" className="text-lg font-semibold tracking-wide text-white">
-          {BUSINESS.name}
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-6 px-6 py-4">
+        <Link href="/" className="flex items-center" aria-label={`${BUSINESS.name} home`}>
+          <Image
+            src={IMAGES.logo}
+            alt={`${BUSINESS.name} logo`}
+            width={779}
+            height={442}
+            priority
+            className="h-12 w-auto md:h-14"
+          />
         </Link>
 
         <nav className="hidden items-center gap-6 md:flex">
-          {NAV_LINKS.map((item) => {
-            if (item.hasDropdown && item.path === "/services") {
-              return (
-                <div key={item.path} className="relative" ref={servicesRef}>
-                  <button
-                    type="button"
-                    className="inline-flex items-center gap-1 text-sm text-white/80 transition hover:text-white"
-                    onClick={() => setServicesOpen((v) => !v)}
-                    aria-expanded={servicesOpen}
-                    aria-haspopup="menu"
-                  >
-                    {item.label}
-                    <ChevronDown
-                      size={16}
-                      className={`transition ${servicesOpen ? "rotate-180" : ""}`}
-                    />
-                  </button>
+          {NAV_LINKS.map((item) => (
+            <Link
+              key={item.path}
+              href={item.path}
+              className="text-sm text-white/80 transition hover:text-white"
+            >
+              {item.label}
+            </Link>
+          ))}
 
-                  {servicesOpen && (
-                    <div className="panel-safe absolute left-0 top-full mt-3 w-[320px] p-3">
-                      <div className="grid gap-1">
-                        <Link
-                          href="/services"
-                          className="rounded-xl px-3 py-2 text-sm font-medium text-white transition hover:bg-white/5"
-                          onClick={() => setServicesOpen(false)}
-                        >
-                          All Services
-                        </Link>
+          <a href={BUSINESS.phoneHref} className="text-sm text-white/80 transition hover:text-white">
+            {BUSINESS.phone}
+          </a>
 
-                        {SERVICES.map((service) => (
-                          <Link
-                            key={service.path}
-                            href={service.path}
-                            className="rounded-xl px-3 py-2 text-sm text-white/75 transition hover:bg-white/5 hover:text-white"
-                            onClick={() => setServicesOpen(false)}
-                          >
-                            {service.name}
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              );
-            }
-
-            return (
-              <Link
-                key={item.path}
-                href={item.path}
-                className="text-sm text-white/80 transition hover:text-white"
-              >
-                {item.label}
-              </Link>
-            );
-          })}
-
-          <Link href={CTA.primary.path} className="btn-primary">
+          <Link href={CTA.primary.path} className="btn-primary text-sm">
             {CTA.primary.label}
           </Link>
         </nav>
@@ -105,49 +57,28 @@ export default function Navbar() {
       {open && (
         <div className="border-t border-white/10 bg-[#050816]/96 backdrop-blur-xl md:hidden">
           <nav className="mx-auto flex max-w-7xl flex-col px-6 py-4">
-            {NAV_LINKS.map((item) => {
-              if (item.hasDropdown && item.path === "/services") {
-                return (
-                  <div key={item.path} className="py-1">
-                    <Link
-                      href="/services"
-                      className="py-3 text-sm font-medium text-white/90"
-                      onClick={() => setOpen(false)}
-                    >
-                      Services
-                    </Link>
+            {NAV_LINKS.map((item) => (
+              <Link
+                key={item.path}
+                href={item.path}
+                className="py-3 text-sm text-white/80 transition hover:text-white"
+                onClick={() => setOpen(false)}
+              >
+                {item.label}
+              </Link>
+            ))}
 
-                    <div className="mb-2 ml-3 flex flex-col border-l border-white/10 pl-4">
-                      {SERVICES.map((service) => (
-                        <Link
-                          key={service.path}
-                          href={service.path}
-                          className="py-2 text-sm text-white/70 transition hover:text-white"
-                          onClick={() => setOpen(false)}
-                        >
-                          {service.name}
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                );
-              }
-
-              return (
-                <Link
-                  key={item.path}
-                  href={item.path}
-                  className="py-3 text-sm text-white/80 transition hover:text-white"
-                  onClick={() => setOpen(false)}
-                >
-                  {item.label}
-                </Link>
-              );
-            })}
+            <a
+              href={BUSINESS.phoneHref}
+              className="py-3 text-sm text-white/80 transition hover:text-white"
+              onClick={() => setOpen(false)}
+            >
+              {BUSINESS.phone}
+            </a>
 
             <Link
               href={CTA.primary.path}
-              className="btn-primary mt-3 w-fit"
+              className="btn-primary mt-3 w-fit text-sm"
               onClick={() => setOpen(false)}
             >
               {CTA.primary.label}

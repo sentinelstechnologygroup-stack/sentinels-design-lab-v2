@@ -20,7 +20,7 @@ export default function ServiceGrid({ title, subtitle, services }) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: i * 0.08 }}
-              className="group bg-card/60 border border-border/50 rounded-xl p-7 hover:border-primary/30 hover:bg-card/80 transition-all duration-300"
+              className="group panel-safe p-7 hover:border-primary/30 hover:bg-card/80 transition-all duration-300"
             >
               {service.icon && (
                 <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-5 group-hover:bg-primary/20 transition-colors">

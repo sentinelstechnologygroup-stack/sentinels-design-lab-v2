@@ -35,13 +35,13 @@ function Hero({ badge, headline, highlight, subheadline, description, startingPr
             </p>
             <div className="flex flex-wrap gap-3">
               <Link
-                href="/start-project"
+                href="/contact"
                 className="inline-flex items-center gap-2 bg-primary hover:bg-primary text-primary-foreground px-7 py-3.5 rounded-lg font-semibold transition-all hover:shadow-lg hover:shadow-primary/25 text-sm"
               >
-                Start a Project <ArrowRight className="w-4 h-4" />
+                Get Website Evaluation <ArrowRight className="w-4 h-4" />
               </Link>
               <Link
-                href="/packages"
+                href="/pricing"
                 className="inline-flex items-center gap-2 border border-border hover:border-primary/50 text-foreground px-7 py-3.5 rounded-lg font-semibold transition-all hover:bg-secondary/50 text-sm"
               >
                 View Pricing <ChevronRight className="w-4 h-4" />
@@ -111,13 +111,13 @@ function AboutSection({ title, highlight, body, bullets, differentiators }) {
             </ul>
             <div className="mt-8 flex gap-3">
               <Link
-                href="/start-project"
+                href="/contact"
                 className="inline-flex items-center gap-2 bg-primary hover:bg-primary text-primary-foreground px-6 py-3 rounded-lg font-semibold text-sm transition-all hover:shadow-lg hover:shadow-primary/20"
               >
-                Start a Project <ArrowRight className="w-4 h-4" />
+                Get Website Evaluation <ArrowRight className="w-4 h-4" />
               </Link>
               <a
-                href="tel:+18555544057"
+                href="tel:+18324320224"
                 className="inline-flex items-center gap-2 border border-border hover:border-primary/40 text-foreground px-6 py-3 rounded-lg font-semibold text-sm transition-all hover:bg-secondary/50"
               >
                 <Phone className="w-4 h-4" /> Let's Chat
@@ -330,7 +330,7 @@ function PricingSection({ subtitle, title, packages }) {
                 ))}
               </ul>
               <Link
-                href="/start-project"
+                href="/contact"
                 className={`flex items-center justify-center gap-1.5 w-full py-2.5 rounded-lg font-semibold text-sm transition-all ${
                   pkg.featured
                     ? "bg-primary hover:bg-primary text-primary-foreground hover:shadow-lg hover:shadow-primary/20"

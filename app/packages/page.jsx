@@ -1,6 +1,5 @@
-// app/packages/page.jsx
-import Packages from "@/pages/Packages";
+import { redirect } from "next/navigation";
 
 export default function Page() {
-  return <Packages />;
+  redirect("/pricing");
 }

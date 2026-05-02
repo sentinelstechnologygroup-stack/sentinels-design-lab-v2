@@ -57,4 +57,4 @@ Remove-Item package-lock.json
 npm install
 
 ## Recommended Next Step
-Proceed with framework normalization and then the V3 home page conversion pass."# sentinels-design-lab-v2" 
+Proceed with framework normalization and then the V3 home page conversion pass.

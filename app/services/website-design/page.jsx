@@ -1,6 +1,5 @@
-// app/services/website-design/page.jsx
-import WebsiteDesign from "@/pages/services/WebsiteDesign";
+import { redirect } from "next/navigation";
 
 export default function Page() {
-  return <WebsiteDesign />;
+  redirect("/services");
 }

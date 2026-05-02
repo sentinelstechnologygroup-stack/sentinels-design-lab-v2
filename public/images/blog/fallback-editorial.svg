@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1200" viewBox="0 0 1600 1200" fill="none">
+  <rect width="1600" height="1200" fill="#07101D"/>
+  <rect x="96" y="96" width="1408" height="1008" rx="36" fill="#0B1628" stroke="rgba(255,255,255,0.12)"/>
+  <circle cx="260" cy="210" r="6" fill="#3B82F6"/>
+  <circle cx="470" cy="330" r="8" fill="#3B82F6" fill-opacity="0.9"/>
+  <circle cx="760" cy="240" r="7" fill="#60A5FA"/>
+  <circle cx="1080" cy="370" r="8" fill="#3B82F6"/>
+  <circle cx="1320" cy="260" r="6" fill="#60A5FA"/>
+  <circle cx="330" cy="760" r="8" fill="#3B82F6"/>
+  <circle cx="700" cy="690" r="7" fill="#60A5FA"/>
+  <circle cx="1010" cy="830" r="8" fill="#3B82F6"/>
+  <circle cx="1280" cy="700" r="6" fill="#60A5FA"/>
+  <path d="M260 210L470 330L760 240L1080 370L1320 260" stroke="rgba(96,165,250,0.35)" stroke-width="2"/>
+  <path d="M330 760L700 690L1010 830L1280 700" stroke="rgba(96,165,250,0.35)" stroke-width="2"/>
+  <path d="M470 330L330 760" stroke="rgba(96,165,250,0.18)" stroke-width="2"/>
+  <path d="M760 240L700 690" stroke="rgba(96,165,250,0.18)" stroke-width="2"/>
+  <path d="M1080 370L1010 830" stroke="rgba(96,165,250,0.18)" stroke-width="2"/>
+  <rect x="210" y="438" width="1180" height="360" rx="28" fill="#0E1B30" stroke="rgba(255,255,255,0.08)"/>
+  <rect x="258" y="486" width="258" height="22" rx="11" fill="#1D4ED8" fill-opacity="0.5"/>
+  <rect x="258" y="532" width="430" height="14" rx="7" fill="rgba(255,255,255,0.12)"/>
+  <rect x="258" y="562" width="380" height="14" rx="7" fill="rgba(255,255,255,0.08)"/>
+  <rect x="258" y="618" width="316" height="120" rx="18" fill="#13233C" stroke="rgba(255,255,255,0.06)"/>
+  <rect x="602" y="618" width="316" height="120" rx="18" fill="#13233C" stroke="rgba(255,255,255,0.06)"/>
+  <rect x="946" y="618" width="316" height="120" rx="18" fill="#13233C" stroke="rgba(255,255,255,0.06)"/>
+  <text x="258" y="860" fill="rgba(255,255,255,0.86)" font-family="Inter, Arial, sans-serif" font-size="64" font-weight="700">SDL Editorial</text>
+  <text x="258" y="914" fill="rgba(255,255,255,0.48)" font-family="Inter, Arial, sans-serif" font-size="28">Website redesigns, digital systems, and operational modernization.</text>
+</svg>

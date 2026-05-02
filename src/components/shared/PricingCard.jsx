@@ -1,4 +1,3 @@
-// src/components/shared/PricingCard.jsx
 "use client";
 
 import React from "react";
@@ -9,12 +8,12 @@ export default function PricingCard({
   name,
   originalPrice,
   price,
+  description,
   features = [],
   featured,
 }) {
   const serviceParam = encodeURIComponent(name || "");
-  const messageParam = encodeURIComponent(`Interested in: ${name || ""}`);
-  const contactHref = `/contact?service=${serviceParam}&message=${messageParam}`;
+  const contactHref = `/contact?type=website-evaluation&service=${serviceParam}`;
 
   const showDollarPrice =
     typeof price === "string" &&
@@ -30,59 +29,75 @@ export default function PricingCard({
 
   return (
     <div
-      className={`relative rounded-xl border p-7 flex flex-col transition-all duration-300 hover:shadow-xl hover:shadow-primary/5 ${
+      className={`relative flex h-full flex-col overflow-hidden rounded-[28px] border p-7 transition-all duration-300 md:p-8 ${
         featured
-          ? "border-primary/40 bg-primary/5 shadow-lg shadow-primary/10"
-          : "border-border/50 bg-card/60 hover:border-primary/20"
+          ? "border-primary/40 bg-primary/[0.08] shadow-[0_24px_70px_rgba(59,130,246,0.18)]"
+          : "panel-safe hover:border-primary/20 hover:shadow-[0_24px_60px_rgba(0,0,0,0.26)]"
       }`}
     >
-      {featured && (
-        <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-primary text-primary-foreground text-xs font-bold rounded-full whitespace-nowrap">
+      {featured ? (
+        <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 rounded-full border border-primary/30 bg-primary px-4 py-1 text-[11px] font-bold uppercase tracking-[0.18em] text-primary-foreground whitespace-nowrap">
           Most Popular
         </div>
-      )}
+      ) : null}
 
-      <h3 className="font-heading text-xl font-bold text-foreground">{name}</h3>
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <div className="text-xs font-semibold uppercase tracking-[0.18em] text-primary/85">
+            {featured ? "Recommended package" : "Website package"}
+          </div>
+          <h3 className="mt-3 font-heading text-2xl font-bold text-foreground">{name}</h3>
+        </div>
+      </div>
 
-      <div className="mt-4 mb-6">
-        {showDollarOriginalPrice && (
-          <span className="text-sm text-muted-foreground line-through mr-2">
-            ${originalPrice}
-          </span>
-        )}
+      <div className="mt-6 flex items-end gap-2">
+        {showDollarOriginalPrice ? (
+          <span className="text-sm text-muted-foreground line-through">${originalPrice}</span>
+        ) : null}
 
-        <span className="text-3xl font-heading font-bold text-foreground">
+        <span className="font-heading text-3xl font-bold text-foreground sm:text-[2.15rem]">
           {showDollarPrice ? `$${price}` : price}
         </span>
 
-        {showDollarPrice && (
-          <span className="text-sm text-muted-foreground ml-1">only</span>
-        )}
+        {showDollarPrice ? (
+          <span className="pb-1 text-sm text-muted-foreground">starting</span>
+        ) : null}
       </div>
 
-      <ul className="space-y-2.5 flex-1 mb-8">
-        {features.map((feature, i) => (
-          <li
-            key={i}
-            className="flex items-start gap-2.5 text-sm text-secondary-foreground"
-          >
-            <Check className="w-4 h-4 text-primary shrink-0 mt-0.5" />
-            <span>{feature}</span>
-          </li>
-        ))}
-      </ul>
+      {description ? (
+        <p className="mt-5 text-sm leading-7 text-muted-foreground">{description}</p>
+      ) : null}
 
-      <Link
-        href={contactHref}
-        className={`flex items-center justify-center gap-2 w-full py-3 rounded-lg font-semibold text-sm transition-all ${
-          featured
-            ? "bg-primary hover:bg-primary text-primary-foreground hover:shadow-lg hover:shadow-primary/20"
-            : "border border-border hover:border-primary/40 text-foreground hover:bg-secondary/50"
-        }`}
-      >
-        Order Now
-        <ArrowRight className="w-4 h-4" />
-      </Link>
+      <div className="mt-6 rounded-[22px] border border-white/10 bg-white/[0.03] p-5">
+        <div className="text-xs font-semibold uppercase tracking-[0.18em] text-white/45">
+          Included
+        </div>
+        <ul className="mt-4 space-y-3">
+          {features.map((feature) => (
+            <li
+              key={feature}
+              className="flex items-start gap-3 text-sm leading-6 text-secondary-foreground"
+            >
+              <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+              <span>{feature}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div className="mt-8 pt-1">
+        <Link
+          href={contactHref}
+          className={`inline-flex w-full items-center justify-center gap-2 rounded-xl px-5 py-3.5 text-sm font-semibold transition-all ${
+            featured
+              ? "bg-primary text-primary-foreground hover:shadow-lg hover:shadow-primary/20"
+              : "border border-border bg-secondary/30 text-foreground hover:border-primary/40 hover:bg-secondary/55"
+          }`}
+        >
+          Request This Build
+          <ArrowRight className="h-4 w-4" />
+        </Link>
+      </div>
     </div>
   );
 }

@@ -1,5 +1,6 @@
 "use client";
 // src/components/roi/ROICalculator.jsx
+"use client";
 
 import React, { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
@@ -357,7 +358,7 @@ export default function ROICalculator() {
         </p>
 
         <Link
-          href={`/start-project?service=${encodeURIComponent(selectedService)}`}
+          href={`/contact?service=${encodeURIComponent(selectedService)}`}
           className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary py-4 text-sm font-bold text-primary-foreground transition-all hover:bg-primary hover:shadow-xl hover:shadow-primary/20"
         >
           Get a Custom ROI Proposal

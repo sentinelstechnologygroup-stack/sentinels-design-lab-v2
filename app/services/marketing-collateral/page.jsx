@@ -1,6 +1,5 @@
-// app/services/marketing-collateral/page.jsx
-import MarketingCollateral from "@/pages/services/MarketingCollateral";
+import { redirect } from "next/navigation";
 
 export default function Page() {
-  return <MarketingCollateral />;
+  redirect("/services");
 }

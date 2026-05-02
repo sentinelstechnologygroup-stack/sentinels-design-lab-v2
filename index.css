@@ -375,106 +375,6 @@
     fill: none;
   }
 
-
-
-  /* -------------------------------------------------
-     PAGE CLEANUP UTILITIES
-  ------------------------------------------------- */
-
-  .surface-card {
-    @apply rounded-2xl border shadow-[0_16px_50px_rgba(0,0,0,0.22)] backdrop-blur-sm;
-    background: rgba(11, 18, 32, 0.9);
-    border-color: rgba(255, 255, 255, 0.1);
-  }
-
-  .surface-card-strong {
-    @apply rounded-[1.75rem] border shadow-[0_20px_60px_rgba(0,0,0,0.24)] backdrop-blur-sm;
-    background: rgba(12, 19, 34, 0.92);
-    border-color: rgba(255, 255, 255, 0.1);
-  }
-
-  .surface-chip {
-    @apply rounded-full border px-4 py-2 text-sm;
-    background: rgba(9, 16, 31, 0.92);
-    border-color: rgba(255,255,255,0.1);
-    color: rgba(255,255,255,0.86);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-  }
-
-  .surface-chip-sm {
-    @apply rounded-full border px-3 py-1.5 text-xs;
-    background: rgba(9, 16, 31, 0.92);
-    border-color: rgba(255,255,255,0.1);
-    color: rgba(255,255,255,0.86);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-  }
-
-  .surface-button {
-    @apply inline-flex items-center justify-center gap-2 rounded-lg border px-8 py-3.5 text-sm font-semibold transition-all;
-    background: rgba(9, 16, 31, 0.94);
-    border-color: rgba(255,255,255,0.12);
-    color: rgb(255,255,255);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-  }
-
-  .surface-button:hover {
-    border-color: rgba(96,165,250,0.28);
-    background: rgba(11, 20, 38, 0.98);
-  }
-
-  .icon-shell {
-    @apply inline-flex items-center justify-center rounded-xl border shrink-0;
-    width: 3rem;
-    height: 3rem;
-    background: rgba(9, 16, 31, 0.94);
-    border-color: rgba(255,255,255,0.1);
-    color: rgb(96,165,250);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-  }
-
-  .icon-shell svg {
-    color: currentColor;
-    stroke: currentColor;
-    fill: none;
-  }
-
-  .icon-shell-accent {
-    @apply inline-flex items-center justify-center rounded-xl border shrink-0;
-    width: 3rem;
-    height: 3rem;
-    background: rgba(9, 16, 31, 0.94);
-    border-color: rgba(251,191,36,0.16);
-    color: rgb(252,211,77);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-  }
-
-  .icon-shell-accent svg {
-    color: currentColor;
-    stroke: currentColor;
-    fill: none;
-  }
-
-  .form-field {
-    @apply w-full rounded-lg px-4 py-2.5 text-sm transition-colors;
-    background: rgba(20, 31, 54, 0.94);
-    border: 1px solid rgba(255,255,255,0.08);
-    color: white;
-  }
-
-  .form-field::placeholder {
-    color: rgba(255,255,255,0.5);
-  }
-
-  .form-field:focus {
-    outline: none;
-    border-color: rgba(59,130,246,0.42);
-  }
-
   /* -------------------------------------------------
      BUTTONS
   ------------------------------------------------- */
@@ -655,5 +555,39 @@
 
   .font-heading {
     font-family: "Space Grotesk", "Inter", sans-serif;
+  }
+}
+
+@layer components {
+  .surface-panel {
+    @apply panel-safe;
+  }
+
+  .surface-panel-soft {
+    @apply panel-safe-soft;
+  }
+
+  .surface-panel-heavy {
+    @apply panel-safe-heavy;
+  }
+
+  .surface-pill {
+    @apply pill;
+  }
+
+  .surface-pill-primary {
+    @apply pill-primary;
+  }
+
+  .surface-pill-accent {
+    @apply pill-accent;
+  }
+
+  .surface-eyebrow {
+    @apply eyebrow;
+  }
+
+  .surface-icon {
+    @apply feature-icon;
   }
 }

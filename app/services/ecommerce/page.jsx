@@ -1,6 +1,5 @@
-// app/services/ecommerce/page.jsx
-import Ecommerce from "@/pages/services/Ecommerce";
+import { redirect } from "next/navigation";
 
 export default function Page() {
-  return <Ecommerce />;
+  redirect("/services");
 }
