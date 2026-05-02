@@ -28,7 +28,7 @@ export default function ServiceHero({ badge, title, highlight, description, imag
               <Link href="/contact" className="inline-flex items-center gap-2 bg-primary hover:bg-primary text-primary-foreground px-7 py-3 rounded-lg font-semibold transition-all hover:shadow-lg hover:shadow-primary/20">
                 Get Started <ArrowRight className="w-4 h-4" />
               </Link>
-              <Link href="/packages" className="inline-flex items-center gap-2 border border-border hover:border-primary/40 text-foreground px-7 py-3 rounded-lg font-semibold transition-all hover:bg-secondary/50">
+              <Link href="/pricing" className="inline-flex items-center gap-2 border border-border hover:border-primary/40 text-foreground px-7 py-3 rounded-lg font-semibold transition-all hover:bg-secondary/50">
                 View Pricing
               </Link>
             </div>

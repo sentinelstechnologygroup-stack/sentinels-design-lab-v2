@@ -2,7 +2,7 @@ export const business = {
   name: "Sentinels Design Lab",
   email: "Info@SentinelsDesignLab.com",
   phone: "+1 (832) 432-0224",
-  phoneHref: "tel:+183****0224",
+  phoneHref: "tel:+18324320224",
   address: "Magnolia, TX",
   footerTagline:
     "Modern websites, custom digital systems, and practical growth infrastructure for service businesses that need more than a template.",

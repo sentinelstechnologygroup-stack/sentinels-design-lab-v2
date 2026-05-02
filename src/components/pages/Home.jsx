@@ -25,10 +25,8 @@ import {
 import CTASection from "@/components/shared/CTASection";
 
 const heroTags = [
-  "Conversion-Focused",
-  "Built for Service Businesses",
   "Strategy First",
-  "Fast Turnaround",
+  "Conversion-Focused",
   "No Template Builds",
   "Business-First Execution",
 ];
@@ -43,39 +41,39 @@ const trustStrip = [
 const services = [
   {
     icon: Globe,
-    title: "Website Design & Rebuilds",
-    desc: "Websites built to clearly present your business, build trust, and turn visitors into leads.",
+    title: "Website Redesigns & Builds",
+    desc: "Modernize outdated websites or build new ones designed around clarity, trust, and a better path to leads.",
     path: "/services",
   },
   {
     icon: Search,
-    title: "SEO & Visibility",
-    desc: "Improve search visibility so the right people can find your business when they are ready to act.",
+    title: "SEO Foundation",
+    desc: "Set up site structure, metadata, and page hierarchy so the right businesses can find you when they are ready to act.",
     path: "/services",
   },
   {
     icon: BarChart3,
-    title: "Conversion Optimization",
-    desc: "Tighten messaging, structure, and CTAs so more traffic turns into calls, forms, and booked work.",
+    title: "Lead Path Cleanup",
+    desc: "Tighten navigation, offers, forms, and CTA flow so more of your traffic turns into real conversations.",
     path: "/services",
   },
   {
     icon: Palette,
-    title: "Brand & Visual Systems",
+    title: "Brand Presentation",
     desc: "Upgrade how your company looks online so your presentation matches the quality of your work.",
     path: "/services",
   },
   {
-    icon: Server,
-    title: "Hosting & Maintenance",
-    desc: "Keep your site fast, secure, and current with reliable hosting and ongoing support.",
+    icon: LayoutDashboard,
+    title: "Portals & Digital Systems",
+    desc: "When a website is not enough — build client portals, internal dashboards, and practical web tools.",
     path: "/services",
   },
   {
-    icon: LayoutDashboard,
-    title: "Growth Support",
-    desc: "Build a stronger digital foundation that supports referrals, ads, local search, and long-term growth.",
-    path: "/packages",
+    icon: Server,
+    title: "Ongoing Support",
+    desc: "Keep your site fast, secure, and current with reliable hosting, maintenance, and ongoing build support.",
+    path: "/services",
   },
 ];
 
@@ -160,8 +158,8 @@ const heroTiles = [
   },
   {
     src: "/images/home/tile-mobile.png",
-    alt: "Digital strategy and planning",
-    label: "Mobile Apps",
+    alt: "Mobile-first responsive website design",
+    label: "Mobile-First Design",
     className: "",
   },
   {
@@ -181,70 +179,6 @@ const heroTiles = [
 export default function Home() {
   return (
     <div className="relative overflow-hidden text-white">
-      {/* Global background now lives in Layout */}
-      <div className="hidden">
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,#040b16_0%,#06101d_40%,#071427_100%)]" />
-        <div className="absolute -top-24 left-[6%] h-[420px] w-[420px] rounded-full bg-sky-400/[0.10] blur-[140px]" />
-        <div className="absolute top-[12%] right-[8%] h-[360px] w-[360px] rounded-full bg-blue-500/[0.10] blur-[140px]" />
-        <div className="absolute bottom-[12%] left-[28%] h-[340px] w-[340px] rounded-full bg-cyan-300/[0.06] blur-[140px]" />
-        <div
-          className="absolute inset-0 opacity-[0.18]"
-          style={{
-            backgroundImage: `
-              radial-gradient(circle at 8% 14%, rgba(125,211,252,0.95) 0 2px, transparent 4px),
-              radial-gradient(circle at 18% 24%, rgba(56,189,248,0.95) 0 2px, transparent 4px),
-              radial-gradient(circle at 28% 18%, rgba(96,165,250,0.90) 0 2px, transparent 4px),
-              radial-gradient(circle at 40% 26%, rgba(125,211,252,0.88) 0 2px, transparent 4px),
-              radial-gradient(circle at 56% 16%, rgba(56,189,248,0.88) 0 2px, transparent 4px),
-              radial-gradient(circle at 70% 24%, rgba(96,165,250,0.86) 0 2px, transparent 4px),
-              radial-gradient(circle at 84% 18%, rgba(125,211,252,0.90) 0 2px, transparent 4px),
-
-              radial-gradient(circle at 12% 44%, rgba(125,211,252,0.88) 0 2px, transparent 4px),
-              radial-gradient(circle at 24% 54%, rgba(56,189,248,0.90) 0 2px, transparent 4px),
-              radial-gradient(circle at 38% 46%, rgba(96,165,250,0.88) 0 2px, transparent 4px),
-              radial-gradient(circle at 50% 56%, rgba(125,211,252,0.85) 0 2px, transparent 4px),
-              radial-gradient(circle at 66% 48%, rgba(56,189,248,0.88) 0 2px, transparent 4px),
-              radial-gradient(circle at 78% 58%, rgba(96,165,250,0.84) 0 2px, transparent 4px),
-              radial-gradient(circle at 90% 46%, rgba(125,211,252,0.88) 0 2px, transparent 4px),
-
-              radial-gradient(circle at 10% 76%, rgba(125,211,252,0.82) 0 2px, transparent 4px),
-              radial-gradient(circle at 22% 86%, rgba(56,189,248,0.84) 0 2px, transparent 4px),
-              radial-gradient(circle at 36% 78%, rgba(96,165,250,0.84) 0 2px, transparent 4px),
-              radial-gradient(circle at 48% 88%, rgba(125,211,252,0.80) 0 2px, transparent 4px),
-              radial-gradient(circle at 62% 80%, rgba(56,189,248,0.82) 0 2px, transparent 4px),
-              radial-gradient(circle at 76% 90%, rgba(96,165,250,0.80) 0 2px, transparent 4px),
-              radial-gradient(circle at 90% 82%, rgba(125,211,252,0.82) 0 2px, transparent 4px),
-
-              linear-gradient(28deg, transparent 0%, transparent 48.7%, rgba(96,165,250,0.20) 49.4%, rgba(96,165,250,0.20) 50.6%, transparent 51.3%, transparent 100%),
-              linear-gradient(62deg, transparent 0%, transparent 48.7%, rgba(56,189,248,0.16) 49.4%, rgba(56,189,248,0.16) 50.6%, transparent 51.3%, transparent 100%),
-              linear-gradient(118deg, transparent 0%, transparent 48.8%, rgba(125,211,252,0.18) 49.5%, rgba(125,211,252,0.18) 50.5%, transparent 51.2%, transparent 100%),
-              linear-gradient(152deg, transparent 0%, transparent 48.9%, rgba(59,130,246,0.16) 49.6%, rgba(59,130,246,0.16) 50.4%, transparent 51.1%, transparent 100%)
-            `,
-            backgroundSize:
-              "auto, auto, auto, auto, auto, auto, auto, auto, auto, auto, auto, auto, auto, auto, auto, auto, auto, auto, auto, auto, auto, 220px 220px, 260px 260px, 320px 320px, 380px 380px",
-            backgroundPosition:
-              "0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, center, center, center, center",
-          }}
-        />
-        <div
-          className="absolute inset-0 opacity-[0.10]"
-          style={{
-            backgroundImage: `
-              radial-gradient(circle at 18% 24%, rgba(56,189,248,0.55) 0, transparent 18px),
-              radial-gradient(circle at 40% 26%, rgba(125,211,252,0.48) 0, transparent 16px),
-              radial-gradient(circle at 70% 24%, rgba(96,165,250,0.46) 0, transparent 16px),
-              radial-gradient(circle at 24% 54%, rgba(56,189,248,0.50) 0, transparent 18px),
-              radial-gradient(circle at 50% 56%, rgba(125,211,252,0.44) 0, transparent 18px),
-              radial-gradient(circle at 78% 58%, rgba(96,165,250,0.42) 0, transparent 18px),
-              radial-gradient(circle at 22% 86%, rgba(56,189,248,0.42) 0, transparent 18px),
-              radial-gradient(circle at 48% 88%, rgba(125,211,252,0.40) 0, transparent 18px),
-              radial-gradient(circle at 76% 90%, rgba(96,165,250,0.38) 0, transparent 18px)
-            `,
-          }}
-        />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_42%,rgba(2,6,15,0.34)_100%)]" />
-      </div>
-
       {/* HERO */}
       <section className="relative bg-transparent pb-8 pt-28">
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -283,22 +217,26 @@ export default function Home() {
                 ))}
               </div>
 
-              <div className="mb-10 flex flex-wrap gap-4">
+              <div className="mb-4 flex flex-wrap gap-4">
                 <Link
-                  href="/start-project"
+                  href="/contact?type=website-evaluation"
                   className="inline-flex items-center gap-2 rounded-lg bg-primary px-8 py-3.5 text-sm font-semibold text-slate-950 transition-all hover:scale-[1.01] hover:bg-primary hover:shadow-[0_10px_30px_rgba(56,189,248,0.20)]"
                 >
-                  Start Your Project
+                  Get Website Evaluation
                   <ArrowRight className="h-4 w-4" />
                 </Link>
 
                 <Link
-                  href="/services"
+                  href="/work"
                   className="inline-flex items-center gap-2 rounded-lg border border-primary/20 bg-sky-400/[0.06] px-8 py-3.5 text-sm font-semibold text-foreground transition-all hover:border-primary/40 hover:bg-sky-400/[0.10]"
                 >
-                  View Services
+                  View Our Work
                 </Link>
               </div>
+
+              <p className="mb-8 text-xs text-muted-foreground/70">
+                No commitment. Free evaluation.
+              </p>
 
               <div className="flex flex-wrap items-center gap-5 text-sm text-muted-foreground">
                 <div className="inline-flex items-center gap-2">
@@ -569,7 +507,7 @@ export default function Home() {
         <div className="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
           <div className="rounded-[1.75rem] border border-white/10 bg-[#0c1322]/84 px-6 py-12 shadow-[0_20px_60px_rgba(0,0,0,0.24)] backdrop-blur-sm sm:px-10">
             <span className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">
-              ROI Perspective
+              Investment Perspective
             </span>
             <h2 className="mb-5 mt-3 font-heading text-3xl font-bold text-foreground sm:text-4xl">
               A Website Should Do More Than Exist
@@ -580,10 +518,10 @@ export default function Home() {
               business could be doing online.
             </p>
             <Link
-              href="/roi"
+              href="/pricing"
               className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 font-semibold text-slate-950 transition-all hover:scale-[1.01] hover:bg-primary hover:shadow-[0_10px_30px_rgba(56,189,248,0.22)]"
             >
-              Explore the ROI Perspective
+              View Pricing & Packages
               <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
@@ -642,10 +580,10 @@ export default function Home() {
           eyebrow="Start Strong"
           title="If your website no longer reflects the quality of your business, it’s time to fix that."
           description="We help businesses build a stronger online presence that looks better, communicates better, and works harder."
-          primaryLabel="Start Your Project"
-          primaryHref="/start-project"
-          secondaryLabel="View Services"
-          secondaryHref="/services"
+          primaryLabel="Get Website Evaluation"
+          primaryHref="/contact?type=website-evaluation"
+          secondaryLabel="View Our Work"
+          secondaryHref="/work"
         />
       </div>
     </div>
