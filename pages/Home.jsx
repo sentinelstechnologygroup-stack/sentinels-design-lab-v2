@@ -5,7 +5,7 @@ import VisualTrustSection from "@/components/sections/VisualTrustSection";
 import ProcessLine from "@/components/sections/ProcessLine";
 import ProofPreview from "@/components/sections/ProofPreview";
 import CTASection from "@/components/shared/CTASection";
-import { primaryCta, secondaryCta, workProjects } from "@/lib/siteData";
+import { primaryCta, secondaryCta } from "@/lib/siteData";
 
 const processSteps = [
   { number: "01", title: "Evaluate", description: "Identify friction, goals, and the trust gaps that are costing the business momentum." },
@@ -53,8 +53,6 @@ const previewProjects = [
 ];
 
 export default function Home() {
-  const featuredVisual = workProjects.find((project) => project.slug === "best-solutions-distribution");
-
   return (
     <div>
       <PageHero
@@ -65,8 +63,8 @@ export default function Home() {
         primaryCtaHref={primaryCta.path}
         secondaryCtaLabel={secondaryCta.label}
         secondaryCtaHref={secondaryCta.path}
-        imageSrc={featuredVisual?.media?.[0]?.src || "/images/about/hero.png"}
-        imageAlt={featuredVisual?.media?.[0]?.alt || "Sentinels Design Lab project visual"}
+        imageSrc="/images/home/x.png"
+        imageAlt="Approved SDL homepage hero visual showing a connected digital ecosystem over a city backdrop"
       >
         <div className="grid gap-3 text-sm text-white/68 sm:grid-cols-3">
           <div>Modern website rebuilds for trust and lead flow</div>
@@ -75,19 +73,27 @@ export default function Home() {
         </div>
       </PageHero>
 
+      <section className="pb-12 md:pb-16">
+        <div className="mx-auto grid max-w-7xl gap-4 px-4 text-sm text-white/70 sm:grid-cols-3 sm:px-6 lg:px-8">
+          <div className="border-b border-white/8 pb-4 sm:border-b-0 sm:border-r sm:pb-0 sm:pr-4">Website-first positioning for service businesses that need cleaner trust and lead flow.</div>
+          <div className="border-b border-white/8 pb-4 sm:border-b-0 sm:border-r sm:px-4 sm:pb-0">Systems capability stays behind the public site until the business actually needs deeper operational support.</div>
+          <div className="sm:pl-4">Proof stays grounded in real project visuals and practical delivery — not inflated agency claims.</div>
+        </div>
+      </section>
+
       <VisualTrustSection
         eyebrow="What SDL Actually Does"
         title="Websites first. Systems where they matter."
         body="We rebuild underperforming websites and replace disconnected tools with controlled, scalable systems."
         items={trustItems}
         visualType="image"
-        imageSrc="/images/about/hero.png"
-        imageAlt="SDL digital systems visual"
+        imageSrc="/images/packages/hero-2.png"
+        imageAlt="Approved SDL systems flow visual"
       />
 
-      <ProofPreview projects={previewProjects} />
-
       <ProcessLine steps={processSteps} />
+
+      <ProofPreview projects={previewProjects} />
 
       <CTASection />
     </div>

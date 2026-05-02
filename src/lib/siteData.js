@@ -2,7 +2,7 @@ export const business = {
   name: "Sentinels Design Lab",
   email: "Info@SentinelsDesignLab.com",
   phone: "+1 (832) 432-0224",
-  phoneHref: "tel:+18324320224",
+  phoneHref: "tel:+183****0224",
   address: "Magnolia, TX",
   footerTagline:
     "Modern websites, custom digital systems, and practical growth infrastructure for service businesses that need more than a template.",
@@ -498,74 +498,3 @@ export const workSections = [
     title: "Website Work",
     description:
       "Redesigns and new website launches built to clean up positioning, modernize presentation, and strengthen the path from trust to inquiry.",
-  },
-  {
-    slug: "digital-systems",
-    title: "Digital Systems",
-    description:
-      "Internal apps, portals, and systems work that shows SDL can move beyond brochure sites into operational product and middleware territory.",
-  },
-];
-
-export const internalSystems = [];
-
-export { blogCategories, blogPosts } from "./blogPosts";
-
-export const projectTypeOptions = [
-  "Website redesign",
-  "New website build",
-  "Portal or dashboard",
-  "Automation or integration",
-  "Custom digital system",
-  "Not sure yet",
-];
-
-export const budgetOptions = [
-  "Under $2,500",
-  "$2,500 - $5,000",
-  "$5,000 - $10,000",
-  "$10,000+",
-  "Need guidance",
-];
-
-export const timelineOptions = [
-  "ASAP",
-  "2-4 weeks",
-  "1-2 months",
-  "2-3 months",
-  "Flexible / planning stage",
-];
-
-export const aboutSections = {
-  whoWeAre:
-    "Sentinels Design Lab is a Magnolia, TX / Houston-area full-stack digital solutions firm building modern websites, web applications, portals, dashboards, automations, and custom business systems.",
-  whatWeBuild: [
-    "Websites",
-    "Web applications",
-    "Client portals",
-    "Dashboards",
-    "Automation workflows",
-    "Integrations",
-    "SEO-ready site foundations",
-    "Lead-generation systems",
-  ],
-  doctrine:
-    "We build modern websites and digital systems using lean code, source control, controlled deployments, and managed infrastructure. We do not build or host WordPress sites by default. We redesign outdated WordPress and legacy sites into modern, lean, secure websites and systems built for performance, stability, and future scalability.",
-  whoWeHelp: [
-    "Businesses with outdated websites",
-    "Businesses outgrowing WordPress, templates, or DIY tools",
-    "Service companies that need stronger lead flow",
-    "Teams that need dashboards, portals, or automations",
-    "Companies that need practical custom software without enterprise bloat",
-  ],
-  howWeWork: ["Evaluate", "Scope", "Build", "QA", "Deploy", "Support"],
-  timeline: [
-    { year: "2016", label: "Independent Start" },
-    { year: "2018", label: "Systems & Development" },
-    { year: "2019", label: "Automation Focus" },
-    { year: "2020", label: "Digital Growth Services" },
-    { year: "2021", label: "Broader Client Support" },
-    { year: "2025", label: "AI Workflow Integration" },
-    { year: "2026", label: "Sentinels Design Lab" },
-  ],
-};

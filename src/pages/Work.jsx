@@ -119,8 +119,8 @@ export default function Work() {
         primaryCtaHref="/contact?type=website-evaluation"
         secondaryCtaLabel="Contact"
         secondaryCtaHref="/contact"
-        imageSrc="/images/work/premier-current.jpg"
-        imageAlt="Premier Kitchens live website preview"
+        imageSrc="/images/home/tile-seo.png"
+        imageAlt="Approved SDL work hero visual showing performance dashboards and analytics"
       />
 
       <section className="pb-20 md:pb-24">

@@ -44,5 +44,28 @@ Required workflow:
    - push status
    - files changed
 
+10. Visual identity change control:
+    Major visual identity elements require approval before replacement.
+    Approval-required changes:
+    - hero images
+    - logo changes
+    - brand color changes
+    - primary page visuals
+    - major homepage visual direction
+    - client/project screenshots used as hero visuals
+    - claims/metrics/testimonials
+
+    Allowed without approval:
+    - bug fixes
+    - spacing fixes
+    - responsive fixes
+    - broken image repair using the same approved asset
+    - compression/optimization of the same image
+    - alt text improvement
+    - layout containment fixes
+
+    Rule:
+    If a task says “add visual anchors,” that does not authorize replacing approved hero images.
+
 Policy rule:
 Successful build + connected GitHub + relevant changes = commit and push unless explicitly blocked.
