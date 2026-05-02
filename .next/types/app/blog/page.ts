@@ -1,4 +1,4 @@
-// File: C:\Projects\Websites\SDL\sentinels-design-lab\app\blog\page.jsx
+// File: /home/patrick/projects/websites/sentinels-design-lab/app/blog/page.jsx
 import * as entry from '../../../../app/blog/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

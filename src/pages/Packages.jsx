@@ -1,5 +1,5 @@
-"use client";
 // src/pages/packages.jsx
+"use client";
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
