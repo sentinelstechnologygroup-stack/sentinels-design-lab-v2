@@ -204,7 +204,7 @@ export default function About() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.08 }}
-                className="bg-[#0b1220]/98 border border-white/10 rounded-xl p-7 hover:border-primary/30 hover:-translate-y-1 transition-all duration-300"
+                className="bg-[#0b1220] border border-white/10 rounded-xl p-7 hover:border-primary/30 hover:-translate-y-1 transition-all duration-300"
               >
                 <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-5">
                   <v.icon className="w-6 h-6 text-primary" />
@@ -322,7 +322,7 @@ export default function About() {
                     <Clock className="w-4 h-4 text-primary" />
                   </div>
 
-                  <div className="rounded-2xl border border-white/10 bg-[#0b1220]/98 backdrop-blur-sm p-5 shadow-[0_12px_30px_rgba(0,0,0,0.22)]">
+                  <div className="rounded-2xl border border-white/10 bg-[#0b1220] p-5 shadow-[0_12px_30px_rgba(0,0,0,0.22)]">
                     <div className="text-primary text-[11px] font-bold uppercase tracking-[0.2em] mb-2">
                       {m.year}
                     </div>
@@ -365,7 +365,7 @@ export default function About() {
               initial={{ opacity: 0, y: 18 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="bg-[#0b1220]/98 border border-white/10 rounded-xl p-7"
+              className="bg-[#0b1220] border border-white/10 rounded-xl p-7"
             >
               <h3 className="font-heading text-xl font-semibold text-foreground mb-3">
                 Systems Over Surface
@@ -383,7 +383,7 @@ export default function About() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.08 }}
-              className="bg-[#0b1220]/98 border border-white/10 rounded-xl p-7"
+              className="bg-[#0b1220] border border-white/10 rounded-xl p-7"
             >
               <h3 className="font-heading text-xl font-semibold text-foreground mb-3">
                 Built for Real Operators
@@ -402,7 +402,7 @@ export default function About() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.16 }}
-              className="bg-[#0b1220]/98 border border-white/10 rounded-xl p-7"
+              className="bg-[#0b1220] border border-white/10 rounded-xl p-7"
             >
               <h3 className="font-heading text-xl font-semibold text-foreground mb-3">
                 Service With Purpose
@@ -417,7 +417,7 @@ export default function About() {
             </motion.div>
           </div>
 
-          <div className="max-w-4xl mx-auto bg-[#0c1322]/99 border border-white/10 rounded-2xl p-8 md:p-10 shadow-[0_16px_50px_rgba(0,0,0,0.28)]">
+          <div className="max-w-4xl mx-auto bg-[#0c1322] border border-white/10 rounded-2xl p-8 md:p-10 shadow-[0_16px_50px_rgba(0,0,0,0.28)]">
             <h3 className="font-heading text-2xl font-semibold text-foreground mb-4">
               What that means in practice
             </h3>

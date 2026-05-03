@@ -315,7 +315,7 @@ export default function Home() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.08 }}
-              className="rounded-xl border border-white/8 bg-[#0c1322]/99 px-4 py-4 text-sm font-medium text-foreground shadow-[0_8px_30px_rgba(0,0,0,0.14)] backdrop-blur-sm"
+              className="rounded-xl border border-white/8 bg-[#0c1322] px-4 py-4 text-sm font-medium text-foreground shadow-[0_8px_30px_rgba(0,0,0,0.14)] backdrop-blur-sm"
             >
               {item}
             </motion.div>
@@ -350,7 +350,7 @@ export default function Home() {
               >
                 <Link
                   href={service.path}
-                  className="group block h-full rounded-2xl border border-white/10 bg-[#0b1220]/98 p-7 shadow-[0_16px_50px_rgba(0,0,0,0.22)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-[0_20px_60px_rgba(0,0,0,0.28)]"
+                  className="group block h-full rounded-2xl border border-white/10 bg-[#0b1220] p-7 shadow-[0_16px_50px_rgba(0,0,0,0.22)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-[0_20px_60px_rgba(0,0,0,0.28)]"
                 >
                   <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-sky-400/10 ring-1 ring-white/8 transition-all group-hover:bg-sky-400/15">
                     <service.icon className="h-6 w-6 text-primary" />
@@ -396,7 +396,7 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.08 }}
-                className="rounded-xl border border-white/10 bg-[#0b1220]/98 px-4 py-5 text-sm font-medium text-foreground shadow-[0_10px_30px_rgba(0,0,0,0.16)] backdrop-blur-sm"
+                className="rounded-xl border border-white/10 bg-[#0b1220] px-4 py-5 text-sm font-medium text-foreground shadow-[0_10px_30px_rgba(0,0,0,0.16)] backdrop-blur-sm"
               >
                 {item}
               </motion.div>
@@ -449,7 +449,7 @@ export default function Home() {
               viewport={{ once: true }}
               className="space-y-5"
             >
-              <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#0c1322]/99 p-7 shadow-[0_18px_55px_rgba(0,0,0,0.22)] backdrop-blur-sm">
+              <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#0c1322] p-7 shadow-[0_18px_55px_rgba(0,0,0,0.22)] backdrop-blur-sm">
                 <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-primary/15 bg-sky-400/[0.07] px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-primary">
                   <ShieldCheck className="h-3.5 w-3.5" />
                   Our Process
@@ -505,7 +505,7 @@ export default function Home() {
       {/* ROI BRIDGE */}
       <section className="relative bg-transparent py-20">
         <div className="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
-          <div className="rounded-[1.75rem] border border-white/10 bg-[#0c1322]/99 px-6 py-12 shadow-[0_20px_60px_rgba(0,0,0,0.24)] backdrop-blur-sm sm:px-10">
+          <div className="rounded-[1.75rem] border border-white/10 bg-[#0c1322] px-6 py-12 shadow-[0_20px_60px_rgba(0,0,0,0.24)] backdrop-blur-sm sm:px-10">
             <span className="eyebrow mb-4">
               Investment Perspective
             </span>

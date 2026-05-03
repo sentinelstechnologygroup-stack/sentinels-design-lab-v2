@@ -132,7 +132,7 @@ export default function Services() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.08 }}
-                  className="rounded-2xl border border-white/10 bg-[#0b1220]/98 p-7 shadow-[0_16px_50px_rgba(0,0,0,0.22)] backdrop-blur-sm"
+                  className="rounded-2xl border border-white/10 bg-[#0b1220] p-7 shadow-[0_16px_50px_rgba(0,0,0,0.22)] backdrop-blur-sm"
                 >
                   <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-sky-400/10 ring-1 ring-white/8">
                     <Icon className="h-6 w-6 text-primary" />
@@ -175,7 +175,7 @@ export default function Services() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.08 }}
-                className="rounded-2xl border border-white/10 bg-[#0b1220]/98 p-6 shadow-[0_10px_30px_rgba(0,0,0,0.18)] backdrop-blur-sm"
+                className="rounded-2xl border border-white/10 bg-[#0b1220] p-6 shadow-[0_10px_30px_rgba(0,0,0,0.18)] backdrop-blur-sm"
               >
                 <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-sky-400/10 ring-1 ring-white/8">
                   <item.icon className="h-5 w-5 text-primary" />
@@ -195,7 +195,7 @@ export default function Services() {
       {/* OUTCOMES */}
       <section className="relative bg-transparent py-20">
         <div className="relative mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          <div className="overflow-hidden rounded-[1.75rem] border border-white/10 bg-[#0c1322]/99 px-8 py-12 shadow-[0_20px_60px_rgba(0,0,0,0.24)] backdrop-blur-sm sm:px-12">
+          <div className="overflow-hidden rounded-[1.75rem] border border-white/10 bg-[#0c1322] px-8 py-12 shadow-[0_20px_60px_rgba(0,0,0,0.24)] backdrop-blur-sm sm:px-12">
             <div className="mb-10 text-center">
               <span className="eyebrow mb-4">
                 What You Get
@@ -253,7 +253,7 @@ export default function Services() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="rounded-2xl border border-white/10 bg-[#0b1220]/98 p-6 shadow-[0_10px_30px_rgba(0,0,0,0.18)] backdrop-blur-sm"
+                className="rounded-2xl border border-white/10 bg-[#0b1220] p-6 shadow-[0_10px_30px_rgba(0,0,0,0.18)] backdrop-blur-sm"
               >
                 <span className="mb-4 inline-flex rounded-md bg-sky-400/10 px-2.5 py-1 text-xs font-bold text-primary ring-1 ring-primary/15">
                   {item.step}
@@ -273,7 +273,7 @@ export default function Services() {
       {/* WHAT WE DON'T DO */}
       <section className="relative bg-transparent py-20">
         <div className="relative mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-          <div className="rounded-[1.75rem] border border-white/10 bg-[#0c1322]/99 px-8 py-12 shadow-[0_20px_60px_rgba(0,0,0,0.24)] backdrop-blur-sm sm:px-12">
+          <div className="rounded-[1.75rem] border border-white/10 bg-[#0c1322] px-8 py-12 shadow-[0_20px_60px_rgba(0,0,0,0.24)] backdrop-blur-sm sm:px-12">
             <div className="mb-8 text-center">
               <span className="eyebrow mb-4">
                 Honest Positioning

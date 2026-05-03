@@ -46,9 +46,9 @@
     --amber-2: rgb(252, 211, 77);
     --amber-3: rgb(251, 191, 36);
 
-    --surface-soft: rgba(10, 17, 31, 0.97);
-    --surface-mid: rgba(9, 16, 30, 0.985);
-    --surface-heavy: rgba(7, 12, 24, 0.995);
+    --surface-soft: #0a111f;
+    --surface-mid: #09101e;
+    --surface-heavy: #070c18;
 
     --surface-stroke: rgba(255, 255, 255, 0.1);
     --surface-stroke-soft: rgba(255, 255, 255, 0.08);
@@ -244,47 +244,44 @@
 
   .surface-subtle {
     @apply rounded-[22px] border;
-    background: rgba(10, 16, 32, 0.97);
-    border-color: rgba(255, 255, 255, 0.09);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
+    background: #0d1626;
+    border-color: rgba(255, 255, 255, 0.10);
   }
 
   /* -------------------------------------------------
-     READABILITY SURFACES
-     Use these for content-heavy panels where background
-     bleed-through competes with text readability.
-     Key difference from panel-safe: minimal blur (4px)
-     prevents background pattern from showing through.
+     READABILITY SURFACES — SOLID DARK
+     These panels use solid hex backgrounds with NO alpha
+     so the NodeNetwork background cannot bleed through.
+     Glass effect comes from border + shadow only.
   ------------------------------------------------- */
 
   .readability-panel {
-    background: rgba(7, 12, 24, 0.99);
-    border: 1px solid rgba(255, 255, 255, 0.10);
-    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.32);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
+    background: #070d18;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.42);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
 
   .readability-card {
-    background: rgba(9, 14, 28, 0.99);
-    border: 1px solid rgba(255, 255, 255, 0.09);
-    box-shadow: 0 16px 50px rgba(0, 0, 0, 0.28);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
+    background: #070d18;
+    border: 1px solid rgba(255, 255, 255, 0.11);
+    box-shadow: 0 18px 55px rgba(0, 0, 0, 0.36);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
 
   .readability-banner {
-    background: rgba(6, 10, 22, 0.995);
-    border: 1px solid rgba(255, 255, 255, 0.09);
-    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.36);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
+    background: #050b16;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 28px 85px rgba(0, 0, 0, 0.46);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
 
   .readability-inner {
-    background: rgba(12, 19, 34, 0.97);
-    border: 1px solid rgba(255, 255, 255, 0.09);
+    background: #0d1626;
+    border: 1px solid rgba(255, 255, 255, 0.10);
   }
 
   .surface-stroke {
