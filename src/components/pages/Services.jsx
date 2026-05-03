@@ -218,7 +218,7 @@ export default function Services() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.07 }}
-                  className="inline-flex items-start gap-3 rounded-xl border border-white/8 bg-white/[0.10] px-4 py-3.5 text-sm text-muted-foreground"
+                  className="inline-flex items-start gap-3 rounded-xl readability-inner px-4 py-3.5 text-sm text-muted-foreground"
                 >
                   <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
                   <span>{point}</span>
@@ -295,7 +295,7 @@ export default function Services() {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.07 }}
-                  className="flex w-full items-start gap-3 rounded-xl border border-white/8 bg-white/[0.10] px-4 py-3 text-sm text-muted-foreground"
+                  className="flex w-full items-start gap-3 rounded-xl readability-inner px-4 py-3 text-sm text-muted-foreground"
                 >
                   <XCircle className="mt-0.5 h-4 w-4 shrink-0 text-rose-400/70" />
                   <span>{item}</span>

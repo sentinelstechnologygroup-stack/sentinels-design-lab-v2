@@ -42,7 +42,7 @@ export default function Pricing() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-4 md:grid-cols-3">
             {pricingNotes.map((note) => (
-              <div key={note.title} className="surface-subtle h-full px-5 py-5 md:px-6">
+              <div key={note.title} className="readability-inner h-full px-5 py-5 md:px-6">
                 <div className="text-sm font-semibold text-foreground">{note.title}</div>
                 <p className="mt-3 text-sm leading-7 text-muted-foreground">{note.description}</p>
               </div>
@@ -81,7 +81,7 @@ export default function Pricing() {
             </div>
             <div className="mt-6 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
               {pricingFactors.map((factor) => (
-                <div key={factor} className="surface-subtle px-4 py-4 text-sm text-white/80">
+                <div key={factor} className="readability-inner px-4 py-4 text-sm text-white/80">
                   {factor}
                 </div>
               ))}

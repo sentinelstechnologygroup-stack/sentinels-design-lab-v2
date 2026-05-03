@@ -24,7 +24,7 @@ export default function CTASection({
       <div className="absolute inset-0 bg-gradient-to-r from-primary/8 via-primary/4 to-accent/8" />
 
       <div className="relative mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-        <div className="rounded-[1.75rem] border border-white/10 bg-[#0c1322]/99 px-8 py-12 text-center shadow-[0_24px_70px_rgba(0,0,0,0.32)] backdrop-blur-sm sm:px-12">
+        <div className="readability-banner rounded-[1.75rem] px-8 py-12 text-center sm:px-12">
           {eyebrow && (
             <span className="eyebrow mb-5 inline-flex">
               {eyebrow}

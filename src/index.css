@@ -244,10 +244,47 @@
 
   .surface-subtle {
     @apply rounded-[22px] border;
-    background: rgba(255, 255, 255, 0.045);
-    border-color: rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
+    background: rgba(10, 16, 32, 0.97);
+    border-color: rgba(255, 255, 255, 0.09);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+
+  /* -------------------------------------------------
+     READABILITY SURFACES
+     Use these for content-heavy panels where background
+     bleed-through competes with text readability.
+     Key difference from panel-safe: minimal blur (4px)
+     prevents background pattern from showing through.
+  ------------------------------------------------- */
+
+  .readability-panel {
+    background: rgba(7, 12, 24, 0.99);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.32);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+
+  .readability-card {
+    background: rgba(9, 14, 28, 0.99);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    box-shadow: 0 16px 50px rgba(0, 0, 0, 0.28);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+
+  .readability-banner {
+    background: rgba(6, 10, 22, 0.995);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.36);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+
+  .readability-inner {
+    background: rgba(12, 19, 34, 0.97);
+    border: 1px solid rgba(255, 255, 255, 0.09);
   }
 
   .surface-stroke {

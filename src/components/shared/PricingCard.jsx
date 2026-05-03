@@ -31,8 +31,8 @@ export default function PricingCard({
     <div
       className={`relative flex h-full flex-col overflow-hidden rounded-[28px] border p-7 transition-all duration-300 md:p-8 ${
         featured
-          ? "border-primary/40 bg-primary/[0.16] shadow-[0_24px_70px_rgba(59,130,246,0.22)]"
-          : "panel-safe hover:border-primary/20 hover:shadow-[0_24px_60px_rgba(0,0,0,0.26)]"
+          ? "border-primary/50 bg-[#040c1a] shadow-[0_24px_70px_rgba(59,130,246,0.22)]"
+          : "readability-card hover:border-primary/20 hover:shadow-[0_24px_60px_rgba(0,0,0,0.26)]"
       }`}
     >
       {featured ? (
@@ -68,7 +68,7 @@ export default function PricingCard({
         <p className="mt-5 text-sm leading-7 text-muted-foreground">{description}</p>
       ) : null}
 
-      <div className="mt-6 rounded-[22px] border border-white/10 bg-white/[0.09] p-5">
+      <div className="mt-6 readability-inner rounded-[22px] p-5">
         <div className="text-xs font-semibold uppercase tracking-[0.18em] text-white/45">
           Included
         </div>

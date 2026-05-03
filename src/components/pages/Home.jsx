@@ -474,7 +474,7 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="panel-safe rounded-2xl p-7">
+              <div className="readability-card rounded-2xl p-7">
                 <h3 className="mb-3 font-heading text-xl font-semibold text-foreground">
                   What a stronger website should do
                 </h3>
@@ -489,7 +489,7 @@ export default function Home() {
                   ].map((item) => (
                     <div
                       key={item}
-                      className="inline-flex items-start gap-2 rounded-lg border border-white/8 bg-white/[0.10] px-3 py-3 text-sm text-muted-foreground"
+                      className="inline-flex items-start gap-2 rounded-lg readability-inner px-3 py-3 text-sm text-muted-foreground"
                     >
                       <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
                       <span>{item}</span>
@@ -548,7 +548,7 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="panel-safe rounded-2xl p-7"
+                className="readability-card rounded-2xl p-7"
               >
                 <div className="mb-4 flex gap-0.5">
                   {[...Array(5)].map((_, j) => (

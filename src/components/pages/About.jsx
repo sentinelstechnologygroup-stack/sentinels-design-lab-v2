@@ -161,24 +161,26 @@ export default function About() {
       </section>
 
       {/* Mission */}
-      <section className="py-20 bg-[#080f1e]/97">
+      <section className="py-20">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <span className="eyebrow mb-4">
-            Our Mission
-          </span>
+          <div className="readability-banner rounded-[1.75rem] px-8 py-12 sm:px-12">
+            <span className="eyebrow mb-5 inline-flex">
+              Our Mission
+            </span>
 
-          <h2 className="font-heading text-3xl sm:text-4xl font-bold text-foreground mt-3 mb-6">
-            Build Systems That{" "}
-            <span className="text-primary">Drive Growth</span>
-          </h2>
+            <h2 className="font-heading text-3xl sm:text-4xl font-bold text-foreground mt-3 mb-6">
+              Build Systems That{" "}
+              <span className="text-primary">Drive Growth</span>
+            </h2>
 
-          <p className="text-muted-foreground leading-relaxed text-lg">
-            Our mission is to turn digital presence into a revenue-generating
-            asset. We don’t build for aesthetics alone — we build systems that
-            drive traffic, convert users, and support long-term business growth.
-            Every decision is made with performance in mind, because results are
-            the only metric that matters.
-          </p>
+            <p className="text-muted-foreground leading-relaxed text-lg">
+              Our mission is to turn digital presence into a revenue-generating
+              asset. We don’t build for aesthetics alone — we build systems that
+              drive traffic, convert users, and support long-term business growth.
+              Every decision is made with performance in mind, because results are
+              the only metric that matters.
+            </p>
+          </div>
         </div>
       </section>
 
@@ -222,10 +224,10 @@ export default function About() {
       </section>
 
       {/* Journey */}
-      <section className="py-24 bg-[#080f1e]/97 overflow-hidden">
+      <section className="py-24 overflow-hidden">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <span className="eyebrow mb-4">
+          <div className="readability-banner rounded-[1.75rem] px-8 py-10 text-center mb-16 sm:px-12">
+            <span className="eyebrow mb-4 inline-flex">
               Our Journey
             </span>
 
@@ -260,7 +262,7 @@ export default function About() {
                     <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-6">
                       {/* Left Card */}
                       <div className={`${isLeft ? "block" : "invisible"}`}>
-                        <div className="ml-auto max-w-md rounded-2xl border border-border/50 bg-[#0b1220]/98 backdrop-blur-sm p-6 shadow-[0_14px_35px_rgba(0,0,0,0.28)] hover:border-primary/30 hover:-translate-y-1 transition-all duration-300">
+                        <div className="ml-auto max-w-md rounded-2xl readability-card rounded-2xl p-6 hover:border-primary/30 hover:-translate-y-1 transition-all duration-300">
                           <div className="text-primary text-[11px] font-bold uppercase tracking-[0.2em] mb-2">
                             {m.year}
                           </div>
@@ -283,7 +285,7 @@ export default function About() {
 
                       {/* Right Card */}
                       <div className={`${!isLeft ? "block" : "invisible"}`}>
-                        <div className="max-w-md rounded-2xl border border-border/50 bg-[#0b1220]/98 backdrop-blur-sm p-6 shadow-[0_14px_35px_rgba(0,0,0,0.28)] hover:border-primary/30 hover:-translate-y-1 transition-all duration-300">
+                        <div className="max-w-md rounded-2xl readability-card rounded-2xl p-6 hover:border-primary/30 hover:-translate-y-1 transition-all duration-300">
                           <div className="text-primary text-[11px] font-bold uppercase tracking-[0.2em] mb-2">
                             {m.year}
                           </div>
@@ -341,8 +343,8 @@ export default function About() {
       {/* Founder Philosophy */}
       <section className="py-20">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-14">
-            <span className="eyebrow mb-4">
+          <div className="readability-banner rounded-[1.75rem] px-8 py-10 text-center max-w-3xl mx-auto mb-14 sm:px-12">
+            <span className="eyebrow mb-4 inline-flex">
               Founder’s Philosophy
             </span>
             <h2 className="font-heading text-3xl sm:text-4xl font-bold text-foreground mt-3 mb-6">
