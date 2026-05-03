@@ -324,8 +324,8 @@ export default function Home() {
       </section>
 
       {/* SERVICES */}
-      <section className="relative bg-transparent py-20">
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section className="py-20 border-t border-white/8" style={{ background: '#070d18' }}>
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-14 text-center">
             <span className="eyebrow mb-4">
               What We Do
@@ -374,8 +374,8 @@ export default function Home() {
       </section>
 
       {/* BEST FIT */}
-      <section className="relative bg-transparent py-20">
-        <div className="relative mx-auto max-w-5xl px-4 text-center sm:px-6 lg:px-8">
+      <section className="py-20 border-t border-white/8" style={{ background: '#07101f' }}>
+        <div className="mx-auto max-w-5xl px-4 text-center sm:px-6 lg:px-8">
           <span className="eyebrow mb-4">
             Best Fit
           </span>
@@ -503,28 +503,26 @@ export default function Home() {
       </section>
 
       {/* ROI BRIDGE */}
-      <section className="relative bg-transparent py-20">
+      <section className="py-20 border-t border-white/8" style={{ background: '#050b16' }}>
         <div className="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
-          <div className="rounded-[1.75rem] border border-white/10 bg-[#0c1322] px-6 py-12 shadow-[0_20px_60px_rgba(0,0,0,0.24)] backdrop-blur-sm sm:px-10">
-            <span className="eyebrow mb-4">
-              Investment Perspective
-            </span>
-            <h2 className="mb-5 mt-3 font-heading text-3xl font-bold text-foreground sm:text-4xl">
-              A Website Should Do More Than Exist
-            </h2>
-            <p className="mx-auto mb-8 max-w-2xl text-muted-foreground">
-              Your website should help you win more jobs, build trust faster,
-              and support your marketing efforts — not quietly limit what your
-              business could be doing online.
-            </p>
-            <Link
-              href="/pricing"
-              className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 font-semibold text-slate-950 transition-all hover:scale-[1.01] hover:bg-primary hover:shadow-[0_10px_30px_rgba(56,189,248,0.22)]"
-            >
-              View Pricing & Packages
-              <ArrowRight className="h-4 w-4" />
-            </Link>
-          </div>
+          <span className="eyebrow mb-4">
+            Investment Perspective
+          </span>
+          <h2 className="mb-5 mt-3 font-heading text-3xl font-bold text-foreground sm:text-4xl">
+            A Website Should Do More Than Exist
+          </h2>
+          <p className="mx-auto mb-8 max-w-2xl text-muted-foreground">
+            Your website should help you win more jobs, build trust faster,
+            and support your marketing efforts — not quietly limit what your
+            business could be doing online.
+          </p>
+          <Link
+            href="/pricing"
+            className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 font-semibold text-slate-950 transition-all hover:scale-[1.01] hover:bg-primary hover:shadow-[0_10px_30px_rgba(56,189,248,0.22)]"
+          >
+            View Pricing & Packages
+            <ArrowRight className="h-4 w-4" />
+          </Link>
         </div>
       </section>
 

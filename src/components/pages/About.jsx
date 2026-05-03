@@ -161,26 +161,24 @@ export default function About() {
       </section>
 
       {/* Mission */}
-      <section className="py-20">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="readability-banner rounded-[1.75rem] px-8 py-12 sm:px-12">
-            <span className="eyebrow mb-5 inline-flex">
-              Our Mission
-            </span>
+      <section className="py-20 border-t border-white/8" style={{ background: '#050b16' }}>
+        <div className="max-w-3xl mx-auto px-4 text-center sm:px-6 lg:px-8">
+          <span className="eyebrow mb-5 inline-flex">
+            Our Mission
+          </span>
 
-            <h2 className="font-heading text-3xl sm:text-4xl font-bold text-foreground mt-3 mb-6">
-              Build Systems That{" "}
-              <span className="text-primary">Drive Growth</span>
-            </h2>
+          <h2 className="font-heading text-3xl sm:text-4xl font-bold text-foreground mt-3 mb-6">
+            Build Systems That{" "}
+            <span className="text-primary">Drive Growth</span>
+          </h2>
 
-            <p className="text-muted-foreground leading-relaxed text-lg">
-              Our mission is to turn digital presence into a revenue-generating
-              asset. We don’t build for aesthetics alone — we build systems that
-              drive traffic, convert users, and support long-term business growth.
-              Every decision is made with performance in mind, because results are
-              the only metric that matters.
-            </p>
-          </div>
+          <p className="text-muted-foreground leading-relaxed text-lg">
+            Our mission is to turn digital presence into a revenue-generating
+            asset. We don’t build for aesthetics alone — we build systems that
+            drive traffic, convert users, and support long-term business growth.
+            Every decision is made with performance in mind, because results are
+            the only metric that matters.
+          </p>
         </div>
       </section>
 
@@ -224,9 +222,9 @@ export default function About() {
       </section>
 
       {/* Journey */}
-      <section className="py-24 overflow-hidden">
+      <section className="py-24 overflow-hidden border-t border-white/8" style={{ background: '#07101f' }}>
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="readability-banner rounded-[1.75rem] px-8 py-10 text-center mb-16 sm:px-12">
+          <div className="text-center mb-16">
             <span className="eyebrow mb-4 inline-flex">
               Our Journey
             </span>
@@ -341,9 +339,9 @@ export default function About() {
       </section>
 
       {/* Founder Philosophy */}
-      <section className="py-20">
+      <section className="py-20 border-t border-white/8" style={{ background: '#070d18' }}>
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="readability-banner rounded-[1.75rem] px-8 py-10 text-center max-w-3xl mx-auto mb-14 sm:px-12">
+          <div className="text-center max-w-3xl mx-auto mb-14">
             <span className="eyebrow mb-4 inline-flex">
               Founder’s Philosophy
             </span>

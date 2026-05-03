@@ -230,8 +230,8 @@ export default function Services() {
       </section>
 
       {/* PROCESS */}
-      <section className="relative bg-transparent py-20">
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section className="py-20 border-t border-white/8" style={{ background: '#07101f' }}>
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-14 text-center">
             <span className="eyebrow mb-4">
               How It Works

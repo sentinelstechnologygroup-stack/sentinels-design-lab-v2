@@ -114,6 +114,9 @@ export default function ProofCaseCard({
   originalState = [],
   whatChanged = [],
   result = [],
+  originalStateLabel = "Original State",
+  whatChangedLabel = "What Changed",
+  resultLabel = "Result",
   note,
 }) {
   const [modal, setModal] = useState(null);
@@ -208,9 +211,9 @@ export default function ProofCaseCard({
           ) : null}
 
           <div className="mt-8 grid gap-8 lg:grid-cols-3">
-            <EvidenceList title="Original State" items={originalState} />
-            <EvidenceList title="What Changed" items={whatChanged} />
-            <EvidenceList title="Result" items={result} />
+            <EvidenceList title={originalStateLabel} items={originalState} />
+            <EvidenceList title={whatChangedLabel} items={whatChanged} />
+            <EvidenceList title={resultLabel} items={result} />
           </div>
 
           <div className="mt-8 flex flex-wrap items-center gap-4">

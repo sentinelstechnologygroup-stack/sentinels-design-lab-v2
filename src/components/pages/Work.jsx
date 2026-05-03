@@ -43,6 +43,7 @@ const websiteProof = {
     ],
   },
   "my-buddys-mobile-detail": {
+    isNewBuild: true,
     originalState: [
       "The business needed a professional web presence instead of relying on scattered informal channels.",
       "Service explanation and booking flow needed stronger structure from day one.",
@@ -60,19 +61,20 @@ const websiteProof = {
     ],
   },
   "best-solutions-distribution": {
+    isNewBuild: true,
     originalState: [
-      "The business needed a stronger first-impression site for painting, flooring, and managed services.",
-      "Service clarity and estimate flow needed to be visible immediately.",
-      "Trust signals had to be stronger at the top of the experience.",
+      "The business needed a stronger first-impression website to present its services and company credibility online.",
+      "Core service and company information needed to be easier to understand at a glance.",
+      "The site needed a clearer path for prospects to evaluate the company and take the next step.",
     ],
     whatChanged: [
       "Built a cleaner homepage structure around services, trust, and next-step action.",
-      "Strengthened hero messaging and estimate CTA placement.",
+      "Strengthened hero messaging and CTA placement.",
       "Used a more polished visual system to support conversion instead of ambiguity.",
     ],
     result: [
-      "The site now reads as a credible local service company rather than a thin placeholder presence.",
-      "Core services are easier to scan and estimate intent is easier to act on.",
+      "The site now reads as a credible operating business rather than a thin placeholder presence.",
+      "Core services are easier to scan and act on.",
       "The live homepage gives SDL a stronger proof asset for real service-business work.",
     ],
   },
@@ -149,6 +151,9 @@ export default function Work() {
                   originalState={proof?.originalState || project.keyImprovements || []}
                   whatChanged={proof?.whatChanged || project.scopeDeliverables || []}
                   result={proof?.result || project.keyImprovements || []}
+                  originalStateLabel={proof?.isNewBuild ? "Business Need" : "Original State"}
+                  whatChangedLabel={proof?.isNewBuild ? "What SDL Built" : "What Changed"}
+                  resultLabel={proof?.isNewBuild ? "Outcome" : "Result"}
                   note={proof?.note}
                 />
               );
