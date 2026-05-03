@@ -197,9 +197,13 @@ export default function Contact() {
         toast.success("Message sent! We'll be in touch shortly.");
         resetForm();
       } else {
-        console.log("Form submission (no endpoint configured):", form);
-        toast.success("Thank you! We'll be in touch shortly.");
-        resetForm();
+        // FORM_ENDPOINT not configured — do not fake submission
+        // Set FORM_ENDPOINT in src/lib/constants.js to enable submissions
+        // Recommended: Formspree (formspree.io), Vercel API route, or email webhook
+        toast.warning(
+          "Our online form is being configured. Please call or email us directly — we respond within one business day.",
+          { duration: 7000 }
+        );
       }
     } catch (error) {
       console.error(error);
