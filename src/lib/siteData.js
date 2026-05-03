@@ -18,11 +18,11 @@ export const seo = {
 
 export const navLinks = [
   { label: "Home", path: "/" },
+  { label: "About", path: "/about" },
   { label: "Services", path: "/services" },
   { label: "Work", path: "/work" },
   { label: "Pricing", path: "/pricing" },
   { label: "Blog", path: "/blog" },
-  { label: "About", path: "/about" },
   { label: "Contact", path: "/contact" },
 ];
 
