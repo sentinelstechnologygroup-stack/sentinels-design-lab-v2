@@ -1,43 +1,9 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
 
 const fallbackImage = "/images/blog/fallback-editorial.svg";
 
-function SectionContent({ section }) {
-  return (
-    <section>
-      <h2 className="font-heading text-2xl font-semibold text-white md:text-3xl">{section.heading}</h2>
-      <div className="mt-5 space-y-4">
-        {section.paragraphs?.map((paragraph, index) => (
-          <p key={index} className="text-sm leading-8 text-white/75 md:text-base">
-            {paragraph}
-          </p>
-        ))}
-      </div>
-
-      {section.bullets?.length ? (
-        <ul className="mt-5 space-y-3 text-sm leading-7 text-white/75 md:text-base">
-          {section.bullets.map((item) => (
-            <li key={item} className="flex gap-3">
-              <span className="mt-[0.7rem] h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
-              <span>{item}</span>
-            </li>
-          ))}
-        </ul>
-      ) : null}
-
-      {section.quote ? (
-        <blockquote className="mt-6 border-l-2 border-primary pl-5 font-heading text-xl italic leading-9 text-white/85">
-          {section.quote}
-        </blockquote>
-      ) : null}
-    </section>
-  );
-}
-
-export default function BlogArticleTemplate({ title, category, date, readTime, excerpt, heroImage, heroImageAlt, sections = [] }) {
+export default function BlogArticleTemplate({ title, category, date, readTime, excerpt, heroImage, heroImageAlt, children }) {
   const imageSrc = heroImage || fallbackImage;
   const imageAlt = heroImageAlt || title;
 
@@ -63,10 +29,8 @@ export default function BlogArticleTemplate({ title, category, date, readTime, e
 
       <section className="section-shell pb-24">
         <article className="mx-auto max-w-4xl rounded-[28px] border border-white/10 bg-[#08101d] p-6 shadow-[0_22px_60px_rgba(0,0,0,0.28)] md:p-10">
-          <div className="space-y-12">
-            {sections.map((section) => (
-              <SectionContent key={section.heading} section={section} />
-            ))}
+          <div className="space-y-2">
+            {children}
           </div>
         </article>
       </section>

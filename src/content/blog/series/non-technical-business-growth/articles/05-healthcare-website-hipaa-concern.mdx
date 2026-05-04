@@ -1,0 +1,55 @@
+---
+title: "When Does a Doctor's Office Website Become a HIPAA Concern?"
+slug: "healthcare-website-hipaa-concern"
+aliases: ["when-does-a-doctors-office-website-become-a-hipaa-concern"]
+category: "Healthcare & Professional Services"
+date: "May 1, 2026"
+readTime: "9 min read"
+excerpt: "HIPAA compliance conversations usually happen inside clinical systems. What gets overlooked more often than it should is the public-facing website, which can create HIPAA exposure in ways that are easy to miss and expensive to discover late."
+author: "Sentinels Design Lab"
+series: "non-technical-business-growth"
+seriesOrder: 5
+thumbnailUrl: "/images/blog/what-a-modern-service-business-website-needs-in-2026-thumb-real-a.webp"
+heroUrl: "/images/blog/what-a-modern-service-business-website-needs-in-2026-hero-real-a.webp"
+alt: "Healthcare website HIPAA compliance thumbnail — professional services workspace."
+---
+
+## The Basic Framework: When Does HIPAA Apply to a Website?
+
+HIPAA applies to covered entities — healthcare providers, health plans, and healthcare clearinghouses — and their business associates. If you're a physician, dentist, therapist, or any other healthcare provider who bills insurance, you're almost certainly a covered entity.
+
+The critical distinction for websites: HIPAA is triggered by Protected Health Information (PHI). PHI is any individually identifiable health information — past, present, or future — created or received in connection with the provision of healthcare. The question for your website is whether it collects, transmits, or stores anything that meets that definition.
+
+## Six Ways Healthcare Websites Create HIPAA Exposure
+
+A contact form that asks "What's your reason for visiting?" or "Describe your symptoms" may collect PHI if a patient submits identifiable health information. If that form data is transmitted unencrypted, stored in a third-party CRM without a Business Associate Agreement (BAA), or accessible to unauthorized parties, it can create a compliance gap.
+
+Third-party scheduling platforms embedded on healthcare websites must have a signed BAA in place if they receive, process, or store PHI. Many popular scheduling tools — particularly general-purpose ones not built for healthcare — don't offer BAAs. Using them without one is a compliance problem.
+
+Live chat tools embedded on a healthcare website may capture PHI if patients use them to ask about appointments, symptoms, or existing care. General-purpose chat tools like Intercom or Drift are not HIPAA-compliant without specific configuration and a BAA — and some don't offer BAAs at all.
+
+Standard web analytics — Google Analytics, in particular — have come under scrutiny in healthcare contexts. If your analytics setup captures URL paths that include appointment details, patient identifiers, or health conditions, that data may constitute PHI. The HHS Office for Civil Rights has issued guidance on tracking technologies that every healthcare website owner should read.
+
+If your website sends automated email confirmations containing appointment details, prescription reminders, or any health-related information, unencrypted standard email is not an appropriate transmission channel for PHI. Patients can consent to email communication with acknowledgment of the risk — but that consent process needs to be documented.
+
+If your site includes a patient portal login — even if it's a third-party tool — the security controls around authentication, session management, and data access need to meet HIPAA's technical safeguard requirements.
+
+> "The most common HIPAA website problems aren't intentional. They're the result of building a website without HIPAA in the room."
+
+## What a HIPAA-Aware Website Strategy Looks Like
+
+A healthcare provider website can be both effective as a marketing and patient acquisition tool and compliant. The two are not in conflict. But compliance has to be a design requirement from the start, not an afterthought after launch.
+
+- Contact forms should be encrypted in transit and stored in a HIPAA-compliant environment, or limited to non-PHI fields
+- Every third-party tool (scheduling, chat, analytics, email) should be evaluated for BAA availability before integration
+- Analytics should be configured to avoid capturing PHI in URL parameters or form field data
+- Privacy policies and consent notices on the website should reflect actual data practices
+- A Security Risk Analysis should evaluate the website as part of the broader technical infrastructure
+
+## The SDL Approach to Healthcare Websites
+
+When SDL works with healthcare providers, we build with compliance requirements as a design constraint — not an audit finding. That means explicit vendor evaluation for every third-party integration, encrypted form handling, and documentation of data flows before the first line of code is written.
+
+If you're a healthcare provider whose website was built without these conversations, the right time to have them is now — before a complaint or audit makes the urgency unavoidable.
+
+The good news: getting this right doesn't mean building a less effective website. It means building one that earns patient trust on two levels — through strong design and clear communication, and through the operational discipline of actually protecting the information patients share with you.

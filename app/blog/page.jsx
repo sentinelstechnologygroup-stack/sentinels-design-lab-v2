@@ -1,4 +1,5 @@
 import BlogPage from "@/components/pages/Blog";
+import { getAllPosts } from "@/lib/blog/getAllPosts";
 import { pageMetadata } from "@/lib/metadata";
 
 export const metadata = pageMetadata(
@@ -7,6 +8,7 @@ export const metadata = pageMetadata(
   "/blog",
 );
 
-export default function Page() {
-  return <BlogPage />;
+export default async function Page() {
+  const posts = await getAllPosts();
+  return <BlogPage posts={posts} />;
 }

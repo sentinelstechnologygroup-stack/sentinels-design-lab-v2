@@ -3,9 +3,8 @@
 
 import React from "react";
 import BlogCard from "@/components/blog/BlogCard";
-import { blogPosts } from "@/lib/blogPosts";
 
-export default function BlogPage() {
+export default function BlogPage({ posts = [] }) {
   return (
     <>
       <section className="section-shell pt-32 pb-16 md:pt-40 md:pb-20">
@@ -24,7 +23,7 @@ export default function BlogPage() {
 
       <section className="section-shell pb-24">
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {blogPosts.map((post) => (
+          {posts.map((post) => (
             <BlogCard
               key={post.slug}
               title={post.title}
@@ -33,8 +32,9 @@ export default function BlogPage() {
               category={post.category}
               date={post.date}
               readTime={post.readTime}
-              thumbnailImage={post.thumbnailImage}
-              thumbnailImageAlt={post.thumbnailImageAlt}
+              thumbnailImage={post.thumbnailUrl}
+              thumbnailImageAlt={post.alt}
+              series={post.series}
             />
           ))}
         </div>

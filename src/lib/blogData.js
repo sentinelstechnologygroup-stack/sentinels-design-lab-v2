@@ -1,3 +1,4 @@
+// src/lib/blogData.js
 export const blogCategories = ["All", "SEO", "Web Design", "Branding", "Paid Ads", "Ecommerce", "Digital Marketing"];
 
 export const blogPosts = [
