@@ -36,20 +36,22 @@ const mdxComponents = {
 
 export async function generateStaticParams() {
   const posts = await getAllPosts();
-  return posts.flatMap(p => [
-    { slug: p.slug },
-    ...(p.aliases || []).map(a => ({ slug: a }))
+  return posts.flatMap((post) => [
+    { slug: post.slug },
+    ...(post.aliases || []).map((alias) => ({ slug: alias })),
   ]);
 }
 
 export async function generateMetadata({ params }) {
-  const post = await getPostBySlug(params.slug);
+  const { slug } = await params;
+  const post = await getPostBySlug(slug);
   if (!post) return pageMetadata("Blog | Sentinels Design Lab", "SDL articles.", "/blog");
   return pageMetadata(`${post.title} | Sentinels Design Lab`, post.excerpt, `/blog/${post.slug}`, post.heroUrl);
 }
 
 export default async function Page({ params }) {
-  const post = await getPostBySlug(params.slug);
+  const { slug } = await params;
+  const post = await getPostBySlug(slug);
   if (!post) notFound();
 
   const Content = await compileMdxContent(post.content);

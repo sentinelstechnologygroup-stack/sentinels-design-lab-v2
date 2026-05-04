@@ -1,57 +1,62 @@
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
+import fs from "fs";
+import path from "path";
+import matter from "gray-matter";
 
-const CONTENT_ROOT = path.join(process.cwd(), 'src/content/blog');
-const SERIES_DIR = path.join(CONTENT_ROOT, 'series');
-const STANDALONE_DIR = path.join(CONTENT_ROOT, 'standalone');
+const BLOG_ROOT = path.join(process.cwd(), "src/content/blog");
+const STANDALONE_ARTICLES_PATH = path.join(BLOG_ROOT, "standalone", "articles");
+const STANDALONE_DIRECT_PATH = path.join(BLOG_ROOT, "standalone");
 
-export async function getAllPosts() {
-  const posts = [];
+function normalizePost(filePath) {
+  const raw = fs.readFileSync(filePath, "utf8");
+  const { data, content } = matter(raw);
 
-  // Series articles
-  if (fs.existsSync(SERIES_DIR)) {
-    for (const seriesSlug of fs.readdirSync(SERIES_DIR)) {
-      const articlesDir = path.join(SERIES_DIR, seriesSlug, 'articles');
-      if (!fs.existsSync(articlesDir)) continue;
-      for (const file of fs.readdirSync(articlesDir).filter(f => f.endsWith('.mdx'))) {
-        const filePath = path.join(articlesDir, file);
-        const { data } = matter(fs.readFileSync(filePath, 'utf8'));
-        posts.push(normalizePost(data));
-      }
-    }
-  }
-
-  // Standalone articles
-  if (fs.existsSync(STANDALONE_DIR)) {
-    for (const dir of fs.readdirSync(STANDALONE_DIR)) {
-      const filePath = path.join(STANDALONE_DIR, dir, 'index.mdx');
-      if (!fs.existsSync(filePath)) continue;
-      const { data } = matter(fs.readFileSync(filePath, 'utf8'));
-      // Skip if already added from series
-      if (!posts.find(p => p.slug === data.slug)) {
-        posts.push(normalizePost(data));
-      }
-    }
-  }
-
-  return posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+  return {
+    title: data.title || "Untitled Article",
+    slug: data.slug,
+    aliases: Array.isArray(data.aliases) ? data.aliases : [],
+    category: data.category || "Insights",
+    date: data.date || "",
+    readTime: data.readTime || "",
+    excerpt: data.excerpt || "",
+    author: data.author || "Sentinels Design Lab",
+    series: data.series || "",
+    seriesOrder: Number(data.seriesOrder || 0),
+    thumbnailUrl: data.thumbnailUrl || data.thumbnail || "/images/blog/fallback-editorial.svg",
+    heroUrl: data.heroUrl || data.hero || data.thumbnailUrl || "/images/blog/fallback-editorial.svg",
+    alt: data.alt || data.title || "SDL blog article image",
+    content,
+    contentPath: filePath,
+  };
 }
 
-function normalizePost(data) {
-  return {
-    slug: data.slug,
-    title: data.title,
-    category: data.category,
-    date: data.date,
-    readTime: data.readTime,
-    excerpt: data.excerpt,
-    author: data.author || 'Sentinels Design Lab',
-    series: data.series || '',
-    seriesOrder: data.seriesOrder || 0,
-    thumbnailUrl: data.thumbnailUrl || '/images/blog/fallback-editorial.svg',
-    heroUrl: data.heroUrl || '/images/blog/fallback-editorial.svg',
-    alt: data.alt || '',
-    aliases: data.aliases || [],
-  };
+function collectMdxFiles(dir) {
+  if (!fs.existsSync(dir)) return [];
+
+  return fs
+    .readdirSync(dir, { withFileTypes: true })
+    .flatMap((entry) => {
+      const fullPath = path.join(dir, entry.name);
+      if (entry.isDirectory()) return collectMdxFiles(fullPath);
+      if (entry.isFile() && entry.name.endsWith(".mdx") && !entry.name.includes("Zone.Identifier")) return [fullPath];
+      return [];
+    });
+}
+
+function parseDate(value) {
+  const time = Date.parse(value || "");
+  return Number.isNaN(time) ? 0 : time;
+}
+
+export async function getAllPosts() {
+  const files = [
+    ...collectMdxFiles(STANDALONE_ARTICLES_PATH),
+    ...collectMdxFiles(STANDALONE_DIRECT_PATH),
+  ];
+
+  const uniqueFiles = [...new Set(files)].filter((file) => file.endsWith(".mdx"));
+
+  return uniqueFiles
+    .map(normalizePost)
+    .filter((post) => Boolean(post.slug))
+    .sort((a, b) => parseDate(b.date) - parseDate(a.date));
 }
