@@ -5,6 +5,7 @@ import { getAllPosts } from "@/lib/blog/getAllPosts";
 import { getPostBySlug } from "@/lib/blog/getPostBySlug";
 import { compileMdxContent } from "@/lib/blog/renderMdx";
 import { pageMetadata } from "@/lib/metadata";
+import { business, seo } from "@/lib/siteData";
 
 const mdxComponents = {
   h2: ({ children }) => (
@@ -56,8 +57,37 @@ export default async function Page({ params }) {
 
   const Content = await compileMdxContent(post.content);
 
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.excerpt,
+    datePublished: post.date,
+    dateModified: post.date,
+    author: {
+      "@type": "Organization",
+      name: business.name,
+      url: seo.baseUrl,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: business.name,
+      url: seo.baseUrl,
+    },
+    url: `${seo.baseUrl}/blog/${post.slug}`,
+    image: post.heroUrl ? `${seo.baseUrl}${post.heroUrl}` : undefined,
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `${seo.baseUrl}/blog/${post.slug}`,
+    },
+  };
+
   return (
     <div>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
       <BlogArticleTemplate
         title={post.title}
         category={post.category}
