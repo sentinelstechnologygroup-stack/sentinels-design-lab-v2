@@ -23,7 +23,7 @@ export default function BlogPage({ posts = [] }) {
 
       <section className="section-shell pb-24">
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {posts.map((post) => (
+          {posts.map((post, index) => (
             <BlogCard
               key={post.slug}
               title={post.title}
@@ -34,7 +34,7 @@ export default function BlogPage({ posts = [] }) {
               readTime={post.readTime}
               thumbnailImage={post.thumbnailUrl}
               thumbnailImageAlt={post.alt}
-              series={post.series}
+              priority={index < 3}
             />
           ))}
         </div>

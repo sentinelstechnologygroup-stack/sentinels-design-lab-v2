@@ -16,6 +16,7 @@ export default function BlogCard({
   thumbnailUrl,
   thumbnailImageAlt,
   alt,
+  priority = false,
 }) {
   const imageSrc = thumbnailImage || thumbnailUrl || fallbackImage;
   const imageAlt = thumbnailImageAlt || alt || `${title} thumbnail`;
@@ -23,7 +24,7 @@ export default function BlogCard({
   return (
     <article className="overflow-hidden rounded-[26px] border border-white/10 bg-[#08101d] p-4 shadow-[0_22px_60px_rgba(0,0,0,0.28)] md:p-5">
       <div className="relative aspect-[4/3] overflow-hidden rounded-[20px] border border-white/10 bg-[#09111f]">
-        <Image src={imageSrc} alt={imageAlt} fill sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw" className="object-cover" />
+        <Image src={imageSrc} alt={imageAlt} fill sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw" className="object-cover" priority={priority} />
       </div>
       <div className="mt-5 text-xs font-semibold uppercase tracking-[0.18em] text-primary">{category}</div>
       <h2 className="mt-3 text-2xl font-semibold text-white">{title}</h2>
