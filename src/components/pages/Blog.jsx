@@ -34,12 +34,17 @@ export default function BlogPage({ posts = [] }) {
               transition={{ duration: 0.8, delay: 0.15 }}
               className="relative hidden lg:block"
             >
-              <div className="absolute -inset-6 rounded-3xl bg-primary/5 blur-2xl" />
-              <img
-                src="/images/hero/blog-hero.webp"
-                alt="Articles on website strategy, local business growth, and digital systems"
-                className="relative w-full max-h-[420px] rounded-t-2xl border border-border/30 object-cover object-top shadow-2xl shadow-black/30"
-              />
+              <div className="absolute -inset-4 rounded-[2rem] bg-primary/10 blur-3xl" />
+              <div className="relative overflow-hidden rounded-[28px] border border-white/10 bg-[#08101d] shadow-[0_30px_80px_rgba(0,0,0,0.34)]">
+                <div className="relative aspect-[4/3] md:aspect-[16/11]">
+                  <img
+                    src="/images/hero/blog-hero.webp"
+                    alt="Articles on website strategy, local business growth, and digital systems"
+                    className="h-full w-full object-cover object-top"
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-[#050816]/72 via-transparent to-transparent" />
+              </div>
             </motion.div>
           </div>
         </div>

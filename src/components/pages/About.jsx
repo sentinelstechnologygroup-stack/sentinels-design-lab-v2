@@ -102,12 +102,12 @@ export default function About() {
         <div className="absolute inset-0 bg-gradient-to-br from-primary/8 via-transparent to-accent/5" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-          <div className="grid lg:grid-cols-2 gap-10 items-end">
+          <div className="grid lg:grid-cols-2 gap-10 items-center">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="pb-12 lg:pb-16"
+              className=""
             >
               <span className="eyebrow mb-6">
                 About Us
@@ -148,13 +148,17 @@ export default function About() {
               transition={{ duration: 0.6, delay: 0.15 }}
               className="relative hidden lg:block"
             >
-              <div className="absolute -inset-6 bg-primary/5 rounded-3xl blur-2xl" />
-
-              <img
-                src="/images/about/hero.webp"
-                alt="Sentinels Design Lab"
-                className="relative w-full max-h-[480px] object-cover rounded-t-2xl border border-border/30 shadow-2xl shadow-black/30"
-              />
+              <div className="absolute -inset-4 rounded-[2rem] bg-primary/10 blur-3xl" />
+              <div className="relative overflow-hidden rounded-[28px] border border-white/10 bg-[#08101d] shadow-[0_30px_80px_rgba(0,0,0,0.34)]">
+                <div className="relative aspect-[4/3] md:aspect-[16/11]">
+                  <img
+                    src="/images/about/hero.webp"
+                    alt="Sentinels Design Lab team and workspace"
+                    className="h-full w-full object-cover object-center"
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-[#050816]/72 via-transparent to-transparent" />
+              </div>
             </motion.div>
           </div>
         </div>

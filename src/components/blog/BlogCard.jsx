@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-const fallbackImage = "/images/blog/fallback-editorial.webp";
+const fallbackImage = "/images/blog/fallback-editorial.svg";
 
 export default function BlogCard({
   title,
@@ -23,7 +23,7 @@ export default function BlogCard({
 
   return (
     <article className="overflow-hidden rounded-[26px] border border-white/10 bg-[#08101d] p-4 shadow-[0_22px_60px_rgba(0,0,0,0.28)] md:p-5">
-      <div className="relative aspect-[4/3] overflow-hidden rounded-[20px] border border-white/10 bg-[#09111f]">
+      <div className="relative aspect-[16/10] overflow-hidden rounded-[20px] border border-white/10 bg-[#09111f]">
         <Image
           src={imageSrc}
           alt={imageAlt}
