@@ -65,7 +65,7 @@ export default function Services() {
       {/* HERO */}
       <section className="relative overflow-hidden bg-transparent pb-8 pt-28">
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid items-end gap-10 lg:grid-cols-2">
+          <div className="grid items-center gap-10 lg:gap-14 lg:grid-cols-[minmax(0,1fr)_minmax(360px,0.9fr)]">
             <motion.div
               initial={{ opacity: 0, y: 28 }}
               animate={{ opacity: 1, y: 0 }}
@@ -114,18 +114,18 @@ export default function Services() {
               className="relative hidden lg:block"
             >
               <div className="absolute -inset-4 rounded-[2rem] bg-primary/10 blur-3xl" />
-              <div className="relative overflow-hidden rounded-[28px] border border-white/10 bg-[#08101d] shadow-[0_30px_80px_rgba(0,0,0,0.34)]">
-                <div className="relative aspect-[4/3] md:aspect-[16/11]">
+              <div className="relative overflow-hidden rounded-[28px] border border-white/10 bg-[#050816] shadow-[0_30px_90px_rgba(0,0,0,0.35)]">
+                <div className="relative aspect-[16/10] w-full">
                   <Image
-                    src="/images/hero/services-hero.png"
+                    src="/images/hero/services-hero.webp"
                     alt="Custom website and digital system design by Sentinels Design Lab"
                     fill
                     priority
-                    sizes="(min-width: 1024px) 42vw, 100vw"
-                    className="object-cover"
+                    sizes="(min-width: 1024px) 48vw, 100vw"
+                    className="object-cover object-center"
                   />
                 </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-[#050816]/72 via-transparent to-transparent" />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#050816]/45 via-transparent to-transparent" />
               </div>
             </motion.div>
           </div>
