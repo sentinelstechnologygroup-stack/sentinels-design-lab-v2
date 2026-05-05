@@ -34,7 +34,7 @@ export default function Pricing() {
         primaryCtaHref="/contact?type=website-evaluation"
         secondaryCtaLabel="Contact"
         secondaryCtaHref="/contact"
-        imageSrc="/images/packages/hero-1.png"
+        imageSrc="/images/hero/pricing-hero.webp"
         imageAlt="Approved SDL pricing hero visual"
       />
 

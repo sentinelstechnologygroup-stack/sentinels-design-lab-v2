@@ -36,7 +36,7 @@ export default function BlogPage({ posts = [] }) {
             >
               <div className="absolute -inset-6 rounded-3xl bg-primary/5 blur-2xl" />
               <img
-                src="/images/blog/standalone/modern-service-business-website.webp"
+                src="/images/hero/blog-hero.webp"
                 alt="Articles on website strategy, local business growth, and digital systems"
                 className="relative w-full max-h-[420px] rounded-t-2xl border border-border/30 object-cover object-top shadow-2xl shadow-black/30"
               />

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-const fallbackImage = "/images/blog/fallback-editorial.svg";
+const fallbackImage = "/images/blog/fallback-editorial.webp";
 
 export default function BlogArticleTemplate({ title, category, date, readTime, excerpt, heroImage, heroImageAlt, children }) {
   const imageSrc = heroImage || fallbackImage;

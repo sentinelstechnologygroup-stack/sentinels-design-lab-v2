@@ -310,13 +310,13 @@ export const workProjects = [
       {
         kind: "image",
         label: "Before — original site",
-        src: "/images/work/eli-original-home.jpg",
+        src: "/images/work/eli-original-home.webp",
         alt: "ELI Land Design original website homepage before SDL redesign",
       },
       {
         kind: "image",
         label: "Current — rebuild preview",
-        src: "/images/work/eli-current.jpg",
+        src: "/images/work/eli-current.webp",
         alt: "ELI Land Design SDL rebuild preview — awaiting client launch approval",
       },
     ],
@@ -345,13 +345,13 @@ export const workProjects = [
       {
         kind: "image",
         label: "Before — original site",
-        src: "/images/work/premier-original-home.jpg",
+        src: "/images/work/premier-original-home.webp",
         alt: "Premier Kitchens original website homepage before SDL redesign",
       },
       {
         kind: "image",
         label: "Current — live site",
-        src: "/images/work/premier-current.jpg",
+        src: "/images/work/premier-current.webp",
         alt: "Premier Kitchens current live homepage after SDL rebuild",
       },
     ],
@@ -380,7 +380,7 @@ export const workProjects = [
       {
         kind: "image",
         label: "Current — live site",
-        src: "/images/work/mybuddys-current.jpg",
+        src: "/images/work/mybuddys-current.webp",
         alt: "My Buddy's Mobile Detail current live homepage built by SDL",
       },
     ],
@@ -409,7 +409,7 @@ export const workProjects = [
       {
         kind: "image",
         label: "Current — live site",
-        src: "/images/work/bestsolution-current.jpg",
+        src: "/images/work/bestsolution-current.webp",
         alt: "Best Solutions Distribution current live homepage built by SDL",
       },
     ],
@@ -436,7 +436,7 @@ export const workProjects = [
       {
         kind: "image",
         label: "Workflow anchor",
-        src: "/images/work/dadson-driver-app-anchor.svg",
+        src: "/images/work/dadson-driver-app-anchor.webp",
         alt: "Abstracted logistics workflow panel representing the Dadson Driver App interface.",
       },
     ],
@@ -463,7 +463,7 @@ export const workProjects = [
       {
         kind: "image",
         label: "Admin anchor",
-        src: "/images/work/dadson-admin-portal-anchor.svg",
+        src: "/images/work/dadson-admin-portal-anchor.webp",
         alt: "Abstracted operations dashboard panel representing the Dadson Admin Portal interface.",
       },
     ],
@@ -490,7 +490,7 @@ export const workProjects = [
       {
         kind: "image",
         label: "System anchor",
-        src: "/images/work/painter-pro-anchor.svg",
+        src: "/images/work/painter-pro-anchor.webp",
         alt: "Abstracted internal system panel representing Painter Pro workflow controls and reporting.",
       },
     ],

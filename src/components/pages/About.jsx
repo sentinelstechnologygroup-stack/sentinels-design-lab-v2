@@ -151,7 +151,7 @@ export default function About() {
               <div className="absolute -inset-6 bg-primary/5 rounded-3xl blur-2xl" />
 
               <img
-                src="/images/about/hero.png"
+                src="/images/about/hero.webp"
                 alt="Sentinels Design Lab"
                 className="relative w-full max-h-[480px] object-cover rounded-t-2xl border border-border/30 shadow-2xl shadow-black/30"
               />

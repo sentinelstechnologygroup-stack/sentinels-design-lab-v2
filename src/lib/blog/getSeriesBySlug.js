@@ -23,7 +23,7 @@ export async function getSeriesBySlug(slug) {
         readTime: data.readTime,
         date: data.date,
         seriesOrder: data.seriesOrder || 0,
-        thumbnailUrl: data.thumbnailUrl || '/images/blog/fallback-editorial.svg',
+        thumbnailUrl: data.thumbnailUrl || '/images/blog/fallback-editorial.webp',
       });
     }
   }

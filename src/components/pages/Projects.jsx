@@ -74,7 +74,7 @@ export default function Projects() {
             </motion.div>
             <motion.div initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.6, delay: 0.15 }} className="relative hidden lg:block">
               <div className="absolute -inset-6 bg-primary/5 rounded-3xl blur-2xl" />
-              <img src="images/hero/projects-hero.png" alt="Projects & Case Studies" className="relative w-full max-h-[380px] object-cover rounded-t-2xl border border-border/30 shadow-2xl shadow-black/30" />
+              <img src="images/hero/projects-hero.webp" alt="Projects & Case Studies" className="relative w-full max-h-[380px] object-cover rounded-t-2xl border border-border/30 shadow-2xl shadow-black/30" />
             </motion.div>
           </div>
         </div>

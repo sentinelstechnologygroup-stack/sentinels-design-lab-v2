@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-const fallbackImage = "/images/blog/fallback-editorial.svg";
+const fallbackImage = "/images/blog/fallback-editorial.webp";
 
 function SectionContent({ section }) {
   return (
