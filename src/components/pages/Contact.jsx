@@ -5,7 +5,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Phone, Mail, MapPin, ArrowRight, MessageSquare, ChevronDown, X, CheckCircle2 } from "lucide-react";
+import { Phone, Mail, MapPin, ArrowRight, MessageSquare, ChevronDown, X } from "lucide-react";
 import { toast } from "sonner";
 import { BUSINESS, FORM_ENDPOINT, SERVICES } from "@/lib/constants";
 
@@ -143,26 +143,23 @@ function ThankYouModal({ onClose }) {
           <X className="h-4 w-4" />
         </button>
 
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-primary/10 border border-primary/20 mb-5">
-            <CheckCircle2 className="h-7 w-7 text-primary" />
-          </div>
+        <div className="text-center mb-10">
           <motion.div
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.1 }}
-            className="flex justify-center mb-5 opacity-90"
+            className="flex justify-center mb-6 opacity-95"
           >
             <Image
               src="/images/logo/logo.webp"
               alt="Sentinels Design Lab"
-              width={180}
-              height={48}
+              width={260}
+              height={80}
               priority
-              className="object-contain"
+              className="object-contain mx-auto"
             />
           </motion.div>
-          <h2 className="font-heading text-3xl font-bold text-white mb-4">Thank You</h2>
+          <h2 className="font-heading text-3xl font-bold text-white mb-3">Thank You</h2>
           <p className="text-muted-foreground leading-relaxed max-w-sm mx-auto">
             Your message has been sent to Sentinels Design Lab. We&apos;ll review your
             project details and follow up within one business day.
