@@ -145,36 +145,34 @@ const testimonials = [
 
 const heroTiles = [
   {
-    src: "/images/home/tile-branding.png",
+    src: "/images/home/tile-branding.webp",
     alt: "Branding and logo design",
     label: "Branding & Identity",
-    className: "row-span-2",
-    imageClassName: "object-contain object-center scale-100 p-2",
-    disableImageHover: true,
+    className: "",
   },
   {
-    src: "/images/home/tile-web-design.png",
+    src: "/images/home/tile-web-design.webp",
     alt: "Website design showcase",
     label: "Web Design",
     className: "",
   },
   {
-    src: "/images/home/tile-mobile.png",
+    src: "/images/home/tile-mobile.webp",
     alt: "Mobile-first responsive website design",
     label: "Mobile-First Design",
     className: "",
   },
   {
-    src: "/images/home/tile-seo.png",
+    src: "/images/home/tile-seo.webp",
     alt: "SEO and optimization work",
     label: "SEO & Visibility",
     className: "",
   },
   {
-    src: "/images/home/tile-video.png",
+    src: "/images/home/tile-video.webp",
     alt: "Video & Animation Performance Visuals",
     label: "Video & Animation",
-    className: "",
+    className: "col-span-2",
   },
 ];
 
@@ -273,7 +271,7 @@ export default function Home() {
                     <img
                       src={tile.src}
                       alt={tile.alt}
-                      className={`h-full w-full transition-transform duration-500 ${tile.disableImageHover ? "" : "group-hover:scale-105"} ${tile.imageClassName ?? "object-cover object-center"}`}
+                      className="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#050816]/90 via-[#050816]/20 to-transparent" />
                     <div className="absolute bottom-0 left-0 right-0 p-4">
