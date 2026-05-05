@@ -149,7 +149,8 @@ const heroTiles = [
     alt: "Branding and logo design",
     label: "Branding & Identity",
     className: "row-span-2",
-    imageClassName: "object-cover object-[60%_50%] scale-110",
+    imageClassName: "object-contain object-center scale-100 p-2",
+    disableImageHover: true,
   },
   {
     src: "/images/home/tile-web-design.png",
@@ -267,12 +268,12 @@ export default function Home() {
                 {heroTiles.map((tile, index) => (
                   <div
                     key={`${tile.label}-${index}`}
-                    className={`group relative overflow-hidden rounded-2xl border border-white/10 bg-card/40 shadow-[0_16px_50px_rgba(0,0,0,0.28)] ${tile.className}`}
+                    className={`group relative overflow-hidden rounded-2xl border border-white/10 bg-[#050816] shadow-[0_16px_50px_rgba(0,0,0,0.28)] ${tile.className}`}
                   >
                     <img
                       src={tile.src}
                       alt={tile.alt}
-                      className={`h-full w-full transition-transform duration-500 group-hover:scale-105 ${tile.imageClassName ?? "object-cover object-center"}`}
+                      className={`h-full w-full transition-transform duration-500 ${tile.disableImageHover ? "" : "group-hover:scale-105"} ${tile.imageClassName ?? "object-cover object-center"}`}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#050816]/90 via-[#050816]/20 to-transparent" />
                     <div className="absolute bottom-0 left-0 right-0 p-4">
