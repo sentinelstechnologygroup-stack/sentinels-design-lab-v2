@@ -2,6 +2,7 @@
 "use client";
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Phone, Mail, MapPin, ArrowRight, MessageSquare, ChevronDown, X, CheckCircle2 } from "lucide-react";
@@ -146,7 +147,21 @@ function ThankYouModal({ onClose }) {
           <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-primary/10 border border-primary/20 mb-5">
             <CheckCircle2 className="h-7 w-7 text-primary" />
           </div>
-          <div className="eyebrow mb-3">Inquiry Received</div>
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.1 }}
+            className="flex justify-center mb-5 opacity-90"
+          >
+            <Image
+              src="/images/logo/logo.webp"
+              alt="Sentinels Design Lab"
+              width={180}
+              height={48}
+              priority
+              className="object-contain"
+            />
+          </motion.div>
           <h2 className="font-heading text-3xl font-bold text-white mb-4">Thank You</h2>
           <p className="text-muted-foreground leading-relaxed max-w-sm mx-auto">
             Your message has been sent to Sentinels Design Lab. We&apos;ll review your
@@ -207,6 +222,7 @@ export default function Contact() {
     service: "",
     projectStage: "",
     message: "",
+    company: "",
   });
 
   const [sending, setSending] = useState(false);
@@ -310,13 +326,19 @@ export default function Contact() {
   };
 
   const resetForm = useCallback(() => {
-    setForm({ name: "", email: "", phone: "", service: "", projectStage: "", message: "" });
+    setForm({ name: "", email: "", phone: "", service: "", projectStage: "", message: "", company: "" });
   }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (sending) return;
+
+    // Honeypot — bots fill this, humans don't
+    if (form.company) {
+      console.warn("[SDL Contact] bot submission blocked");
+      return;
+    }
 
     if (!form.name?.trim() || !form.email?.trim() || !form.message?.trim()) {
       toast.error("Please fill in all required fields.");
@@ -325,42 +347,37 @@ export default function Contact() {
 
     const endpoint = FORM_ENDPOINT || "https://formspree.io/f/mnjgoknr";
 
+    const selectedService = SERVICES.find((s) => s.slug === form.service);
+    const selectedStage   = PROJECT_STAGES.find((s) => s.value === form.projectStage);
+
     const payload = {
+      _subject: "New SDL Website Inquiry",
       name: form.name.trim(),
       email: form.email.trim(),
-      phone: form.phone?.trim() || "",
-      service: form.service || "",
-      projectStage: form.projectStage || "",
+      phone: form.phone?.trim() || "Not provided",
+      service: selectedService?.name || form.service || "Not selected",
+      projectStage: selectedStage?.label || form.projectStage || "Not specified",
       message: form.message.trim(),
       source: "SDL Contact Page",
-      _subject: "New SDL Website Inquiry",
     };
 
     setSending(true);
 
     try {
-      console.log("[SDL Contact] submitting to:", endpoint);
-      console.log("[SDL Contact] payload:", payload);
-
       const res = await fetch(endpoint, {
         method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
+        headers: { Accept: "application/json", "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
 
       const responseText = await res.text();
-      console.log("[SDL Contact] Formspree status:", res.status);
-      console.log("[SDL Contact] Formspree response:", responseText);
 
       if (!res.ok) {
-        throw new Error(`Formspree failed with status ${res.status}: ${responseText}`);
+        throw new Error(`Formspree ${res.status}: ${responseText}`);
       }
 
       resetForm();
-      setShowThankYou(true);
+      setTimeout(() => setShowThankYou(true), 180);
     } catch (error) {
       console.error("[SDL Contact] submission error:", error);
       toast.error("The form did not send. Please email us directly at Info@SentinelsDesignLab.com.");
@@ -427,6 +444,18 @@ export default function Contact() {
                 onSubmit={handleSubmit}
                 className="bg-card border border-border/50 rounded-2xl p-8 space-y-5"
               >
+                {/* Honeypot — hidden from real users, catches bots */}
+                <input
+                  type="text"
+                  name="company"
+                  value={form.company || ""}
+                  onChange={handleChange}
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                  className="hidden"
+                />
+
                 <h2 className="font-heading text-xl font-bold text-foreground mb-2">
                   Send Us a Message
                 </h2>
