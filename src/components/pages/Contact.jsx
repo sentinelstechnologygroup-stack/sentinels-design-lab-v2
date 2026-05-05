@@ -315,29 +315,56 @@ export default function Contact() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!form.name || !form.email || !form.message) {
+
+    if (sending) return;
+
+    if (!form.name?.trim() || !form.email?.trim() || !form.message?.trim()) {
       toast.error("Please fill in all required fields.");
       return;
     }
+
+    const endpoint = FORM_ENDPOINT || "https://formspree.io/f/mnjgoknr";
+
+    const payload = {
+      name: form.name.trim(),
+      email: form.email.trim(),
+      phone: form.phone?.trim() || "",
+      service: form.service || "",
+      projectStage: form.projectStage || "",
+      message: form.message.trim(),
+      source: "SDL Contact Page",
+      _subject: "New SDL Website Inquiry",
+    };
+
     setSending(true);
+
     try {
-      if (FORM_ENDPOINT) {
-        const res = await fetch(FORM_ENDPOINT, {
-          method: "POST",
-          headers: { "Content-Type": "application/json", Accept: "application/json" },
-          body: JSON.stringify({ ...form, source: "SDL Contact Page" }),
-        });
-        if (!res.ok) throw new Error("Form submission failed");
-        resetForm();
-        setShowThankYou(true);
-      } else {
-        toast.warning(
-          "Our online form is being configured. Please call or email us directly — we respond within one business day.",
-          { duration: 7000 }
-        );
+      console.log("[SDL Contact] submitting to:", endpoint);
+      console.log("[SDL Contact] payload:", payload);
+
+      const res = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const responseText = await res.text();
+      console.log("[SDL Contact] Formspree status:", res.status);
+      console.log("[SDL Contact] Formspree response:", responseText);
+
+      if (!res.ok) {
+        throw new Error(`Formspree failed with status ${res.status}: ${responseText}`);
       }
-    } catch {
-      toast.error("Something went wrong. Please try again.");
+
+      resetForm();
+      setShowThankYou(true);
+    } catch (error) {
+      console.error("[SDL Contact] submission error:", error);
+      toast.error("The form did not send. Please email us directly at Info@SentinelsDesignLab.com.");
+      alert("The form did not send. Please email us directly at Info@SentinelsDesignLab.com.");
     } finally {
       setSending(false);
     }
