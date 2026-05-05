@@ -29,9 +29,9 @@ export default function PricingCard({
 
   return (
     <div
-      className={`relative flex h-full flex-col overflow-hidden rounded-[28px] border p-7 transition-all duration-300 md:p-8 ${
+      className={`relative flex h-full flex-col overflow-visible rounded-[28px] border p-7 transition-all duration-300 md:p-8 ${
         featured
-          ? "border-primary/50 bg-[#040c1a] shadow-[0_24px_70px_rgba(59,130,246,0.22)]"
+          ? "border-primary/50 bg-[#040c1a] pt-10 md:pt-11 shadow-[0_24px_70px_rgba(59,130,246,0.22)]"
           : "readability-card hover:border-primary/20 hover:shadow-[0_24px_60px_rgba(0,0,0,0.26)]"
       }`}
     >

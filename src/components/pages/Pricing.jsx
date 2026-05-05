@@ -51,7 +51,7 @@ export default function Pricing() {
         </div>
       </section>
 
-      <section className="pb-16 md:pb-20">
+      <section className="pt-5 pb-16 md:pb-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4 xl:items-stretch">
             {pricingPackages.map((item) => (

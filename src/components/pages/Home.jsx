@@ -180,14 +180,14 @@ export default function Home() {
   return (
     <div className="relative overflow-hidden text-white">
       {/* HERO */}
-      <section className="relative bg-transparent pb-8 pt-28">
+      <section className="relative bg-transparent pb-8 pt-24 md:pt-28">
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid items-end gap-10 lg:grid-cols-2">
+          <div className="grid items-center gap-10 lg:grid-cols-2">
             <motion.div
               initial={{ opacity: 0, y: 28 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7 }}
-              className="pb-10 lg:pb-16"
+              className=""
             >
               <span className="eyebrow mb-6">
                 <Sparkles className="h-3.5 w-3.5" />
