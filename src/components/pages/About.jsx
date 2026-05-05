@@ -149,15 +149,15 @@ export default function About() {
               className="relative hidden lg:block"
             >
               <div className="absolute -inset-4 rounded-[2rem] bg-primary/10 blur-3xl" />
-              <div className="relative overflow-hidden rounded-[28px] border border-white/10 bg-[#08101d] shadow-[0_30px_80px_rgba(0,0,0,0.34)]">
-                <div className="relative aspect-[4/3] md:aspect-[16/11]">
+              <div className="relative overflow-hidden rounded-[32px] border border-white/10 bg-[#050816] shadow-[0_30px_90px_rgba(0,0,0,0.42)]">
+                <div className="relative aspect-[16/9] w-full">
                   <img
                     src="/images/about/hero.webp"
                     alt="Sentinels Design Lab team and workspace"
                     className="h-full w-full object-cover object-center"
                   />
                 </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-[#050816]/72 via-transparent to-transparent" />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#050816]/45 via-transparent to-transparent" />
               </div>
             </motion.div>
           </div>

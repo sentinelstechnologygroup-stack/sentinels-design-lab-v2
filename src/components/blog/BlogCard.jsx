@@ -23,13 +23,13 @@ export default function BlogCard({
 
   return (
     <article className="overflow-hidden rounded-[26px] border border-white/10 bg-[#08101d] p-4 shadow-[0_22px_60px_rgba(0,0,0,0.28)] md:p-5">
-      <div className="relative aspect-[16/10] overflow-hidden rounded-[20px] border border-white/10 bg-[#09111f]">
+      <div className="relative aspect-[4/3] overflow-hidden rounded-[20px] border border-white/10 bg-[#050816] p-2">
         <Image
           src={imageSrc}
           alt={imageAlt}
           fill
           sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
-          className="object-cover object-center"
+          className="object-contain object-center"
           priority={priority}
         />
       </div>
