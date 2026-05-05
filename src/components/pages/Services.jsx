@@ -62,47 +62,64 @@ export default function Services() {
     <div className="relative overflow-hidden text-white">
 
       {/* HERO */}
-      <section className="relative bg-transparent pb-8 pt-28">
-        <div className="relative mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 28 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
-          >
-            <span className="eyebrow mb-6">Services</span>
+      <section className="relative overflow-hidden bg-transparent pb-8 pt-28">
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid items-end gap-10 lg:grid-cols-2">
+            <motion.div
+              initial={{ opacity: 0, y: 28 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7 }}
+              className="pb-10 lg:pb-16"
+            >
+              <span className="eyebrow mb-6">Services</span>
 
-            <h1 className="mb-5 font-heading text-4xl font-bold leading-tight text-foreground sm:text-5xl lg:text-6xl">
-              Websites and Digital Systems{" "}
-              <span className="text-primary">Built for Real Business</span>
-            </h1>
+              <h1 className="mb-5 font-heading text-4xl font-bold leading-tight text-foreground sm:text-5xl lg:text-6xl">
+                Websites and Digital Systems{" "}
+                <span className="text-primary">Built for Real Business</span>
+              </h1>
 
-            <p className="mx-auto mb-8 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-              SDL designs and builds modern websites, web applications, portals,
-              dashboards, and digital systems for service businesses that need
-              more than a template — and more than decorative design.
-            </p>
+              <p className="mb-8 max-w-xl text-lg leading-relaxed text-muted-foreground">
+                SDL designs and builds modern websites, web applications, portals,
+                dashboards, and digital systems for service businesses that need
+                more than a template — and more than decorative design.
+              </p>
 
-            <div className="mb-4 flex flex-wrap justify-center gap-4">
-              <Link
-                href="/contact?type=website-evaluation"
-                className="inline-flex items-center gap-2 rounded-lg bg-primary px-8 py-3.5 text-sm font-semibold text-slate-950 transition-all hover:scale-[1.01] hover:shadow-[0_10px_30px_rgba(56,189,248,0.20)]"
-              >
-                Get Website Evaluation
-                <ArrowRight className="h-4 w-4" />
-              </Link>
+              <div className="mb-4 flex flex-wrap gap-4">
+                <Link
+                  href="/contact?type=website-evaluation"
+                  className="inline-flex items-center gap-2 rounded-lg bg-primary px-8 py-3.5 text-sm font-semibold text-slate-950 transition-all hover:scale-[1.01] hover:shadow-[0_10px_30px_rgba(56,189,248,0.20)]"
+                >
+                  Get Website Evaluation
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
 
-              <Link
-                href="/work"
-                className="inline-flex items-center gap-2 rounded-lg border border-primary/20 bg-sky-400/[0.06] px-8 py-3.5 text-sm font-semibold text-foreground transition-all hover:border-primary/40 hover:bg-sky-400/[0.10]"
-              >
-                View Our Work
-              </Link>
-            </div>
+                <Link
+                  href="/work"
+                  className="inline-flex items-center gap-2 rounded-lg border border-primary/20 bg-sky-400/[0.06] px-8 py-3.5 text-sm font-semibold text-foreground transition-all hover:border-primary/40 hover:bg-sky-400/[0.10]"
+                >
+                  View Our Work
+                </Link>
+              </div>
 
-            <p className="text-xs text-muted-foreground/70">
-              No commitment. Free evaluation.
-            </p>
-          </motion.div>
+              <p className="text-xs text-muted-foreground/70">
+                No commitment. Free evaluation.
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 38 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.15 }}
+              className="relative hidden lg:block"
+            >
+              <div className="absolute -inset-6 rounded-3xl bg-primary/5 blur-2xl" />
+              <img
+                src="/images/services/website-design-hero.png"
+                alt="Custom website and digital system design by Sentinels Design Lab"
+                className="relative w-full max-h-[480px] rounded-t-2xl border border-border/30 object-cover shadow-2xl shadow-black/30"
+              />
+            </motion.div>
+          </div>
         </div>
       </section>
 
