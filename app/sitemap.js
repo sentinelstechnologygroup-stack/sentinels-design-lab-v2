@@ -14,16 +14,19 @@ const STATIC_ROUTES = [
 export default async function sitemap() {
   const posts = await getAllPosts();
 
+  // 🔒 Single build timestamp (cleaner for crawlers)
+  const buildDate = new Date();
+
   const staticEntries = STATIC_ROUTES.map(({ path, changeFrequency, priority }) => ({
     url: `${seo.baseUrl}${path}`,
-    lastModified: new Date(),
+    lastModified: buildDate,
     changeFrequency,
     priority,
   }));
 
   const blogEntries = posts.map((post) => ({
     url: `${seo.baseUrl}/blog/${post.slug}`,
-    lastModified: post.date ? new Date(post.date) : new Date(),
+    lastModified: post.date ? new Date(post.date) : buildDate,
     changeFrequency: "monthly",
     priority: 0.6,
   }));

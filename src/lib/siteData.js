@@ -436,7 +436,7 @@ export const workProjects = [
       {
         kind: "image",
         label: "Workflow anchor",
-        src: "/images/work/dadson-driver-app-anchor.webp",
+        src: "/images/work/dadson-driver-hub.webp",
         alt: "Abstracted logistics workflow panel representing the Dadson Driver App interface.",
       },
     ],
@@ -463,7 +463,7 @@ export const workProjects = [
       {
         kind: "image",
         label: "Admin anchor",
-        src: "/images/work/dadson-admin-portal-anchor.webp",
+        src: "/images/work/dadson-admin-portal.webp",
         alt: "Abstracted operations dashboard panel representing the Dadson Admin Portal interface.",
       },
     ],
@@ -490,7 +490,7 @@ export const workProjects = [
       {
         kind: "image",
         label: "System anchor",
-        src: "/images/work/painter-pro-anchor.webp",
+        src: "/images/work/painter-pro.webp",
         alt: "Abstracted internal system panel representing Painter Pro workflow controls and reporting.",
       },
     ],

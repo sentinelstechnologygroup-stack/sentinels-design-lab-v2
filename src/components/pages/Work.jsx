@@ -112,7 +112,7 @@ const digitalSystems = [
     industry: "Driver Workflow App",
     projectType: "Mobile App",
     status: "LIVE SYSTEM",
-    imageSrc: "/images/work/dadson-admin-portal.webp",
+    imageSrc: "/images/work/dadson-driver-hub.webp",
     imageAlt: "Dadson Driver Hub mobile workflow interface for field load and document management",
     whatItDoes: [
       "Supports drivers in creating loads, continuing active work, and resolving incomplete submissions.",
