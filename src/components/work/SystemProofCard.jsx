@@ -4,6 +4,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
+function statusBadgeClass(status) {
+  if (status === "LIVE SYSTEM") return "border-emerald-400/25 bg-emerald-400/[0.08] text-emerald-400";
+  if (status === "ACTIVE BUILD") return "border-sky-400/25 bg-sky-400/[0.08] text-sky-400";
+  return "border-white/10 bg-white/[0.04] text-white/70";
+}
+
 function ListBlock({ title, items = [] }) {
   return (
     <div>
@@ -33,7 +39,7 @@ export default function SystemProofCard({ name, whatItDoes = [], systemRole = []
             <h3 className="mt-3 font-heading text-2xl font-bold text-white">{name}</h3>
           </div>
           <div className="flex flex-wrap gap-2 text-xs">
-            <span className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-white/70">{status}</span>
+            <span className={`rounded-full border px-3 py-1 ${statusBadgeClass(status)}`}>{status}</span>
             <span className="rounded-full border border-primary/25 bg-primary/10 px-3 py-1 text-primary">{projectType}</span>
           </div>
         </div>

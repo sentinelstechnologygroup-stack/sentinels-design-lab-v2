@@ -80,36 +80,148 @@ const websiteProof = {
   },
 };
 
-const systemProof = {
-  "dadson-driver-app": {
+const digitalSystems = [
+  {
+    slug: "dadson-admin-portal",
+    name: "Dadson Trucking Admin Portal",
+    industry: "Logistics Operations Platform",
+    projectType: "Admin Portal",
+    status: "LIVE SYSTEM",
+    imageSrc: "/images/work/dadson-admin-portal.webp",
+    imageAlt: "Dadson Trucking admin portal dashboard managing loads, drivers, and documents",
+    whatItDoes: [
+      "Manages loads, drivers, and documents from a centralized admin dashboard.",
+      "Provides operational visibility across driver states and workflow stages.",
+      "Supports document handling, status tracking, and admin workflow control.",
+    ],
+    systemRole: [
+      "Admin visibility",
+      "Operational coordination",
+      "Workflow control",
+    ],
     proofNotes: [
-      "Visual anchor shows a real workflow-oriented interface concept, not a text-only claim.",
-      "The system is framed as a field-operations tool with controlled workflow context.",
-      "SDL capability is demonstrated through operational product thinking, not just marketing pages.",
+      "Live system in active daily use across the Dadson Trucking operation.",
+      "Visual shows the admin layer of a real logistics platform, not a concept.",
+      "SDL built the admin portal and driver hub as connected systems.",
     ],
     confidentialityNote: "Visual is intentionally abstracted to protect internal workflow details while still showing that the system exists.",
   },
-  "dadson-admin-portal": {
+  {
+    slug: "dadson-driver-hub",
+    name: "Dadson Driver Hub",
+    industry: "Driver Workflow App",
+    projectType: "Mobile App",
+    status: "LIVE SYSTEM",
+    imageSrc: "/images/work/dadson-admin-portal.webp",
+    imageAlt: "Dadson Driver Hub mobile workflow interface for field load and document management",
+    whatItDoes: [
+      "Supports drivers in creating loads, continuing active work, and resolving incomplete submissions.",
+      "Mobile-first field experience built around real driver friction points.",
+      "Keeps documentation and load state moving without requiring admin intervention.",
+    ],
+    systemRole: [
+      "Driver field operations",
+      "Mobile workflow",
+      "Load and document state",
+    ],
     proofNotes: [
-      "Visual anchor supports the admin and oversight layer described in the case study.",
-      "The system is positioned as an internal coordination tool rather than decorative concept art.",
-      "Operational visibility and control are made concrete through the interface proof.",
+      "Live system used by drivers in the field across the Dadson Trucking operation.",
+      "Built as the mobile counterpart to the Dadson Admin Portal.",
+      "Both systems share a unified backend and operational data layer.",
     ],
     confidentialityNote: "Visual is intentionally abstracted to protect internal workflow details while still showing that the system exists.",
   },
-  "painter-pro": {
-    proofNotes: [
-      "Visual anchor prevents the system from reading like a text-only idea.",
-      "The case study shows SDL capability in operations-oriented system design for service businesses.",
-      "The proof format keeps the system believable without overstating confidential internals.",
+  {
+    slug: "shared-grocery-list",
+    name: "Shared Grocery List",
+    industry: "Household Utility System",
+    projectType: "Utility App",
+    status: "ACTIVE BUILD",
+    imageSrc: "/images/work/shared-grocery-list.webp",
+    imageAlt: "Shared Grocery List app showing household item tracking and real-time collaboration",
+    whatItDoes: [
+      "Shared list collaboration across household members in real time.",
+      "Item tracking and update visibility without unnecessary account complexity.",
+      "Built for practical everyday mobile and desktop use.",
     ],
-    confidentialityNote: "Visual is intentionally abstracted to protect internal workflow details while still showing that the system exists.",
+    systemRole: [
+      "Household coordination",
+      "Real-time list sync",
+      "Productized utility workflow",
+    ],
+    proofNotes: [
+      "Active build with functional shared-list and item tracking already in place.",
+      "Real-world daily use case built for households, not a portfolio concept.",
+      "SDL is extending the system with additional household coordination features.",
+    ],
   },
-};
+  {
+    slug: "painter-bid",
+    name: "PainterBid / Painter Pro",
+    industry: "Contractor Business System",
+    projectType: "Business System",
+    status: "ACTIVE BUILD",
+    imageSrc: "/images/work/painter-pro.webp",
+    imageAlt: "PainterBid Painter Pro contractor business management system for quotes, jobs, and clients",
+    whatItDoes: [
+      "Quote creation workflow for painting contractors with job and client management.",
+      "Desktop and mobile experience designed around real contractor operations.",
+      "Operational visibility across jobs, scheduling, and active work.",
+    ],
+    systemRole: [
+      "Quote and job management",
+      "Client operations",
+      "Contractor workflow visibility",
+    ],
+    proofNotes: [
+      "Active build with core quote and job workflows already functional.",
+      "Designed around real contractor operational needs, not generic business software.",
+      "SDL is extending into scheduling and reporting for a complete contractor OS.",
+    ],
+  },
+];
+
+const infrastructureCards = [
+  {
+    title: "Operations Sync Layer",
+    label: "SYSTEM INFRASTRUCTURE",
+    labelClass: "border-amber-400/25 bg-amber-400/[0.08] text-amber-300",
+    description:
+      "Connects field workflows, admin dashboards, and operational records so teams are not manually copying the same information across disconnected systems.",
+    bullets: [
+      "Workflow syncing",
+      "Form-to-dashboard routing",
+      "Operational state tracking",
+    ],
+  },
+  {
+    title: "Intake + CRM Middleware",
+    label: "INTEGRATION LAYER",
+    labelClass: "border-sky-400/25 bg-sky-400/[0.08] text-sky-400",
+    description:
+      "Routes website inquiries, quote requests, and client intake data into structured workflows that can support follow-up, reporting, and fulfillment.",
+    bullets: [
+      "Contact and quote intake",
+      "CRM-ready data structure",
+      "Follow-up workflow support",
+    ],
+  },
+  {
+    title: "Reporting + Visibility Pipeline",
+    label: "DATA SYSTEM",
+    labelClass: "border-amber-400/25 bg-amber-400/[0.08] text-amber-300",
+    description:
+      "Turns operational activity into cleaner visibility for owners and managers without forcing teams to rebuild their process around generic software.",
+    bullets: [
+      "Dashboard-ready data",
+      "Business visibility workflows",
+      "Cleaner reporting foundations",
+    ],
+  },
+];
 
 export default function Work() {
-  const websiteProjects = workProjects.filter((project) => project.section === "website-work");
-  const systemProjects = workProjects.filter((project) => project.section === "digital-systems");
+  const websiteProjects = workProjects.filter((p) => p.section === "website-work");
 
   return (
     <div>
@@ -121,16 +233,21 @@ export default function Work() {
         primaryCtaHref="/contact?type=website-evaluation"
         secondaryCtaLabel="Contact"
         secondaryCtaHref="/contact"
-        imageSrc="/images/home/tile-seo.png"
+        imageSrc="/images/hero/work-hero.webp"
         imageAlt="Approved SDL work hero visual showing performance dashboards and analytics"
       />
 
+      {/* WEBSITE WORK */}
       <section className="pb-20 md:pb-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl">
             <div className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Website Work</div>
-            <h2 className="mt-3 font-heading text-3xl font-bold text-foreground sm:text-4xl">Proof-driven website rebuilds and launch work</h2>
-            <p className="mt-4 text-lg leading-relaxed text-muted-foreground">Each project is shown with real context: what was wrong, what SDL changed, and what result the business now has — without fake metrics.</p>
+            <h2 className="mt-3 font-heading text-3xl font-bold text-foreground sm:text-4xl">
+              Proof-driven website rebuilds and launch work
+            </h2>
+            <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
+              Each project is shown with real context: what was wrong, what SDL changed, and what result the business now has — without fake metrics.
+            </p>
           </div>
 
           <div className="mt-10 grid gap-8 xl:grid-cols-2">
@@ -138,7 +255,7 @@ export default function Work() {
               const proof = websiteProof[project.slug];
               const allMedia = project.media?.length
                 ? project.media
-                : [{ src: "/images/blog/fallback-editorial.svg", alt: project.name, label: null }];
+                : [{ src: "/images/blog/fallback-editorial.webp", alt: project.name, label: null }];
               return (
                 <ProofCaseCard
                   key={project.slug}
@@ -162,34 +279,77 @@ export default function Work() {
         </div>
       </section>
 
+      {/* DIGITAL SYSTEMS */}
       <section className="pb-20 md:pb-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl">
             <div className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Digital Systems</div>
-            <h2 className="mt-3 font-heading text-3xl font-bold text-foreground sm:text-4xl">Operational systems with visible proof</h2>
-            <p className="mt-4 text-lg leading-relaxed text-muted-foreground">Every system includes a visual anchor so the page demonstrates that the work exists instead of relying on text-only claims.</p>
+            <h2 className="mt-3 font-heading text-3xl font-bold text-foreground sm:text-4xl">
+              Operational systems in active use and active development
+            </h2>
+            <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
+              These are real product and system builds in active use or active development. SDL does not present fake case studies, invented rankings, or fabricated metrics.
+            </p>
           </div>
 
           <div className="mt-10 grid gap-8 xl:grid-cols-2">
-            {systemProjects.map((project) => {
-              const media = project.media?.[0];
-              const proof = systemProof[project.slug];
-              return (
-                <SystemProofCard
-                  key={project.slug}
-                  name={project.name}
-                  industry={project.industry}
-                  projectType={project.projectType}
-                  status={project.status}
-                  visualSrc={media?.src || "/images/blog/fallback-editorial.svg"}
-                  visualAlt={media?.alt || project.name}
-                  whatItDoes={project.whatItDoes || []}
-                  systemRole={project.systemRole || []}
-                  proofNotes={proof?.proofNotes || []}
-                  confidentialityNote={proof?.confidentialityNote}
-                />
-              );
-            })}
+            {digitalSystems.map((system) => (
+              <SystemProofCard
+                key={system.slug}
+                name={system.name}
+                industry={system.industry}
+                projectType={system.projectType}
+                status={system.status}
+                visualSrc={system.imageSrc}
+                visualAlt={system.imageAlt}
+                whatItDoes={system.whatItDoes}
+                systemRole={system.systemRole}
+                proofNotes={system.proofNotes}
+                confidentialityNote={system.confidentialityNote}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SYSTEMS INFRASTRUCTURE */}
+      <section className="pb-20 md:pb-24">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="max-w-4xl">
+            <div className="eyebrow mb-4">Systems Infrastructure</div>
+            <h2 className="mt-3 font-heading text-3xl font-bold text-foreground sm:text-4xl">
+              Middleware, integrations, and automation layers
+            </h2>
+            <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
+              Most businesses do not just need a better screen. They need the systems behind the screen to connect. SDL builds middleware, integrations, sync workflows, and automation layers that help websites, dashboards, CRMs, forms, and operational tools work together.
+            </p>
+          </div>
+
+          <div className="mt-10 grid gap-6 md:grid-cols-3">
+            {infrastructureCards.map((card) => (
+              <div
+                key={card.title}
+                className="rounded-[24px] border border-white/10 bg-[#08101d] p-7 shadow-[0_16px_50px_rgba(0,0,0,0.22)]"
+              >
+                <span className={`inline-block rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] ${card.labelClass}`}>
+                  {card.label}
+                </span>
+                <h3 className="mt-4 font-heading text-lg font-bold text-white">
+                  {card.title}
+                </h3>
+                <p className="mt-3 text-sm leading-7 text-white/65">
+                  {card.description}
+                </p>
+                <ul className="mt-5 space-y-2">
+                  {card.bullets.map((b) => (
+                    <li key={b} className="flex items-start gap-3 text-sm leading-7 text-white/72">
+                      <span className="mt-[0.7rem] h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
+                      {b}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
         </div>
       </section>
