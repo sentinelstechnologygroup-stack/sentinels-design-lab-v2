@@ -13,7 +13,7 @@ export const seo = {
   title: "Sentinels Design Lab | Custom Websites & Digital Systems",
   description:
     "Sentinels Design Lab builds modern websites, web applications, portals, dashboards, automations, and custom digital systems using lean code, controlled deployments, and managed infrastructure.",
-  baseUrl: "https://sentinels-design-lab-v2.vercel.app",
+  baseUrl: "https://www.sentinelsdesignlab.com",
 };
 
 export const navLinks = [
