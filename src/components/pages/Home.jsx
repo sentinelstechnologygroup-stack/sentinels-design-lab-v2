@@ -564,6 +564,73 @@ export default function Home() {
         </div>
       </section>
 
+      {/* FEATURED INSIGHTS */}
+      <section className="py-20 border-t border-white/8" style={{ background: '#07101f' }}>
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-10 text-center">
+            <span className="eyebrow mb-4">SDL Insights</span>
+            <h2 className="mt-3 font-heading text-3xl font-bold text-foreground sm:text-4xl">
+              Featured Insights
+            </h2>
+            <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
+              Practical guidance for business owners evaluating website
+              modernization, trust, SEO, and long-term digital infrastructure.
+            </p>
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-2">
+            <Link
+              href="/blog/why-outdated-websites-cost-local-businesses-leads"
+              className="group block rounded-2xl border border-white/10 bg-[#08101d] p-7 shadow-[0_16px_50px_rgba(0,0,0,0.22)] transition-all hover:border-primary/30 hover:-translate-y-0.5"
+            >
+              <div className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-primary">
+                Local Business Growth
+              </div>
+              <h3 className="font-heading text-xl font-semibold text-foreground leading-snug group-hover:text-primary transition-colors">
+                Why Outdated Websites Cost Local Businesses Leads
+              </h3>
+              <p className="mt-3 text-sm leading-7 text-muted-foreground">
+                Your website is the first employee every potential customer
+                meets. If it's slow, stale, or hard to use on a phone, they're
+                already walking out the door before you ever knew they arrived.
+              </p>
+              <span className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-primary">
+                Read article <ArrowRight className="h-3.5 w-3.5" />
+              </span>
+            </Link>
+
+            <Link
+              href="/blog/rebuild-wordpress-sites"
+              className="group block rounded-2xl border border-white/10 bg-[#08101d] p-7 shadow-[0_16px_50px_rgba(0,0,0,0.22)] transition-all hover:border-primary/30 hover:-translate-y-0.5"
+            >
+              <div className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-primary">
+                Web Development
+              </div>
+              <h3 className="font-heading text-xl font-semibold text-foreground leading-snug group-hover:text-primary transition-colors">
+                Why We Rebuild WordPress Sites Instead of Maintaining Plugin Stacks
+              </h3>
+              <p className="mt-3 text-sm leading-7 text-muted-foreground">
+                What starts as a clean WordPress install becomes a dependency
+                maze of conflicting updates, abandoned integrations, and
+                security gaps that no amount of patching can fully close.
+              </p>
+              <span className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-primary">
+                Read article <ArrowRight className="h-3.5 w-3.5" />
+              </span>
+            </Link>
+          </div>
+
+          <div className="mt-8 text-center">
+            <Link
+              href="/blog"
+              className="inline-flex items-center gap-2 text-sm font-medium text-primary transition hover:text-white"
+            >
+              View all articles <ArrowRight className="h-3.5 w-3.5" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
       <div className="relative">
         <CTASection
           eyebrow="Start Strong"
