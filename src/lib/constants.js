@@ -34,4 +34,4 @@ export const IMAGES = {
   logo: "/images/logo/logo-mark.webp",
 };
 
-export const FORM_ENDPOINT = "";
+export const FORM_ENDPOINT = "https://formspree.io/f/mnjgoknr";
