@@ -149,6 +149,7 @@ const heroTiles = [
     alt: "Branding and logo design",
     label: "Branding & Identity",
     className: "row-span-2",
+    imageClassName: "object-cover object-[60%_50%] scale-110",
   },
   {
     src: "/images/home/tile-web-design.png",
@@ -271,7 +272,7 @@ export default function Home() {
                     <img
                       src={tile.src}
                       alt={tile.alt}
-                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      className={`h-full w-full transition-transform duration-500 group-hover:scale-105 ${tile.imageClassName ?? "object-cover object-center"}`}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#050816]/90 via-[#050816]/20 to-transparent" />
                     <div className="absolute bottom-0 left-0 right-0 p-4">
