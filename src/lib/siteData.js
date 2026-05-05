@@ -20,6 +20,7 @@ export const navLinks = [
   { label: "Home", path: "/" },
   { label: "About", path: "/about" },
   { label: "Services", path: "/services" },
+  { label: "Systems", path: "/systems/sis" },
   { label: "Work", path: "/work" },
   { label: "Pricing", path: "/pricing" },
   { label: "Blog", path: "/blog" },

@@ -361,6 +361,29 @@ export default function Home() {
               </motion.div>
             ))}
           </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mt-6"
+          >
+            <Link
+              href="/systems/sis"
+              className="group flex items-center justify-between rounded-2xl border border-primary/20 bg-sky-400/[0.05] px-7 py-5 transition-all hover:border-primary/40 hover:bg-sky-400/[0.08]"
+            >
+              <div>
+                <div className="text-xs font-semibold uppercase tracking-[0.18em] text-primary mb-1">
+                  Sentinel Intelligence System
+                </div>
+                <p className="font-heading text-lg font-semibold text-foreground">
+                  Connected systems that run your business →{" "}
+                  <span className="text-primary">SIS</span>
+                </p>
+              </div>
+              <ArrowRight className="h-5 w-5 shrink-0 text-primary transition-transform group-hover:translate-x-1" />
+            </Link>
+          </motion.div>
         </div>
       </section>
 

@@ -290,6 +290,13 @@ export default function Work() {
             <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
               These are real product and system builds in active use or active development. SDL does not present fake case studies, invented rankings, or fabricated metrics.
             </p>
+            <p className="mt-4 text-muted-foreground">
+              The operational framework behind these systems is the{" "}
+              <a href="/systems/sis" className="text-primary underline-offset-4 hover:underline">
+                Sentinel Intelligence System (SIS)
+              </a>{" "}
+              — SDL&apos;s approach to connecting websites, workflows, and business operations into one controlled layer.
+            </p>
           </div>
 
           <div className="mt-10 grid gap-8 xl:grid-cols-2">

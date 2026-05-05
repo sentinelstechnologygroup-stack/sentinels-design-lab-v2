@@ -332,6 +332,68 @@ export default function Services() {
         </div>
       </section>
 
+      {/* DIGITAL SYSTEMS & AUTOMATION */}
+      <section className="relative py-20 border-t border-white/8" style={{ background: "#07101f" }}>
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid items-center gap-12 lg:grid-cols-2">
+            <div>
+              <span className="eyebrow mb-4">Beyond the Website</span>
+              <h2 className="mt-3 font-heading text-3xl font-bold text-foreground sm:text-4xl">
+                Digital Systems &amp; Automation
+              </h2>
+              <p className="mt-5 text-lg leading-relaxed text-muted-foreground">
+                When a website alone is not enough, SDL builds the operational
+                layer behind it — portals, dashboards, integrations, and
+                automation pipelines that connect your site to how your business
+                actually runs.
+              </p>
+              <ul className="mt-8 space-y-3">
+                {[
+                  "Website → CRM intake routing",
+                  "Form-to-workflow automation",
+                  "Client portals and internal dashboards",
+                  "Reporting and visibility pipelines",
+                  "Field operations and admin system layers",
+                ].map((point) => (
+                  <li key={point} className="flex items-start gap-3 text-sm leading-7 text-muted-foreground">
+                    <span className="mt-[0.7rem] h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
+                    {point}
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-8">
+                <Link
+                  href="/systems/sis"
+                  className="inline-flex items-center gap-2 rounded-lg bg-primary px-7 py-3 text-sm font-semibold text-slate-950 transition-all hover:scale-[1.01] hover:shadow-[0_10px_30px_rgba(56,189,248,0.20)]"
+                >
+                  Learn About SIS
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              {[
+                { label: "LIVE SYSTEM", title: "Dadson Trucking Admin Portal", desc: "Centralized load, driver, and document management for a logistics operation." },
+                { label: "LIVE SYSTEM", title: "Dadson Driver Hub", desc: "Mobile-first field workflow connecting drivers to the operational data layer." },
+                { label: "ACTIVE BUILD", title: "PainterBid / Painter Pro", desc: "Quote, job, and client management system for painting contractors." },
+              ].map((item) => (
+                <div key={item.title} className="rounded-2xl border border-white/10 bg-[#08101d] p-6 shadow-[0_16px_50px_rgba(0,0,0,0.22)]">
+                  <span className={`text-[11px] font-semibold uppercase tracking-[0.16em] ${item.label === "LIVE SYSTEM" ? "text-emerald-400" : "text-sky-400"}`}>
+                    {item.label}
+                  </span>
+                  <h3 className="mt-2 font-heading text-base font-semibold text-foreground">{item.title}</h3>
+                  <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{item.desc}</p>
+                </div>
+              ))}
+              <Link href="/work" className="inline-flex items-center gap-2 text-sm font-medium text-primary transition hover:text-white">
+                View all system work <ArrowRight className="h-3.5 w-3.5" />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* CTA */}
       <div className="relative">
         <CTASection
