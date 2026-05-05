@@ -58,8 +58,8 @@ module.exports = {
         sm: "calc(var(--radius) - 4px)",
       },
       fontFamily: {
-        sans: ["Inter", ...fontFamily.sans],
-        display: ["Space Grotesk", ...fontFamily.sans],
+        sans: ["var(--font-inter)", ...fontFamily.sans],
+        display: ["var(--font-space-grotesk)", ...fontFamily.sans],
       },
     },
   },

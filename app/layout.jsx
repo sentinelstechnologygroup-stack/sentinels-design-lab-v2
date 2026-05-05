@@ -1,6 +1,19 @@
 import "../src/index.css";
+import { Inter, Space_Grotesk } from "next/font/google";
 import Layout from "@/components/layout/Layout";
 import { business, seo } from "@/lib/siteData";
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+});
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-space-grotesk",
+  display: "swap",
+});
 
 const orgSchema = {
   "@context": "https://schema.org",
@@ -50,7 +63,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable}`}>
       <head>
         <script
           type="application/ld+json"
