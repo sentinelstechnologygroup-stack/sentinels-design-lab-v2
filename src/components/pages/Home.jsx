@@ -282,16 +282,7 @@ export default function Home() {
                   </div>
                 ))}
 
-                <div className="absolute -left-5 top-1/2 z-10 -translate-y-1/2 rounded-xl border border-white/10 bg-[#0b1220]/90 px-4 py-3 shadow-xl backdrop-blur-md">
-                  <div className="text-2xl font-heading font-bold text-primary">
-                    Strategy
-                  </div>
-                  <div className="text-xs text-slate-300">
-                    before design, not after
-                  </div>
-                </div>
-
-                <div className="absolute -right-4 bottom-16 z-10 rounded-xl border border-white/10 bg-[#0b1220]/90 px-4 py-3 shadow-xl backdrop-blur-md">
+<div className="absolute -right-4 bottom-16 z-10 rounded-xl border border-white/10 bg-[#0b1220]/90 px-4 py-3 shadow-xl backdrop-blur-md">
                   <div className="inline-flex items-center gap-2">
                     <div className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
                     <span className="text-xs font-semibold text-white">
