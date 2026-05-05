@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import {
@@ -112,12 +113,20 @@ export default function Services() {
               transition={{ duration: 0.8, delay: 0.15 }}
               className="relative hidden lg:block"
             >
-              <div className="absolute -inset-6 rounded-3xl bg-primary/5 blur-2xl" />
-              <img
-                src="/images/services/website-design-hero.png"
-                alt="Custom website and digital system design by Sentinels Design Lab"
-                className="relative w-full max-h-[480px] rounded-t-2xl border border-border/30 object-cover shadow-2xl shadow-black/30"
-              />
+              <div className="absolute -inset-4 rounded-[2rem] bg-primary/10 blur-3xl" />
+              <div className="relative overflow-hidden rounded-[28px] border border-white/10 bg-[#08101d] shadow-[0_30px_80px_rgba(0,0,0,0.34)]">
+                <div className="relative aspect-[4/3] md:aspect-[16/11]">
+                  <Image
+                    src="/images/hero/services-hero.png"
+                    alt="Custom website and digital system design by Sentinels Design Lab"
+                    fill
+                    priority
+                    sizes="(min-width: 1024px) 42vw, 100vw"
+                    className="object-cover"
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-[#050816]/72 via-transparent to-transparent" />
+              </div>
             </motion.div>
           </div>
         </div>
