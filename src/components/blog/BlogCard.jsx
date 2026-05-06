@@ -37,11 +37,7 @@ export default function BlogCard({
           <>
             <div
               aria-hidden="true"
-              className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.82)_0%,rgba(0,0,0,0.72)_32%,rgba(0,0,0,0.30)_55%,rgba(0,0,0,0)_72%)]"
-            />
-            <div
-              aria-hidden="true"
-              className="absolute bottom-[8%] left-[4%] top-[8%] z-[1] w-[45%] rounded-2xl bg-black/35"
+              className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.88)_0%,rgba(0,0,0,0.78)_32%,rgba(0,0,0,0.35)_55%,rgba(0,0,0,0)_72%)]"
             />
             <div className="absolute inset-0 z-10 flex max-w-[52%] flex-col justify-center pl-[6%] pr-0">
               <p className="font-heading text-[clamp(1.35rem,3.2vw,3rem)] font-black leading-[0.92] tracking-[-0.03em] text-white">
