@@ -20,7 +20,7 @@ export default function BlogArticleTemplate({ title, category, date, readTime, e
           <p className="mt-6 text-lg leading-8 text-white/70">{excerpt}</p>
         </div>
 
-        <div className="mt-10 max-w-5xl">
+        {heroImage && <div className="mt-10 max-w-5xl">
           <div className={`relative overflow-hidden rounded-[28px] border border-white/10 bg-[#09111f] shadow-2xl shadow-black/30 ${heroOverlay ? "aspect-[1456/816]" : "aspect-[16/9]"}`}>
             <Image
               src={imageSrc}
@@ -83,7 +83,7 @@ export default function BlogArticleTemplate({ title, category, date, readTime, e
               </>
             )}
           </div>
-        </div>
+        </div>}
       </section>
 
       <section className="section-shell pb-24">

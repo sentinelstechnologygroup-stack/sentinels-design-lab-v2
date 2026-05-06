@@ -19,12 +19,12 @@ export default function BlogCard({
   heroOverlay,
   priority = false,
 }) {
-  const imageSrc = thumbnailImage || thumbnailUrl || fallbackImage;
+  const imageSrc = thumbnailImage || thumbnailUrl || null;
   const imageAlt = thumbnailImageAlt || alt || `${title} thumbnail`;
 
   return (
     <article className="overflow-hidden rounded-[26px] border border-white/10 bg-[#08101d] p-4 shadow-[0_22px_60px_rgba(0,0,0,0.28)] md:p-5">
-      <div className={`relative aspect-[4/3] overflow-hidden rounded-[20px] border border-white/10 bg-[#050816] ${heroOverlay ? "" : "p-2"}`}>
+      {imageSrc && <div className={`relative aspect-[4/3] overflow-hidden rounded-[20px] border border-white/10 bg-[#050816] ${heroOverlay ? "" : "p-2"}`}>
         <Image
           src={imageSrc}
           alt={imageAlt}
@@ -58,7 +58,7 @@ export default function BlogCard({
             </div>
           </>
         )}
-      </div>
+      </div>}
 
       <div className="mt-5 text-xs font-semibold uppercase tracking-[0.18em] text-primary">
         {category}
