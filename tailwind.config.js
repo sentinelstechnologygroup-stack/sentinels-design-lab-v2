@@ -60,6 +60,8 @@ module.exports = {
       fontFamily: {
         sans: ["var(--font-inter)", ...fontFamily.sans],
         display: ["var(--font-space-grotesk)", ...fontFamily.sans],
+        bebas: ["var(--font-bebas-neue)", ...fontFamily.sans],
+        "barlow-condensed": ["var(--font-barlow-condensed)", ...fontFamily.sans],
       },
     },
   },
