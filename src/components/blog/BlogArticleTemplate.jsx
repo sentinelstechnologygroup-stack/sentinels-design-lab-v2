@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const fallbackImage = "/images/blog/fallback-editorial.webp";
 
-export default function BlogArticleTemplate({ title, category, date, readTime, excerpt, heroImage, heroImageAlt, children }) {
+export default function BlogArticleTemplate({ title, category, date, readTime, excerpt, heroImage, heroImageAlt, heroOverlay, children }) {
   const imageSrc = heroImage || fallbackImage;
   const imageAlt = heroImageAlt || title;
 
@@ -22,7 +22,48 @@ export default function BlogArticleTemplate({ title, category, date, readTime, e
 
         <div className="mt-10 max-w-5xl">
           <div className="relative aspect-[16/9] overflow-hidden rounded-[28px] border border-white/10 bg-[#09111f] shadow-2xl shadow-black/30">
-            <Image src={imageSrc} alt={imageAlt} fill priority sizes="(min-width: 1280px) 1120px, (min-width: 768px) 90vw, 100vw" className="object-cover" />
+            <Image
+              src={imageSrc}
+              alt={imageAlt}
+              fill
+              priority
+              sizes="(min-width: 1280px) 1120px, (min-width: 768px) 90vw, 100vw"
+              className={heroOverlay ? "object-cover object-right" : "object-cover"}
+            />
+            {heroOverlay && (
+              <>
+                <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/60 to-transparent max-md:from-black/90 max-md:via-black/80" />
+                <div className="absolute inset-0 z-10 flex max-w-[54%] flex-col justify-center px-[5.5%] py-[5%] max-md:max-w-[88%]">
+                  <p className="font-heading font-bold leading-[0.92] tracking-wide text-white [font-size:clamp(2rem,5.5vw,5rem)]">
+                    {(heroOverlay.titleLines || []).map((line, i) => (
+                      <span key={i} className={`block ${line === heroOverlay.accentLine ? "text-[#C9961A]" : ""}`}>
+                        {line}
+                      </span>
+                    ))}
+                  </p>
+                  <div aria-hidden="true" className="my-3 h-1 w-16 rounded-full bg-[#C9961A]" />
+                  {heroOverlay.subtitle && (
+                    <p className="max-w-[32ch] font-semibold leading-snug tracking-wide text-white [font-size:clamp(0.85rem,1.8vw,1.5rem)]">
+                      {heroOverlay.subtitle}
+                    </p>
+                  )}
+                  {heroOverlay.tagline && (
+                    <div className="mt-4 flex items-center gap-3">
+                      <span aria-hidden="true" className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 border-[#C9961A]">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-5 w-5">
+                          <path d="M12 2.5L2 20.5h20L12 2.5z" fill="#C9961A" stroke="#C9961A" strokeWidth="1.2" strokeLinejoin="round" />
+                          <path d="M12 9v5" stroke="#000" strokeWidth="2" strokeLinecap="round" />
+                          <circle cx="12" cy="16.5" r="1" fill="#000" />
+                        </svg>
+                      </span>
+                      <span className="text-[0.65rem] font-bold uppercase tracking-[0.18em] text-neutral-400 md:text-xs">
+                        {heroOverlay.tagline}
+                      </span>
+                    </div>
+                  )}
+                </div>
+              </>
+            )}
           </div>
         </div>
       </section>

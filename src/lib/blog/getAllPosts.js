@@ -24,6 +24,7 @@ function normalizePost(filePath) {
     thumbnailUrl: data.thumbnailUrl || data.thumbnail || "/images/blog/fallback-editorial.webp",
     heroUrl: data.heroUrl || data.hero || data.thumbnailUrl || "/images/blog/fallback-editorial.webp",
     alt: data.alt || data.title || "SDL blog article image",
+    heroOverlay: data.heroOverlay || null,
     content,
     contentPath: filePath,
   };
