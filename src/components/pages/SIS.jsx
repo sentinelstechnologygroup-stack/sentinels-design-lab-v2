@@ -263,7 +263,7 @@ export default function SIS() {
                   href="/work"
                   className="inline-flex items-center gap-2 rounded-lg border border-primary/20 bg-sky-400/[0.06] px-7 py-3 text-sm font-semibold text-foreground transition-all hover:border-primary/40 hover:bg-sky-400/[0.10]"
                 >
-                  See System Work
+                  See Our Work
                 </Link>
               </div>
             </div>
