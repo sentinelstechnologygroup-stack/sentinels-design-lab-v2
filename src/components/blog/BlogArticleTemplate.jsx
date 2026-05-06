@@ -36,6 +36,14 @@ export default function BlogArticleTemplate({ title, category, date, readTime, e
                   aria-hidden="true"
                   className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.82)_0%,rgba(0,0,0,0.72)_30%,rgba(0,0,0,0.30)_52%,rgba(0,0,0,0)_65%)] max-md:bg-[linear-gradient(to_right,rgba(0,0,0,0.90)_0%,rgba(0,0,0,0.80)_50%,rgba(0,0,0,0.35)_80%,rgba(0,0,0,0)_100%)]"
                 />
+                <div
+                  aria-hidden="true"
+                  className="absolute bottom-[7%] left-[3.5%] top-[7%] z-[1] w-[42%] rounded-[28px] bg-black/38 blur-[2px] max-md:left-[3%] max-md:right-[18%] max-md:w-auto"
+                />
+                <div
+                  aria-hidden="true"
+                  className="absolute bottom-[5%] left-[3%] top-[5%] z-[1] w-[48%] rounded-[32px] bg-[linear-gradient(to_right,rgba(0,0,0,0.52)_0%,rgba(0,0,0,0.42)_60%,rgba(0,0,0,0.08)_100%)] max-md:left-[2%] max-md:right-[10%] max-md:w-auto"
+                />
                 <div className="absolute inset-0 z-10 flex max-w-[54%] flex-col justify-center py-[5%] pl-[5.5%] pr-0 max-md:max-w-[88%] max-md:px-[5%]">
                   <p className="font-heading text-[clamp(4rem,8vw,7.6rem)] font-black leading-[0.92] tracking-[-0.03em] text-white">
                     {(heroOverlay.titleLines || []).map((line, i) => (
