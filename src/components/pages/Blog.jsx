@@ -63,7 +63,6 @@ export default function BlogPage({ posts = [] }) {
               readTime={post.readTime}
               thumbnailImage={post.thumbnailUrl}
               thumbnailImageAlt={post.alt}
-              heroOverlay={post.heroOverlay || null}
               priority={index < 3}
             />
           ))}

@@ -96,7 +96,6 @@ export default async function Page({ params }) {
         excerpt={post.excerpt}
         heroImage={post.heroUrl}
         heroImageAlt={post.alt || post.title}
-        heroOverlay={post.heroOverlay || null}
       >
         <Content components={mdxComponents} />
       </BlogArticleTemplate>
