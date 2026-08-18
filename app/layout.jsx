@@ -61,6 +61,9 @@ export const metadata = {
   metadataBase: new URL(seo.baseUrl),
   title: seo.title,
   description: seo.description,
+  other: {
+    "impact-site-verification": "53d565cc-b42f-4b07-88b2-242a7f96a7dd",
+  },
   openGraph: {
     title: seo.title,
     description: seo.description,
