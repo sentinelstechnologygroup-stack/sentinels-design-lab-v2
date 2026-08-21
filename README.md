@@ -1,61 +1,58 @@
 # Sentinels Design Lab
 
-Sentinels Design Lab is a Vite + React marketing site. This repository has been scrubbed of platform-specific runtime dependencies so it can run as a standard local project.
+Production website for Sentinels Design Lab.
 
-## Stack
+## Production Stack
 
-- Vite
-- React
-- React Router
+- Next.js 15 App Router
+- React 18
 - Tailwind CSS
 - Framer Motion
 - Radix UI
+- Vercel deployment
+- GitHub source control
 
-## Getting Started
+## Local Development
 
-1. Install dependencies:
-   npm install
+```bash
+npm ci
+npm run dev
+```
 
-2. Start the development server:
-   npm run dev
+The development server runs on the standard Next.js local port unless overridden.
 
-3. Build for production:
-   npm run build
+## Production Validation
 
-4. Preview the production build locally:
-   npm run preview
+```bash
+npm run build
+npm start
+```
 
 ## Project Structure
 
-sentinels-design-lab/
-├─ src/
-│  ├─ components/
-│  ├─ hooks/
-│  ├─ lib/
-│  ├─ pages/
-│  ├─ utils/
-│  ├─ App.jsx
-│  ├─ index.css
-│  └─ main.jsx
-├─ index.html
-├─ package.json
-├─ tailwind.config.js
-└─ vite.config.js
+```text
+app/                    Next.js routes, metadata, sitemap, and robots
+src/components/         Active application components
+src/lib/                Shared site data, metadata, and utilities
+src/index.css            Global styles
+public/                  Production images and static assets
+next.config.mjs          Next.js configuration
+package.json             Runtime and build dependencies
+```
 
-## Notes
+The `@/*` path alias resolves to `src/*`.
 
-- Image references are currently hardcoded in individual pages and service pages.
-- Shared business info, navigation, and utility values live in `src/lib/constants.js`.
-- Delete `package-lock.json` and regenerate it after pasting the cleaned `package.json`.
+## Production Source of Truth
 
-Mac/Linux:
-rm package-lock.json
-npm install
+- `main` is the production branch.
+- Vercel production deployments are sourced from GitHub.
+- `https://www.sentinelsdesignlab.com` is the production domain.
+- Platform-exported or historical project copies are not the production source of truth.
 
-Windows PowerShell:
-Remove-Item package-lock.json
-npm install
+## Pricing Data
 
-## Recommended Next Step
-Proceed with framework normalization and then the V3 home page conversion pass."# sentinels-design-lab-v2" 
-# sentinels-design-lab-v2
+Current public pricing and managed website-care inclusions are centralized in `src/lib/pricingData.js` and rendered by `src/components/pages/Pricing.jsx`.
+
+## Deployment Notes
+
+Production changes should be validated through a branch/PR, allowed to complete the Vercel preview/build checks, and then merged into `main`.
