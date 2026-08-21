@@ -4,6 +4,7 @@ import CTASection from "@/components/shared/CTASection";
 import PageHero from "@/components/sections/PageHero";
 import PricingCard from "@/components/shared/PricingCard";
 import {
+  growthServices,
   managedWebsiteIncludes,
   pricingExclusions,
   pricingFactors,
@@ -17,9 +18,9 @@ const pricingNotes = [
       "Your monthly website plan includes the build, hosting, maintenance, security, backups, monitoring, deployment management, and routine technical support.",
   },
   {
-    title: "No separate maintenance plan",
+    title: "SEO-ready at launch",
     description:
-      "The managed service is part of the website plan from day one, so clients are not handed a site and left to manage the technical stack themselves.",
+      "Every site is built with search-friendly structure, metadata, sitemap and indexing setup. Ongoing SEO growth work is available as an add-on.",
   },
   {
     title: "Custom systems stay custom",
@@ -34,7 +35,7 @@ export default function Pricing() {
       <PageHero
         eyebrow="Pricing"
         title="Professional websites without the large upfront investment"
-        description="Choose a managed monthly website plan that includes the build and the ongoing technical care required to keep it secure, maintained, monitored, and online. Custom software, CRM, portals, AI, and advanced digital systems are scoped separately."
+        description="Choose a managed monthly website plan that includes the build, launch-level SEO setup, and the ongoing technical care required to keep it secure, maintained, monitored, and online. Expanded SEO, PPC, social campaigns, and custom digital systems are available when you need to grow beyond the website itself."
         primaryCtaLabel="Get Website Evaluation"
         primaryCtaHref="/contact?type=website-evaluation"
         secondaryCtaLabel="Contact"
@@ -87,6 +88,38 @@ export default function Pricing() {
               Traditional project pricing is available. We&apos;ll scope the build, provide an upfront project price, and define the ongoing hosting and maintenance arrangement separately.
             </p>
           </div>
+        </div>
+      </section>
+
+      <section className="pb-14 md:pb-16">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-8 max-w-3xl">
+            <div className="eyebrow mb-3">Optional growth services</div>
+            <h2 className="font-heading text-2xl font-bold text-foreground md:text-3xl">
+              Add ongoing search growth or paid campaigns when the business is ready to scale.
+            </h2>
+            <p className="mt-4 text-sm leading-7 text-muted-foreground">
+              Launch SEO is part of how we build every website. Ongoing SEO strategy and paid advertising management are separate services because they require continued research, optimization, campaign management, and reporting.
+            </p>
+          </div>
+
+          <div className="grid gap-6 lg:grid-cols-2 lg:items-stretch">
+            {growthServices.map((item) => (
+              <PricingCard
+                key={item.name}
+                name={item.name}
+                price={item.price}
+                periodLabel={item.periodLabel}
+                categoryLabel="Growth add-on"
+                ctaLabel={item.ctaLabel}
+                description={item.description}
+                features={item.features}
+              />
+            ))}
+          </div>
+          <p className="mt-4 text-sm leading-6 text-muted-foreground">
+            Advertising media spend is paid separately and is not included in the $500/month campaign-management starting price.
+          </p>
         </div>
       </section>
 
