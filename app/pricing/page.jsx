@@ -2,8 +2,8 @@ import Pricing from "@/components/pages/Pricing";
 import { pageMetadata } from "@/lib/metadata";
 
 export const metadata = pageMetadata(
-  "Pricing | Sentinels Design Lab",
-  "Website pricing starting points for SDL plus discovery-led scoping for portals, dashboards, automations, integrations, and custom digital systems.",
+  "Website Pricing | Sentinels Design Lab",
+  "SDL website packages start at $2,500 and include managed hosting, maintenance, security, backups, monitoring, deployment management, and basic technical support.",
   "/pricing",
 );
 
