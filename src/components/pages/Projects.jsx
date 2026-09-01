@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { TrendingUp, Users, Clock, ChevronRight } from "lucide-react";
+import { Clock, ChevronRight } from "lucide-react";
 import CTASection from "../../../components/shared/CTASection";
 import { categories, projects } from "../../../lib/projectsData";
 

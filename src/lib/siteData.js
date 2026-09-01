@@ -31,7 +31,7 @@ export const footerLinks = navLinks;
 
 export const primaryCta = {
   label: "Get Website Evaluation",
-  path: "/contact?type=website-evaluation",
+  path: "https://sentinels-design-lab-v2.vercel.app/evaluation",
 };
 
 export const secondaryCta = {

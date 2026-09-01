@@ -42,6 +42,7 @@ export default function TimelineStrip({ items = [] }) {
         </div>
       </div>
 
+      {/* eslint-disable-next-line react/no-unknown-property */}
       <style jsx>{`
         .timeline-grid {
           display: grid;

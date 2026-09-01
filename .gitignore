@@ -8,3 +8,6 @@ _route-backup
 *.zip
 *.Identifier
 .next
+.vercel
+.env*
+!.env.example
