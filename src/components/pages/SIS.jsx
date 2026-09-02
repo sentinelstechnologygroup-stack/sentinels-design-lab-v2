@@ -253,8 +253,15 @@ export default function SIS() {
 
               <div className="mt-8 flex flex-wrap gap-4">
                 <Link
-                  href="/contact"
+                  href="/advanced-reports"
                   className="inline-flex items-center gap-2 rounded-lg bg-primary px-7 py-3 text-sm font-semibold text-slate-950 transition-all hover:scale-[1.01] hover:shadow-[0_10px_30px_rgba(56,189,248,0.20)]"
+                >
+                  View Advanced Reports
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+                <Link
+                  href="/contact"
+                  className="inline-flex items-center gap-2 rounded-lg border border-primary/20 bg-sky-400/[0.06] px-7 py-3 text-sm font-semibold text-foreground transition-all hover:border-primary/40 hover:bg-sky-400/[0.10]"
                 >
                   Request a Systems Evaluation
                   <ArrowRight className="h-4 w-4" />

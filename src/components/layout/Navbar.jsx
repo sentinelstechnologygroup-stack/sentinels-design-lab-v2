@@ -44,6 +44,7 @@ export default function Navbar() {
           <Link href={CTA.primary.path} className="btn-primary whitespace-nowrap text-sm">
             {CTA.primary.label}
           </Link>
+          <Link href="/dashboard" className="whitespace-nowrap text-sm font-semibold text-white/80 hover:text-white">My reports / Sign in</Link>
         </nav>
 
         <button
@@ -90,6 +91,7 @@ export default function Navbar() {
             >
               {CTA.primary.label}
             </Link>
+            <Link href="/dashboard" className="mt-3 flex min-h-11 items-center rounded-lg px-2 text-sm font-semibold text-white/80" onClick={() => setOpen(false)}>My reports / Sign in</Link>
           </nav>
         </div>
       )}

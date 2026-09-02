@@ -1,74 +1,55 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
+import { put } from "@vercel/blob";
 import { buildBasicEvaluation, inspectPage } from "@/lib/dataforseo";
+import { generateEvaluationPdf } from "@/lib/evaluation-pdf";
+import { sendEvaluationEmails } from "@/lib/evaluation-email";
+import { adminAuth } from "@/lib/firebase-admin";
+import { createReport, createWebsite, updateReport, upsertProfile } from "@/db/firestore";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
-
 const attempts = new Map();
 const WINDOW_MS = 60 * 60 * 1000;
 const MAX_ATTEMPTS = 3;
-
-const requestSchema = z.object({
-  name: z.string().trim().min(2).max(100),
-  email: z.string().trim().email().max(200),
-  phone: z.string().trim().max(40).optional().default(""),
-  businessName: z.string().trim().min(2).max(150),
-  website: z.string().trim().max(500),
-  primaryService: z.string().trim().min(2).max(160),
-  location: z.string().trim().max(160).optional().default(""),
-  company: z.string().max(0).optional().default(""),
-});
+const requestSchema = z.object({ name: z.string().trim().min(2).max(100), email: z.string().trim().email().max(200), phone: z.string().trim().max(40).optional().default(""), businessName: z.string().trim().min(2).max(150), website: z.string().trim().max(500), primaryService: z.string().trim().min(2).max(160), location: z.string().trim().max(160).optional().default(""), company: z.string().max(0).optional().default("") });
 
 function normalizeWebsite(value) {
-  const withProtocol = /^https?:\/\//i.test(value) ? value : `https://${value}`;
-  const url = new URL(withProtocol);
-  if (!['http:', 'https:'].includes(url.protocol)) throw new Error("Invalid website protocol.");
+  const url = new URL(/^https?:\/\//i.test(value) ? value : `https://${value}`);
   const host = url.hostname.toLowerCase();
   const privateIpv4 = /^(10\.|127\.|169\.254\.|192\.168\.|172\.(1[6-9]|2\d|3[01])\.)/;
-  if (
-    host === "localhost" ||
-    host.endsWith(".local") ||
-    host === "::1" ||
-    privateIpv4.test(host)
-  ) throw new Error("Please enter a public website.");
+  if (!["http:", "https:"].includes(url.protocol) || host === "localhost" || host.endsWith(".local") || host === "::1" || privateIpv4.test(host)) throw new Error("Please enter a public website.");
   return url.toString();
 }
 
 export async function POST(request) {
   try {
-    const forwarded = request.headers.get("x-forwarded-for") || "unknown";
-    const clientId = forwarded.split(",")[0].trim();
+    const clientId = (request.headers.get("x-forwarded-for") || "unknown").split(",")[0].trim();
     const now = Date.now();
     const recent = (attempts.get(clientId) || []).filter((time) => now - time < WINDOW_MS);
-    if (recent.length >= MAX_ATTEMPTS) {
-      return NextResponse.json({ error: "You have reached the free evaluation limit. Please try again later." }, { status: 429 });
-    }
-
+    if (recent.length >= MAX_ATTEMPTS) return NextResponse.json({ error: "You have reached the free evaluation limit. Please try again later." }, { status: 429 });
     const parsed = requestSchema.safeParse(await request.json());
-    if (!parsed.success) {
-      return NextResponse.json({ error: "Please check the required fields and try again." }, { status: 400 });
-    }
-
+    if (!parsed.success) return NextResponse.json({ error: "Please check the required fields and try again." }, { status: 400 });
     const url = normalizeWebsite(parsed.data.website);
     attempts.set(clientId, [...recent, now]);
-    const inspection = await inspectPage(url);
-    const evaluation = buildBasicEvaluation(url, inspection);
-
-    return NextResponse.json({
-      ok: true,
-      evaluation,
-      nextStep: {
-        label: "Explore the complete SIS report series",
-        href: "/systems/sis",
-      },
-    });
+    const evaluation = buildBasicEvaluation(url, await inspectPage(url), parsed.data);
+    const pdf = generateEvaluationPdf(evaluation);
+    const email = parsed.data.email.toLowerCase();
+    let user;
+    try { user = await adminAuth().getUserByEmail(email); }
+    catch (error) { if (error.code !== "auth/user-not-found") throw error; user = await adminAuth().createUser({ email, displayName: parsed.data.name }); }
+    await upsertProfile(user.uid, { email, name: parsed.data.name });
+    const websiteId = await createWebsite(user.uid, { businessName: parsed.data.businessName, url, primaryService: parsed.data.primaryService, location: parsed.data.location });
+    const reportId = await createReport(user.uid, { websiteId, reportType: "free-readiness", title: `${parsed.data.businessName} Website Readiness Snapshot`, status: "generating", findings: evaluation });
+    const blob = await put(`reports/${user.uid}/${reportId}.pdf`, pdf, { access: "private", addRandomSuffix: false, contentType: "application/pdf" });
+    await updateReport(reportId, { blobUrl: blob.url, status: "complete" });
+    const portalUrl = await adminAuth().generateSignInWithEmailLink(email, { url: `${process.env.NEXT_PUBLIC_APP_URL || "https://reports.sentinelsdesignlab.com"}/sign-in`, handleCodeInApp: true });
+    let delivery = { sent: false, reason: "not_configured" };
+    try { delivery = await sendEvaluationEmails({ evaluation, lead: { ...parsed.data, email }, pdf, portalUrl }); }
+    catch (error) { console.error("[SIS email delivery]", error); delivery = { sent: false, reason: "delivery_failed" }; }
+    return NextResponse.json({ ok: true, evaluation, delivery, report: { id: reportId, filename: `SDL-Website-Readiness-${evaluation.businessName.replace(/[^a-z0-9]+/gi, "-")}.pdf`, url: `/api/reports/${reportId}/download` }, nextStep: { label: "Sign in to view reports", href: "/sign-in" } });
   } catch (error) {
     console.error("[SIS evaluation]", error);
-    const configurationError = error instanceof Error && error.message.includes("credentials are not configured");
-    return NextResponse.json(
-      { error: configurationError ? "The evaluation service is being connected. Please try again shortly." : "We could not inspect that website right now. Confirm the address and try again." },
-      { status: configurationError ? 503 : 502 },
-    );
+    return NextResponse.json({ error: "We could not inspect that website right now. Confirm the address and try again." }, { status: 502 });
   }
 }

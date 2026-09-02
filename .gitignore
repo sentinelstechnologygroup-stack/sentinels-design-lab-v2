@@ -11,3 +11,7 @@ _route-backup
 .vercel
 .env*
 !.env.example
+.agents/
+output/
+tmp/
+skills-lock.json

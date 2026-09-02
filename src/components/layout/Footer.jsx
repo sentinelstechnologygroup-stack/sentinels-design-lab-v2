@@ -46,6 +46,11 @@ export default function Footer() {
               </Link>
             ))}
           </div>
+          <div className="mt-7 flex flex-wrap gap-x-5 gap-y-2 border-t border-white/10 pt-5">
+            <Link href="/privacy" className="text-xs text-white/55 transition hover:text-white">Privacy Policy</Link>
+            <Link href="/terms" className="text-xs text-white/55 transition hover:text-white">Terms of Service</Link>
+            <Link href="/advanced-reports" className="text-xs text-white/55 transition hover:text-white">Connected Accounts</Link>
+          </div>
         </div>
       </div>
     </footer>

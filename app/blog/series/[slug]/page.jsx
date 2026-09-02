@@ -10,13 +10,15 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }) {
-  const series = await getSeriesBySlug(params.slug);
+  const { slug } = await params;
+  const series = await getSeriesBySlug(slug);
   if (!series) return pageMetadata("Blog | Sentinels Design Lab", "SDL series.", "/blog");
   return pageMetadata(`${series.title} | Sentinels Design Lab`, series.description, `/blog/series/${series.slug}`);
 }
 
 export default async function Page({ params }) {
-  const series = await getSeriesBySlug(params.slug);
+  const { slug } = await params;
+  const series = await getSeriesBySlug(slug);
   if (!series) notFound();
 
   return (
