@@ -147,7 +147,7 @@ export default function Pricing() {
               The website and the technical care behind it are one service.
             </h2>
             <p className="mt-4 max-w-3xl text-sm leading-7 text-muted-foreground">
-              SDL manages the production foundation so clients are not left coordinating separate hosting, routine technical maintenance, security basics, backups, monitoring, or deployment support.
+              Sentinels Design Lab manages the production foundation so clients are not left coordinating separate hosting, routine technical maintenance, security basics, backups, monitoring, or deployment support.
             </p>
 
             <div className="mt-7 grid gap-3 md:grid-cols-2 lg:grid-cols-4">
