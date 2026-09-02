@@ -42,8 +42,6 @@ env:
   - variable: SMTP_USER
     value: reports@sentinelsdesignlab.com
     availability: [RUNTIME]
-  - variable: SMTP_PASSWORD
-    secret: SMTP_PASSWORD
   - variable: DATAFORSEO_LOGIN
     secret: DATAFORSEO_LOGIN
   - variable: DATAFORSEO_PASSWORD
@@ -54,12 +52,8 @@ env:
     secret: GOOGLE_OAUTH_CLIENT_ID
   - variable: GOOGLE_OAUTH_CLIENT_SECRET
     secret: GOOGLE_OAUTH_CLIENT_SECRET
-  - variable: GOOGLE_ADS_DEVELOPER_TOKEN
-    secret: GOOGLE_ADS_DEVELOPER_TOKEN
   - variable: STRIPE_SECRET_KEY
     secret: STRIPE_SECRET_KEY
-  - variable: STRIPE_WEBHOOK_SECRET
-    secret: STRIPE_WEBHOOK_SECRET
   - variable: NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
     secret: NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
     availability: [BUILD, RUNTIME]
