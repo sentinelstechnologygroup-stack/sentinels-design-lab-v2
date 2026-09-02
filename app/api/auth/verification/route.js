@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import { Resend } from "resend";
 import { adminAuth } from "@/lib/firebase-admin";
 import { getSessionUser } from "@/lib/session";
+import { sendMail } from "@/lib/smtp";
 
 export const runtime = "nodejs";
 
@@ -16,7 +16,6 @@ function verificationEmailHtml({ name, verificationUrl }) {
 export async function POST() {
   const session = await getSessionUser();
   if (!session) return NextResponse.json({ error: "Authentication required." }, { status: 401 });
-  if (!process.env.RESEND_API_KEY) return NextResponse.json({ error: "Branded email delivery is not configured." }, { status: 503 });
   const user = await adminAuth().getUser(session.uid);
   if (!user.email) return NextResponse.json({ error: "This account does not have an email address." }, { status: 400 });
   if (user.emailVerified) return NextResponse.json({ ok: true, alreadyVerified: true });
@@ -28,14 +27,13 @@ export async function POST() {
     const value = firebaseLink.searchParams.get(key);
     if (value) verificationUrl.searchParams.set(key, value);
   });
-  const resend = new Resend(process.env.RESEND_API_KEY);
-  const { error } = await resend.emails.send({
+  const result = await sendMail({
     from: process.env.SIS_FROM_EMAIL || "Sentinels Design Lab <reports@sentinelsdesignlab.com>",
     to: user.email,
     replyTo: process.env.SIS_NOTIFICATION_EMAIL || "Info@SentinelsDesignLab.com",
     subject: "Verify your email for Sentinels Design Lab",
     html: verificationEmailHtml({ name: user.displayName, verificationUrl: verificationUrl.toString() }),
   });
-  if (error) return NextResponse.json({ error: error.message || "The verification email could not be sent." }, { status: 502 });
+  if (!result.sent) return NextResponse.json({ error: "Branded email delivery is not configured." }, { status: 503 });
   return NextResponse.json({ ok: true });
 }

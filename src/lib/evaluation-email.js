@@ -1,4 +1,4 @@
-import { Resend } from "resend";
+import { sendMail } from "@/lib/smtp";
 
 function escape(value = "") {
   return String(value).replace(/[&<>"']/g, (character) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" })[character]);
@@ -25,15 +25,11 @@ export function adminEmailHtml(evaluation, lead) {
 }
 
 export async function sendEvaluationEmails({ evaluation, lead, pdf, portalUrl }) {
-  if (!process.env.RESEND_API_KEY) return { sent: false, reason: "not_configured" };
-  const resend = new Resend(process.env.RESEND_API_KEY);
   const from = process.env.SIS_FROM_EMAIL || "Sentinels Design Lab <reports@sentinelsdesignlab.com>";
   const admin = process.env.SIS_NOTIFICATION_EMAIL || "Info@SentinelsDesignLab.com";
-  const attachment = { filename: `SDL-Basic-Website-Evaluation-${evaluation.businessName.replace(/[^a-z0-9]+/gi, "-")}.pdf`, content: pdf };
-  const { error } = await resend.batch.send([
-    { from, to: lead.email, replyTo: admin, subject: `${evaluation.businessName} website readiness snapshot`, html: customerEmailHtml(evaluation, lead.name).replace('</td></tr><tr><td style="background:#f8fafc', `<div style="margin:26px 0;text-align:center"><a href="${escape(portalUrl)}" style="display:inline-block;background:#2f76f6;color:#fff;text-decoration:none;font-weight:700;padding:14px 22px;border-radius:9px">View My Reports &amp; Additional Bundles</a></div></td></tr><tr><td style="background:#f8fafc`), attachments: [attachment] },
-    { from, to: admin, replyTo: lead.email, subject: `New SIS lead: ${evaluation.businessName} readiness snapshot`, html: adminEmailHtml(evaluation, lead), attachments: [attachment] },
-  ]);
-  if (error) throw new Error(error.message || "Email delivery failed.");
-  return { sent: true };
+  const attachment = { filename: `SDL-Basic-Website-Evaluation-${evaluation.businessName.replace(/[^a-z0-9]+/gi, "-")}.pdf`, content: Buffer.from(pdf), contentType: "application/pdf" };
+  const customer = await sendMail({ from, to: lead.email, replyTo: admin, subject: `${evaluation.businessName} website readiness snapshot`, html: customerEmailHtml(evaluation, lead.name).replace('</td></tr><tr><td style="background:#f8fafc', `<div style="margin:26px 0;text-align:center"><a href="${escape(portalUrl)}" style="display:inline-block;background:#2f76f6;color:#fff;text-decoration:none;font-weight:700;padding:14px 22px;border-radius:9px">View My Reports &amp; Additional Bundles</a></div></td></tr><tr><td style="background:#f8fafc`), attachments: [attachment] });
+  if (!customer.sent) return customer;
+  await sendMail({ from, to: admin, replyTo: lead.email, subject: `New SIS lead: ${evaluation.businessName} readiness snapshot`, html: adminEmailHtml(evaluation, lead), attachments: [attachment] });
+  return customer;
 }

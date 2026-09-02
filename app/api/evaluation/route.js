@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { put } from "@vercel/blob";
 import { buildBasicEvaluation, inspectPage } from "@/lib/dataforseo";
 import { generateEvaluationPdf } from "@/lib/evaluation-pdf";
 import { sendEvaluationEmails } from "@/lib/evaluation-email";
 import { adminAuth } from "@/lib/firebase-admin";
+import { storeReportPdf } from "@/lib/report-storage";
 import { getSessionUser } from "@/lib/session";
 import { createReport, createWebsite, updateReport, upsertProfile } from "@/db/firestore";
 
@@ -43,8 +43,8 @@ export async function POST(request) {
     await upsertProfile(user.uid, { email, name: parsed.data.name, phone: parsed.data.phone });
     const websiteId = await createWebsite(user.uid, { businessName: parsed.data.businessName, url, primaryService: parsed.data.primaryService, location: parsed.data.location });
     const reportId = await createReport(user.uid, { websiteId, reportType: "free-readiness", title: `${parsed.data.businessName} Website Readiness Snapshot`, status: "generating", findings: evaluation });
-    const blob = await put(`reports/${user.uid}/${reportId}.pdf`, pdf, { access: "private", addRandomSuffix: false, contentType: "application/pdf" });
-    await updateReport(reportId, { blobUrl: blob.url, status: "complete" });
+    const storagePath = await storeReportPdf({ uid: user.uid, reportId, pdf });
+    await updateReport(reportId, { storagePath, blobUrl: null, status: "complete" });
     const portalUrl = `${process.env.NEXT_PUBLIC_APP_URL || "https://reports.sentinelsdesignlab.com"}/dashboard`;
     let delivery = { sent: false, reason: "not_configured" };
     try { delivery = await sendEvaluationEmails({ evaluation, lead: { ...parsed.data, email }, pdf, portalUrl }); }

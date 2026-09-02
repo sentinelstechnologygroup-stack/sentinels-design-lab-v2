@@ -1,0 +1,65 @@
+runConfig:
+  minInstances: 0
+  maxInstances: 10
+  concurrency: 40
+  cpu: 1
+  memoryMiB: 1024
+
+env:
+  - variable: NEXT_PUBLIC_APP_URL
+    value: https://reports.sentinelsdesignlab.com
+    availability: [BUILD, RUNTIME]
+  - variable: NEXT_PUBLIC_FIREBASE_PROJECT_ID
+    value: sdl-website-a5f2d
+    availability: [BUILD, RUNTIME]
+  - variable: NEXT_PUBLIC_FIREBASE_APP_ID
+    value: 1:8390102773:web:6ad79f6aee6ba47718ffbc
+    availability: [BUILD, RUNTIME]
+  - variable: NEXT_PUBLIC_FIREBASE_API_KEY
+    value: AIzaSyC4kfcHYz9eRM_YD-TKPVxWX1GcNAgNYQ4
+    availability: [BUILD, RUNTIME]
+  - variable: NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
+    value: sdl-website-a5f2d.firebaseapp.com
+    availability: [BUILD, RUNTIME]
+  - variable: NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET
+    value: sdl-website-a5f2d.firebasestorage.app
+    availability: [BUILD, RUNTIME]
+  - variable: NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID
+    value: "8390102773"
+    availability: [BUILD, RUNTIME]
+  - variable: SIS_FROM_EMAIL
+    value: Sentinels Design Lab <reports@sentinelsdesignlab.com>
+    availability: [RUNTIME]
+  - variable: SIS_NOTIFICATION_EMAIL
+    value: Info@SentinelsDesignLab.com
+    availability: [RUNTIME]
+  - variable: SMTP_HOST
+    value: secure.patientdrive.com
+    availability: [RUNTIME]
+  - variable: SMTP_PORT
+    value: "465"
+    availability: [RUNTIME]
+  - variable: SMTP_USER
+    value: reports@sentinelsdesignlab.com
+    availability: [RUNTIME]
+  - variable: SMTP_PASSWORD
+    secret: SMTP_PASSWORD
+  - variable: DATAFORSEO_LOGIN
+    secret: DATAFORSEO_LOGIN
+  - variable: DATAFORSEO_PASSWORD
+    secret: DATAFORSEO_PASSWORD
+  - variable: SIS_CONNECTION_SECRET
+    secret: SIS_CONNECTION_SECRET
+  - variable: GOOGLE_OAUTH_CLIENT_ID
+    secret: GOOGLE_OAUTH_CLIENT_ID
+  - variable: GOOGLE_OAUTH_CLIENT_SECRET
+    secret: GOOGLE_OAUTH_CLIENT_SECRET
+  - variable: GOOGLE_ADS_DEVELOPER_TOKEN
+    secret: GOOGLE_ADS_DEVELOPER_TOKEN
+  - variable: STRIPE_SECRET_KEY
+    secret: STRIPE_SECRET_KEY
+  - variable: STRIPE_WEBHOOK_SECRET
+    secret: STRIPE_WEBHOOK_SECRET
+  - variable: NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+    secret: NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+    availability: [BUILD, RUNTIME]
