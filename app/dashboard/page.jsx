@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { Download, FileText, Plus, ShieldCheck } from "lucide-react";
+import { Download, FileText, Link2, Plus, ShieldCheck } from "lucide-react";
 import { listOwned } from "@/db/firestore";
 import { adminAuth } from "@/lib/firebase-admin";
 import { getSessionUser } from "@/lib/session";
@@ -21,7 +21,7 @@ export default async function DashboardPage({ searchParams }) {
   ]);
 
   return <main className="min-h-screen pb-24 pt-28"><section className="mx-auto max-w-6xl px-6">
-    <div className="flex flex-col justify-between gap-6 border-b border-white/10 pb-10 sm:flex-row sm:items-end"><div><span className="eyebrow mb-4">Secure Customer Portal</span><h1 className="font-heading text-4xl font-bold">Welcome{user?.displayName ? `, ${user.displayName.split(" ")[0]}` : ""}</h1><p className="mt-3 text-muted-foreground">Your websites, completed reports, and purchases stay connected to this verified account.</p></div><Link href="/evaluation" className="btn-primary inline-flex items-center justify-center gap-2"><Plus className="h-4 w-4" />New free snapshot</Link></div>
+    <div className="flex flex-col justify-between gap-6 border-b border-white/10 pb-10 sm:flex-row sm:items-end"><div><span className="eyebrow mb-4">Secure Customer Portal</span><h1 className="font-heading text-4xl font-bold">Welcome{user?.displayName ? `, ${user.displayName.split(" ")[0]}` : ""}</h1><p className="mt-3 text-muted-foreground">Your websites, completed reports, purchases, and temporary data connections stay connected to this account.</p></div><div className="flex flex-col gap-3 sm:flex-row"><Link href="/advanced-reports" className="inline-flex items-center justify-center gap-2 rounded-lg border border-white/15 px-5 py-3 text-sm font-semibold"><Link2 className="h-4 w-4" />Report data connections</Link><Link href="/evaluation" className="btn-primary inline-flex items-center justify-center gap-2"><Plus className="h-4 w-4" />New free snapshot</Link></div></div>
     {params?.checkout === "success" && <div className="mt-8 rounded-xl border border-emerald-400/25 bg-emerald-400/[0.06] p-4 text-sm text-emerald-100"><ShieldCheck className="mr-2 inline h-5 w-5" />Payment received. Your order will appear after Stripe’s signed confirmation is processed.</div>}
     {params?.checkout === "cancelled" && <div className="mt-8 rounded-xl border border-amber-400/25 bg-amber-400/[0.06] p-4 text-sm text-amber-100">Checkout was cancelled. No report was ordered.</div>}
 

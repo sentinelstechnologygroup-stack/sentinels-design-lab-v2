@@ -1,10 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowRight, CheckCircle2, Download, FileText, Globe2, LoaderCircle, Mail, ShieldCheck } from "lucide-react";
+import { createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from "firebase/auth";
+import { firebaseClientAuth } from "@/lib/firebase-client";
 
-const initialForm = { name: "", email: "", phone: "", businessName: "", website: "", primaryService: "", location: "", company: "" };
+const initialForm = { name: "", email: "", phone: "", businessName: "", website: "", primaryService: "", location: "", password: "", confirmPassword: "", company: "" };
 
 export default function Evaluation() {
   const [form, setForm] = useState(initialForm);
@@ -13,6 +15,16 @@ export default function Evaluation() {
   const [result, setResult] = useState(null);
   const [report, setReport] = useState(null);
   const [delivery, setDelivery] = useState(null);
+  const [signedIn, setSignedIn] = useState(false);
+
+  useEffect(() => {
+    fetch("/api/session", { cache: "no-store" }).then((response) => response.json()).then((session) => {
+      if (session.authenticated) {
+        setSignedIn(true);
+        setForm((current) => ({ ...current, email: session.email || current.email, name: session.name || current.name }));
+      }
+    }).catch(() => null);
+  }, []);
 
   function update(event) {
     setForm((current) => ({ ...current, [event.target.name]: event.target.value }));
@@ -34,9 +46,19 @@ export default function Evaluation() {
     setError("");
 
     try {
+      if (!signedIn) {
+        if (form.password.length < 12) throw new Error("Use a password with at least 12 characters.");
+        if (form.password !== form.confirmPassword) throw new Error("The passwords do not match.");
+        const credential = await createUserWithEmailAndPassword(firebaseClientAuth(), form.email.trim(), form.password);
+        await updateProfile(credential.user, { displayName: form.name.trim() });
+        await sendEmailVerification(credential.user).catch(() => null);
+        const sessionResponse = await fetch("/api/session", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ idToken: await credential.user.getIdToken(true) }) });
+        if (!sessionResponse.ok) throw new Error("Your account was created, but the secure session could not start. Please sign in.");
+        setSignedIn(true);
+      }
       await generateReport();
     } catch (submissionError) {
-      setError(submissionError.message);
+      setError(submissionError.code === "auth/email-already-in-use" ? "An account already exists for this email. Sign in to request another report." : submissionError.message);
     } finally {
       setLoading(false);
     }
@@ -61,11 +83,12 @@ export default function Evaluation() {
                 <div className="sm:col-span-2"><Field label="Website address" name="website" placeholder="https://yourbusiness.com" value={form.website} onChange={update} required /></div>
                 <Field label="Primary service" name="primaryService" placeholder="What do customers hire you for?" value={form.primaryService} onChange={update} required />
                 <Field label="City / service area" name="location" value={form.location} onChange={update} />
+                {!signedIn && <><Field label="Create password" name="password" type="password" autoComplete="new-password" minLength={12} value={form.password} onChange={update} required /><Field label="Verify password" name="confirmPassword" type="password" autoComplete="new-password" minLength={12} value={form.confirmPassword} onChange={update} required /></>}
               </div>
               {error && <p className="mt-5 rounded-lg border border-red-400/30 bg-red-400/10 px-4 py-3 text-sm text-red-200">{error}</p>}
-              <button type="submit" disabled={loading} className="btn-primary mt-6 inline-flex w-full items-center justify-center gap-2 disabled:opacity-60">{loading ? <><LoaderCircle className="h-4 w-4 animate-spin" /> Preparing your report</> : <>Get My Free Report <ArrowRight className="h-4 w-4" /></>}</button>
-              <p className="mt-4 text-center text-sm text-muted-foreground">Already have reports? <Link href="/sign-in" className="font-semibold text-primary">Sign in by secure email link</Link></p>
-              <p className="mt-4 flex items-center justify-center gap-2 text-center text-xs text-muted-foreground"><ShieldCheck className="h-4 w-4" /> No password is created or stored. We email a secure, expiring link to your private report portal.</p>
+              <button type="submit" disabled={loading} className="btn-primary mt-6 inline-flex w-full items-center justify-center gap-2 disabled:opacity-60">{loading ? <><LoaderCircle className="h-4 w-4 animate-spin" /> Preparing your report</> : signedIn ? <>Get My Free Report <ArrowRight className="h-4 w-4" /></> : <>Create My Account & Free Report <ArrowRight className="h-4 w-4" /></>}</button>
+              {!signedIn && <p className="mt-4 text-center text-sm text-muted-foreground">Already have an account? <Link href="/sign-in" className="font-semibold text-primary">Sign in to my reports</Link></p>}
+              <p className="mt-4 flex items-center justify-center gap-2 text-center text-xs text-muted-foreground"><ShieldCheck className="h-4 w-4" /> Firebase securely handles password storage and reset protection. Sentinels never receives your password.</p>
             </form>
             <EvaluationPreview />
           </div>

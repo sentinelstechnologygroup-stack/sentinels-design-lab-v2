@@ -5,6 +5,7 @@ import { buildBasicEvaluation, inspectPage } from "@/lib/dataforseo";
 import { generateEvaluationPdf } from "@/lib/evaluation-pdf";
 import { sendEvaluationEmails } from "@/lib/evaluation-email";
 import { adminAuth } from "@/lib/firebase-admin";
+import { getSessionUser } from "@/lib/session";
 import { createReport, createWebsite, updateReport, upsertProfile } from "@/db/firestore";
 
 export const runtime = "nodejs";
@@ -24,6 +25,8 @@ function normalizeWebsite(value) {
 
 export async function POST(request) {
   try {
+    const sessionUser = await getSessionUser();
+    if (!sessionUser) return NextResponse.json({ error: "Create an account or sign in before requesting a report." }, { status: 401 });
     const clientId = (request.headers.get("x-forwarded-for") || "unknown").split(",")[0].trim();
     const now = Date.now();
     const recent = (attempts.get(clientId) || []).filter((time) => now - time < WINDOW_MS);
@@ -35,15 +38,14 @@ export async function POST(request) {
     const evaluation = buildBasicEvaluation(url, await inspectPage(url), parsed.data);
     const pdf = generateEvaluationPdf(evaluation);
     const email = parsed.data.email.toLowerCase();
-    let user;
-    try { user = await adminAuth().getUserByEmail(email); }
-    catch (error) { if (error.code !== "auth/user-not-found") throw error; user = await adminAuth().createUser({ email, displayName: parsed.data.name }); }
-    await upsertProfile(user.uid, { email, name: parsed.data.name });
+    if (sessionUser.email?.toLowerCase() !== email) return NextResponse.json({ error: "Use the email address connected to your signed-in account." }, { status: 403 });
+    const user = await adminAuth().getUser(sessionUser.uid);
+    await upsertProfile(user.uid, { email, name: parsed.data.name, phone: parsed.data.phone });
     const websiteId = await createWebsite(user.uid, { businessName: parsed.data.businessName, url, primaryService: parsed.data.primaryService, location: parsed.data.location });
     const reportId = await createReport(user.uid, { websiteId, reportType: "free-readiness", title: `${parsed.data.businessName} Website Readiness Snapshot`, status: "generating", findings: evaluation });
     const blob = await put(`reports/${user.uid}/${reportId}.pdf`, pdf, { access: "private", addRandomSuffix: false, contentType: "application/pdf" });
     await updateReport(reportId, { blobUrl: blob.url, status: "complete" });
-    const portalUrl = await adminAuth().generateSignInWithEmailLink(email, { url: `${process.env.NEXT_PUBLIC_APP_URL || "https://reports.sentinelsdesignlab.com"}/sign-in`, handleCodeInApp: true });
+    const portalUrl = `${process.env.NEXT_PUBLIC_APP_URL || "https://reports.sentinelsdesignlab.com"}/dashboard`;
     let delivery = { sent: false, reason: "not_configured" };
     try { delivery = await sendEvaluationEmails({ evaluation, lead: { ...parsed.data, email }, pdf, portalUrl }); }
     catch (error) { console.error("[SIS email delivery]", error); delivery = { sent: false, reason: "delivery_failed" }; }
