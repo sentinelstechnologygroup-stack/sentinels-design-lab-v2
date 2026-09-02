@@ -37,7 +37,7 @@ export default function Pricing() {
         title="Professional websites without the large upfront investment"
         description="Choose a managed monthly website plan that includes the build, launch-level SEO setup, and the ongoing technical care required to keep it secure, maintained, monitored, and online. Expanded SEO, PPC, social campaigns, and custom digital systems are available when you need to grow beyond the website itself."
         primaryCtaLabel="Get Website Evaluation"
-        primaryCtaHref="/contact?type=website-evaluation"
+        primaryCtaHref="https://reports.sentinelsdesignlab.com/evaluation"
         secondaryCtaLabel="Contact"
         secondaryCtaHref="/contact"
         imageSrc="/images/hero/pricing-hero.webp"

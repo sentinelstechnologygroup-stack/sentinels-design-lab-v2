@@ -87,7 +87,7 @@ export default function Services() {
 
               <div className="mb-4 flex flex-wrap gap-4">
                 <Link
-                  href="/contact?type=website-evaluation"
+                  href="https://reports.sentinelsdesignlab.com/evaluation"
                   className="inline-flex items-center gap-2 rounded-lg bg-primary px-8 py-3.5 text-sm font-semibold text-slate-950 transition-all hover:scale-[1.01] hover:shadow-[0_10px_30px_rgba(56,189,248,0.20)]"
                 >
                   Get Website Evaluation
@@ -401,7 +401,7 @@ export default function Services() {
           title="If your website isn't working hard enough for your business, it's time to fix that."
           description="Request a free website evaluation. We'll review what you have, identify the biggest gaps, and recommend the clearest next step — no commitment required."
           primaryLabel="Get Website Evaluation"
-          primaryHref="/contact?type=website-evaluation"
+          primaryHref="https://reports.sentinelsdesignlab.com/evaluation"
           secondaryLabel="View Pricing"
           secondaryHref="/pricing"
         />

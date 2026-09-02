@@ -17,7 +17,8 @@ export default function CTASection({
   ctaHref,
 }) {
   const resolvedPrimaryLabel = primaryLabel || ctaLabel || "Get Website Evaluation";
-  const resolvedPrimaryHref = primaryHref || ctaHref || "/contact?type=website-evaluation";
+  const resolvedPrimaryHref =
+    primaryHref || ctaHref || "https://reports.sentinelsdesignlab.com/evaluation";
 
   return (
     <section className="relative overflow-hidden border-t border-white/8 py-20" style={{ background: '#050b16' }}>

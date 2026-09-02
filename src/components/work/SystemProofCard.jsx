@@ -53,7 +53,7 @@ export default function SystemProofCard({ name, whatItDoes = [], systemRole = []
         </div>
 
         <div className="mt-8 flex flex-wrap items-center gap-4">
-          <Link href="/contact?type=website-evaluation" className="inline-flex items-center gap-2 text-sm font-medium text-primary transition hover:text-white">
+          <Link href="https://reports.sentinelsdesignlab.com/evaluation" className="inline-flex items-center gap-2 text-sm font-medium text-primary transition hover:text-white">
             Request a website evaluation
             <ArrowRight className="h-4 w-4" />
           </Link>

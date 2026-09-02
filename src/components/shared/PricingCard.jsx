@@ -14,8 +14,7 @@ export default function PricingCard({
   features = [],
   featured,
 }) {
-  const serviceParam = encodeURIComponent(name || "");
-  const contactHref = `/contact?type=website-evaluation&service=${serviceParam}`;
+  const contactHref = "https://reports.sentinelsdesignlab.com/evaluation";
   const showDollarPrice = typeof price === "string" && /^\d[\d,]*$/.test(price);
 
   return (

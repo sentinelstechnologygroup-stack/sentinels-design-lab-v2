@@ -230,7 +230,7 @@ export default function Work() {
         title="Real modernization work. Real system proof. No fake case studies."
         description="SDL uses real screenshots, real system anchors, and plain-language delivery summaries instead of invented metrics, fabricated rankings, or decorative portfolio filler."
         primaryCtaLabel="Get Website Evaluation"
-        primaryCtaHref="/contact?type=website-evaluation"
+        primaryCtaHref="https://reports.sentinelsdesignlab.com/evaluation"
         secondaryCtaLabel="Contact"
         secondaryCtaHref="/contact"
         imageSrc="/images/hero/work-hero.webp"
