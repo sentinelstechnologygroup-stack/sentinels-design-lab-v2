@@ -21,11 +21,11 @@ import {
 } from "lucide-react";
 
 const googleConnections = [
-  { key: "search-console", name: "Google Search Console", icon: Search, value: "Actual search queries, clicks, impressions, positions, pages, and indexing evidence.", reports: "WER · TER · SCR · LPR · CAR" },
-  { key: "analytics", name: "Google Analytics 4", icon: LineChart, value: "Actual traffic, engagement, lead events, purchases, and conversion paths.", reports: "WER · LPR · CRO · PAR" },
-  { key: "business-profile", name: "Google Business Profile", icon: Building2, value: "Local profile information, locations, reviews, and customer activity available to the owner.", reports: "GBR · RRR · CAR" },
-  { key: "ads", name: "Google Ads", icon: BarChart3, value: "Campaign, keyword, search-term, spending, click, and conversion performance.", reports: "PAR · LPR · CRO" },
-  { key: "tag-manager", name: "Google Tag Manager", icon: Tags, value: "Read-only verification of analytics, advertising, and conversion tracking configuration.", reports: "TER · CRO · PAR" },
+  { key: "search-console", name: "Google Search Console", icon: Search, value: "Actual search queries, clicks, impressions, positions, pages, and indexing evidence.", reports: "Website Evaluation, Technical SEO, Search Competitor, Landing Page and Competitive Analysis reports" },
+  { key: "analytics", name: "Google Analytics 4", icon: LineChart, value: "Actual traffic, engagement, lead events, purchases, and conversion paths.", reports: "Website Evaluation, Landing Page, Conversion Optimization and Paid Advertising reports" },
+  { key: "business-profile", name: "Google Business Profile", icon: Building2, value: "Local profile information, locations, reviews, and customer activity available to the owner.", reports: "Google Business Profile, Reputation and Reviews, and Competitive Analysis reports" },
+  { key: "ads", name: "Google Ads", icon: BarChart3, value: "Campaign, keyword, search-term, spending, click, and conversion performance.", reports: "Paid Advertising, Landing Page and Conversion Optimization reports" },
+  { key: "tag-manager", name: "Google Tag Manager", icon: Tags, value: "Read-only verification of analytics, advertising, and conversion tracking configuration.", reports: "Technical SEO, Conversion Optimization and Paid Advertising reports" },
 ];
 
 const futureConnections = [
@@ -109,7 +109,7 @@ export default function AdvancedReports() {
       <section className="mx-auto max-w-6xl px-6">
         <div className="grid items-end gap-8 border-b border-white/10 pb-12 lg:grid-cols-[1fr_.72fr]">
           <div>
-            <span className="eyebrow mb-5">Advanced SIS Reports</span>
+            <span className="eyebrow mb-5">Advanced Sentinels Intelligence Suite Reports</span>
             <h1 className="max-w-4xl font-heading text-4xl font-bold text-foreground sm:text-5xl">Connect real business data without sharing a password</h1>
             <p className="mt-5 max-w-3xl text-lg leading-8 text-muted-foreground">Authorize the accounts needed for a verified SEO, advertising, local visibility, or conversion report. Sign-in happens on the provider’s official website, access is read-only wherever available, and one-time connections expire automatically.</p>
           </div>
@@ -169,7 +169,7 @@ export default function AdvancedReports() {
           <div className="grid gap-5 md:grid-cols-2">{futureConnections.map(({ name, icon: Icon, value }) => <div key={name} className="rounded-2xl border border-white/10 bg-card p-6"><div className="flex items-center gap-4"><div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/[0.05]"><Icon className="h-5 w-5 text-primary" /></div><div><h3 className="font-semibold text-foreground">{name}</h3><span className="text-xs text-white/40">Coming with the advanced report pipeline</span></div></div><p className="mt-4 text-sm leading-6 text-muted-foreground">{value}</p></div>)}</div>
         </section>
 
-        <div className="mt-14 flex flex-col gap-3 border-t border-white/10 pt-8 sm:flex-row"><Link href="/systems/sis" className="btn-primary inline-flex items-center justify-center gap-2">Explore SIS reports <ArrowRight className="h-4 w-4" /></Link><Link href="/contact?message=I%20would%20like%20help%20selecting%20an%20advanced%20SIS%20report" className="inline-flex items-center justify-center rounded-lg border border-white/15 px-6 py-3 text-sm font-semibold">Help me choose a report</Link></div>
+        <div className="mt-14 flex flex-col gap-3 border-t border-white/10 pt-8 sm:flex-row"><Link href="/systems/sis" className="btn-primary inline-flex items-center justify-center gap-2">Explore Sentinels Intelligence Suite reports <ArrowRight className="h-4 w-4" /></Link><Link href="/contact?message=I%20would%20like%20help%20selecting%20an%20advanced%20report" className="inline-flex items-center justify-center rounded-lg border border-white/15 px-6 py-3 text-sm font-semibold">Help me choose a report</Link></div>
       </section>
     </main>
   );

@@ -48,10 +48,10 @@ export async function POST(request) {
     const portalUrl = `${process.env.NEXT_PUBLIC_APP_URL || "https://reports.sentinelsdesignlab.com"}/dashboard`;
     let delivery = { sent: false, reason: "not_configured" };
     try { delivery = await sendEvaluationEmails({ evaluation, lead: { ...parsed.data, email }, pdf, portalUrl }); }
-    catch (error) { console.error("[SIS email delivery]", error); delivery = { sent: false, reason: "delivery_failed" }; }
-    return NextResponse.json({ ok: true, evaluation, delivery, report: { id: reportId, filename: `SDL-Website-Readiness-${evaluation.businessName.replace(/[^a-z0-9]+/gi, "-")}.pdf`, url: `/api/reports/${reportId}/download` }, nextStep: { label: "Sign in to view reports", href: "/sign-in" } });
+    catch (error) { console.error("[Sentinels Intelligence Suite email delivery]", error); delivery = { sent: false, reason: "delivery_failed" }; }
+    return NextResponse.json({ ok: true, evaluation, delivery, report: { id: reportId, filename: `Sentinels-Design-Lab-Website-Readiness-${evaluation.businessName.replace(/[^a-z0-9]+/gi, "-")}.pdf`, url: `/api/reports/${reportId}/download` }, nextStep: { label: "Sign in to view reports", href: "/sign-in" } });
   } catch (error) {
-    console.error("[SIS evaluation]", error);
+    console.error("[Sentinels Intelligence Suite evaluation]", error);
     return NextResponse.json({ error: "We could not inspect that website right now. Confirm the address and try again." }, { status: 502 });
   }
 }

@@ -27,7 +27,7 @@ export function adminEmailHtml(evaluation, lead) {
 export async function sendEvaluationEmails({ evaluation, lead, pdf, portalUrl }) {
   const from = process.env.SIS_FROM_EMAIL || "Sentinels Design Lab <reports@sentinelsdesignlab.com>";
   const admin = process.env.SIS_NOTIFICATION_EMAIL || "Info@SentinelsDesignLab.com";
-  const attachment = { filename: `SDL-Basic-Website-Evaluation-${evaluation.businessName.replace(/[^a-z0-9]+/gi, "-")}.pdf`, content: Buffer.from(pdf), contentType: "application/pdf" };
+  const attachment = { filename: `Sentinels-Design-Lab-Website-Evaluation-${evaluation.businessName.replace(/[^a-z0-9]+/gi, "-")}.pdf`, content: Buffer.from(pdf), contentType: "application/pdf" };
   const customer = await sendMail({ from, to: lead.email, replyTo: admin, subject: `${evaluation.businessName} website readiness snapshot`, html: customerEmailHtml(evaluation, lead.name).replace('</td></tr><tr><td style="background:#f8fafc', `<div style="margin:26px 0;text-align:center"><a href="${escape(portalUrl)}" style="display:inline-block;background:#2f76f6;color:#fff;text-decoration:none;font-weight:700;padding:14px 22px;border-radius:9px">View My Reports &amp; Additional Bundles</a></div></td></tr><tr><td style="background:#f8fafc`), attachments: [attachment] });
   if (!customer.sent) return customer;
   await sendMail({ from, to: admin, replyTo: lead.email, subject: `New SIS lead: ${evaluation.businessName} readiness snapshot`, html: adminEmailHtml(evaluation, lead), attachments: [attachment] });

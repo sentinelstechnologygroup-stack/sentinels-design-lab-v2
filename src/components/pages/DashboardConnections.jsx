@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import { ArrowRight, CheckCircle2, CircleAlert, LoaderCircle, Unplug } from "lucide-react";
 import { REPORTING_POLICY } from "@/lib/reporting-policy";
 
@@ -45,10 +44,10 @@ export default function DashboardConnections() {
           const connected = Boolean(status.connections?.[key]);
           return <div key={key} className="flex flex-col gap-3 rounded-xl border border-white/10 bg-white/[0.025] p-4 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex gap-3">{connected ? <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-300" /> : <CircleAlert className="mt-0.5 h-5 w-5 shrink-0 text-white/35" />}<div><div className="text-sm font-semibold text-foreground">{label}</div><div className="mt-1 text-xs text-muted-foreground">{purpose}</div></div></div>
-            {connected ? <button onClick={() => disconnect(key)} disabled={busy === key} className="inline-flex items-center gap-2 text-xs font-semibold text-white/55 hover:text-white"><Unplug className="h-3.5 w-3.5" />{busy === key ? "Removing..." : "Remove access"}</button> : <Link href="/advanced-reports" className="inline-flex items-center gap-1 text-xs font-semibold text-primary">Connect <ArrowRight className="h-3.5 w-3.5" /></Link>}
+            {connected ? <button onClick={() => disconnect(key)} disabled={busy === key} className="inline-flex items-center gap-2 text-xs font-semibold text-white/55 hover:text-white"><Unplug className="h-3.5 w-3.5" />{busy === key ? "Removing..." : "Remove access"}</button> : <a href={`/api/connections/google/start?service=${key}`} className="inline-flex items-center gap-1 text-xs font-semibold text-primary">Connect {label} <ArrowRight className="h-3.5 w-3.5" /></a>}
           </div>;
         })}</div>}
-        <Link href="/advanced-reports" className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-primary">Manage accounts and choose properties <ArrowRight className="h-4 w-4" /></Link>
+        <p className="mt-5 text-xs leading-5 text-muted-foreground">After Google authorization, you will return here to choose the exact business account or property used for your report.</p>
       </div>
     </div>
   </section>;

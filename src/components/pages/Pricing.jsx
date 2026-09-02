@@ -79,6 +79,22 @@ export default function Pricing() {
 
       <section className="pb-14 md:pb-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-8 max-w-3xl">
+            <div className="eyebrow mb-3">Comprehensive intelligence reports</div>
+            <h2 className="font-heading text-2xl font-bold text-foreground md:text-3xl">SEO and PPC analysis with a 30 / 60 / 90 / 120-day action plan</h2>
+            <p className="mt-4 text-sm leading-7 text-muted-foreground">These are deeper, custom-scoped engagements—not the $19 individual snapshot reports. Final pricing depends on website size, markets, locations, competitors, advertising accounts, and available first-party data.</p>
+          </div>
+          <div className="grid gap-6 lg:grid-cols-2">
+            {[
+              { name: "Comprehensive SEO Report", description: "Full-site technical review, keyword and competitor research, organic visibility, backlinks and authority, local search, content opportunities, conversion evidence, and prioritized implementation roadmap.", access: "Best results require Google Search Console, Google Analytics 4, and Google Business Profile access where applicable." },
+              { name: "Comprehensive PPC Report", description: "Campaign and account structure, keywords and search terms, spend efficiency, competitor advertising pressure, landing pages, tracking, conversions, waste reduction, and prioritized optimization roadmap.", access: "Best results require Google Ads, Google Analytics 4, and Google Tag Manager access." },
+            ].map((report) => <article key={report.name} className="panel-safe p-7 md:p-8"><div className="text-xs font-semibold uppercase tracking-[.15em] text-primary">Custom scope and quote</div><h3 className="mt-3 font-heading text-2xl font-bold">{report.name}</h3><p className="mt-4 text-sm leading-7 text-muted-foreground">{report.description}</p><p className="mt-4 rounded-xl border border-white/10 bg-white/[0.025] p-4 text-xs leading-6 text-white/60">{report.access}</p><a href="/contact?service=seo-ppc-report" className="btn-primary mt-6 inline-flex">Request report pricing</a></article>)}
+          </div>
+        </div>
+      </section>
+
+      <section className="pb-14 md:pb-16">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="readability-banner px-6 py-7 text-center md:px-10 md:py-9">
             <div className="eyebrow mb-3">Prefer to own it outright?</div>
             <h2 className="font-heading text-2xl font-bold text-foreground md:text-3xl">
