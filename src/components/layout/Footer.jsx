@@ -5,12 +5,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { BUSINESS, FOOTER_QUICK_LINKS, IMAGES } from "@/lib/constants";
 
+const MAIN_SITE_URL = "https://sentinelsdesignlab.com";
+
 export default function Footer() {
   return (
     <footer className="border-t border-white/10 bg-[#050816]">
       <div className="mx-auto grid max-w-7xl gap-10 px-6 py-14 md:grid-cols-[1.3fr,1fr]">
         <div>
-          <Link href="/" className="inline-flex items-center" aria-label={`${BUSINESS.name} home`}>
+          <a href={MAIN_SITE_URL} className="inline-flex items-center" aria-label={`${BUSINESS.name} home`}>
             <Image
               src={IMAGES.logo}
               alt={`${BUSINESS.name} logo`}
@@ -18,7 +20,7 @@ export default function Footer() {
               height={442}
               className="h-16 w-auto md:h-20"
             />
-          </Link>
+          </a>
           <p className="mt-3 max-w-2xl text-sm leading-7 text-white/70">
             {BUSINESS.tagline}
           </p>
@@ -39,7 +41,7 @@ export default function Footer() {
             {FOOTER_QUICK_LINKS.map((item) => (
               <Link
                 key={item.path}
-                href={item.path}
+                href={`${MAIN_SITE_URL}${item.path === "/" ? "" : item.path}`}
                 className="text-sm text-white/70 transition hover:text-white"
               >
                 {item.label}

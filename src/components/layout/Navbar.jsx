@@ -6,13 +6,16 @@ import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { BUSINESS, NAV_LINKS, CTA, IMAGES } from "@/lib/constants";
 
+const MAIN_SITE_URL = "https://sentinelsdesignlab.com";
+const REPORTS_URL = "https://reports.sentinelsdesignlab.com";
+
 export default function Navbar() {
   const [open, setOpen] = useState(false);
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-[#050816]/90 backdrop-blur-xl">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-6 px-4 py-3 sm:px-6 sm:py-4">
-        <Link href="/" className="flex min-w-0 items-center" aria-label={`${BUSINESS.name} home`}>
+        <a href={MAIN_SITE_URL} className="flex min-w-0 items-center" aria-label={`${BUSINESS.name} home`}>
           <Image
             src={IMAGES.logo}
             alt={`${BUSINESS.name} logo`}
@@ -21,13 +24,13 @@ export default function Navbar() {
             priority
             className="h-11 w-auto sm:h-12 xl:h-14"
           />
-        </Link>
+        </a>
 
         <nav className="hidden items-center gap-5 xl:flex" aria-label="Primary navigation">
           {NAV_LINKS.map((item) => (
             <Link
               key={item.path}
-              href={item.path}
+              href={`${MAIN_SITE_URL}${item.path === "/" ? "" : item.path}`}
               className="whitespace-nowrap text-sm text-white/80 transition hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
             >
               {item.label}
@@ -44,7 +47,7 @@ export default function Navbar() {
           <Link href={CTA.primary.path} className="btn-primary whitespace-nowrap text-sm">
             {CTA.primary.label}
           </Link>
-          <Link href="/dashboard" className="whitespace-nowrap text-sm font-semibold text-white/80 hover:text-white">My reports / Sign in</Link>
+          <a href={`${REPORTS_URL}/dashboard`} className="whitespace-nowrap text-sm font-semibold text-white/80 hover:text-white">My reports / Sign in</a>
         </nav>
 
         <button
@@ -68,7 +71,7 @@ export default function Navbar() {
             {NAV_LINKS.map((item) => (
               <Link
                 key={item.path}
-                href={item.path}
+                href={`${MAIN_SITE_URL}${item.path === "/" ? "" : item.path}`}
                 className="flex min-h-11 items-center rounded-lg px-2 text-sm text-white/80 transition hover:bg-white/5 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
                 onClick={() => setOpen(false)}
               >
@@ -91,7 +94,7 @@ export default function Navbar() {
             >
               {CTA.primary.label}
             </Link>
-            <Link href="/dashboard" className="mt-3 flex min-h-11 items-center rounded-lg px-2 text-sm font-semibold text-white/80" onClick={() => setOpen(false)}>My reports / Sign in</Link>
+            <a href={`${REPORTS_URL}/dashboard`} className="mt-3 flex min-h-11 items-center rounded-lg px-2 text-sm font-semibold text-white/80" onClick={() => setOpen(false)}>My reports / Sign in</a>
           </nav>
         </div>
       )}

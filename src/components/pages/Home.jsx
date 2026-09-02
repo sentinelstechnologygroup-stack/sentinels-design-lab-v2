@@ -219,7 +219,7 @@ export default function Home() {
 
               <div className="mb-4 flex flex-wrap gap-4">
                 <Link
-                  href="https://reports.sentinelsdesignlab.com/evaluation"
+                  href="https://sentinelsdesignlab.com/contact/?type=website-evaluation"
                   className="inline-flex items-center gap-2 rounded-lg bg-primary px-8 py-3.5 text-sm font-semibold text-slate-950 transition-all hover:scale-[1.01] hover:bg-primary hover:shadow-[0_10px_30px_rgba(56,189,248,0.20)]"
                 >
                   Get Website Evaluation
