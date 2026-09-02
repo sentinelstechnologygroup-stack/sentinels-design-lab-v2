@@ -221,7 +221,7 @@ export function buildBasicEvaluation(url, inspection, business = {}) {
     categories,
     unverifiedDimensions,
     strengths,
-    priorities: priorities.length ? priorities : [{ category: "Growth", title: "Competitive visibility", recommendation: "Continue with the complete SIS series to benchmark rankings, competitors, local presence, reputation, and conversion opportunities." }],
+    priorities: priorities.length ? priorities : [{ category: "Growth", title: "Competitive visibility", recommendation: "Continue with the complete Sentinels Intelligence Suite to benchmark rankings, competitors, local presence, reputation, and conversion opportunities." }],
     metrics: { statusCode: page.status_code ?? null, pageSizeKb, loadTimeMs: loadTimeMs || null, brokenLinks, wordCount },
     scopeNote: "This free snapshot reviews one public page and its visible controls at the recorded time. It is not a full-site crawl, accessibility audit, compliance opinion, or security penetration test. Rankings, traffic, backlinks, competitors, local visibility, paid media, and conversions remain unverified until the appropriate data sources are analyzed.",
   };

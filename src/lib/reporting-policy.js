@@ -6,7 +6,11 @@ export const REPORTING_POLICY = {
   limitedDataNotice:
     "Advanced reports combine public market research with private business data that only the owner can authorize. If a required account is not connected, the report will identify the missing source and clearly label affected findings as limited or not verified.",
   rerunNotice:
-    "If required accounts were not connected when an advanced report was produced, the customer may request one complimentary rerun after connecting them within 60 days of the original report date.",
+    "Every paid advanced report includes one complimentary reevaluation after the missing required accounts are connected within 60 days of the original report date.",
+  pendingAccessNotice:
+    "A displayed 0 means Pending access—not zero performance—when the source required to calculate that section has not been connected. The report must name each missing source and provide a direct secure connection link.",
+  enhancedFreeNotice:
+    "Customers may connect supported accounts before running a free snapshot. Connected data can add limited context beyond the ordinary public-page snapshot, but the free evaluation never includes the depth, full-site analysis, cross-source validation, recommendations, or action plan of a paid advanced report.",
 };
 
 export const SIS_INSTRUMENTATION_STATUS = [

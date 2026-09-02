@@ -36,6 +36,7 @@ export default function DashboardConnections() {
         <span className="eyebrow mb-4">Data Control Board</span>
         <h2 className="font-heading text-3xl font-bold">Improve report accuracy with verified business data</h2>
         <p className="mt-4 text-sm leading-7 text-muted-foreground">{REPORTING_POLICY.limitedDataNotice}</p>
+        <div className="mt-4 rounded-xl border border-primary/20 bg-primary/[0.05] p-4 text-sm leading-6 text-muted-foreground">{REPORTING_POLICY.enhancedFreeNotice}</div>
         <div className="mt-4 rounded-xl border border-amber-400/20 bg-amber-400/[0.05] p-4 text-sm leading-6 text-amber-100/80"><strong>Missing a connection?</strong> {REPORTING_POLICY.rerunNotice}</div>
         <div className="mt-5 rounded-xl border border-emerald-400/20 bg-emerald-400/[0.05] p-4 text-sm leading-6 text-emerald-100/80">Connections use the provider's official sign-in, request only the access needed for reporting, and can be removed here at any time. Sentinels never receives the provider password.</div>
       </div>

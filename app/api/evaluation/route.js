@@ -7,6 +7,7 @@ import { adminAuth } from "@/lib/firebase-admin";
 import { storeReportPdf } from "@/lib/report-storage";
 import { getSessionUser } from "@/lib/session";
 import { createReport, createWebsite, updateReport, upsertProfile } from "@/db/firestore";
+import { decryptConnection, getSearchConsolePreview, selectionCookieName, tokenCookieName } from "@/lib/google-connections";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -36,6 +37,15 @@ export async function POST(request) {
     const url = normalizeWebsite(parsed.data.website);
     attempts.set(clientId, [...recent, now]);
     const evaluation = buildBasicEvaluation(url, await inspectPage(url), parsed.data);
+    const searchToken = decryptConnection(request.cookies.get(tokenCookieName("search-console"))?.value || "");
+    const searchSelection = decryptConnection(request.cookies.get(selectionCookieName("search-console"))?.value || "");
+    if (searchToken?.accessToken && searchToken.expiresAt > Date.now() && searchSelection?.id) {
+      try {
+        const preview = await getSearchConsolePreview(searchToken.accessToken, searchSelection.id);
+        evaluation.connectedInsights = [{ source: "Google Search Console", label: "Limited 28-day search context", ...preview }];
+        evaluation.scopeNote += " A connected Google Search Console property supplied a limited 28-day context preview. This added context is not an advanced SEO report.";
+      } catch (error) { console.error("[Free evaluation connected insight]", error); }
+    }
     const pdf = generateEvaluationPdf(evaluation);
     const email = parsed.data.email.toLowerCase();
     if (sessionUser.email?.toLowerCase() !== email) return NextResponse.json({ error: "Use the email address connected to your signed-in account." }, { status: 403 });

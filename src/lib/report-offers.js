@@ -1,9 +1,8 @@
 export const REPORT_OFFERS = {
-  individual: { code: "individual", name: "Individual advanced report", amountCents: 1900, reportCredits: 1, hostingCredit: "$19 for 1 month", summary: "Choose one focused analysis from the ten-report Sentinels Intelligence Suite." },
-  three: { code: "three", name: "Choose any 3 advanced reports", amountCents: 4900, reportCredits: 3, hostingCredit: "$49 for 1 month", summary: "Select three report areas for a broader, decision-ready view." },
-  five: { code: "five", name: "Choose any 5 advanced reports", amountCents: 7900, reportCredits: 5, hostingCredit: "$39.50/month for 2 months", summary: "Select five reports for a deeper website-performance or market-visibility analysis." },
-  complete: { code: "complete", name: "Complete Sentinels Intelligence Suite bundle", amountCents: 9900, reportCredits: 10, hostingCredit: "$33/month for 3 months", summary: "All ten advanced reports plus the official executive rollup." },
-  "complete-review": { code: "complete-review", name: "Complete suite bundle + expert review", amountCents: 16000, reportCredits: 10, includesReview: true, hostingCredit: "$40/month for 4 months", summary: "The complete series, executive rollup, and a professional findings review." },
+  seo: { code: "seo", name: "SEO Intelligence", amountCents: 9900, reportCredits: 1, includedReports: ["seo-intelligence"], summary: "Technical, organic, competitor, local, and reputation intelligence in one focused report." },
+  ppc: { code: "ppc", name: "PPC Intelligence", amountCents: 9900, reportCredits: 1, includedReports: ["ppc-intelligence"], summary: "Paid-search, landing-page, tracking, and conversion intelligence in one focused report." },
+  comprehensive: { code: "comprehensive", name: "Website & Conversion Deep Dive", amountCents: 14900, reportCredits: 1, includedReports: ["website-conversion"], summary: "A comprehensive website, usability, trust, analytics, and conversion-path investigation." },
+  complete: { code: "complete", name: "Complete Growth Intelligence Bundle", amountCents: 34900, reportCredits: 3, includedReports: ["seo-intelligence", "ppc-intelligence", "website-conversion"], summary: "All three advanced analyses combined with an executive 30 / 60 / 90 / 120-day action plan." },
 };
 
 export function getReportOffer(code) {

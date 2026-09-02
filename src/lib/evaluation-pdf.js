@@ -21,7 +21,7 @@ function scoreStyle(score) {
 function brandBand(doc) {
   doc.setFillColor(...C.midnight); doc.rect(PAGE.left, 36, PAGE.right - PAGE.left, 28, "F");
   setText(doc, "SENTINELS DESIGN LAB", PAGE.left + 10, 54, { size: 9, color: C.white, style: "bold" });
-  setText(doc, "SENTINEL INTELLIGENCE SYSTEM", PAGE.right - 10, 54, { size: 6.5, color: C.cyan, style: "bold", align: "right" });
+  setText(doc, "SENTINELS INTELLIGENCE SUITE", PAGE.right - 10, 54, { size: 6.5, color: C.cyan, style: "bold", align: "right" });
 }
 
 function footer(doc, page, total) {
@@ -85,6 +85,14 @@ export function generateEvaluationPdf(evaluation) {
   const labels = unknowns.map((item) => item.label.toLowerCase());
   setText(doc, `This evaluation is based on visible homepage evidence only. ${labels.join(", ").replace(/, ([^,]*)$/, ", and $1")} require additional data and are not reflected in the scores above. A strong homepage score does not establish performance in those areas.`, PAGE.left + 12, y + 31, { size: 7.2, color: C.slate, style: "italic", maxWidth: 510 });
 
+  if (evaluation.connectedInsights?.length) {
+    const insight = evaluation.connectedInsights[0];
+    y += 66; doc.setFillColor(232, 240, 254); doc.setDrawColor(...C.blue); doc.rect(PAGE.left, y, PAGE.right - PAGE.left, 45, "FD");
+    setText(doc, `${insight.label.toUpperCase()} — ${insight.source}`, PAGE.left + 12, y + 15, { size: 6.8, color: C.blue, style: "bold" });
+    setText(doc, `${Number(insight.clicks || 0).toLocaleString()} clicks | ${Number(insight.impressions || 0).toLocaleString()} impressions | ${((insight.ctr || 0) * 100).toFixed(1)}% CTR | ${insight.period}`, PAGE.left + 12, y + 29, { size: 7.2, color: C.charcoal });
+    setText(doc, "Enhanced free context only; this is not equivalent to the paid SEO Intelligence analysis.", PAGE.left + 12, y + 39, { size: 6.2, color: C.slate, style: "italic" });
+  }
+
   y += 82; setText(doc, "TOP FINDINGS", PAGE.left, y, { size: 10, color: C.midnight, style: "bold" }); y += 21;
   priorities.forEach((item, index) => { y += summaryFinding(doc, item, index, y); });
   doc.setFillColor(...C.amberBg); doc.setDrawColor(234, 179, 101); doc.rect(PAGE.left, 684, PAGE.right - PAGE.left, 42, "FD");
@@ -103,6 +111,6 @@ export function generateEvaluationPdf(evaluation) {
   });
 
   const total = doc.getNumberOfPages(); for (let page = 1; page <= total; page += 1) { doc.setPage(page); footer(doc, page, total); }
-  doc.setProperties({ title: `${evaluation.businessName} Website Readiness Snapshot`, subject: "Sentinel Intelligence System Free Website Evaluation", author: "Sentinels Design Lab", creator: "Sentinels Design Lab" });
+  doc.setProperties({ title: `${evaluation.businessName} Website Readiness Snapshot`, subject: "Sentinels Intelligence Suite Free Website Evaluation", author: "Sentinels Design Lab", creator: "Sentinels Design Lab" });
   return Buffer.from(doc.output("arraybuffer"));
 }

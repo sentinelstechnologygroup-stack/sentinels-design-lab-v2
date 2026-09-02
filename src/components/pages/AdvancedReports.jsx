@@ -123,7 +123,7 @@ export default function AdvancedReports() {
 
         <div className="mt-5 grid gap-4 md:grid-cols-2">
           <div className="rounded-xl border border-amber-400/20 bg-amber-400/[0.05] p-5 text-sm leading-6 text-amber-100/80"><strong className="text-amber-100">Accuracy requires the right evidence.</strong><p className="mt-2">{REPORTING_POLICY.limitedDataNotice}</p><p className="mt-2">{REPORTING_POLICY.rerunNotice}</p></div>
-          <div className="rounded-xl border border-primary/20 bg-primary/[0.05] p-5 text-sm leading-6 text-muted-foreground"><strong className="text-foreground">A plan built for measurable progress.</strong><p className="mt-2">Comprehensive SEO and PPC reports include a cohesive 30 / 60 / 90 / 120-day action plan. {REPORTING_POLICY.changeNotice}</p></div>
+          <div className="rounded-xl border border-primary/20 bg-primary/[0.05] p-5 text-sm leading-6 text-muted-foreground"><strong className="text-foreground">A plan built for measurable progress.</strong><p className="mt-2">{REPORTING_POLICY.pendingAccessNotice}</p><p className="mt-2">Paid reports include a cohesive 30 / 60 / 90 / 120-day action plan. {REPORTING_POLICY.changeNotice}</p></div>
         </div>
 
         <div className="mt-10 grid gap-5 lg:grid-cols-2">

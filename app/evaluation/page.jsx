@@ -3,7 +3,7 @@ import { pageMetadata } from "@/lib/metadata";
 
 export const metadata = pageMetadata(
   "Free Website Evaluation | Sentinels Design Lab",
-  "Get a free basic website evaluation powered by the Sentinel Intelligence System.",
+  "Get a free basic website evaluation powered by the Sentinels Intelligence Suite.",
   "/evaluation",
 );
 
