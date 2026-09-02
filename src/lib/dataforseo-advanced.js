@@ -25,6 +25,31 @@ async function live(path, task) {
   return { result: apiTask.result || [], cost: Number(apiTask.cost || 0), endpoint: path };
 }
 
+async function apiJson(path, options = {}) {
+  const response = await fetch(`${API_BASE}/${path}`, { ...options, headers: { Authorization: authorization(), "Content-Type": "application/json", ...options.headers }, cache: "no-store" });
+  const payload = await response.json().catch(() => ({}));
+  if (!response.ok || payload.status_code !== 20000) throw new Error(payload.status_message || `DataForSEO ${path} request failed.`);
+  return payload;
+}
+
+export async function crawlSite(website, maxCrawlPages = 50) {
+  const target = domainOf(website);
+  const created = await apiJson("on_page/task_post", { method: "POST", body: JSON.stringify([{ target, max_crawl_pages: maxCrawlPages, max_crawl_depth: 4, respect_sitemap: true, enable_javascript: true, load_resources: true, enable_www_redirect_check: true, accept_language: "en-US" }]) });
+  const task = created.tasks?.[0];
+  if (!task?.id || ![20000, 20100].includes(task.status_code)) throw new Error(task?.status_message || "DataForSEO site crawl could not be started.");
+  let summary;
+  for (let attempt = 0; attempt < 20; attempt += 1) {
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+    const payload = await apiJson(`on_page/summary/${task.id}`);
+    const result = payload.tasks?.[0]?.result?.[0];
+    if (result?.crawl_progress === "finished") { summary = result; break; }
+  }
+  if (!summary) throw new Error("DataForSEO site crawl did not finish within the report-generation window.");
+  const pagesPayload = await apiJson("on_page/pages", { method: "POST", body: JSON.stringify([{ id: task.id, limit: Math.min(maxCrawlPages, 1000) }]) });
+  const pagesResult = pagesPayload.tasks?.[0]?.result?.[0] || {};
+  return { taskId: task.id, summary, pages: pagesResult.items || [], pagesCrawled: pagesResult.crawl_status?.pages_crawled || summary.crawl_status?.pages_crawled || 0 };
+}
+
 function domainOf(url) {
   return new URL(/^https?:\/\//i.test(url) ? url : `https://${url}`).hostname.replace(/^www\./i, "");
 }
@@ -48,7 +73,17 @@ export async function collectAdvancedPublicData({ reportCode, website, businessN
     requests.push(live("keywords_data/google_ads/search_volume/live", { keywords: keywords.slice(0, 1000), ...locale }));
   }
 
-  return Promise.all(requests);
+  const settled = await Promise.allSettled(requests);
+  const completed = settled.filter((item) => item.status === "fulfilled").map((item) => item.value);
+  if (reportCode === "ppc-intelligence" && !keywords.length) {
+    const ranked = completed.find((item) => item.endpoint.includes("ranked_keywords"));
+    const discovered = (ranked?.result?.[0]?.items || []).map((item) => item.keyword_data?.keyword).filter(Boolean).slice(0, 1000);
+    if (discovered.length) {
+      try { completed.push(await live("keywords_data/google_ads/search_volume/live", { keywords: discovered, ...locale })); } catch { /* Paid report retains ranked-keyword evidence if volume enrichment is unavailable. */ }
+    }
+  }
+  if (!completed.length && requests.length) throw settled.find((item) => item.status === "rejected")?.reason || new Error("No DataForSEO source completed.");
+  return completed;
 }
 
 export const DATAFORSEO_ADVANCED_ENDPOINTS = Object.freeze({

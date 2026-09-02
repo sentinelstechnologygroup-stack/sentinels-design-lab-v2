@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { createOrder, upsertProfile } from "@/db/firestore";
+import { createOrder, listOwned, upsertProfile } from "@/db/firestore";
 import { adminAuth } from "@/lib/firebase-admin";
 import { getSessionUser } from "@/lib/session";
 import { getReportOffer } from "@/lib/report-offers";
@@ -10,9 +10,12 @@ export async function POST(request) {
   const sessionUser = await getSessionUser();
   if (!sessionUser) return NextResponse.json({ error: "Sign in before purchasing a report." }, { status: 401 });
   const userId = sessionUser.uid;
-  const { offerCode, selectedReports } = await request.json().catch(() => ({}));
+  const { offerCode, selectedReports, websiteId } = await request.json().catch(() => ({}));
   const offer = getReportOffer(offerCode);
   if (!offer) return NextResponse.json({ error: "Unknown report offer." }, { status: 400 });
+  if (typeof websiteId !== "string" || !websiteId) return NextResponse.json({ error: "Choose the website this report should evaluate." }, { status: 400 });
+  const ownedWebsites = await listOwned("websites", userId);
+  if (!ownedWebsites.some((website) => website.id === websiteId)) return NextResponse.json({ error: "That website is not available in this account." }, { status: 403 });
   const selection = validateReportSelection(offer, selectedReports);
   if (!selection) return NextResponse.json({ error: `Select exactly ${offer.reportCredits} report${offer.reportCredits === 1 ? "" : "s"} before checkout.` }, { status: 400 });
   const user = await adminAuth().getUser(userId);
@@ -37,10 +40,10 @@ export async function POST(request) {
     success_url: `${process.env.NEXT_PUBLIC_APP_URL || "https://reports.sentinelsdesignlab.com"}/dashboard?checkout=success`,
     cancel_url: `${process.env.NEXT_PUBLIC_APP_URL || "https://reports.sentinelsdesignlab.com"}/dashboard?checkout=cancelled`,
     client_reference_id: userId,
-    metadata: { firebaseUid: userId, offerCode: offer.code, selectedReports: selection.join(",") },
+    metadata: { firebaseUid: userId, offerCode: offer.code, websiteId, selectedReports: selection.join(",") },
   });
 
   await upsertProfile(userId, { email, name: user.displayName || "" });
-  await createOrder(userId, { stripeSessionId: session.id, offerCode: offer.code, selectedReports: selection, amountCents: offer.amountCents, currency: "usd", status: "pending" });
+  await createOrder(userId, { stripeSessionId: session.id, offerCode: offer.code, websiteId, selectedReports: selection, amountCents: offer.amountCents, currency: "usd", status: "pending", generationStatus: "awaiting_payment" });
   return NextResponse.json({ url: session.url });
 }

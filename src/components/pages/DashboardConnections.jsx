@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { ArrowRight, CheckCircle2, CircleAlert, LoaderCircle, Unplug } from "lucide-react";
 import { REPORTING_POLICY } from "@/lib/reporting-policy";
+import DashboardReevaluation from "@/components/pages/DashboardReevaluation";
 
 const SOURCES = [
   ["search-console", "Search Console", "Rankings, queries, clicks and indexing"],
@@ -51,5 +52,6 @@ export default function DashboardConnections() {
         <p className="mt-5 text-xs leading-5 text-muted-foreground">After Google authorization, you will return here to choose the exact business account or property used for your report.</p>
       </div>
     </div>
+    <DashboardReevaluation />
   </section>;
 }

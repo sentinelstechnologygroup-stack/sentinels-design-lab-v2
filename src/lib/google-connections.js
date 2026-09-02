@@ -196,3 +196,27 @@ export async function getSearchConsolePreview(accessToken, siteUrl) {
     topQueries: (queries.rows || []).map((row) => ({ query: row.keys?.[0] || "", clicks: row.clicks || 0, impressions: row.impressions || 0, position: row.position || 0 })),
   };
 }
+
+export async function getConnectedReportPreview(service, accessToken, resourceId) {
+  if (service === "search-console") return getSearchConsolePreview(accessToken, resourceId);
+  if (service === "analytics") {
+    const payload = await googleJson(`https://analyticsdata.googleapis.com/v1beta/${resourceId}:runReport`, accessToken, { method: "POST", body: JSON.stringify({ dateRanges: [{ startDate: "30daysAgo", endDate: "yesterday" }], metrics: [{ name: "sessions" }, { name: "totalUsers" }, { name: "eventCount" }], dimensions: [{ name: "sessionDefaultChannelGroup" }], limit: "20" }) });
+    const totals = payload.totals?.[0]?.metricValues || [];
+    return { period: "Previous 30 complete days", sessions: Number(totals[0]?.value || 0), users: Number(totals[1]?.value || 0), events: Number(totals[2]?.value || 0), channels: (payload.rows || []).slice(0, 10).map((row) => ({ channel: row.dimensionValues?.[0]?.value, sessions: Number(row.metricValues?.[0]?.value || 0) })) };
+  }
+  if (service === "business-profile") {
+    const payload = await googleJson(`https://mybusinessbusinessinformation.googleapis.com/v1/${resourceId}/locations?readMask=name,title,storeCode,websiteUri,phoneNumbers,categories&pageSize=100`, accessToken);
+    return { locations: (payload.locations || []).map((location) => ({ name: location.name, title: location.title, website: location.websiteUri, primaryCategory: location.categories?.primaryCategory?.displayName })) };
+  }
+  if (service === "tag-manager") {
+    const payload = await googleJson(`https://tagmanager.googleapis.com/tagmanager/v2/${resourceId}/containers`, accessToken);
+    return { containers: (payload.container || []).map((container) => ({ name: container.name, publicId: container.publicId, usageContext: container.usageContext })) };
+  }
+  if (service === "ads") {
+    if (!process.env.GOOGLE_ADS_DEVELOPER_TOKEN) throw new Error("Google Ads developer token is not configured.");
+    const customerId = resourceId.replace("customers/", "");
+    const payload = await googleJson(`https://googleads.googleapis.com/v21/customers/${customerId}/googleAds:searchStream`, accessToken, { method: "POST", headers: { "developer-token": process.env.GOOGLE_ADS_DEVELOPER_TOKEN }, body: JSON.stringify({ query: "SELECT campaign.id, campaign.name, campaign.status, metrics.impressions, metrics.clicks, metrics.cost_micros, metrics.conversions FROM campaign WHERE segments.date DURING LAST_30_DAYS" }) });
+    return { period: "Previous 30 days", campaigns: payload.flatMap((batch) => batch.results || []).map((row) => ({ id: row.campaign?.id, name: row.campaign?.name, status: row.campaign?.status, impressions: Number(row.metrics?.impressions || 0), clicks: Number(row.metrics?.clicks || 0), cost: Number(row.metrics?.costMicros || 0) / 1e6, conversions: Number(row.metrics?.conversions || 0) })) };
+  }
+  throw new Error("Unsupported connected report source.");
+}
