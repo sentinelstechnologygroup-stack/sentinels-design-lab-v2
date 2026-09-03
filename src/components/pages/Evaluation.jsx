@@ -170,11 +170,20 @@ export default function Evaluation() {
           </p>
         </div>
 
-        <div className="grid gap-8 lg:grid-cols-[1.05fr_.95fr]">
+        <div className="grid gap-8">
+          <EvaluationPreview />
           <form
             onSubmit={submit}
             className="rounded-2xl border border-border/50 bg-card p-6 sm:p-8"
           >
+            <div className="mb-6 border-b border-border/50 pb-5">
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">
+                Evaluation information
+              </p>
+              <h2 className="mt-2 font-heading text-2xl font-bold text-foreground">
+                Tell us about your business and website
+              </h2>
+            </div>
             <input
               name="company"
               value={form.company}
@@ -339,7 +348,6 @@ export default function Evaluation() {
               </Link>
             </p>
           </form>
-          <EvaluationPreview />
         </div>
       </section>
     </main>
@@ -362,43 +370,56 @@ function Field({ label, ...props }) {
 function EvaluationPreview() {
   return (
     <aside className="rounded-2xl border border-primary/20 bg-primary/[0.05] p-6 sm:p-8">
-      <Globe2 className="h-10 w-10 text-primary" />
-      <h2 className="mt-6 font-heading text-2xl font-bold">
-        A truthful snapshot backed by visible evidence
-      </h2>
-      <ul className="mt-6 space-y-4 text-sm text-muted-foreground">
-        {[
-          "Seven independent homepage-readiness scores",
-          "Broken links, dead controls, and contact-path checks",
-          "Visible security, risk, and outdated-content warnings",
-          "Exact page, evidence, test time, and verification steps",
-          "Clear list of what was not measured",
-          "Branded PDF and formatted email",
-        ].map((item) => (
-          <li key={item} className="flex gap-3">
-            <CheckCircle2 className="h-5 w-5 shrink-0 text-primary" />
-            {item}
-          </li>
-        ))}
-      </ul>
-      <div className="mt-8 border-t border-white/10 pt-6 text-sm leading-6 text-muted-foreground">
-        <strong className="text-foreground">Important:</strong> This free
-        snapshot tests one public page. It is not a full-site crawl, compliance
-        opinion, or security penetration test. Anything not directly verified is
-        labeled accordingly.
+      <div className="grid gap-8 lg:grid-cols-[0.75fr_1.25fr] lg:items-start">
+        <div>
+          <Globe2 className="h-10 w-10 text-primary" />
+          <h2 className="mt-5 max-w-lg font-heading text-2xl font-bold sm:text-3xl">
+            A truthful snapshot backed by visible evidence
+          </h2>
+          <p className="mt-4 max-w-xl text-sm leading-6 text-muted-foreground">
+            See what the evaluation checks, what it can verify publicly, and
+            where additional access is required before you submit your details.
+          </p>
+        </div>
+        <ul className="grid gap-4 text-sm text-muted-foreground sm:grid-cols-2">
+          {[
+            "Seven independent homepage-readiness scores",
+            "Broken links, dead controls, and contact-path checks",
+            "Visible security, risk, and outdated-content warnings",
+            "Exact page, evidence, test time, and verification steps",
+            "Clear list of what was not measured",
+            "Branded PDF and formatted email",
+          ].map((item) => (
+            <li key={item} className="flex gap-3">
+              <CheckCircle2 className="h-5 w-5 shrink-0 text-primary" />
+              {item}
+            </li>
+          ))}
+        </ul>
       </div>
-      <div className="mt-5 rounded-xl border border-primary/20 bg-black/10 p-4 text-sm leading-6 text-muted-foreground">
-        <strong className="text-foreground">
-          Connect accounts for additional free insight.
-        </strong>{" "}
-        Supported customer-owned data may add limited context beyond the
-        ordinary free snapshot. It will never equal the depth, cross-source
-        validation, recommendations, or 30 / 60 / 90 / 120-day plan included in
-        a paid advanced report.{" "}
-        <a href="/dashboard#connections" className="font-semibold text-primary">
-          Connect supported accounts
-        </a>
-        .
+      <div className="mt-8 grid gap-5 border-t border-white/10 pt-6 md:grid-cols-2">
+        <div className="text-sm leading-6 text-muted-foreground">
+          <strong className="text-foreground">Important:</strong> This free
+          snapshot samples selected public pages and customer paths. It is not a
+          full-site crawl, compliance opinion, or security penetration test.
+          Anything not directly verified is labeled accordingly.
+        </div>
+        <div className="rounded-xl border border-primary/20 bg-black/10 p-4 text-sm leading-6 text-muted-foreground">
+          <strong className="text-foreground">
+            Connect accounts for additional free insight.
+          </strong>{" "}
+          Supported customer-owned data may add limited context beyond the
+          ordinary free snapshot. It will never equal the depth, cross-source
+          validation, recommendations, or 30 / 60 / 90 / 120-day plan included
+          in a paid advanced report.{" "}
+          <a
+            href="/dashboard#connections"
+            className="font-semibold text-primary"
+          >
+            Connect supported accounts
+          </a>
+          .
+        </div>
       </div>
     </aside>
   );
