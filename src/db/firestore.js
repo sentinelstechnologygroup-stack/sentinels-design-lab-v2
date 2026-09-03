@@ -1,5 +1,5 @@
 import "server-only";
-import { randomUUID } from "node:crypto";
+import { createHash, randomUUID } from "node:crypto";
 import { FieldValue, Timestamp } from "firebase-admin/firestore";
 import { firestore } from "@/lib/firebase-admin";
 
@@ -28,6 +28,27 @@ export async function getProfile(uid) {
   const snap = await firestore().collection("profiles").doc(uid).get();
   return snap.exists ? record(snap) : null;
 }
+export async function getEvaluationSnapshot(domainKey) {
+  const snap = await firestore()
+    .collection("evaluation_snapshots")
+    .doc(domainKey)
+    .get();
+  return snap.exists ? record(snap) : null;
+}
+export async function saveEvaluationSnapshot(domainKey, values) {
+  await firestore()
+    .collection("evaluation_snapshots")
+    .doc(domainKey)
+    .set(
+      {
+        ...values,
+        domainKey,
+        requestCount: FieldValue.increment(1),
+        updatedAt: FieldValue.serverTimestamp(),
+      },
+      { merge: true },
+    );
+}
 export async function createWebsite(uid, values) {
   const id = randomUUID();
   await firestore()
@@ -40,6 +61,25 @@ export async function createWebsite(uid, values) {
       createdAt: FieldValue.serverTimestamp(),
       updatedAt: FieldValue.serverTimestamp(),
     });
+  return id;
+}
+export async function upsertWebsiteForDomain(uid, normalizedDomain, values) {
+  const id = createHash("sha256")
+    .update(`${uid}:${normalizedDomain}`)
+    .digest("hex");
+  const ref = firestore().collection("websites").doc(id);
+  const exists = (await ref.get()).exists;
+  await ref.set(
+    {
+      ...values,
+      id,
+      uid,
+      normalizedDomain,
+      updatedAt: FieldValue.serverTimestamp(),
+      ...(!exists && { createdAt: FieldValue.serverTimestamp() }),
+    },
+    { merge: true },
+  );
   return id;
 }
 export async function createReport(uid, values) {

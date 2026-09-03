@@ -162,6 +162,21 @@ export default async function DashboardPage({ searchParams }) {
                       {report.findings.verdict}
                     </p>
                   )}
+                  {report.findings?.confidence && (
+                    <p className="mt-3 text-xs text-muted-foreground">
+                      Evaluation confidence:{" "}
+                      <strong className="text-foreground">
+                        {report.findings.confidence.label} (
+                        {report.findings.confidence.percent}%)
+                      </strong>
+                    </p>
+                  )}
+                  {report.findings?.consistency?.snapshotReused && (
+                    <p className="mt-3 rounded-lg border border-primary/15 bg-primary/[0.05] px-3 py-2 text-xs text-muted-foreground">
+                      This report reused the domain's controlled 24-hour
+                      evidence snapshot to keep repeat requests consistent.
+                    </p>
+                  )}
                   {report.status === "complete" &&
                     (report.storagePath || report.blobUrl) && (
                       <a

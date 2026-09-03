@@ -272,12 +272,88 @@ async function inspectVisibleSignals(url) {
         }
       }),
     );
+    const essentialPattern =
+      /\b(contact|about|service|privacy|terms|condition|quote|estimate|book|schedule)\b/i;
+    const crawlTargets = [
+      response.url,
+      ...anchors
+        .filter((item) => {
+          try {
+            return (
+              new URL(item.absolute).hostname.replace(/^www\./i, "") ===
+                requestedHost &&
+              essentialPattern.test(
+                `${item.label} ${new URL(item.absolute).pathname}`,
+              )
+            );
+          } catch {
+            return false;
+          }
+        })
+        .map((item) => item.absolute),
+    ]
+      .filter((value, index, values) => values.indexOf(value) === index)
+      .slice(0, 8);
+    const crawlPages = await Promise.all(
+      crawlTargets.map(async (target) => {
+        try {
+          const result =
+            target === response.url ? response : await request(target);
+          const body = target === response.url ? html : await result.text();
+          const bodyText = plainText(body);
+          return {
+            url: target,
+            finalUrl: result.url,
+            status: result.status,
+            ok: result.ok,
+            title: plainText(
+              body.match(/<title[^>]*>([\s\S]*?)<\/title>/i)?.[1] || "",
+            ),
+            wordCount: bodyText.split(/\s+/).filter(Boolean).length,
+            forms: (body.match(/<form\b/gi) || []).length,
+            challenge:
+              /robot challenge|captcha|access denied|verify (?:you are|that you are) human/i.test(
+                bodyText.slice(0, 700),
+              ),
+          };
+        } catch {
+          return {
+            url: target,
+            finalUrl: null,
+            status: null,
+            ok: false,
+            title: "",
+            wordCount: 0,
+            forms: 0,
+            challenge: false,
+          };
+        }
+      }),
+    );
+    const [robotsResult, sitemapResult] = await Promise.all(
+      ["/robots.txt", "/sitemap.xml"].map(async (pathname) => {
+        try {
+          const result = await request(new URL(pathname, response.url));
+          return { status: result.status, ok: result.ok };
+        } catch {
+          return { status: null, ok: false };
+        }
+      }),
+    );
     return {
       sourceIntegrity:
         !/robot challenge|captcha|access denied|verify (?:you are|that you are) human/i.test(
           `${title} ${plain.slice(0, 500)}`,
         ),
       directStatusCode: response.status,
+      directFinalUrl: response.url,
+      directTitle: title,
+      directDescription: description,
+      challengeDetected:
+        /robot challenge|captcha|access denied|verify (?:you are|that you are) human/i.test(
+          `${title} ${plain.slice(0, 700)}`,
+        ),
+      hasDoctype: /<!doctype\s+html/i.test(html),
       directWordCount: plain.split(/\s+/).filter(Boolean).length,
       forms: (html.match(/<form\b/gi) || []).length,
       tel_links: anchors.filter((item) => /^tel:/i.test(item.href)).length,
@@ -348,6 +424,9 @@ async function inspectVisibleSignals(url) {
         policies.length > 0 &&
         policies.every((item) => item.status >= 200 && item.status < 400),
       policies,
+      crawlPages,
+      robotsAvailable: robotsResult.ok,
+      sitemapAvailable: sitemapResult.ok,
       security_headers: {
         contentSecurityPolicy: response.headers.has("content-security-policy"),
         frameProtection:
@@ -371,10 +450,15 @@ async function inspectVisibleSignals(url) {
 
 function scoreChecks(checks) {
   const earned = checks.reduce(
-    (sum, item) => sum + (item.pass ? item.weight || 1 : 0),
+    (sum, item) =>
+      sum + (item.status === "Verified Pass" ? item.weight || 1 : 0),
     0,
   );
-  const possible = checks.reduce((sum, item) => sum + (item.weight || 1), 0);
+  const possible = checks.reduce(
+    (sum, item) =>
+      sum + (item.status === "Not Applicable" ? 0 : item.weight || 1),
+    0,
+  );
   return Math.round((earned / Math.max(1, possible)) * 100);
 }
 
@@ -396,7 +480,8 @@ export function buildBasicEvaluation(url, inspection, business = {}) {
   // The direct fetch is authoritative for source identity and static HTML. DataForSEO's
   // rendered values remain a fallback for signals that are not available directly.
   custom = { ...custom, ...(inspection.visibleSignals || {}) };
-  const brokenLinks = Number(page.broken_links || 0);
+  const brokenLinks =
+    page.broken_links == null ? null : Number(page.broken_links);
   const wordCount = Math.round(
     Number(custom.directWordCount || content.plain_text_word_count || 0),
   );
@@ -404,16 +489,47 @@ export function buildBasicEvaluation(url, inspection, business = {}) {
   const loadTimeMs = Number(
     timing.duration_time || timing.time_to_interactive || 0,
   );
+  const normalizedTitle = (value) =>
+    plainText(value || "")
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, " ")
+      .trim();
+  const renderedTitle = normalizedTitle(meta.title);
+  const directTitle = normalizedTitle(custom.directTitle);
+  const sourceTitlesAgree =
+    Boolean(renderedTitle && directTitle) &&
+    (renderedTitle === directTitle ||
+      renderedTitle.includes(directTitle) ||
+      directTitle.includes(renderedTitle));
+  const crawlPages = Array.isArray(custom.crawlPages) ? custom.crawlPages : [];
+  const failedCrawlPages = crawlPages.filter(
+    (item) => !item.ok || item.challenge,
+  );
 
   const observedAt = new Date().toISOString();
   const evidence = (value, fallback) =>
     Array.isArray(value) && value.length ? value.join("; ") : fallback;
   const check = (pass, label, details = {}) => ({
-    pass,
-    status: pass ? "Passed" : "Failed",
+    pass: pass === true,
+    status: details.notApplicable
+      ? "Not Applicable"
+      : pass === true
+        ? "Verified Pass"
+        : pass === false
+          ? details.status || "Verified Failure"
+          : "Not Verified",
     label,
     pageUrl: url,
     observedAt,
+    evidence:
+      details.evidence ||
+      (details.notApplicable
+        ? "This check does not apply to the public elements detected."
+        : pass === true
+          ? "The required public signal was affirmatively verified."
+          : pass === false
+            ? "The required public signal was not present or did not pass verification."
+            : "The inspection did not return enough reliable evidence to verify this requirement."),
     ...details,
   });
   const categories = [
@@ -422,7 +538,10 @@ export function buildBasicEvaluation(url, inspection, business = {}) {
       label: "Technical Health",
       checks: [
         check(
-          !checks.is_broken && !checks.is_4xx_code && !checks.is_5xx_code,
+          Number(custom.directStatusCode) >= 200 &&
+            Number(custom.directStatusCode) < 400 &&
+            Number(page.status_code) >= 200 &&
+            Number(page.status_code) < 400,
           "Homepage responds successfully",
           {
             weight: 2,
@@ -431,7 +550,9 @@ export function buildBasicEvaluation(url, inspection, business = {}) {
           },
         ),
         check(
-          custom.sourceIntegrity === true,
+          custom.sourceIntegrity === true &&
+            custom.challengeDetected !== true &&
+            !/robot challenge|captcha|access denied/i.test(meta.title || ""),
           "The evaluator reached the real website content",
           {
             weight: 3,
@@ -444,7 +565,7 @@ export function buildBasicEvaluation(url, inspection, business = {}) {
           },
         ),
         check(
-          !checks.high_loading_time,
+          loadTimeMs > 0 ? loadTimeMs <= 4000 : null,
           "Homepage load time is within the tested threshold",
           {
             failTitle: "Homepage load time exceeded the tested threshold",
@@ -454,7 +575,7 @@ export function buildBasicEvaluation(url, inspection, business = {}) {
             reproduce: `Open ${url} and observe whether the primary content becomes usable promptly.`,
           },
         ),
-        check(custom.has_viewport !== false, "Mobile viewport is configured", {
+        check(custom.has_viewport === true, "Mobile viewport is configured", {
           evidence:
             custom.has_viewport === false
               ? "No mobile viewport declaration was detected."
@@ -473,6 +594,108 @@ export function buildBasicEvaluation(url, inspection, business = {}) {
             reproduce: `Open both the www and non-www versions and compare the final browser address.`,
           },
         ),
+        check(
+          sourceTitlesAgree,
+          "Independent inspections agree on the page identity",
+          {
+            weight: 3,
+            failTitle:
+              "Inspection sources returned conflicting page identities",
+            evidence: `Rendered title: ${meta.title || "not returned"}; direct title: ${custom.directTitle || "not returned"}.`,
+            reproduce: `Compare a private-browser load of ${url} with the titles recorded by both inspection methods.`,
+          },
+        ),
+        check(
+          custom.hasDoctype === true,
+          "The page has a valid HTML document declaration",
+          {
+            evidence: custom.hasDoctype
+              ? "HTML doctype detected."
+              : "HTML doctype was not detected.",
+          },
+        ),
+        check(
+          custom.robotsAvailable === true,
+          "Robots instructions are available",
+          {
+            evidence: `robots.txt ${custom.robotsAvailable ? "responded successfully" : "was not confirmed"}.`,
+          },
+        ),
+        check(custom.sitemapAvailable === true, "An XML sitemap is available", {
+          evidence: `sitemap.xml ${custom.sitemapAvailable ? "responded successfully" : "was not confirmed"}.`,
+        }),
+        check(
+          crawlPages.length > 1 ? failedCrawlPages.length === 0 : null,
+          "Essential public pages respond consistently",
+          {
+            weight: 2,
+            evidence:
+              crawlPages.length > 1
+                ? `${crawlPages.length} public pages sampled; ${failedCrawlPages.length} returned an error or challenge.`
+                : "No supporting public pages could be reliably sampled.",
+          },
+        ),
+        check(
+          Number(timing.largest_contentful_paint) > 0
+            ? Number(timing.largest_contentful_paint) <= 2500
+            : null,
+          "Largest Contentful Paint meets the tested threshold",
+          {
+            weight: 2,
+            failTitle: "Largest Contentful Paint exceeds the tested threshold",
+            evidence:
+              Number(timing.largest_contentful_paint) > 0
+                ? `Measured LCP: ${Number(timing.largest_contentful_paint)} ms.`
+                : "A reliable LCP measurement was not returned.",
+          },
+        ),
+        check(
+          typeof checks.has_render_blocking_resources === "boolean"
+            ? !checks.has_render_blocking_resources
+            : null,
+          "No render-blocking resources were flagged",
+          {
+            failTitle: "Render-blocking resources were detected",
+            evidence:
+              checks.has_render_blocking_resources === true
+                ? "The rendered page reported resources that block initial rendering."
+                : "No render-blocking-resource result was returned.",
+          },
+        ),
+        check(
+          Number(page.size) > 0 ? Number(page.size) <= 3 * 1024 * 1024 : null,
+          "Page transfer size stays below the tested ceiling",
+          {
+            evidence:
+              Number(page.size) > 0
+                ? `Measured page size: ${Math.round(Number(page.size) / 1024)} KB.`
+                : "Page size was not returned.",
+          },
+        ),
+        check(
+          typeof checks.no_content_encoding === "boolean"
+            ? !checks.no_content_encoding
+            : null,
+          "Content compression is enabled",
+          {
+            evidence:
+              checks.no_content_encoding === true
+                ? "The response was not content-encoded."
+                : "Content encoding was detected.",
+          },
+        ),
+        check(null, "Interactive mobile layout was verified", {
+          evidence:
+            "The free automated inspection did not complete a touch-target, overflow, and mobile-layout interaction audit.",
+        }),
+        check(
+          null,
+          "Browser console and resource execution completed without errors",
+          {
+            evidence:
+              "The free automated inspection did not return a reliable browser-console error inventory.",
+          },
+        ),
       ],
     },
     {
@@ -480,13 +703,16 @@ export function buildBasicEvaluation(url, inspection, business = {}) {
       label: "Links & Functionality",
       checks: [
         check(
-          brokenLinks === 0,
+          brokenLinks == null ? null : brokenLinks === 0,
           "No broken destinations detected from the tested homepage",
           {
             failTitle: "Broken destinations detected from the tested homepage",
-            evidence: brokenLinks
-              ? `${brokenLinks} broken destination${brokenLinks === 1 ? "" : "s"} detected.`
-              : "No broken destination was returned for the tested homepage.",
+            evidence:
+              brokenLinks == null
+                ? "The destination crawl did not return a reliable broken-link count."
+                : brokenLinks
+                  ? `${brokenLinks} broken destination${brokenLinks === 1 ? "" : "s"} detected.`
+                  : "No broken destination was returned for the tested homepage.",
             reproduce: `Open ${url} and test its visible navigation and action links. Full-site verification requires a crawl.`,
           },
         ),
@@ -571,9 +797,12 @@ export function buildBasicEvaluation(url, inspection, business = {}) {
           },
         ),
         check(
-          Number(custom.insecure_forms?.length || 0) === 0,
+          Number(custom.forms || 0) === 0
+            ? null
+            : Number(custom.insecure_forms?.length || 0) === 0,
           "No visibly insecure form destination detected",
           {
+            notApplicable: Number(custom.forms || 0) === 0,
             failTitle: "Insecure form destination detected",
             evidence: evidence(
               custom.insecure_forms,
@@ -702,7 +931,7 @@ export function buildBasicEvaluation(url, inspection, business = {}) {
       label: "Content Accuracy & Freshness",
       checks: [
         check(
-          wordCount === 0 || wordCount >= 300,
+          wordCount > 0 ? wordCount >= 300 : null,
           "Homepage provides useful content depth",
           {
             evidence: wordCount
@@ -802,7 +1031,9 @@ export function buildBasicEvaluation(url, inspection, business = {}) {
       label: "Trust & Compliance",
       checks: [
         check(
-          !checks.has_micromarkup_errors,
+          typeof checks.has_micromarkup_errors === "boolean"
+            ? !checks.has_micromarkup_errors
+            : null,
           "Structured data has no detected errors",
         ),
         check(
@@ -877,11 +1108,30 @@ export function buildBasicEvaluation(url, inspection, business = {}) {
             ]),
       ],
     },
-  ].map((category) => ({ ...category, score: scoreChecks(category.checks) }));
+  ].map((category) => {
+    const applicable = category.checks.filter(
+      (item) => item.status !== "Not Applicable",
+    );
+    const verified = applicable.filter(
+      (item) => item.status !== "Not Verified",
+    );
+    return {
+      ...category,
+      score: scoreChecks(category.checks),
+      verifiedChecks: verified.length,
+      totalChecks: applicable.length,
+      confidence: applicable.length
+        ? Math.round((verified.length / applicable.length) * 100)
+        : 0,
+    };
+  });
 
   const failed = categories.flatMap((category) =>
     category.checks
-      .filter((item) => !item.pass)
+      .filter(
+        (item) =>
+          item.status === "Verified Failure" || item.status === "Warning",
+      )
       .map((item) => ({
         ...item,
         category: category.label,
@@ -937,7 +1187,7 @@ export function buildBasicEvaluation(url, inspection, business = {}) {
     if (priorityPool.length < 5 && !priorityPool.includes(item))
       priorityPool.push(item);
   });
-  const priorities = priorityPool.map((item) => ({
+  let priorities = priorityPool.map((item) => ({
     ...item,
     originalTitle: item.title,
     title: item.displayTitle,
@@ -945,10 +1195,34 @@ export function buildBasicEvaluation(url, inspection, business = {}) {
       recommendations[item.title] ||
       `Review the ${item.displayTitle.toLowerCase()} finding, correct it if confirmed, and retest the exact page.`,
   }));
+  const concerns = Array.isArray(business.concerns)
+    ? business.concerns.slice(0, 3)
+    : [];
+  const concernCategories = {
+    leads: ["Conversion Path", "Links & Functionality"],
+    search: ["Search Foundation"],
+    functionality: ["Links & Functionality"],
+    mobile: ["Technical Health"],
+    speed: ["Technical Health"],
+    content: ["Content Accuracy & Freshness"],
+    trust: ["Trust & Compliance"],
+    security: ["Security & Risk", "Trust & Compliance"],
+    local: ["Search Foundation", "Trust & Compliance"],
+    advertising: ["Conversion Path", "Search Foundation"],
+  };
+  priorities = priorities.sort(
+    (a, b) =>
+      Number(
+        concerns.some((key) => concernCategories[key]?.includes(b.category)),
+      ) -
+      Number(
+        concerns.some((key) => concernCategories[key]?.includes(a.category)),
+      ),
+  );
   const strengths = categories
     .flatMap((category) =>
       category.checks
-        .filter((item) => item.pass)
+        .filter((item) => item.status === "Verified Pass")
         .map((item) => ({
           ...item,
           category: category.label,
@@ -956,24 +1230,114 @@ export function buildBasicEvaluation(url, inspection, business = {}) {
         })),
     )
     .slice(0, 5);
+  const notVerifiedChecks = categories.flatMap((category) =>
+    category.checks
+      .filter((item) => item.status === "Not Verified")
+      .map((item) => ({ ...item, category: category.label })),
+  );
   const scores = categories.map((item) => item.score);
   const lowestScore = Math.min(...scores);
   const weakAreas = categories
     .filter((item) => item.score < 70)
     .map((item) => item.label);
+  const categoryWeights = {
+    technical: 1.4,
+    functionality: 1.3,
+    security: 1,
+    search: 1,
+    freshness: 0.8,
+    conversion: 1.4,
+    trust: 1.4,
+  };
+  const totalCategoryWeight = categories.reduce(
+    (sum, item) => sum + categoryWeights[item.key],
+    0,
+  );
   const averageScore = Math.round(
-    scores.reduce((sum, value) => sum + value, 0) / Math.max(1, scores.length),
+    categories.reduce(
+      (sum, item) => sum + item.score * categoryWeights[item.key],
+      0,
+    ) / totalCategoryWeight,
   );
   const criticalCaps = [];
-  if (custom.sourceIntegrity !== true) criticalCaps.push(35);
-  if (custom.businessDomainLinksHealthy === false) criticalCaps.push(45);
+  const criticalFailures = [];
+  const addGate = (active, cap, label) => {
+    if (active) {
+      criticalCaps.push(cap);
+      criticalFailures.push(label);
+    }
+  };
+  addGate(
+    custom.sourceIntegrity !== true ||
+      custom.challengeDetected === true ||
+      !sourceTitlesAgree,
+    35,
+    "The inspected source could not be reliably verified",
+  );
+  addGate(
+    custom.businessDomainLinksHealthy === false,
+    39,
+    "A customer-facing business domain is unreachable or conflicting",
+  );
+  const viableContactPaths =
+    Number(custom.forms || 0) +
+    Number(custom.tel_links || 0) +
+    Number(custom.mailto_links || 0);
+  addGate(
+    viableContactPaths === 0,
+    49,
+    "No dependable public contact path was confirmed",
+  );
   if (
     custom.isTexasRealEstate &&
     (!custom.trecIabsLink || !custom.trecConsumerProtectionLink)
   )
-    criticalCaps.push(65);
-  if (custom.policyLinksWork !== true) criticalCaps.push(69);
-  const overallScore = Math.min(averageScore, ...criticalCaps, 100);
+    addGate(
+      true,
+      59,
+      "Required Texas real estate disclosures were not confirmed",
+    );
+  addGate(
+    custom.policyLinksWork !== true,
+    69,
+    "Essential public policy pages were not confirmed",
+  );
+  const gateCap = criticalCaps.length
+    ? Math.max(
+        15,
+        Math.min(...criticalCaps) - Math.max(0, criticalCaps.length - 1) * 4,
+      )
+    : 100;
+  const overallScore = Math.min(averageScore, gateCap, 100);
+  const verifiedCount = categories.reduce(
+    (sum, item) => sum + item.verifiedChecks,
+    0,
+  );
+  const possibleVerified = categories.reduce(
+    (sum, item) => sum + item.totalChecks,
+    0,
+  );
+  const confidencePercent = Math.round(
+    (verifiedCount / Math.max(1, possibleVerified)) * 100,
+  );
+  const confidence =
+    custom.challengeDetected || !sourceTitlesAgree
+      ? "Low"
+      : confidencePercent >= 90
+        ? "High"
+        : confidencePercent >= 70
+          ? "Moderate"
+          : "Low";
+  const readiness =
+    overallScore >= 80 && !criticalFailures.length
+      ? "Customer Ready"
+      : overallScore >= 65 && !criticalFailures.length
+        ? "Improvements Required"
+        : overallScore >= 50
+          ? "Material Problems"
+          : overallScore >= 25
+            ? "High Risk - Not Customer Ready"
+            : "Critical Failure";
   const unverifiedDimensions = [
     {
       key: "rankings",
@@ -1019,16 +1383,25 @@ export function buildBasicEvaluation(url, inspection, business = {}) {
     contactName: business.name || "",
     generatedAt: new Date().toISOString(),
     score: overallScore,
-    scoreLabel: "Evidence-adjusted public website readiness",
-    verdict: weakAreas.length
-      ? `${overallScore}/100 public website readiness. Professional review recommended. Meaningful gaps were found in ${weakAreas.join(", ")}.`
-      : `${overallScore}/100 public website readiness. The measured homepage checks are generally strong, but traffic, rankings, authority, local visibility, paid media, and conversions remain unverified.`,
+    scoreLabel: readiness,
+    confidence: {
+      label: confidence,
+      percent: confidencePercent,
+      reason:
+        confidence === "Low"
+          ? "Important inspection evidence was incomplete or contradictory."
+          : `${verifiedCount} of ${possibleVerified} applicable checks returned a verified result.`,
+    },
+    criticalFailures,
+    verdict: `${overallScore}/100 public website readiness - ${readiness}. ${criticalFailures.length ? `Critical gate${criticalFailures.length === 1 ? "" : "s"}: ${criticalFailures.join("; ")}.` : weakAreas.length ? `Meaningful gaps were found in ${weakAreas.join(", ")}.` : "No critical public-readiness gate failed in the pages tested."}`,
     assessment: {
       lowestScore,
       weakAreas,
       reviewRecommended: weakAreas.length > 0 || failed.length >= 3,
     },
     categories,
+    concerns,
+    notVerifiedChecks,
     unverifiedDimensions,
     strengths,
     findings: failed.map((item) => ({
@@ -1062,8 +1435,63 @@ export function buildBasicEvaluation(url, inspection, business = {}) {
       telephoneLinks: Number(custom.tel_links || 0),
       emailLinks: Number(custom.mailto_links || 0),
       alternateDomains: custom.alternateDomains || [],
+      crawlPages,
     },
-    scopeNote:
-      "This free snapshot reviews one public page and its visible controls at the recorded time. It is not a full-site crawl, accessibility audit, compliance opinion, or security penetration test. Rankings, traffic, backlinks, competitors, local visibility, paid media, and conversions remain unverified until the appropriate data sources are analyzed.",
+    scopeNote: `This free snapshot samples ${crawlPages.length || 1} public page${crawlPages.length === 1 ? "" : "s"} and visible customer paths at the recorded time. It is not a full-site crawl, accessibility audit, compliance opinion, or security penetration test. Rankings, traffic, backlinks, competitors, local visibility, paid media, and conversions remain unverified until the appropriate data sources are analyzed.`,
   };
+}
+
+export const EVALUATION_ENGINE_VERSION = "2026-09-gated-v2";
+
+export function validateEvaluation(evaluation) {
+  const errors = [];
+  const allChecks = (evaluation.categories || []).flatMap(
+    (category) => category.checks || [],
+  );
+  if (evaluation.score >= 80 && evaluation.criticalFailures?.length)
+    errors.push("A favorable rating cannot coexist with a critical gate.");
+  if (
+    (evaluation.categories || []).some(
+      (category) =>
+        category.score === 100 &&
+        (category.checks || []).some((item) => item.status === "Not Verified"),
+    )
+  )
+    errors.push("A category with unverified required checks cannot score 100.");
+  if (
+    evaluation.observedContent?.pageTitle?.match(
+      /robot challenge|captcha|access denied/i,
+    ) &&
+    evaluation.confidence?.label !== "Low"
+  )
+    errors.push("Challenge-page evidence requires low confidence.");
+  if (
+    allChecks.some((item) =>
+      /<svg|<path|<script|<a\b/i.test(String(item.evidence || "")),
+    )
+  )
+    errors.push("Raw markup leaked into customer evidence.");
+  if (
+    allChecks.some(
+      (item) =>
+        item.status !== "Verified Pass" && !String(item.evidence || "").trim(),
+    )
+  )
+    errors.push("A non-passing check is missing customer-readable evidence.");
+  const findingKeys = (evaluation.findings || []).map(
+    (item) => `${item.category}|${item.label}|${item.pageUrl}`,
+  );
+  if (new Set(findingKeys).size !== findingKeys.length)
+    errors.push("Duplicate findings were generated.");
+  if (
+    (evaluation.categories || []).some(
+      (category) => category.score !== scoreChecks(category.checks || []),
+    )
+  )
+    errors.push("A category score does not match its checks.");
+  if (!evaluation.verdict || !evaluation.scoreLabel || !evaluation.confidence)
+    errors.push("The readiness conclusion is incomplete.");
+  if (errors.length)
+    throw new Error(`Evaluation consistency check failed: ${errors.join(" ")}`);
+  return evaluation;
 }

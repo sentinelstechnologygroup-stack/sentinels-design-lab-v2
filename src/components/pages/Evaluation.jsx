@@ -27,7 +27,21 @@ const initialForm = {
   password: "",
   confirmPassword: "",
   company: "",
+  concerns: [],
 };
+
+const CONCERNS = [
+  ["leads", "Not receiving enough leads"],
+  ["search", "Not appearing in Google"],
+  ["functionality", "Broken links, buttons, or forms"],
+  ["mobile", "Mobile usability"],
+  ["speed", "Website speed"],
+  ["content", "Outdated or inaccurate information"],
+  ["trust", "Customer trust and credibility"],
+  ["security", "Privacy, security, or compliance"],
+  ["local", "Local / Google Business visibility"],
+  ["advertising", "Advertising and landing pages"],
+];
 
 export default function Evaluation() {
   const [form, setForm] = useState(initialForm);
@@ -56,6 +70,19 @@ export default function Evaluation() {
       ...current,
       [event.target.name]: event.target.value,
     }));
+  }
+
+  function toggleConcern(key) {
+    setForm((current) => {
+      const selected = current.concerns.includes(key);
+      if (!selected && current.concerns.length >= 3) return current;
+      return {
+        ...current,
+        concerns: selected
+          ? current.concerns.filter((item) => item !== key)
+          : [...current.concerns, key],
+      };
+    });
   }
 
   async function generateReport() {
@@ -211,6 +238,39 @@ export default function Evaluation() {
                 value={form.location}
                 onChange={update}
               />
+              <fieldset className="sm:col-span-2">
+                <legend className="text-sm font-medium text-foreground">
+                  What are you most concerned about?{" "}
+                  <span className="font-normal text-muted-foreground">
+                    Select up to three.
+                  </span>
+                </legend>
+                <div className="mt-3 grid gap-2 sm:grid-cols-2">
+                  {CONCERNS.map(([key, label]) => {
+                    const checked = form.concerns.includes(key);
+                    const disabled = !checked && form.concerns.length >= 3;
+                    return (
+                      <label
+                        key={key}
+                        className={`flex cursor-pointer items-start gap-3 rounded-lg border px-3 py-3 text-sm transition ${checked ? "border-primary/50 bg-primary/[0.08]" : "border-border/50 bg-secondary/30"} ${disabled ? "cursor-not-allowed opacity-45" : ""}`}
+                      >
+                        <input
+                          type="checkbox"
+                          checked={checked}
+                          disabled={disabled}
+                          onChange={() => toggleConcern(key)}
+                          className="mt-0.5 h-4 w-4 accent-blue-500"
+                        />
+                        <span>{label}</span>
+                      </label>
+                    );
+                  })}
+                </div>
+                <p className="mt-2 text-xs text-muted-foreground">
+                  Your selections prioritize relevant findings; they never
+                  change the objective score.
+                </p>
+              </fieldset>
               {!signedIn && (
                 <>
                   <Field

@@ -231,7 +231,7 @@ export function generateEvaluationPdf(evaluation) {
   );
   setText(
     doc,
-    `Tested ${testedAt}  -  ${categories.length} measured areas, ${unknowns.length} critical dimensions not yet verified.`,
+    `Tested ${testedAt}  -  Confidence: ${evaluation.confidence?.label || "Not stated"} (${evaluation.confidence?.percent ?? 0}%)  -  ${categories.length} measured areas.`,
     PAGE.left,
     140,
     { size: 7.2, color: C.slate },
@@ -254,7 +254,7 @@ export function generateEvaluationPdf(evaluation) {
   const labels = unknowns.map((item) => item.label.toLowerCase());
   setText(
     doc,
-    `This evaluation is based on visible homepage evidence only. ${labels.join(", ").replace(/, ([^,]*)$/, ", and $1")} require additional data and are not reflected in the scores above. A strong homepage score does not establish performance in those areas.`,
+    `This evaluation samples selected public pages and customer paths. ${labels.join(", ").replace(/, ([^,]*)$/, ", and $1")} require additional data and are not reflected in the scores above. Missing or contradictory evidence never earns passing credit.`,
     PAGE.left + 12,
     y + 31,
     { size: 7.2, color: C.slate, style: "italic", maxWidth: 510 },
@@ -349,6 +349,50 @@ export function generateEvaluationPdf(evaluation) {
     y += detailBlock(doc, evaluation, item, index, y, testedAt) + 10;
   });
 
+  if (evaluation.notVerifiedChecks?.length) {
+    doc.addPage();
+    brandBand(doc);
+    setText(doc, "REQUIRED CHECKS NOT VERIFIED", PAGE.left, 93, {
+      size: 12,
+      color: C.midnight,
+      style: "bold",
+    });
+    setText(
+      doc,
+      "These checks earned no points. They are not represented as passing results.",
+      PAGE.left,
+      109,
+      { size: 7.5, color: C.slate, style: "italic" },
+    );
+    y = 135;
+    evaluation.notVerifiedChecks.slice(0, 22).forEach((item) => {
+      if (y > 710) {
+        doc.addPage();
+        brandBand(doc);
+        setText(doc, "REQUIRED CHECKS NOT VERIFIED", PAGE.left, 93, {
+          size: 12,
+          color: C.midnight,
+          style: "bold",
+        });
+        y = 120;
+      }
+      setText(doc, `${item.category}: ${item.label}`, PAGE.left, y, {
+        size: 8,
+        style: "bold",
+        maxWidth: 510,
+      });
+      setText(
+        doc,
+        item.evidence ||
+          "The inspection did not return enough evidence to verify this check.",
+        PAGE.left,
+        y + 13,
+        { size: 7, color: C.slate, maxWidth: 510 },
+      );
+      y += 37;
+    });
+  }
+
   doc.addPage();
   brandBand(doc);
   setText(doc, "CONTENT AND CONTACT SIGNALS COLLECTED", PAGE.left, 93, {
@@ -412,6 +456,66 @@ export function generateEvaluationPdf(evaluation) {
       color: domains.some((item) => !item.live) ? C.red : C.charcoal,
       maxWidth: 510,
     },
+  );
+  y +=
+    54 +
+    doc.splitTextToSize(
+      domains.length
+        ? domains
+            .map(
+              (item) => `${item.url} - ${item.live ? "live" : "not reachable"}`,
+            )
+            .join("; ")
+        : "None detected.",
+      510,
+    ).length *
+      8;
+  const concernLabels = {
+    leads: "Not receiving enough leads",
+    search: "Not appearing in Google",
+    functionality: "Broken links, buttons, or forms",
+    mobile: "Mobile usability",
+    speed: "Website speed",
+    content: "Outdated or inaccurate information",
+    trust: "Customer trust and credibility",
+    security: "Privacy, security, or compliance",
+    local: "Local / Google Business visibility",
+    advertising: "Advertising and landing pages",
+  };
+  setText(doc, "OWNER-SELECTED CONCERNS", PAGE.left, y, {
+    size: 8,
+    color: C.midnight,
+    style: "bold",
+  });
+  setText(
+    doc,
+    evaluation.concerns?.length
+      ? evaluation.concerns
+          .map((item) => concernLabels[item] || item)
+          .join("; ")
+      : "No concerns selected. The objective score was not altered.",
+    PAGE.left,
+    y + 15,
+    { size: 7.5, maxWidth: 510 },
+  );
+  y += 48;
+  setText(doc, "PUBLIC PAGES SAMPLED", PAGE.left, y, {
+    size: 8,
+    color: C.midnight,
+    style: "bold",
+  });
+  (observed.crawlPages || []).slice(0, 8).forEach((item, index) =>
+    setText(
+      doc,
+      `${index + 1}. ${item.url} - ${item.status || "not verified"}${item.challenge ? " - challenge detected" : ""}`,
+      PAGE.left,
+      y + 16 + index * 13,
+      {
+        size: 7,
+        color: item.ok && !item.challenge ? C.charcoal : C.red,
+        maxWidth: 510,
+      },
+    ),
   );
 
   const total = doc.getNumberOfPages();
