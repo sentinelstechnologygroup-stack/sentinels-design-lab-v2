@@ -123,13 +123,18 @@ export default function Evaluation() {
 
     try {
       if (!signedIn) {
+        const email = form.email.trim().toLowerCase();
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email))
+          throw new Error(
+            "Enter a complete email address, including the domain ending (for example, name@business.com).",
+          );
         if (form.password.length < 12)
           throw new Error("Use a password with at least 12 characters.");
         if (form.password !== form.confirmPassword)
           throw new Error("The passwords do not match.");
         const credential = await createUserWithEmailAndPassword(
           firebaseClientAuth(),
-          form.email.trim(),
+          email,
           form.password,
         );
         await updateProfile(credential.user, { displayName: form.name.trim() });
@@ -159,6 +164,10 @@ export default function Evaluation() {
       const accountErrors = {
         "auth/email-already-in-use":
           "An account already exists for this email. Sign in to request another report.",
+        "auth/invalid-email":
+          "Enter a complete email address, including the domain ending (for example, name@business.com).",
+        "auth/weak-password":
+          "Use a stronger password with at least 12 characters.",
         "auth/too-many-requests":
           "Account creation is temporarily paused after repeated attempts. If this account was already created, sign in instead; otherwise wait a few minutes before retrying.",
       };
