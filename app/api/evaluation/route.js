@@ -53,7 +53,14 @@ export async function POST(request) {
     await upsertProfile(user.uid, { email, name: parsed.data.name, phone: parsed.data.phone });
     const websiteId = await createWebsite(user.uid, { businessName: parsed.data.businessName, url, primaryService: parsed.data.primaryService, location: parsed.data.location });
     const reportId = await createReport(user.uid, { websiteId, reportType: "free-readiness", title: `${parsed.data.businessName} Website Readiness Snapshot`, status: "generating", findings: evaluation });
-    const storagePath = await storeReportPdf({ uid: user.uid, reportId, pdf });
+    let storagePath;
+    try {
+      storagePath = await storeReportPdf({ uid: user.uid, reportId, pdf });
+    } catch (error) {
+      await updateReport(reportId, { status: "failed", error: "The PDF could not be stored.", failedAt: new Date() });
+      console.error("[Sentinels Intelligence Suite report storage]", error);
+      return NextResponse.json({ error: "Your website was inspected, but the report file could not be saved. Please try again shortly." }, { status: 503 });
+    }
     await updateReport(reportId, { storagePath, blobUrl: null, status: "complete" });
     const portalUrl = `${process.env.NEXT_PUBLIC_APP_URL || "https://reports.sentinelsdesignlab.com"}/dashboard`;
     let delivery = { sent: false, reason: "not_configured" };
