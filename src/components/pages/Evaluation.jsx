@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowRight, CheckCircle2, Globe2, LoaderCircle, ShieldCheck } from "lucide-react";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from "firebase/auth";
 import { firebaseClientAuth } from "@/lib/firebase-client";
 
 const initialForm = { name: "", email: "", phone: "", businessName: "", website: "", primaryService: "", location: "", password: "", confirmPassword: "", company: "" };
@@ -50,7 +50,9 @@ export default function Evaluation() {
         const sessionResponse = await fetch("/api/session", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ idToken: await credential.user.getIdToken(true) }) });
         if (!sessionResponse.ok) throw new Error("Your account was created, but the secure session could not start. Please sign in.");
         const verificationResponse = await fetch("/api/auth/verification", { method: "POST" });
-        if (!verificationResponse.ok) console.error("The branded verification email could not be sent.");
+        if (!verificationResponse.ok) {
+          await sendEmailVerification(credential.user, { url: `${window.location.origin}/dashboard` });
+        }
         setSignedIn(true);
       }
       await generateReport();
