@@ -30,7 +30,7 @@ export async function POST() {
   const result = await sendMail({
     from: process.env.SIS_FROM_EMAIL || "Sentinels Design Lab <reports@sentinelsdesignlab.com>",
     to: user.email,
-    replyTo: process.env.SIS_NOTIFICATION_EMAIL || "Info@SentinelsDesignLab.com",
+    replyTo: process.env.SIS_NOTIFICATION_EMAIL || "reports@sentinelsdesignlab.com",
     subject: "Verify your email for Sentinels Design Lab",
     html: verificationEmailHtml({ name: user.displayName, verificationUrl: verificationUrl.toString() }),
   });

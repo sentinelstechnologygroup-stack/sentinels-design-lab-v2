@@ -31,7 +31,7 @@ env:
     value: Sentinels Design Lab <reports@sentinelsdesignlab.com>
     availability: [RUNTIME]
   - variable: SIS_NOTIFICATION_EMAIL
-    value: Info@SentinelsDesignLab.com
+    value: reports@sentinelsdesignlab.com
     availability: [RUNTIME]
   - variable: SMTP_HOST
     value: secure.patientdrive.com
@@ -42,6 +42,8 @@ env:
   - variable: SMTP_USER
     value: reports@sentinelsdesignlab.com
     availability: [RUNTIME]
+  - variable: SMTP_PASSWORD
+    secret: SMTP_PASSWORD
   - variable: DATAFORSEO_LOGIN
     secret: DATAFORSEO_LOGIN
   - variable: DATAFORSEO_PASSWORD

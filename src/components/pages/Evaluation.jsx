@@ -31,7 +31,8 @@ export default function Evaluation() {
     const response = await fetch("/api/evaluation", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(form) });
     const payload = await response.json();
     if (!response.ok) throw new Error(payload.error || "The evaluation could not be completed.");
-    window.location.assign(`/dashboard?created=1&report=${encodeURIComponent(payload.report.id)}`);
+    const delivery = payload.delivery?.sent ? "sent" : "failed";
+    window.location.assign(`/dashboard?created=1&report=${encodeURIComponent(payload.report.id)}&delivery=${delivery}`);
   }
 
   async function submit(event) {

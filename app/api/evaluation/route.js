@@ -59,6 +59,7 @@ export async function POST(request) {
     let delivery = { sent: false, reason: "not_configured" };
     try { delivery = await sendEvaluationEmails({ evaluation, lead: { ...parsed.data, email }, pdf, portalUrl }); }
     catch (error) { console.error("[Sentinels Intelligence Suite email delivery]", error); delivery = { sent: false, reason: "delivery_failed" }; }
+    await updateReport(reportId, { emailDelivery: delivery, emailDeliveryCheckedAt: new Date() });
     return NextResponse.json({ ok: true, evaluation, delivery, report: { id: reportId, filename: `Sentinels-Design-Lab-Website-Readiness-${evaluation.businessName.replace(/[^a-z0-9]+/gi, "-")}.pdf`, url: `/api/reports/${reportId}/download` }, nextStep: { label: "Sign in to view reports", href: "/sign-in" } });
   } catch (error) {
     console.error("[Sentinels Intelligence Suite evaluation]", error);
