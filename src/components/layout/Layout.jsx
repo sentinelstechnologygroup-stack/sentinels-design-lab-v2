@@ -4,8 +4,14 @@ import React from "react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import NodeNetwork from "@/components/shared/NodeNetwork";
+import { usePathname } from "next/navigation";
 
 export default function Layout({ children }) {
+  const pathname = usePathname();
+  if (pathname.startsWith("/dashboard")) {
+    return <div className="min-h-screen bg-[#050914] text-white">{children}</div>;
+  }
+
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-[#030712] text-white">
       {/* Global background system only */}

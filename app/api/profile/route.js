@@ -15,6 +15,10 @@ export async function GET() {
     name: profile?.name || user.displayName || "",
     phone: profile?.phone || user.phoneNumber || "",
     email: user.email || "",
+    emailVerified: user.emailVerified,
+    businessName: profile?.businessName || "",
+    website: profile?.website || "",
+    serviceArea: profile?.serviceArea || "",
   });
 }
 
@@ -29,14 +33,17 @@ export async function PATCH(request) {
   const phone = String(body.phone || "")
     .trim()
     .slice(0, 30);
+  const businessName = String(body.businessName || "").trim().slice(0, 120);
+  const website = String(body.website || "").trim().slice(0, 300);
+  const serviceArea = String(body.serviceArea || "").trim().slice(0, 160);
   if (!name)
     return NextResponse.json(
       { error: "Your name is required." },
       { status: 400 },
     );
   await Promise.all([
-    upsertProfile(session.uid, { name, phone }),
+    upsertProfile(session.uid, { name, phone, businessName, website, serviceArea }),
     adminAuth().updateUser(session.uid, { displayName: name }),
   ]);
-  return NextResponse.json({ ok: true, name, phone });
+  return NextResponse.json({ ok: true, name, phone, businessName, website, serviceArea });
 }
