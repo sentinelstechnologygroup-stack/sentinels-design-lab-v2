@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import {
   ArrowRight,
+  BadgeCheck,
   CheckCircle2,
-  Globe2,
   LoaderCircle,
   ShieldCheck,
 } from "lucide-react";
@@ -55,11 +55,6 @@ export default function Evaluation() {
       .then((session) => {
         if (session.authenticated) {
           setSignedIn(true);
-          setForm((current) => ({
-            ...current,
-            email: session.email || current.email,
-            name: session.name || current.name,
-          }));
         }
       })
       .catch(() => null);
@@ -174,6 +169,7 @@ export default function Evaluation() {
           <EvaluationPreview />
           <form
             onSubmit={submit}
+            autoComplete="off"
             className="rounded-2xl border border-border/50 bg-card p-6 sm:p-8"
           >
             <div className="mb-6 border-b border-border/50 pb-5">
@@ -197,6 +193,7 @@ export default function Evaluation() {
               <Field
                 label="Full name"
                 name="name"
+                placeholder="Jane Smith"
                 value={form.name}
                 onChange={update}
                 required
@@ -204,6 +201,7 @@ export default function Evaluation() {
               <Field
                 label="Business name"
                 name="businessName"
+                placeholder="Smith Home Services"
                 value={form.businessName}
                 onChange={update}
                 required
@@ -212,6 +210,7 @@ export default function Evaluation() {
                 label="Email"
                 name="email"
                 type="email"
+                placeholder="jane@smithhomeservices.com"
                 value={form.email}
                 onChange={update}
                 required
@@ -220,6 +219,7 @@ export default function Evaluation() {
                 label="Phone"
                 name="phone"
                 type="tel"
+                placeholder="(555) 123-4567"
                 value={form.phone}
                 onChange={update}
               />
@@ -244,6 +244,7 @@ export default function Evaluation() {
               <Field
                 label="City / service area"
                 name="location"
+                placeholder="Houston, TX"
                 value={form.location}
                 onChange={update}
               />
@@ -287,6 +288,7 @@ export default function Evaluation() {
                     name="password"
                     type="password"
                     autoComplete="new-password"
+                    placeholder="At least 12 characters"
                     minLength={12}
                     value={form.password}
                     onChange={update}
@@ -297,6 +299,7 @@ export default function Evaluation() {
                     name="confirmPassword"
                     type="password"
                     autoComplete="new-password"
+                    placeholder="Enter the same password again"
                     minLength={12}
                     value={form.confirmPassword}
                     onChange={update}
@@ -361,7 +364,7 @@ function Field({ label, ...props }) {
       {props.required && <span className="text-primary"> *</span>}
       <input
         {...props}
-        className="mt-2 w-full rounded-lg border border-border/60 bg-secondary/50 px-4 py-3 text-sm text-foreground outline-none transition focus:border-primary/60"
+        className="mt-2 w-full rounded-lg border border-border/60 bg-secondary/50 px-4 py-3 text-sm text-foreground outline-none transition placeholder:text-muted-foreground/60 focus:border-primary/60"
       />
     </label>
   );
@@ -369,10 +372,14 @@ function Field({ label, ...props }) {
 
 function EvaluationPreview() {
   return (
-    <aside className="rounded-2xl border border-primary/20 bg-primary/[0.05] p-6 sm:p-8">
+    <aside className="rounded-2xl border border-border/50 bg-card p-6 sm:p-8">
       <div className="grid gap-8 lg:grid-cols-[0.75fr_1.25fr] lg:items-start">
         <div>
-          <Globe2 className="h-10 w-10 text-primary" />
+          <BadgeCheck
+            aria-hidden="true"
+            strokeWidth={1.8}
+            className="h-11 w-11 text-primary"
+          />
           <h2 className="mt-5 max-w-lg font-heading text-2xl font-bold sm:text-3xl">
             A truthful snapshot backed by visible evidence
           </h2>
