@@ -219,10 +219,10 @@ export default function Home() {
 
               <div className="mb-4 flex flex-wrap gap-4">
                 <Link
-                  href="https://sentinelsdesignlab.com/contact/?type=website-evaluation"
+                  href="/contact"
                   className="inline-flex items-center gap-2 rounded-lg bg-primary px-8 py-3.5 text-sm font-semibold text-slate-950 transition-all hover:scale-[1.01] hover:bg-primary hover:shadow-[0_10px_30px_rgba(56,189,248,0.20)]"
                 >
-                  Get Website Evaluation
+                  Start Your Project
                   <ArrowRight className="h-4 w-4" />
                 </Link>
 
@@ -235,7 +235,8 @@ export default function Home() {
               </div>
 
               <p className="mb-8 text-xs text-muted-foreground/70">
-                No commitment. Free evaluation.
+                Tell us what you need built. We’ll review your goals and follow
+                up within one business day.
               </p>
 
               <div className="flex flex-wrap items-center gap-5 text-sm text-muted-foreground">
@@ -282,7 +283,7 @@ export default function Home() {
                   </div>
                 ))}
 
-<div className="absolute -right-4 bottom-16 z-10 rounded-xl border border-white/10 bg-[#0b1220]/90 px-4 py-3 shadow-xl backdrop-blur-md">
+                <div className="absolute -right-4 bottom-16 z-10 rounded-xl border border-white/10 bg-[#0b1220]/90 px-4 py-3 shadow-xl backdrop-blur-md">
                   <div className="inline-flex items-center gap-2">
                     <div className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
                     <span className="text-xs font-semibold text-white">
@@ -315,12 +316,13 @@ export default function Home() {
       </section>
 
       {/* SERVICES */}
-      <section className="py-20 border-t border-white/8" style={{ background: '#070d18' }}>
+      <section
+        className="py-20 border-t border-white/8"
+        style={{ background: "#070d18" }}
+      >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-14 text-center">
-            <span className="eyebrow mb-4">
-              What We Do
-            </span>
+            <span className="eyebrow mb-4">What We Do</span>
             <h2 className="mt-3 font-heading text-3xl font-bold text-foreground sm:text-4xl">
               What We Actually Help You Achieve
             </h2>
@@ -388,11 +390,12 @@ export default function Home() {
       </section>
 
       {/* BEST FIT */}
-      <section className="py-20 border-t border-white/8" style={{ background: '#07101f' }}>
+      <section
+        className="py-20 border-t border-white/8"
+        style={{ background: "#07101f" }}
+      >
         <div className="mx-auto max-w-5xl px-4 text-center sm:px-6 lg:px-8">
-          <span className="eyebrow mb-4">
-            Best Fit
-          </span>
+          <span className="eyebrow mb-4">Best Fit</span>
           <h2 className="mb-5 mt-3 font-heading text-3xl font-bold text-foreground sm:text-4xl">
             Built for Businesses That Need Real Results
           </h2>
@@ -424,9 +427,7 @@ export default function Home() {
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid items-center gap-16 lg:grid-cols-2">
             <div>
-              <span className="eyebrow mb-4">
-                Why Sentinels
-              </span>
+              <span className="eyebrow mb-4">Why Sentinels</span>
               <h2 className="mb-8 mt-3 font-heading text-3xl font-bold text-foreground sm:text-4xl">
                 A More Strategic Website Build From Day One
               </h2>
@@ -517,17 +518,18 @@ export default function Home() {
       </section>
 
       {/* ROI BRIDGE */}
-      <section className="py-20 border-t border-white/8" style={{ background: '#050b16' }}>
+      <section
+        className="py-20 border-t border-white/8"
+        style={{ background: "#050b16" }}
+      >
         <div className="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
-          <span className="eyebrow mb-4">
-            Investment Perspective
-          </span>
+          <span className="eyebrow mb-4">Investment Perspective</span>
           <h2 className="mb-5 mt-3 font-heading text-3xl font-bold text-foreground sm:text-4xl">
             A Website Should Do More Than Exist
           </h2>
           <p className="mx-auto mb-8 max-w-2xl text-muted-foreground">
-            Your website should help you win more jobs, build trust faster,
-            and support your marketing efforts — not quietly limit what your
+            Your website should help you win more jobs, build trust faster, and
+            support your marketing efforts — not quietly limit what your
             business could be doing online.
           </p>
           <Link
@@ -544,9 +546,7 @@ export default function Home() {
       <section className="relative bg-transparent py-20">
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-14 text-center">
-            <span className="eyebrow mb-4">
-              Testimonials
-            </span>
+            <span className="eyebrow mb-4">Testimonials</span>
             <h2 className="mt-3 font-heading text-3xl font-bold text-foreground sm:text-4xl">
               Trusted by Businesses Ready to Level Up
             </h2>
@@ -588,7 +588,10 @@ export default function Home() {
       </section>
 
       {/* FEATURED INSIGHTS */}
-      <section className="py-20 border-t border-white/8" style={{ background: '#07101f' }}>
+      <section
+        className="py-20 border-t border-white/8"
+        style={{ background: "#07101f" }}
+      >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-10 text-center">
             <span className="eyebrow mb-4">SDL Insights</span>
@@ -630,7 +633,8 @@ export default function Home() {
                 Web Development
               </div>
               <h3 className="font-heading text-xl font-semibold text-foreground leading-snug group-hover:text-primary transition-colors">
-                Why We Rebuild WordPress Sites Instead of Maintaining Plugin Stacks
+                Why We Rebuild WordPress Sites Instead of Maintaining Plugin
+                Stacks
               </h3>
               <p className="mt-3 text-sm leading-7 text-muted-foreground">
                 What starts as a clean WordPress install becomes a dependency
@@ -658,9 +662,9 @@ export default function Home() {
         <CTASection
           eyebrow="Start Strong"
           title="If your website no longer reflects the quality of your business, it’s time to fix that."
-          description="We help businesses build a stronger online presence that looks better, communicates better, and works harder."
-          primaryLabel="Get Website Evaluation"
-          primaryHref="https://reports.sentinelsdesignlab.com/evaluation"
+          description="Tell us about your goals, what you need built, and where your current website or systems are falling short. We’ll review your request and recommend the clearest next step."
+          primaryLabel="Start Your Project"
+          primaryHref="/contact"
           secondaryLabel="View Our Work"
           secondaryHref="/work"
         />

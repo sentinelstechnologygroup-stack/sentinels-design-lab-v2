@@ -16,20 +16,18 @@ export default function CTASection({
   ctaLabel,
   ctaHref,
 }) {
-  const resolvedPrimaryLabel = primaryLabel || ctaLabel || "Get Website Evaluation";
-  const resolvedPrimaryHref =
-    primaryHref || ctaHref || "https://reports.sentinelsdesignlab.com/evaluation";
+  const resolvedPrimaryLabel = primaryLabel || ctaLabel || "Start Your Project";
+  const resolvedPrimaryHref = primaryHref || ctaHref || "/contact";
 
   return (
-    <section className="relative overflow-hidden border-t border-white/8 py-20" style={{ background: '#050b16' }}>
+    <section
+      className="relative overflow-hidden border-t border-white/8 py-20"
+      style={{ background: "#050b16" }}
+    >
       <div className="absolute inset-0 bg-gradient-to-r from-primary/8 via-primary/4 to-accent/8" />
 
       <div className="relative mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
-        {eyebrow && (
-          <span className="eyebrow mb-5 inline-flex">
-            {eyebrow}
-          </span>
-        )}
+        {eyebrow && <span className="eyebrow mb-5 inline-flex">{eyebrow}</span>}
 
         <h2 className="font-heading text-3xl font-bold text-foreground sm:text-4xl">
           {title ||
@@ -38,7 +36,7 @@ export default function CTASection({
 
         <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">
           {description ||
-            "Request a website evaluation and we'll review the current state, identify the biggest friction points, and recommend the clearest next step."}
+            "Tell us about your goals and what you need built. We'll review your request and recommend the clearest next step."}
         </p>
 
         <div className="mt-8 flex flex-wrap justify-center gap-4">

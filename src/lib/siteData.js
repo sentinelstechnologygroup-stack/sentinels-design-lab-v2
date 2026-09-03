@@ -30,8 +30,8 @@ export const navLinks = [
 export const footerLinks = navLinks;
 
 export const primaryCta = {
-  label: "Get Website Evaluation",
-  path: "https://reports.sentinelsdesignlab.com/evaluation",
+  label: "Start Your Project",
+  path: "/contact",
 };
 
 export const secondaryCta = {
@@ -168,7 +168,8 @@ export const opportunityPoints = [
 ];
 
 export const servicesPage = {
-  heroTitle: "Custom Websites and Digital Systems Built for Real Business Needs",
+  heroTitle:
+    "Custom Websites and Digital Systems Built for Real Business Needs",
   heroDescription:
     "SDL designs and builds modern websites, web applications, portals, dashboards, automations, integrations, and internal systems for businesses that need secure, scalable, and practical digital infrastructure.",
   coreServices: [
@@ -455,11 +456,7 @@ export const workProjects = [
       "Supports internal management views tied to the Dadson workflow stack.",
       "Centralizes operational handling away from scattered tools.",
     ],
-    systemRole: [
-      "Admin visibility",
-      "Internal operations",
-      "Workflow control",
-    ],
+    systemRole: ["Admin visibility", "Internal operations", "Workflow control"],
     media: [
       {
         kind: "image",
@@ -482,11 +479,7 @@ export const workProjects = [
       "Organizes workflow logic beyond a simple marketing website.",
       "Shows SDL capability in business-system execution, not just brochure work.",
     ],
-    systemRole: [
-      "Internal operations",
-      "Admin visibility",
-      "Workflow control",
-    ],
+    systemRole: ["Internal operations", "Admin visibility", "Workflow control"],
     media: [
       {
         kind: "image",
@@ -505,11 +498,11 @@ export const workSections = [
     title: "Website Work",
     description:
       "Redesigns and new website launches built to clean up positioning, modernize presentation, and strengthen the path from trust to inquiry.",
-    },
-    {
-      slug: "digital-systems",
-      title: "Digital Systems",
-      description:
-        "Internal tools and operational systems designed to reduce manual work, improve visibility, and support controlled business execution.",
-    },
-  ];
+  },
+  {
+    slug: "digital-systems",
+    title: "Digital Systems",
+    description:
+      "Internal tools and operational systems designed to reduce manual work, improve visibility, and support controlled business execution.",
+  },
+];
