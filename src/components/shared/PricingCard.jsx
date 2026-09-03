@@ -14,7 +14,8 @@ export default function PricingCard({
   features = [],
   featured,
 }) {
-  const contactHref = "https://reports.sentinelsdesignlab.com/evaluation";
+  const contactHref =
+    "https://sentinelsdesignlab.com/contact/?type=website-evaluation";
   const showDollarPrice = typeof price === "string" && /^\d[\d,]*$/.test(price);
 
   return (
@@ -35,7 +36,9 @@ export default function PricingCard({
         <div className="text-xs font-semibold uppercase tracking-[0.18em] text-primary/85">
           {categoryLabel || (featured ? "Recommended plan" : "Website plan")}
         </div>
-        <h3 className="mt-3 font-heading text-2xl font-bold text-foreground">{name}</h3>
+        <h3 className="mt-3 font-heading text-2xl font-bold text-foreground">
+          {name}
+        </h3>
       </div>
 
       <div className="mt-6 flex flex-wrap items-end gap-x-2 gap-y-1">
@@ -43,12 +46,16 @@ export default function PricingCard({
           {showDollarPrice ? `$${price}` : price}
         </span>
         {periodLabel ? (
-          <span className="pb-1 text-sm font-medium text-muted-foreground">{periodLabel}</span>
+          <span className="pb-1 text-sm font-medium text-muted-foreground">
+            {periodLabel}
+          </span>
         ) : null}
       </div>
 
       {description ? (
-        <p className="mt-5 text-sm leading-7 text-muted-foreground">{description}</p>
+        <p className="mt-5 text-sm leading-7 text-muted-foreground">
+          {description}
+        </p>
       ) : null}
 
       <div className="mt-6 readability-inner rounded-[22px] p-5">
@@ -61,7 +68,10 @@ export default function PricingCard({
               key={feature}
               className="flex items-start gap-3 text-sm leading-6 text-secondary-foreground"
             >
-              <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
+              <Check
+                className="mt-0.5 h-4 w-4 shrink-0 text-primary"
+                aria-hidden="true"
+              />
               <span>{feature}</span>
             </li>
           ))}

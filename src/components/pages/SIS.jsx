@@ -98,8 +98,8 @@ export default function SIS() {
         eyebrow="Sentinel Intelligence System"
         title="The system layer that connects your website to your operations"
         description="SIS is SDL's operational framework for connecting websites, forms, CRMs, dashboards, and workflows into one controlled system. Data moves cleanly. Teams get visibility. Manual bridging work disappears."
-        primaryCtaLabel="Request a Systems Evaluation"
-        primaryCtaHref="/contact"
+        primaryCtaLabel="Get Website Evaluation"
+        primaryCtaHref="https://sentinelsdesignlab.com/contact/?type=website-evaluation"
         secondaryCtaLabel="View Our Work"
         secondaryCtaHref="/work"
         imageSrc="/images/services/custom-apps-hero.webp"
@@ -147,7 +147,10 @@ export default function SIS() {
       </section>
 
       {/* HOW IT WORKS */}
-      <section className="py-20 border-t border-white/8" style={{ background: "#07101f" }}>
+      <section
+        className="py-20 border-t border-white/8"
+        style={{ background: "#07101f" }}
+      >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-14 text-center">
             <span className="eyebrow mb-4">The Approach</span>
@@ -221,7 +224,10 @@ export default function SIS() {
       </section>
 
       {/* WEBSITE INTEGRATION */}
-      <section className="py-20 border-t border-white/8" style={{ background: "#070d18" }}>
+      <section
+        className="py-20 border-t border-white/8"
+        style={{ background: "#070d18" }}
+      >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid items-center gap-14 lg:grid-cols-2">
             <div>
@@ -244,7 +250,10 @@ export default function SIS() {
                   "Reporting pulls from a single operational layer — not four disconnected dashboards",
                   "Admin and field-facing views stay in sync without manual reconciliation",
                 ].map((point) => (
-                  <li key={point} className="flex items-start gap-3 text-sm leading-7 text-muted-foreground">
+                  <li
+                    key={point}
+                    className="flex items-start gap-3 text-sm leading-7 text-muted-foreground"
+                  >
                     <span className="mt-[0.7rem] h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
                     {point}
                   </li>
@@ -260,10 +269,10 @@ export default function SIS() {
                   <ArrowRight className="h-4 w-4" />
                 </Link>
                 <Link
-                  href="/contact"
+                  href="https://sentinelsdesignlab.com/contact/?type=website-evaluation"
                   className="inline-flex items-center gap-2 rounded-lg border border-primary/20 bg-sky-400/[0.06] px-7 py-3 text-sm font-semibold text-foreground transition-all hover:border-primary/40 hover:bg-sky-400/[0.10]"
                 >
-                  Request a Systems Evaluation
+                  Get Website Evaluation
                   <ArrowRight className="h-4 w-4" />
                 </Link>
                 <Link
@@ -285,15 +294,36 @@ export default function SIS() {
                 What changes
               </div>
               {[
-                { before: "Lead comes in through website", after: "Lead routes automatically to CRM with tags and source data" },
-                { before: "Team re-enters job data into scheduling", after: "Job syncs from CRM to scheduling system on status change" },
-                { before: "Monthly report assembled from 4 platforms", after: "Reporting dashboard pulls from one operational data layer" },
-                { before: "Follow-up depends on someone remembering", after: "Follow-up sequence triggers on form submission or job close" },
+                {
+                  before: "Lead comes in through website",
+                  after:
+                    "Lead routes automatically to CRM with tags and source data",
+                },
+                {
+                  before: "Team re-enters job data into scheduling",
+                  after:
+                    "Job syncs from CRM to scheduling system on status change",
+                },
+                {
+                  before: "Monthly report assembled from 4 platforms",
+                  after:
+                    "Reporting dashboard pulls from one operational data layer",
+                },
+                {
+                  before: "Follow-up depends on someone remembering",
+                  after:
+                    "Follow-up sequence triggers on form submission or job close",
+                },
               ].map((row, i) => (
-                <div key={i} className={`py-4 ${i > 0 ? "border-t border-white/8" : ""}`}>
+                <div
+                  key={i}
+                  className={`py-4 ${i > 0 ? "border-t border-white/8" : ""}`}
+                >
                   <div className="text-xs text-white/40 mb-1">Before</div>
                   <div className="text-sm text-white/65">{row.before}</div>
-                  <div className="text-xs text-primary mt-2 mb-1">After SIS</div>
+                  <div className="text-xs text-primary mt-2 mb-1">
+                    After SIS
+                  </div>
                   <div className="text-sm text-white">{row.after}</div>
                 </div>
               ))}
@@ -304,8 +334,8 @@ export default function SIS() {
 
       <CTASection
         title="Ready to connect your website to your operations?"
-        description="Request a Website + Systems Evaluation and we'll map the clearest path forward."
-        ctaLabel="Request a Website + Systems Evaluation"
+        description="Request a website evaluation and we'll map the clearest path forward."
+        ctaLabel="Get Website Evaluation"
       />
     </div>
   );

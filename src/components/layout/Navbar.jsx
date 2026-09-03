@@ -15,7 +15,11 @@ export default function Navbar() {
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-[#050816]/90 backdrop-blur-xl">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-6 px-4 py-3 sm:px-6 sm:py-4">
-        <a href={MAIN_SITE_URL} className="flex min-w-0 items-center" aria-label={`${BUSINESS.name} home`}>
+        <a
+          href={MAIN_SITE_URL}
+          className="flex min-w-0 items-center"
+          aria-label={`${BUSINESS.name} home`}
+        >
           <Image
             src={IMAGES.logo}
             alt={`${BUSINESS.name} logo`}
@@ -26,7 +30,10 @@ export default function Navbar() {
           />
         </a>
 
-        <nav className="hidden items-center gap-5 xl:flex" aria-label="Primary navigation">
+        <nav
+          className="hidden items-center gap-5 xl:flex"
+          aria-label="Primary navigation"
+        >
           {NAV_LINKS.map((item) => (
             <Link
               key={item.path}
@@ -44,10 +51,18 @@ export default function Navbar() {
             {BUSINESS.phone}
           </a>
 
-          <Link href={CTA.primary.path} className="btn-primary whitespace-nowrap text-sm">
+          <Link
+            href={CTA.primary.path}
+            className="nav-evaluation-cta whitespace-nowrap text-sm"
+          >
             {CTA.primary.label}
           </Link>
-          <a href={`${REPORTS_URL}/dashboard`} className="whitespace-nowrap text-sm font-semibold text-white/80 hover:text-white">My reports / Sign in</a>
+          <a
+            href={`${REPORTS_URL}/dashboard`}
+            className="whitespace-nowrap text-sm font-semibold text-white/80 hover:text-white"
+          >
+            My reports / Sign in
+          </a>
         </nav>
 
         <button
@@ -58,7 +73,11 @@ export default function Navbar() {
           aria-expanded={open}
           aria-controls="mobile-navigation"
         >
-          {open ? <X size={24} aria-hidden="true" /> : <Menu size={24} aria-hidden="true" />}
+          {open ? (
+            <X size={24} aria-hidden="true" />
+          ) : (
+            <Menu size={24} aria-hidden="true" />
+          )}
         </button>
       </div>
 
@@ -67,7 +86,10 @@ export default function Navbar() {
           id="mobile-navigation"
           className="max-h-[calc(100dvh-72px)] overflow-y-auto border-t border-white/10 bg-[#050816]/96 backdrop-blur-xl xl:hidden"
         >
-          <nav className="mx-auto flex max-w-7xl flex-col px-4 py-4 sm:px-6" aria-label="Mobile navigation">
+          <nav
+            className="mx-auto flex max-w-7xl flex-col px-4 py-4 sm:px-6"
+            aria-label="Mobile navigation"
+          >
             {NAV_LINKS.map((item) => (
               <Link
                 key={item.path}
@@ -89,12 +111,18 @@ export default function Navbar() {
 
             <Link
               href={CTA.primary.path}
-              className="btn-primary mt-3 w-full justify-center text-sm sm:w-fit"
+              className="nav-evaluation-cta mt-3 w-full justify-center text-sm sm:w-fit"
               onClick={() => setOpen(false)}
             >
               {CTA.primary.label}
             </Link>
-            <a href={`${REPORTS_URL}/dashboard`} className="mt-3 flex min-h-11 items-center rounded-lg px-2 text-sm font-semibold text-white/80" onClick={() => setOpen(false)}>My reports / Sign in</a>
+            <a
+              href={`${REPORTS_URL}/dashboard`}
+              className="mt-3 flex min-h-11 items-center rounded-lg px-2 text-sm font-semibold text-white/80"
+              onClick={() => setOpen(false)}
+            >
+              My reports / Sign in
+            </a>
           </nav>
         </div>
       )}

@@ -88,7 +88,8 @@ const digitalSystems = [
     projectType: "Admin Portal",
     status: "LIVE SYSTEM",
     imageSrc: "/images/work/dadson-admin-portal.webp",
-    imageAlt: "Dadson Trucking admin portal dashboard managing loads, drivers, and documents",
+    imageAlt:
+      "Dadson Trucking admin portal dashboard managing loads, drivers, and documents",
     whatItDoes: [
       "Manages loads, drivers, and documents from a centralized admin dashboard.",
       "Provides operational visibility across driver states and workflow stages.",
@@ -104,7 +105,8 @@ const digitalSystems = [
       "Visual shows the admin layer of a real logistics platform, not a concept.",
       "SDL built the admin portal and driver hub as connected systems.",
     ],
-    confidentialityNote: "Visual is intentionally abstracted to protect internal workflow details while still showing that the system exists.",
+    confidentialityNote:
+      "Visual is intentionally abstracted to protect internal workflow details while still showing that the system exists.",
   },
   {
     slug: "dadson-driver-hub",
@@ -113,7 +115,8 @@ const digitalSystems = [
     projectType: "Mobile App",
     status: "LIVE SYSTEM",
     imageSrc: "/images/work/dadson-driver-hub.webp",
-    imageAlt: "Dadson Driver Hub mobile workflow interface for field load and document management",
+    imageAlt:
+      "Dadson Driver Hub mobile workflow interface for field load and document management",
     whatItDoes: [
       "Supports drivers in creating loads, continuing active work, and resolving incomplete submissions.",
       "Mobile-first field experience built around real driver friction points.",
@@ -129,7 +132,8 @@ const digitalSystems = [
       "Built as the mobile counterpart to the Dadson Admin Portal.",
       "Both systems share a unified backend and operational data layer.",
     ],
-    confidentialityNote: "Visual is intentionally abstracted to protect internal workflow details while still showing that the system exists.",
+    confidentialityNote:
+      "Visual is intentionally abstracted to protect internal workflow details while still showing that the system exists.",
   },
   {
     slug: "shared-grocery-list",
@@ -138,7 +142,8 @@ const digitalSystems = [
     projectType: "Utility App",
     status: "ACTIVE BUILD",
     imageSrc: "/images/work/shared-grocery-list.webp",
-    imageAlt: "Shared Grocery List app showing household item tracking and real-time collaboration",
+    imageAlt:
+      "Shared Grocery List app showing household item tracking and real-time collaboration",
     whatItDoes: [
       "Shared list collaboration across household members in real time.",
       "Item tracking and update visibility without unnecessary account complexity.",
@@ -162,7 +167,8 @@ const digitalSystems = [
     projectType: "Business System",
     status: "ACTIVE BUILD",
     imageSrc: "/images/work/painter-pro.webp",
-    imageAlt: "PainterBid Painter Pro contractor business management system for quotes, jobs, and clients",
+    imageAlt:
+      "PainterBid Painter Pro contractor business management system for quotes, jobs, and clients",
     whatItDoes: [
       "Quote creation workflow for painting contractors with job and client management.",
       "Desktop and mobile experience designed around real contractor operations.",
@@ -221,7 +227,9 @@ const infrastructureCards = [
 ];
 
 export default function Work() {
-  const websiteProjects = workProjects.filter((p) => p.section === "website-work");
+  const websiteProjects = workProjects.filter(
+    (p) => p.section === "website-work",
+  );
 
   return (
     <div>
@@ -230,7 +238,7 @@ export default function Work() {
         title="Real modernization work. Real system proof. No fake case studies."
         description="SDL uses real screenshots, real system anchors, and plain-language delivery summaries instead of invented metrics, fabricated rankings, or decorative portfolio filler."
         primaryCtaLabel="Get Website Evaluation"
-        primaryCtaHref="https://reports.sentinelsdesignlab.com/evaluation"
+        primaryCtaHref="https://sentinelsdesignlab.com/contact/?type=website-evaluation"
         secondaryCtaLabel="Contact"
         secondaryCtaHref="/contact"
         imageSrc="/images/hero/work-hero.webp"
@@ -241,12 +249,16 @@ export default function Work() {
       <section className="pb-20 md:pb-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl">
-            <div className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Website Work</div>
+            <div className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">
+              Website Work
+            </div>
             <h2 className="mt-3 font-heading text-3xl font-bold text-foreground sm:text-4xl">
               Proof-driven website rebuilds and launch work
             </h2>
             <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
-              Each project is shown with real context: what was wrong, what SDL changed, and what result the business now has — without fake metrics.
+              Each project is shown with real context: what was wrong, what SDL
+              changed, and what result the business now has — without fake
+              metrics.
             </p>
           </div>
 
@@ -255,7 +267,13 @@ export default function Work() {
               const proof = websiteProof[project.slug];
               const allMedia = project.media?.length
                 ? project.media
-                : [{ src: "/images/blog/fallback-editorial.webp", alt: project.name, label: null }];
+                : [
+                    {
+                      src: "/images/blog/fallback-editorial.webp",
+                      alt: project.name,
+                      label: null,
+                    },
+                  ];
               return (
                 <ProofCaseCard
                   key={project.slug}
@@ -265,11 +283,19 @@ export default function Work() {
                   status={project.status}
                   allMedia={allMedia}
                   liveLink={project.liveLink}
-                  originalState={proof?.originalState || project.keyImprovements || []}
-                  whatChanged={proof?.whatChanged || project.scopeDeliverables || []}
+                  originalState={
+                    proof?.originalState || project.keyImprovements || []
+                  }
+                  whatChanged={
+                    proof?.whatChanged || project.scopeDeliverables || []
+                  }
                   result={proof?.result || project.keyImprovements || []}
-                  originalStateLabel={proof?.isNewBuild ? "Business Need" : "Original State"}
-                  whatChangedLabel={proof?.isNewBuild ? "What SDL Built" : "What Changed"}
+                  originalStateLabel={
+                    proof?.isNewBuild ? "Business Need" : "Original State"
+                  }
+                  whatChangedLabel={
+                    proof?.isNewBuild ? "What SDL Built" : "What Changed"
+                  }
                   resultLabel={proof?.isNewBuild ? "Outcome" : "Result"}
                   note={proof?.note}
                 />
@@ -283,19 +309,27 @@ export default function Work() {
       <section className="pb-20 md:pb-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl">
-            <div className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Digital Systems</div>
+            <div className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">
+              Digital Systems
+            </div>
             <h2 className="mt-3 font-heading text-3xl font-bold text-foreground sm:text-4xl">
               Operational systems in active use and active development
             </h2>
             <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
-              These are real product and system builds in active use or active development. SDL does not present fake case studies, invented rankings, or fabricated metrics.
+              These are real product and system builds in active use or active
+              development. SDL does not present fake case studies, invented
+              rankings, or fabricated metrics.
             </p>
             <p className="mt-4 text-muted-foreground">
               The operational framework behind these systems is the{" "}
-              <a href="/systems/sis" className="text-primary underline-offset-4 hover:underline">
+              <a
+                href="/systems/sis"
+                className="text-primary underline-offset-4 hover:underline"
+              >
                 Sentinel Intelligence System (SIS)
               </a>{" "}
-              — SDL&apos;s approach to connecting websites, workflows, and business operations into one controlled layer.
+              — SDL&apos;s approach to connecting websites, workflows, and
+              business operations into one controlled layer.
             </p>
           </div>
 
@@ -328,7 +362,11 @@ export default function Work() {
               Middleware, integrations, and automation layers
             </h2>
             <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
-              Most businesses do not just need a better screen. They need the systems behind the screen to connect. SDL builds middleware, integrations, sync workflows, and automation layers that help websites, dashboards, CRMs, forms, and operational tools work together.
+              Most businesses do not just need a better screen. They need the
+              systems behind the screen to connect. SDL builds middleware,
+              integrations, sync workflows, and automation layers that help
+              websites, dashboards, CRMs, forms, and operational tools work
+              together.
             </p>
           </div>
 
@@ -338,7 +376,9 @@ export default function Work() {
                 key={card.title}
                 className="rounded-[24px] border border-white/10 bg-[#08101d] p-7 shadow-[0_16px_50px_rgba(0,0,0,0.22)]"
               >
-                <span className={`inline-block rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] ${card.labelClass}`}>
+                <span
+                  className={`inline-block rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] ${card.labelClass}`}
+                >
                   {card.label}
                 </span>
                 <h3 className="mt-4 font-heading text-lg font-bold text-white">
@@ -349,7 +389,10 @@ export default function Work() {
                 </p>
                 <ul className="mt-5 space-y-2">
                   {card.bullets.map((b) => (
-                    <li key={b} className="flex items-start gap-3 text-sm leading-7 text-white/72">
+                    <li
+                      key={b}
+                      className="flex items-start gap-3 text-sm leading-7 text-white/72"
+                    >
                       <span className="mt-[0.7rem] h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
                       {b}
                     </li>

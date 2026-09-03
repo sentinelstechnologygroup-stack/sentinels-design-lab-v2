@@ -7,7 +7,9 @@ import { ArrowRight, ExternalLink, X, ZoomIn } from "lucide-react";
 
 function ImageModal({ src, alt, label, name, onClose }) {
   useEffect(() => {
-    const handler = (e) => { if (e.key === "Escape") onClose(); };
+    const handler = (e) => {
+      if (e.key === "Escape") onClose();
+    };
     document.addEventListener("keydown", handler);
     return () => document.removeEventListener("keydown", handler);
   }, [onClose]);
@@ -46,9 +48,7 @@ function ImageModal({ src, alt, label, name, onClose }) {
                 {label}
               </span>
             )}
-            {name && (
-              <p className="mt-1 text-sm text-white/60">{name}</p>
-            )}
+            {name && <p className="mt-1 text-sm text-white/60">{name}</p>}
           </div>
         )}
       </div>
@@ -59,7 +59,9 @@ function ImageModal({ src, alt, label, name, onClose }) {
 function EvidenceList({ title, items = [] }) {
   return (
     <div>
-      <div className="text-sm font-semibold uppercase tracking-[0.18em] text-white/50">{title}</div>
+      <div className="text-sm font-semibold uppercase tracking-[0.18em] text-white/50">
+        {title}
+      </div>
       <ul className="mt-4 space-y-3 text-sm leading-7 text-white/72">
         {items.map((item) => (
           <li key={item} className="flex gap-3">
@@ -127,8 +129,8 @@ export default function ProofCaseCard({
     allMedia && allMedia.length > 0
       ? allMedia
       : imageSrc
-      ? [{ src: imageSrc, alt: imageAlt || name, label: null }]
-      : [];
+        ? [{ src: imageSrc, alt: imageAlt || name, label: null }]
+        : [];
 
   const isBeforeAfter = media.length >= 2;
 
@@ -145,7 +147,6 @@ export default function ProofCaseCard({
       )}
 
       <article className="overflow-hidden rounded-[28px] border border-white/10 bg-[#08101d] shadow-[0_26px_70px_rgba(0,0,0,0.3)]">
-
         {isBeforeAfter ? (
           <div className="border-b border-white/10 bg-[#09111f] p-4">
             <div className="mb-3 text-center text-xs font-semibold uppercase tracking-[0.18em] text-white/35">
@@ -195,12 +196,20 @@ export default function ProofCaseCard({
         <div className="p-6 md:p-8">
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
-              <div className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">{industry}</div>
-              <h3 className="mt-3 font-heading text-2xl font-bold text-white">{name}</h3>
+              <div className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">
+                {industry}
+              </div>
+              <h3 className="mt-3 font-heading text-2xl font-bold text-white">
+                {name}
+              </h3>
             </div>
             <div className="flex flex-wrap gap-2 text-xs">
-              <span className="rounded-full border border-white/10 bg-white/[0.06] px-3 py-1 text-white/70">{status}</span>
-              <span className="rounded-full border border-primary/25 bg-primary/10 px-3 py-1 text-primary">{projectType}</span>
+              <span className="rounded-full border border-white/10 bg-white/[0.06] px-3 py-1 text-white/70">
+                {status}
+              </span>
+              <span className="rounded-full border border-primary/25 bg-primary/10 px-3 py-1 text-primary">
+                {projectType}
+              </span>
             </div>
           </div>
 
@@ -218,7 +227,7 @@ export default function ProofCaseCard({
 
           <div className="mt-8 flex flex-wrap items-center gap-4">
             <Link
-              href="https://reports.sentinelsdesignlab.com/evaluation"
+              href="https://sentinelsdesignlab.com/contact/?type=website-evaluation"
               className="inline-flex items-center gap-2 text-sm font-medium text-primary transition hover:text-white"
             >
               Request a website evaluation

@@ -29,9 +29,12 @@ export const navLinks = [
 
 export const footerLinks = navLinks;
 
+export const websiteEvaluationUrl =
+  "https://sentinelsdesignlab.com/contact/?type=website-evaluation";
+
 export const primaryCta = {
-  label: "Start Your Project",
-  path: "/contact",
+  label: "Get a Free Website Evaluation",
+  path: websiteEvaluationUrl,
 };
 
 export const secondaryCta = {

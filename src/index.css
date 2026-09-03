@@ -211,13 +211,12 @@
     inset: 0;
     pointer-events: none;
     border-radius: inherit;
-    background:
-      linear-gradient(
-        180deg,
-        rgba(255, 255, 255, 0.06) 0%,
-        rgba(255, 255, 255, 0.018) 18%,
-        rgba(255, 255, 255, 0) 42%
-      );
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.06) 0%,
+      rgba(255, 255, 255, 0.018) 18%,
+      rgba(255, 255, 255, 0) 42%
+    );
   }
 
   .safe-card {
@@ -243,7 +242,7 @@
   .surface-subtle {
     @apply rounded-[22px] border;
     background: #0d1626;
-    border-color: rgba(255, 255, 255, 0.10);
+    border-color: rgba(255, 255, 255, 0.1);
   }
 
   /* -------------------------------------------------
@@ -279,7 +278,7 @@
 
   .readability-inner {
     background: #0d1626;
-    border: 1px solid rgba(255, 255, 255, 0.10);
+    border: 1px solid rgba(255, 255, 255, 0.1);
   }
 
   .surface-stroke {
@@ -423,6 +422,29 @@
     transform: translateY(-1px);
     background: rgb(29, 78, 216);
     box-shadow: 0 16px 36px rgba(37, 99, 235, 0.28);
+  }
+
+  .nav-evaluation-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(250, 204, 21, 0.38);
+    border-radius: 9999px;
+    background: rgba(250, 204, 21, 0.12);
+    padding: 0.72rem 1.25rem;
+    color: rgb(253 224 71);
+    font-weight: 700;
+    box-shadow: 0 0 24px rgba(250, 204, 21, 0.08);
+    transition:
+      background-color 180ms ease,
+      border-color 180ms ease,
+      transform 180ms ease;
+  }
+
+  .nav-evaluation-cta:hover {
+    border-color: rgba(250, 204, 21, 0.65);
+    background: rgba(250, 204, 21, 0.2);
+    transform: translateY(-1px);
   }
 
   .btn-secondary {
@@ -572,13 +594,12 @@
   }
 
   .bg-page-fade {
-    background:
-      linear-gradient(
-        180deg,
-        rgba(3, 7, 18, 0.18) 0%,
-        rgba(3, 7, 18, 0.08) 30%,
-        rgba(3, 7, 18, 0.16) 100%
-      );
+    background: linear-gradient(
+      180deg,
+      rgba(3, 7, 18, 0.18) 0%,
+      rgba(3, 7, 18, 0.08) 30%,
+      rgba(3, 7, 18, 0.16) 100%
+    );
   }
 
   .font-display {

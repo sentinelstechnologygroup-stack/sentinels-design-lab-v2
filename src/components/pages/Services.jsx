@@ -61,7 +61,6 @@ const whoItIsFor = [
 export default function Services() {
   return (
     <div className="relative overflow-hidden text-white">
-
       {/* HERO */}
       <section className="relative overflow-hidden bg-transparent pb-8 pt-28">
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -80,14 +79,15 @@ export default function Services() {
               </h1>
 
               <p className="mb-8 max-w-xl text-lg leading-relaxed text-muted-foreground">
-                SDL designs and builds modern websites, web applications, portals,
-                dashboards, and digital systems for service businesses that need
-                more than a template — and more than decorative design.
+                SDL designs and builds modern websites, web applications,
+                portals, dashboards, and digital systems for service businesses
+                that need more than a template — and more than decorative
+                design.
               </p>
 
               <div className="mb-4 flex flex-wrap gap-4">
                 <Link
-                  href="https://reports.sentinelsdesignlab.com/evaluation"
+                  href="https://sentinelsdesignlab.com/contact/?type=website-evaluation"
                   className="inline-flex items-center gap-2 rounded-lg bg-primary px-8 py-3.5 text-sm font-semibold text-slate-950 transition-all hover:scale-[1.01] hover:shadow-[0_10px_30px_rgba(56,189,248,0.20)]"
                 >
                   Get Website Evaluation
@@ -136,15 +136,14 @@ export default function Services() {
       <section className="relative bg-transparent py-20">
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-14 text-center">
-            <span className="eyebrow mb-4">
-              What We Do
-            </span>
+            <span className="eyebrow mb-4">What We Do</span>
             <h2 className="mt-3 font-heading text-3xl font-bold text-foreground sm:text-4xl">
               Core Service Areas
             </h2>
             <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
               Every service is built around one goal: a stronger, cleaner
-              digital presence that earns trust and moves visitors toward action.
+              digital presence that earns trust and moves visitors toward
+              action.
             </p>
           </div>
 
@@ -180,9 +179,7 @@ export default function Services() {
       <section className="relative bg-transparent py-20">
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-14 text-center">
-            <span className="eyebrow mb-4">
-              Who It's For
-            </span>
+            <span className="eyebrow mb-4">Who It's For</span>
             <h2 className="mt-3 font-heading text-3xl font-bold text-foreground sm:text-4xl">
               Built for Businesses That Need Real Results
             </h2>
@@ -223,9 +220,7 @@ export default function Services() {
         <div className="relative mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
           <div className="overflow-hidden rounded-[1.75rem] border border-white/10 bg-[#0c1322] px-8 py-12 shadow-[0_20px_60px_rgba(0,0,0,0.24)] backdrop-blur-sm sm:px-12">
             <div className="mb-10 text-center">
-              <span className="eyebrow mb-4">
-                What You Get
-              </span>
+              <span className="eyebrow mb-4">What You Get</span>
               <h2 className="mt-3 font-heading text-3xl font-bold text-foreground sm:text-4xl">
                 What a Better Website Actually Does
               </h2>
@@ -256,12 +251,13 @@ export default function Services() {
       </section>
 
       {/* PROCESS */}
-      <section className="py-20 border-t border-white/8" style={{ background: '#07101f' }}>
+      <section
+        className="py-20 border-t border-white/8"
+        style={{ background: "#07101f" }}
+      >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-14 text-center">
-            <span className="eyebrow mb-4">
-              How It Works
-            </span>
+            <span className="eyebrow mb-4">How It Works</span>
             <h2 className="mt-3 font-heading text-3xl font-bold text-foreground sm:text-4xl">
               A Structured Build Process From Day One
             </h2>
@@ -301,9 +297,7 @@ export default function Services() {
         <div className="relative mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <div className="rounded-[1.75rem] border border-white/10 bg-[#0c1322] px-8 py-12 shadow-[0_20px_60px_rgba(0,0,0,0.24)] backdrop-blur-sm sm:px-12">
             <div className="mb-8 text-center">
-              <span className="eyebrow mb-4">
-                Honest Positioning
-              </span>
+              <span className="eyebrow mb-4">Honest Positioning</span>
               <h2 className="mt-3 font-heading text-2xl font-bold text-foreground sm:text-3xl">
                 What SDL Does Not Do
               </h2>
@@ -333,7 +327,10 @@ export default function Services() {
       </section>
 
       {/* DIGITAL SYSTEMS & AUTOMATION */}
-      <section className="relative py-20 border-t border-white/8" style={{ background: "#07101f" }}>
+      <section
+        className="relative py-20 border-t border-white/8"
+        style={{ background: "#07101f" }}
+      >
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid items-center gap-12 lg:grid-cols-2">
             <div>
@@ -355,7 +352,10 @@ export default function Services() {
                   "Reporting and visibility pipelines",
                   "Field operations and admin system layers",
                 ].map((point) => (
-                  <li key={point} className="flex items-start gap-3 text-sm leading-7 text-muted-foreground">
+                  <li
+                    key={point}
+                    className="flex items-start gap-3 text-sm leading-7 text-muted-foreground"
+                  >
                     <span className="mt-[0.7rem] h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
                     {point}
                   </li>
@@ -374,19 +374,43 @@ export default function Services() {
 
             <div className="space-y-4">
               {[
-                { label: "LIVE SYSTEM", title: "Dadson Trucking Admin Portal", desc: "Centralized load, driver, and document management for a logistics operation." },
-                { label: "LIVE SYSTEM", title: "Dadson Driver Hub", desc: "Mobile-first field workflow connecting drivers to the operational data layer." },
-                { label: "ACTIVE BUILD", title: "PainterBid / Painter Pro", desc: "Quote, job, and client management system for painting contractors." },
+                {
+                  label: "LIVE SYSTEM",
+                  title: "Dadson Trucking Admin Portal",
+                  desc: "Centralized load, driver, and document management for a logistics operation.",
+                },
+                {
+                  label: "LIVE SYSTEM",
+                  title: "Dadson Driver Hub",
+                  desc: "Mobile-first field workflow connecting drivers to the operational data layer.",
+                },
+                {
+                  label: "ACTIVE BUILD",
+                  title: "PainterBid / Painter Pro",
+                  desc: "Quote, job, and client management system for painting contractors.",
+                },
               ].map((item) => (
-                <div key={item.title} className="rounded-2xl border border-white/10 bg-[#08101d] p-6 shadow-[0_16px_50px_rgba(0,0,0,0.22)]">
-                  <span className={`text-[11px] font-semibold uppercase tracking-[0.16em] ${item.label === "LIVE SYSTEM" ? "text-emerald-400" : "text-sky-400"}`}>
+                <div
+                  key={item.title}
+                  className="rounded-2xl border border-white/10 bg-[#08101d] p-6 shadow-[0_16px_50px_rgba(0,0,0,0.22)]"
+                >
+                  <span
+                    className={`text-[11px] font-semibold uppercase tracking-[0.16em] ${item.label === "LIVE SYSTEM" ? "text-emerald-400" : "text-sky-400"}`}
+                  >
                     {item.label}
                   </span>
-                  <h3 className="mt-2 font-heading text-base font-semibold text-foreground">{item.title}</h3>
-                  <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{item.desc}</p>
+                  <h3 className="mt-2 font-heading text-base font-semibold text-foreground">
+                    {item.title}
+                  </h3>
+                  <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+                    {item.desc}
+                  </p>
                 </div>
               ))}
-              <Link href="/work" className="inline-flex items-center gap-2 text-sm font-medium text-primary transition hover:text-white">
+              <Link
+                href="/work"
+                className="inline-flex items-center gap-2 text-sm font-medium text-primary transition hover:text-white"
+              >
                 View all system work <ArrowRight className="h-3.5 w-3.5" />
               </Link>
             </div>
@@ -401,7 +425,7 @@ export default function Services() {
           title="If your website isn't working hard enough for your business, it's time to fix that."
           description="Request a free website evaluation. We'll review what you have, identify the biggest gaps, and recommend the clearest next step — no commitment required."
           primaryLabel="Get Website Evaluation"
-          primaryHref="https://reports.sentinelsdesignlab.com/evaluation"
+          primaryHref="https://sentinelsdesignlab.com/contact/?type=website-evaluation"
           secondaryLabel="View Pricing"
           secondaryHref="/pricing"
         />
