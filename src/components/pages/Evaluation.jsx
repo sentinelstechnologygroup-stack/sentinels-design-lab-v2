@@ -6,12 +6,14 @@ import {
   ArrowRight,
   BadgeCheck,
   CheckCircle2,
+  LogOut,
   LoaderCircle,
   ShieldCheck,
 } from "lucide-react";
 import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
+  signOut,
   updateProfile,
 } from "firebase/auth";
 import { firebaseClientAuth } from "@/lib/firebase-client";
@@ -48,6 +50,8 @@ export default function Evaluation() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [signedIn, setSignedIn] = useState(false);
+  const [sessionEmail, setSessionEmail] = useState("");
+  const [switchingAccount, setSwitchingAccount] = useState(false);
 
   useEffect(() => {
     fetch("/api/session", { cache: "no-store" })
@@ -55,6 +59,7 @@ export default function Evaluation() {
       .then((session) => {
         if (session.authenticated) {
           setSignedIn(true);
+          setSessionEmail(session.email || "your existing account");
         }
       })
       .catch(() => null);
@@ -78,6 +83,19 @@ export default function Evaluation() {
           : [...current.concerns, key],
       };
     });
+  }
+
+  async function useDifferentAccount() {
+    setSwitchingAccount(true);
+    setError("");
+    await Promise.allSettled([
+      signOut(firebaseClientAuth()),
+      fetch("/api/session", { method: "DELETE" }),
+    ]);
+    setForm(initialForm);
+    setSignedIn(false);
+    setSessionEmail("");
+    setSwitchingAccount(false);
   }
 
   async function generateReport() {
@@ -180,6 +198,30 @@ export default function Evaluation() {
                 Tell us about your business and website
               </h2>
             </div>
+            {signedIn && (
+              <div className="mb-6 flex flex-col gap-4 rounded-xl border border-primary/25 bg-primary/[0.07] p-4 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                  <p className="text-sm font-semibold text-foreground">
+                    You are signed in as {sessionEmail}.
+                  </p>
+                  <p className="mt-1 text-xs leading-5 text-muted-foreground">
+                    Password creation is only shown when creating a new reports
+                    account.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={useDifferentAccount}
+                  disabled={switchingAccount}
+                  className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-lg border border-primary/35 px-4 text-sm font-semibold text-primary transition hover:bg-primary/10 disabled:opacity-60"
+                >
+                  <LogOut className="h-4 w-4" />
+                  {switchingAccount
+                    ? "Switching accounts..."
+                    : "Use a different account"}
+                </button>
+              </div>
+            )}
             <input
               name="company"
               value={form.company}
