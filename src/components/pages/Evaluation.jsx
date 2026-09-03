@@ -2,11 +2,32 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { ArrowRight, CheckCircle2, Globe2, LoaderCircle, ShieldCheck } from "lucide-react";
-import { createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from "firebase/auth";
+import {
+  ArrowRight,
+  CheckCircle2,
+  Globe2,
+  LoaderCircle,
+  ShieldCheck,
+} from "lucide-react";
+import {
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+  updateProfile,
+} from "firebase/auth";
 import { firebaseClientAuth } from "@/lib/firebase-client";
 
-const initialForm = { name: "", email: "", phone: "", businessName: "", website: "", primaryService: "", location: "", password: "", confirmPassword: "", company: "" };
+const initialForm = {
+  name: "",
+  email: "",
+  phone: "",
+  businessName: "",
+  website: "",
+  primaryService: "",
+  location: "",
+  password: "",
+  confirmPassword: "",
+  company: "",
+};
 
 export default function Evaluation() {
   const [form, setForm] = useState(initialForm);
@@ -15,24 +36,43 @@ export default function Evaluation() {
   const [signedIn, setSignedIn] = useState(false);
 
   useEffect(() => {
-    fetch("/api/session", { cache: "no-store" }).then((response) => response.json()).then((session) => {
-      if (session.authenticated) {
-        setSignedIn(true);
-        setForm((current) => ({ ...current, email: session.email || current.email, name: session.name || current.name }));
-      }
-    }).catch(() => null);
+    fetch("/api/session", { cache: "no-store" })
+      .then((response) => response.json())
+      .then((session) => {
+        if (session.authenticated) {
+          setSignedIn(true);
+          setForm((current) => ({
+            ...current,
+            email: session.email || current.email,
+            name: session.name || current.name,
+          }));
+        }
+      })
+      .catch(() => null);
   }, []);
 
   function update(event) {
-    setForm((current) => ({ ...current, [event.target.name]: event.target.value }));
+    setForm((current) => ({
+      ...current,
+      [event.target.name]: event.target.value,
+    }));
   }
 
   async function generateReport() {
-    const response = await fetch("/api/evaluation", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(form) });
+    const response = await fetch("/api/evaluation", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(form),
+    });
     const payload = await response.json();
-    if (!response.ok) throw new Error(payload.error || "The evaluation could not be completed.");
+    if (!response.ok)
+      throw new Error(
+        payload.error || "The evaluation could not be completed.",
+      );
     const delivery = payload.delivery?.sent ? "sent" : "failed";
-    window.location.assign(`/dashboard?created=1&report=${encodeURIComponent(payload.report.id)}&delivery=${delivery}`);
+    window.location.assign(
+      `/dashboard?created=1&report=${encodeURIComponent(payload.report.id)}&delivery=${delivery}`,
+    );
   }
 
   async function submit(event) {
@@ -43,21 +83,46 @@ export default function Evaluation() {
 
     try {
       if (!signedIn) {
-        if (form.password.length < 12) throw new Error("Use a password with at least 12 characters.");
-        if (form.password !== form.confirmPassword) throw new Error("The passwords do not match.");
-        const credential = await createUserWithEmailAndPassword(firebaseClientAuth(), form.email.trim(), form.password);
+        if (form.password.length < 12)
+          throw new Error("Use a password with at least 12 characters.");
+        if (form.password !== form.confirmPassword)
+          throw new Error("The passwords do not match.");
+        const credential = await createUserWithEmailAndPassword(
+          firebaseClientAuth(),
+          form.email.trim(),
+          form.password,
+        );
         await updateProfile(credential.user, { displayName: form.name.trim() });
-        const sessionResponse = await fetch("/api/session", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ idToken: await credential.user.getIdToken(true) }) });
-        if (!sessionResponse.ok) throw new Error("Your account was created, but the secure session could not start. Please sign in.");
-        const verificationResponse = await fetch("/api/auth/verification", { method: "POST" });
+        const sessionResponse = await fetch("/api/session", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            idToken: await credential.user.getIdToken(true),
+          }),
+        });
+        if (!sessionResponse.ok)
+          throw new Error(
+            "Your account was created, but the secure session could not start. Please sign in.",
+          );
+        const verificationResponse = await fetch("/api/auth/verification", {
+          method: "POST",
+        });
         if (!verificationResponse.ok) {
-          await sendEmailVerification(credential.user, { url: `${window.location.origin}/dashboard` });
+          await sendEmailVerification(credential.user, {
+            url: `${window.location.origin}/dashboard`,
+          });
         }
         setSignedIn(true);
       }
       await generateReport();
     } catch (submissionError) {
-      setError(submissionError.code === "auth/email-already-in-use" ? "An account already exists for this email. Sign in to request another report." : submissionError.message);
+      const accountErrors = {
+        "auth/email-already-in-use":
+          "An account already exists for this email. Sign in to request another report.",
+        "auth/too-many-requests":
+          "Account creation is temporarily paused after repeated attempts. If this account was already created, sign in instead; otherwise wait a few minutes before retrying.",
+      };
+      setError(accountErrors[submissionError.code] || submissionError.message);
     } finally {
       setLoading(false);
     }
@@ -66,37 +131,215 @@ export default function Evaluation() {
   return (
     <main className="min-h-screen pt-28 pb-20">
       <section className="mx-auto max-w-6xl px-6">
-        <div className="mb-12 max-w-3xl"><span className="eyebrow mb-5">Sentinels Intelligence Suite</span><h1 className="font-heading text-4xl font-bold text-foreground sm:text-5xl">Get your free website readiness snapshot</h1><p className="mt-5 text-lg leading-8 text-muted-foreground">See separate homepage-readiness scores alongside the critical SEO, traffic, local, paid-media, and conversion areas that still need verification. No misleading overall health score.</p></div>
+        <div className="mb-12 max-w-3xl">
+          <span className="eyebrow mb-5">Sentinels Intelligence Suite</span>
+          <h1 className="font-heading text-4xl font-bold text-foreground sm:text-5xl">
+            Get your free website readiness snapshot
+          </h1>
+          <p className="mt-5 text-lg leading-8 text-muted-foreground">
+            Get an evidence-adjusted public website readiness rating, category
+            scores, critical failures, and the SEO, traffic, local, paid-media,
+            and conversion areas that still require verification.
+          </p>
+        </div>
 
-          <div className="grid gap-8 lg:grid-cols-[1.05fr_.95fr]">
-            <form onSubmit={submit} className="rounded-2xl border border-border/50 bg-card p-6 sm:p-8">
-              <input name="company" value={form.company} onChange={update} tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
-              <div className="grid gap-5 sm:grid-cols-2">
-                <Field label="Full name" name="name" value={form.name} onChange={update} required />
-                <Field label="Business name" name="businessName" value={form.businessName} onChange={update} required />
-                <Field label="Email" name="email" type="email" value={form.email} onChange={update} required />
-                <Field label="Phone" name="phone" type="tel" value={form.phone} onChange={update} />
-                <div className="sm:col-span-2"><Field label="Website address" name="website" placeholder="https://yourbusiness.com" value={form.website} onChange={update} required /></div>
-                <Field label="Primary service" name="primaryService" placeholder="What do customers hire you for?" value={form.primaryService} onChange={update} required />
-                <Field label="City / service area" name="location" value={form.location} onChange={update} />
-                {!signedIn && <><Field label="Create password" name="password" type="password" autoComplete="new-password" minLength={12} value={form.password} onChange={update} required /><Field label="Verify password" name="confirmPassword" type="password" autoComplete="new-password" minLength={12} value={form.confirmPassword} onChange={update} required /></>}
+        <div className="grid gap-8 lg:grid-cols-[1.05fr_.95fr]">
+          <form
+            onSubmit={submit}
+            className="rounded-2xl border border-border/50 bg-card p-6 sm:p-8"
+          >
+            <input
+              name="company"
+              value={form.company}
+              onChange={update}
+              tabIndex={-1}
+              autoComplete="off"
+              className="hidden"
+              aria-hidden="true"
+            />
+            <div className="grid gap-5 sm:grid-cols-2">
+              <Field
+                label="Full name"
+                name="name"
+                value={form.name}
+                onChange={update}
+                required
+              />
+              <Field
+                label="Business name"
+                name="businessName"
+                value={form.businessName}
+                onChange={update}
+                required
+              />
+              <Field
+                label="Email"
+                name="email"
+                type="email"
+                value={form.email}
+                onChange={update}
+                required
+              />
+              <Field
+                label="Phone"
+                name="phone"
+                type="tel"
+                value={form.phone}
+                onChange={update}
+              />
+              <div className="sm:col-span-2">
+                <Field
+                  label="Website address"
+                  name="website"
+                  placeholder="https://yourbusiness.com"
+                  value={form.website}
+                  onChange={update}
+                  required
+                />
               </div>
-              {error && <p className="mt-5 rounded-lg border border-red-400/30 bg-red-400/10 px-4 py-3 text-sm text-red-200">{error}</p>}
-              <button type="submit" disabled={loading} className="btn-primary mt-6 inline-flex w-full items-center justify-center gap-2 disabled:opacity-60">{loading ? <><LoaderCircle className="h-4 w-4 animate-spin" /> Preparing your report</> : signedIn ? <>Get My Free Report <ArrowRight className="h-4 w-4" /></> : <>Create My Account & Free Report <ArrowRight className="h-4 w-4" /></>}</button>
-              {!signedIn && <p className="mt-4 text-center text-sm text-muted-foreground">Already have an account? <Link href="/sign-in" className="font-semibold text-primary">Sign in to my reports</Link></p>}
-              <p className="mt-4 flex items-center justify-center gap-2 text-center text-xs text-muted-foreground"><ShieldCheck className="h-4 w-4" /> Your information is protected and used only to provide requested reports and services. We do not sell customer data or contact information. <Link href="/privacy" className="font-semibold text-primary">Privacy policy</Link></p>
-            </form>
-            <EvaluationPreview />
-          </div>
+              <Field
+                label="Primary service"
+                name="primaryService"
+                placeholder="What do customers hire you for?"
+                value={form.primaryService}
+                onChange={update}
+                required
+              />
+              <Field
+                label="City / service area"
+                name="location"
+                value={form.location}
+                onChange={update}
+              />
+              {!signedIn && (
+                <>
+                  <Field
+                    label="Create password"
+                    name="password"
+                    type="password"
+                    autoComplete="new-password"
+                    minLength={12}
+                    value={form.password}
+                    onChange={update}
+                    required
+                  />
+                  <Field
+                    label="Verify password"
+                    name="confirmPassword"
+                    type="password"
+                    autoComplete="new-password"
+                    minLength={12}
+                    value={form.confirmPassword}
+                    onChange={update}
+                    required
+                  />
+                </>
+              )}
+            </div>
+            {error && (
+              <p className="mt-5 rounded-lg border border-red-400/30 bg-red-400/10 px-4 py-3 text-sm text-red-200">
+                {error}
+              </p>
+            )}
+            <button
+              type="submit"
+              disabled={loading}
+              className="btn-primary mt-6 inline-flex w-full items-center justify-center gap-2 disabled:opacity-60"
+            >
+              {loading ? (
+                <>
+                  <LoaderCircle className="h-4 w-4 animate-spin" /> Preparing
+                  your report
+                </>
+              ) : signedIn ? (
+                <>
+                  Get My Free Report <ArrowRight className="h-4 w-4" />
+                </>
+              ) : (
+                <>
+                  Create My Account & Free Report{" "}
+                  <ArrowRight className="h-4 w-4" />
+                </>
+              )}
+            </button>
+            {!signedIn && (
+              <p className="mt-4 text-center text-sm text-muted-foreground">
+                Already have an account?{" "}
+                <Link href="/sign-in" className="font-semibold text-primary">
+                  Sign in to my reports
+                </Link>
+              </p>
+            )}
+            <p className="mt-4 flex items-center justify-center gap-2 text-center text-xs text-muted-foreground">
+              <ShieldCheck className="h-4 w-4" /> Your information is protected
+              and used only to provide requested reports and services. We do not
+              sell customer data or contact information.{" "}
+              <Link href="/privacy" className="font-semibold text-primary">
+                Privacy policy
+              </Link>
+            </p>
+          </form>
+          <EvaluationPreview />
+        </div>
       </section>
     </main>
   );
 }
 
 function Field({ label, ...props }) {
-  return <label className="block text-sm font-medium text-foreground">{label}{props.required && <span className="text-primary"> *</span>}<input {...props} className="mt-2 w-full rounded-lg border border-border/60 bg-secondary/50 px-4 py-3 text-sm text-foreground outline-none transition focus:border-primary/60" /></label>;
+  return (
+    <label className="block text-sm font-medium text-foreground">
+      {label}
+      {props.required && <span className="text-primary"> *</span>}
+      <input
+        {...props}
+        className="mt-2 w-full rounded-lg border border-border/60 bg-secondary/50 px-4 py-3 text-sm text-foreground outline-none transition focus:border-primary/60"
+      />
+    </label>
+  );
 }
 
 function EvaluationPreview() {
-  return <aside className="rounded-2xl border border-primary/20 bg-primary/[0.05] p-6 sm:p-8"><Globe2 className="h-10 w-10 text-primary" /><h2 className="mt-6 font-heading text-2xl font-bold">A truthful snapshot backed by visible evidence</h2><ul className="mt-6 space-y-4 text-sm text-muted-foreground">{["Seven independent homepage-readiness scores", "Broken links, dead controls, and contact-path checks", "Visible security, risk, and outdated-content warnings", "Exact page, evidence, test time, and verification steps", "Clear list of what was not measured", "Branded PDF and formatted email"].map((item) => <li key={item} className="flex gap-3"><CheckCircle2 className="h-5 w-5 shrink-0 text-primary" />{item}</li>)}</ul><div className="mt-8 border-t border-white/10 pt-6 text-sm leading-6 text-muted-foreground"><strong className="text-foreground">Important:</strong> This free snapshot tests one public page. It is not a full-site crawl, compliance opinion, or security penetration test. Anything not directly verified is labeled accordingly.</div><div className="mt-5 rounded-xl border border-primary/20 bg-black/10 p-4 text-sm leading-6 text-muted-foreground"><strong className="text-foreground">Connect accounts for additional free insight.</strong> Supported customer-owned data may add limited context beyond the ordinary free snapshot. It will never equal the depth, cross-source validation, recommendations, or 30 / 60 / 90 / 120-day plan included in a paid advanced report. <a href="/dashboard#connections" className="font-semibold text-primary">Connect supported accounts</a>.</div></aside>;
+  return (
+    <aside className="rounded-2xl border border-primary/20 bg-primary/[0.05] p-6 sm:p-8">
+      <Globe2 className="h-10 w-10 text-primary" />
+      <h2 className="mt-6 font-heading text-2xl font-bold">
+        A truthful snapshot backed by visible evidence
+      </h2>
+      <ul className="mt-6 space-y-4 text-sm text-muted-foreground">
+        {[
+          "Seven independent homepage-readiness scores",
+          "Broken links, dead controls, and contact-path checks",
+          "Visible security, risk, and outdated-content warnings",
+          "Exact page, evidence, test time, and verification steps",
+          "Clear list of what was not measured",
+          "Branded PDF and formatted email",
+        ].map((item) => (
+          <li key={item} className="flex gap-3">
+            <CheckCircle2 className="h-5 w-5 shrink-0 text-primary" />
+            {item}
+          </li>
+        ))}
+      </ul>
+      <div className="mt-8 border-t border-white/10 pt-6 text-sm leading-6 text-muted-foreground">
+        <strong className="text-foreground">Important:</strong> This free
+        snapshot tests one public page. It is not a full-site crawl, compliance
+        opinion, or security penetration test. Anything not directly verified is
+        labeled accordingly.
+      </div>
+      <div className="mt-5 rounded-xl border border-primary/20 bg-black/10 p-4 text-sm leading-6 text-muted-foreground">
+        <strong className="text-foreground">
+          Connect accounts for additional free insight.
+        </strong>{" "}
+        Supported customer-owned data may add limited context beyond the
+        ordinary free snapshot. It will never equal the depth, cross-source
+        validation, recommendations, or 30 / 60 / 90 / 120-day plan included in
+        a paid advanced report.{" "}
+        <a href="/dashboard#connections" className="font-semibold text-primary">
+          Connect supported accounts
+        </a>
+        .
+      </div>
+    </aside>
+  );
 }
