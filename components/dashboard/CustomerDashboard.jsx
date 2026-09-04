@@ -25,6 +25,13 @@ const SOURCES = [
   ["tag-manager", "Google Tag Manager", "Analytics and conversion-tag verification"],
   ["meta-ads", "Meta Ads", "Campaign, audience, spend, and conversion evidence"],
 ];
+const CONCERNS = [
+  ["leads", "Not receiving enough leads"], ["search", "Not appearing in Google"],
+  ["functionality", "Broken links, buttons, or forms"], ["mobile", "Mobile usability"],
+  ["speed", "Website speed"], ["content", "Outdated or inaccurate information"],
+  ["trust", "Customer trust and credibility"], ["security", "Privacy, security, or compliance"],
+  ["local", "Local / Google Business visibility"], ["advertising", "Advertising and landing pages"],
+];
 const titleCase = (value = "") => value.replaceAll("_", " ").replaceAll("-", " ").replace(/\b\w/g, (c) => c.toUpperCase());
 const date = (value) => value ? new Date(value).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : "Date unavailable";
 
@@ -36,6 +43,7 @@ export default function CustomerDashboard({ initialData }) {
   const [view, setView] = useState(initialData.view || "overview");
   const [mobile, setMobile] = useState(false);
   const [support, setSupport] = useState(false);
+  const [evaluation, setEvaluation] = useState(false);
   const [query, setQuery] = useState("");
   const [customer, setCustomer] = useState(initialData.customer);
   const normalizedQuery = query.trim().toLowerCase();
@@ -76,7 +84,7 @@ export default function CustomerDashboard({ initialData }) {
       <header className="sticky top-0 z-30 border-b border-white/10 bg-[#070b15]/90 backdrop-blur-xl"><div className="flex h-16 items-center gap-3 px-4 sm:px-6 lg:px-8"><button className="lg:hidden" onClick={() => setMobile(true)} aria-label="Open navigation"><Menu className="h-5 w-5"/></button><div className="hidden w-full max-w-md items-center md:flex"><Search className="pointer-events-none ml-3 h-4 w-4 text-white/35"/><input value={query} onChange={(event) => setQuery(event.target.value)} onFocus={() => choose("reports")} className="-ml-7 h-10 w-full rounded-xl border border-white/10 bg-white/[.035] pl-10 pr-3 text-sm" placeholder="Search reports and orders"/></div><div className="ml-auto flex items-center gap-2"><button onClick={() => choose("orders")} className="relative rounded-xl p-2.5 text-white/65 hover:bg-white/[.05]" aria-label="View order notifications"><Bell className="h-5 w-5"/>{initialData.orders.some((o) => o.generationStatus === "generating") && <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-blue-400"/>}</button><button onClick={() => choose("settings")} className="flex items-center gap-2 rounded-xl p-1.5 hover:bg-white/[.05]"><span className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-violet-600 text-xs font-bold">{(customer.name || customer.email || "A").split(/\s|@/).slice(0,2).map((v) => v[0]).join("").toUpperCase()}</span><span className="hidden text-sm font-medium sm:block">{customer.name || "Account"}</span><ChevronDown className="hidden h-4 w-4 text-white/35 sm:block"/></button></div></div></header>
       <main className="mx-auto max-w-[1400px] px-4 py-7 sm:px-6 lg:px-8">
         {initialData.notice && <div className="mb-5 rounded-xl border border-blue-400/25 bg-blue-500/10 px-4 py-3 text-sm text-blue-100">{initialData.notice === "success" ? "Payment received. Your order will update after Stripe confirms it." : initialData.notice === "cancelled" ? "Checkout was cancelled. No report was ordered." : "Your evaluation has been saved to this account."}</div>}
-        {view === "overview" && <Overview customer={customer} reports={initialData.reports} orders={initialData.orders} websites={initialData.websites} score={score} latest={latest} choose={choose}/>} 
+        {view === "overview" && <Overview customer={customer} reports={initialData.reports} orders={initialData.orders} websites={initialData.websites} score={score} latest={latest} choose={choose} runEvaluation={() => setEvaluation(true)}/>}
         {view === "reports" && <Reports reports={visibleReports}/>} 
         {view === "order" && <OrderReports websites={initialData.websites}/>} 
         {view === "accounts" && <LinkedAccounts connection={initialData.connection} connectionService={initialData.connectionService}/>}
@@ -85,21 +93,22 @@ export default function CustomerDashboard({ initialData }) {
       </main>
     </div>
     {support && <SupportModal customer={customer} close={() => setSupport(false)}/>} 
+    {evaluation && <FreeEvaluationModal customer={customer} websites={initialData.websites} close={() => setEvaluation(false)}/>}
   </div>;
 }
 
 function Heading({ eyebrow, title, copy }) { return <header><p className="text-xs font-semibold uppercase tracking-[.18em] text-cyan-300">{eyebrow}</p><h1 className="mt-2 text-3xl font-bold tracking-tight">{title}</h1>{copy && <p className="mt-2 max-w-3xl text-sm leading-6 text-white/50">{copy}</p>}</header>; }
 function Card({ children, className = "" }) { return <section className={`rounded-2xl border border-white/10 bg-[#0b1220]/95 shadow-[0_18px_60px_rgba(0,0,0,.2)] ${className}`}>{children}</section>; }
 
-function Overview({ customer, reports, orders, websites, score, latest, choose }) {
+function Overview({ customer, reports, orders, websites, score, latest, choose, runEvaluation }) {
   const generating = reports.filter((report) => report.status === "generating").length;
   const priorities = (latest?.findings?.priorities || latest?.findings?.recommendations || []).slice(0, 3);
   const priorityText = (item) => typeof item === "string" ? item : item?.title || item?.recommendation || item?.action;
   return <div className="space-y-5">
-    <Card className="relative overflow-hidden border-blue-400/25 bg-[linear-gradient(125deg,#102249,#0b1428_52%,#211638)] p-6 sm:p-8"><div className="relative z-10 flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between"><div><p className="text-xs font-semibold uppercase tracking-[.18em] text-cyan-300">Customer intelligence workspace</p><h1 className="mt-1 text-3xl font-bold tracking-tight">Welcome back{customer.name ? `, ${customer.name.split(" ")[0]}` : ""}.</h1><p className="mt-2 max-w-2xl text-sm leading-6 text-white/65">Here is the latest view of {customer.businessName || "your business"}. Run a free evaluation, review your reports, or enrich the evidence with connected accounts.</p></div><div className="flex flex-wrap gap-3"><a href="/evaluation" className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold shadow-lg shadow-blue-950/30"><Sparkles className="h-4 w-4"/>Run Free Evaluation</a><button onClick={() => choose(latest ? "reports" : "order")} className="rounded-xl border border-white/15 bg-white/[.06] px-4 py-3 text-sm font-semibold">{latest ? "Open latest report" : "Order advanced report"}</button></div></div><ShieldCheck className="pointer-events-none absolute -bottom-12 right-8 h-56 w-56 text-blue-400/[.055]"/><div className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-cyan-300/70 to-transparent"/></Card>
+    <Card className="relative overflow-hidden border-blue-400/25 bg-[linear-gradient(125deg,#102249,#0b1428_52%,#211638)] p-6 sm:p-8"><div className="relative z-10 flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between"><div><p className="text-xs font-semibold uppercase tracking-[.18em] text-cyan-300">Customer intelligence workspace</p><h1 className="mt-1 text-3xl font-bold tracking-tight">Welcome back{customer.name ? `, ${customer.name.split(" ")[0]}` : ""}.</h1><p className="mt-2 max-w-2xl text-sm leading-6 text-white/65">Here is the latest view of {customer.businessName || "your business"}. Run a free evaluation, review your reports, or enrich the evidence with connected accounts.</p></div><div className="flex flex-wrap gap-3"><button onClick={runEvaluation} className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold shadow-lg shadow-blue-950/30"><Sparkles className="h-4 w-4"/>Run Free Evaluation</button><button onClick={() => choose(latest ? "reports" : "order")} className="rounded-xl border border-white/15 bg-white/[.06] px-4 py-3 text-sm font-semibold">{latest ? "Open latest report" : "Order advanced report"}</button></div></div><ShieldCheck className="pointer-events-none absolute -bottom-12 right-8 h-56 w-56 text-blue-400/[.055]"/><div className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-cyan-300/70 to-transparent"/></Card>
 
     <div className="grid gap-5 lg:grid-cols-3"><div className="space-y-5 lg:col-span-2">
-      <Card className="p-6"><div className="flex items-center justify-between gap-4"><h2 className="font-semibold">Overall evaluation score</h2>{latest && <button onClick={() => choose("reports")} className="text-sm font-medium text-blue-400">Open full report</button>}</div>{latest ? <div className="mt-6 grid gap-7 sm:grid-cols-[170px_1fr] sm:items-center"><div className="mx-auto flex h-40 w-40 items-center justify-center rounded-full p-3" style={{ background: `conic-gradient(#3b82f6 ${Math.max(0, Math.min(100, Number(score) || 0))}%, rgba(59,130,246,.16) 0)` }}><div className="flex h-full w-full items-center justify-center rounded-full bg-[#0b1220] text-center"><div><strong className="text-4xl">{score ?? "—"}</strong><span className="block text-xs text-white/45">out of 100</span></div></div></div><div><h3 className="text-xl font-semibold">{latest.title}</h3><p className="mt-2 text-sm leading-6 text-white/55">{latest.findings?.verdict || latest.findings?.summary || "Your completed evaluation is ready for review."}</p><a href={`/api/reports/${latest.id}/download`} className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-blue-400">Download private PDF <Download className="h-4 w-4"/></a></div></div> : <div className="py-9 text-center"><p className="text-sm text-white/50">No completed evaluations yet.</p><a href="/evaluation" className="mt-4 inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold"><Sparkles className="h-4 w-4"/>Start your free evaluation</a></div>}</Card>
+      <Card className="p-6"><div className="flex items-center justify-between gap-4"><h2 className="font-semibold">Overall evaluation score</h2>{latest && <button onClick={() => choose("reports")} className="text-sm font-medium text-blue-400">Open full report</button>}</div>{latest ? <div className="mt-6 grid gap-7 sm:grid-cols-[170px_1fr] sm:items-center"><div className="mx-auto flex h-40 w-40 items-center justify-center rounded-full p-3" style={{ background: `conic-gradient(#3b82f6 ${Math.max(0, Math.min(100, Number(score) || 0))}%, rgba(59,130,246,.16) 0)` }}><div className="flex h-full w-full items-center justify-center rounded-full bg-[#0b1220] text-center"><div><strong className="text-4xl">{score ?? "—"}</strong><span className="block text-xs text-white/45">out of 100</span></div></div></div><div><h3 className="text-xl font-semibold">{latest.title}</h3><p className="mt-2 text-sm leading-6 text-white/55">{latest.findings?.verdict || latest.findings?.summary || "Your completed evaluation is ready for review."}</p><a href={`/api/reports/${latest.id}/download`} className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-blue-400">Download private PDF <Download className="h-4 w-4"/></a></div></div> : <div className="py-9 text-center"><p className="text-sm text-white/50">No completed evaluations yet.</p><button onClick={runEvaluation} className="mt-4 inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold"><Sparkles className="h-4 w-4"/>Start your free evaluation</button></div>}</Card>
 
       <Card className="p-6"><div className="flex items-center justify-between"><h2 className="font-semibold">Digital presence map</h2><button onClick={() => choose("accounts")} className="text-sm text-blue-400">Manage sources</button></div><div className="relative mt-6 min-h-64 overflow-hidden rounded-2xl border border-white/10 bg-[radial-gradient(circle_at_center,rgba(37,99,235,.19),transparent_48%),linear-gradient(rgba(255,255,255,.025)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.025)_1px,transparent_1px)] bg-[size:auto,32px_32px,32px_32px]"><div className="absolute left-1/2 top-1/2 z-10 flex h-24 w-24 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full border border-cyan-300/35 bg-[#101b31] shadow-[0_0_45px_rgba(34,211,238,.15)]"><Globe2 className="h-7 w-7 text-cyan-300"/><span className="mt-1 max-w-20 truncate text-xs">{websites[0]?.name || "Website"}</span></div>{[["Search",12,16],["Analytics",76,15],["Business",8,72],["Ads",78,74],["Tags",43,8]].map(([label,left,top]) => <div key={label} className="absolute rounded-xl border border-white/10 bg-[#0b1220] px-3 py-2 text-xs text-white/55" style={{left:`${left}%`,top:`${top}%`}}>{label}</div>)}</div><p className="mt-4 text-xs leading-5 text-white/45">Your website sits at the center. Authorized data sources strengthen report evidence; disconnected sources remain private and inactive.</p></Card>
 
@@ -108,10 +117,80 @@ function Overview({ customer, reports, orders, websites, score, latest, choose }
       <Card className="p-6"><div className="flex items-center justify-between"><h2 className="font-semibold">Recent reports</h2><button onClick={() => choose("reports")} className="text-sm text-blue-400">View all</button></div><div className="mt-3 divide-y divide-white/10">{reports.length ? reports.slice(0, 5).map((report) => <ReportRow key={report.id} report={report}/>) : <p className="py-8 text-center text-sm text-white/45">Your completed reports will appear here.</p>}</div></Card>
     </div><div className="space-y-5">
       <Card className="p-5"><h2 className="font-semibold">Data source readiness</h2><div className="mt-4 space-y-3"><div className="flex items-center justify-between text-sm"><span className="text-white/55">Saved websites</span><strong>{websites.length}</strong></div><div className="flex items-center justify-between text-sm"><span className="text-white/55">Reports generating</span><strong>{generating}</strong></div><div className="h-2 overflow-hidden rounded-full bg-white/[.06]"><div className="h-full w-1/5 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500"/></div><button onClick={() => choose("accounts")} className="text-sm font-medium text-blue-400">Connect data sources</button></div></Card>
-      <Card className="border-blue-400/25 p-5"><div className="flex items-center gap-2"><Sparkles className="h-5 w-5 text-cyan-300"/><h2 className="font-semibold">Free evaluation</h2></div><p className="mt-2 text-sm leading-6 text-white/50">Order your website readiness snapshot directly from the dashboard.</p><a href="/evaluation" className="mt-4 inline-flex w-full items-center justify-center rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold">Run Free Evaluation</a></Card>
+      <Card className="border-blue-400/25 p-5"><div className="flex items-center gap-2"><Sparkles className="h-5 w-5 text-cyan-300"/><h2 className="font-semibold">Free evaluation</h2></div><p className="mt-2 text-sm leading-6 text-white/50">Run your website readiness snapshot directly from the dashboard.</p><button onClick={runEvaluation} className="mt-4 inline-flex w-full items-center justify-center rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold">Run Free Evaluation</button></Card>
       <Card className="p-5"><h2 className="font-semibold">Recent orders</h2><div className="mt-4 space-y-3">{orders.length ? orders.slice(0, 3).map((order) => <div key={order.id} className="rounded-xl border border-white/10 p-3"><p className="text-sm font-medium">{REPORT_OFFERS[order.offerCode]?.name || titleCase(order.offerCode)}</p><p className="mt-1 text-xs text-white/40">{titleCase(order.status)} · {date(order.createdAt)}</p></div>) : <p className="text-sm text-white/45">No advanced report orders yet.</p>}</div><button onClick={() => choose("order")} className="mt-4 w-full rounded-xl border border-white/10 px-4 py-2.5 text-sm font-semibold">Order advanced report</button></Card>
       {latest && <Card className="p-5"><p className="text-sm text-white/50">Saved reports</p><p className="mt-1 text-3xl font-bold">{reports.length}</p></Card>}
     </div></div>
+  </div>;
+}
+
+function FreeEvaluationModal({ customer, websites, close }) {
+  const savedWebsites = websites.length ? websites : customer.website ? [{ id: "profile", businessName: customer.businessName, url: customer.website, location: customer.serviceArea }] : [];
+  const [websiteId, setWebsiteId] = useState(savedWebsites[0]?.id || "");
+  const [concerns, setConcerns] = useState([]);
+  const [primaryService, setPrimaryService] = useState(savedWebsites[0]?.primaryService || "");
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState("");
+  const selected = savedWebsites.find((website) => website.id === websiteId) || savedWebsites[0];
+
+  function chooseWebsite(event) {
+    const nextId = event.target.value;
+    const next = savedWebsites.find((website) => website.id === nextId);
+    setWebsiteId(nextId);
+    setPrimaryService(next?.primaryService || "");
+  }
+
+  function toggleConcern(key) {
+    setConcerns((current) => current.includes(key)
+      ? current.filter((item) => item !== key)
+      : current.length < 3 ? [...current, key] : current);
+  }
+
+  async function submit(event) {
+    event.preventDefault();
+    if (!selected) {
+      window.location.assign("/evaluation");
+      return;
+    }
+    setBusy(true);
+    setError("");
+    try {
+      const response = await fetch("/api/evaluation", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: customer.name,
+          email: customer.email,
+          phone: customer.phone || "",
+          businessName: selected.businessName || customer.businessName,
+          website: selected.url || customer.website,
+          primaryService,
+          location: selected.location || customer.serviceArea || "",
+          concerns,
+          company: "",
+        }),
+      });
+      const payload = await response.json();
+      if (!response.ok) throw new Error(payload.error || "The evaluation could not be completed.");
+      const delivery = payload.delivery?.sent ? "sent" : "failed";
+      window.location.assign(`/dashboard?created=1&report=${encodeURIComponent(payload.report.id)}&delivery=${delivery}`);
+    } catch (submissionError) {
+      setError(submissionError.message);
+      setBusy(false);
+    }
+  }
+
+  return <div className="fixed inset-0 z-[70] flex items-center justify-center bg-black/75 p-4 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="evaluation-title">
+    <div className="max-h-[92vh] w-full max-w-2xl overflow-y-auto rounded-2xl border border-blue-400/25 bg-[#0b1220] p-6 shadow-2xl sm:p-7">
+      <div className="flex items-start justify-between gap-4"><div><p className="text-xs font-semibold uppercase tracking-[.18em] text-cyan-300">Website readiness snapshot</p><h2 id="evaluation-title" className="mt-2 text-2xl font-bold">Run Free Evaluation</h2><p className="mt-2 text-sm leading-6 text-white/50">Your saved account details will be used automatically. Optionally choose up to three areas you want prioritized.</p></div><button onClick={close} className="rounded-lg p-2 text-white/50 hover:bg-white/[.06] hover:text-white" aria-label="Close evaluation"><X className="h-5 w-5"/></button></div>
+      {savedWebsites.length ? <form onSubmit={submit} className="mt-6">
+        <label className="text-sm font-medium">Website<select value={websiteId} onChange={chooseWebsite} className="mt-2 h-12 w-full rounded-xl border border-white/10 bg-[#101827] px-4">{savedWebsites.map((website) => <option key={website.id} value={website.id}>{website.businessName || website.url} — {website.url}</option>)}</select></label>
+        <label className="mt-4 block text-sm font-medium">Primary service<input required value={primaryService} onChange={(event) => setPrimaryService(event.target.value)} placeholder="What do customers hire you for?" className="mt-2 h-12 w-full rounded-xl border border-white/10 bg-white/[.04] px-4"/></label>
+        <fieldset className="mt-5"><legend className="text-sm font-medium">What concerns should this report prioritize? <span className="font-normal text-white/40">Optional · select up to three</span></legend><div className="mt-3 grid gap-2 sm:grid-cols-2">{CONCERNS.map(([key, label]) => { const checked = concerns.includes(key); const disabled = !checked && concerns.length >= 3; return <label key={key} className={`flex cursor-pointer gap-3 rounded-xl border px-3 py-3 text-sm ${checked ? "border-blue-400/50 bg-blue-500/10" : "border-white/10 bg-white/[.025]"} ${disabled ? "cursor-not-allowed opacity-40" : ""}`}><input type="checkbox" checked={checked} disabled={disabled} onChange={() => toggleConcern(key)} className="mt-0.5 h-4 w-4 accent-blue-500"/><span>{label}</span></label>; })}</div></fieldset>
+        {error && <p className="mt-5 rounded-xl border border-red-400/30 bg-red-400/10 px-4 py-3 text-sm text-red-200">{error}</p>}
+        <div className="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end"><button type="button" onClick={close} className="rounded-xl border border-white/10 px-5 py-3 text-sm font-semibold">Cancel</button><button disabled={busy} className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-3 text-sm font-semibold disabled:opacity-60">{busy ? <><LoaderCircle className="h-4 w-4 animate-spin"/>Preparing your report</> : <><Sparkles className="h-4 w-4"/>Run evaluation</>}</button></div>
+      </form> : <div className="mt-6 rounded-xl border border-white/10 bg-white/[.025] p-5"><p className="text-sm leading-6 text-white/60">This account does not have a saved website yet. Add the first website once; future evaluations will run directly from this workspace.</p><a href="/evaluation" className="mt-4 inline-flex rounded-xl bg-blue-600 px-5 py-3 text-sm font-semibold">Add website & run evaluation</a></div>}
+    </div>
   </div>;
 }
 
