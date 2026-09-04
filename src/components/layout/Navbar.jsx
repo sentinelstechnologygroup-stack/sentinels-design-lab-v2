@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { BUSINESS, NAV_LINKS, CTA, IMAGES } from "@/lib/constants";
 
@@ -11,6 +12,14 @@ const REPORTS_URL = "https://reports.sentinelsdesignlab.com";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+  const isReportsEvaluation = pathname === "/evaluation";
+  const primaryCtaLabel = isReportsEvaluation
+    ? "Get a Free Website Evaluation"
+    : CTA.primary.label;
+  const primaryCtaClass = isReportsEvaluation
+    ? "nav-evaluation-cta"
+    : "btn-primary";
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-[#050816]/90 backdrop-blur-xl">
@@ -53,9 +62,9 @@ export default function Navbar() {
 
           <Link
             href={CTA.primary.path}
-            className="nav-evaluation-cta whitespace-nowrap text-sm"
+            className={`${primaryCtaClass} whitespace-nowrap text-sm`}
           >
-            {CTA.primary.label}
+            {primaryCtaLabel}
           </Link>
           <a
             href={`${REPORTS_URL}/dashboard`}
@@ -111,10 +120,10 @@ export default function Navbar() {
 
             <Link
               href={CTA.primary.path}
-              className="nav-evaluation-cta mt-3 w-full justify-center text-sm sm:w-fit"
+              className={`${primaryCtaClass} mt-3 w-full justify-center text-sm sm:w-fit`}
               onClick={() => setOpen(false)}
             >
-              {CTA.primary.label}
+              {primaryCtaLabel}
             </Link>
             <a
               href={`${REPORTS_URL}/dashboard`}

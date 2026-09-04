@@ -33,7 +33,7 @@ export const websiteEvaluationUrl =
   "https://sentinelsdesignlab.com/contact/?type=website-evaluation";
 
 export const primaryCta = {
-  label: "Get a Free Website Evaluation",
+  label: "Get Website Evaluation",
   path: websiteEvaluationUrl,
 };
 
