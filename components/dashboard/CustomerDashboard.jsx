@@ -7,7 +7,7 @@ import { REPORT_OFFERS } from "@/lib/report-offers";
 import DashboardCheckout from "@/components/pages/DashboardCheckout";
 import DashboardReevaluation from "@/components/pages/DashboardReevaluation";
 import {
-  BarChart3, Bell, CheckCircle2, ChevronDown, Download, FileText, Globe2,
+  BarChart3, Bell, CheckCircle2, ChevronDown, CircleAlert, Download, FileText, Globe2,
   LayoutDashboard, LifeBuoy, Link2, LoaderCircle, LogOut, Menu, Search,
   Settings, ShieldCheck, ShoppingBag, Sparkles, Unplug, X,
 } from "lucide-react";
@@ -33,7 +33,7 @@ function Brand() {
 }
 
 export default function CustomerDashboard({ initialData }) {
-  const [view, setView] = useState("overview");
+  const [view, setView] = useState(initialData.view || "overview");
   const [mobile, setMobile] = useState(false);
   const [support, setSupport] = useState(false);
   const [query, setQuery] = useState("");
@@ -50,7 +50,16 @@ export default function CustomerDashboard({ initialData }) {
     window.location.assign("/sign-in");
   }
 
-  const choose = (next) => { setView(next); setMobile(false); window.scrollTo({ top: 0, behavior: "smooth" }); };
+  const choose = (next) => {
+    setView(next);
+    setMobile(false);
+    const url = new URL(window.location.href);
+    if (next === "overview") url.searchParams.delete("view"); else url.searchParams.set("view", next);
+    url.searchParams.delete("connection");
+    url.searchParams.delete("service");
+    window.history.replaceState({}, "", `${url.pathname}${url.search}`);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return <div className="min-h-screen bg-[radial-gradient(circle_at_75%_-10%,rgba(37,99,235,.15),transparent_34%),linear-gradient(180deg,#070b15,#040812)]">
     <aside className={`fixed inset-y-0 left-0 z-50 w-64 border-r border-white/10 bg-[#060b15] p-4 transition lg:translate-x-0 ${mobile ? "translate-x-0" : "-translate-x-full"}`}>
@@ -70,7 +79,7 @@ export default function CustomerDashboard({ initialData }) {
         {view === "overview" && <Overview customer={customer} reports={initialData.reports} orders={initialData.orders} websites={initialData.websites} score={score} latest={latest} choose={choose}/>} 
         {view === "reports" && <Reports reports={visibleReports}/>} 
         {view === "order" && <OrderReports websites={initialData.websites}/>} 
-        {view === "accounts" && <LinkedAccounts/>} 
+        {view === "accounts" && <LinkedAccounts connection={initialData.connection} connectionService={initialData.connectionService}/>}
         {view === "orders" && <Orders orders={visibleOrders}/>} 
         {view === "settings" && <AccountSettings customer={customer} setCustomer={setCustomer}/>} 
       </main>
@@ -111,12 +120,96 @@ function Reports({ reports }) { return <div className="space-y-5"><Heading eyebr
 
 function OrderReports({ websites }) { return <div className="space-y-5"><Heading eyebrow="Advanced intelligence" title="Order an Advanced Report" copy="Choose a focused report or combine all three into one cross-channel growth plan. Purchases use the existing secure Stripe checkout."/><div className="grid gap-4 lg:grid-cols-2">{Object.values(REPORT_OFFERS).map((offer) => <Card key={offer.code} className={`flex flex-col p-6 ${offer.code === "complete" ? "border-blue-400/45 ring-1 ring-blue-500/15" : ""}`}><div className="flex items-start justify-between gap-4"><span className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-500/10 text-blue-300"><BarChart3 className="h-5 w-5"/></span>{offer.code === "complete" && <span className="rounded-full bg-blue-500/15 px-3 py-1 text-xs text-blue-300">Best value</span>}</div><h2 className="mt-5 text-xl font-semibold">{offer.name}</h2><p className="mt-2 flex-1 text-sm leading-6 text-white/50">{offer.summary}</p><div className="mt-5 border-t border-white/10 pt-5"><span className="text-3xl font-bold">${offer.amountCents / 100}</span><DashboardCheckout offer={offer} websites={websites}/></div></Card>)}</div></div>; }
 
-function LinkedAccounts() {
-  const [status, setStatus] = useState(null); const [busy, setBusy] = useState("");
-  const refresh = () => fetch("/api/connections/google/status", { cache: "no-store" }).then((r) => r.json()).then(setStatus);
-  useEffect(() => { refresh().catch(() => setStatus({ connections: {}, configured: false })); }, []);
-  async function disconnect(service) { setBusy(service); await fetch("/api/connections/google/disconnect", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ service }) }); await refresh(); setBusy(""); }
-  return <div className="space-y-5"><Heading eyebrow="Data control board" title="Linked Accounts" copy="Connect the exact business properties used to verify report findings. Access is temporary, read-only where supported, and removable at any time."/><div className="space-y-3">{SOURCES.map(([key, label, purpose]) => { const connected = Boolean(status?.connections?.[key]); const available = key !== "meta-ads"; return <Card key={key} className="grid gap-4 p-5 md:grid-cols-[minmax(240px,1fr)_minmax(280px,1.4fr)_auto] md:items-center"><div className="flex items-center gap-3"><span className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-500/10 text-blue-300"><Globe2 className="h-5 w-5"/></span><div><p className="font-semibold">{label}</p><p className="text-xs text-white/35">{connected ? "Connected" : available ? "Not connected" : "Integration planned"}</p></div></div><p className="text-sm text-white/45">{purpose}</p><div className="flex justify-end">{!status ? <LoaderCircle className="h-4 w-4 animate-spin"/> : connected ? <button onClick={() => disconnect(key)} disabled={busy === key} className="inline-flex items-center gap-2 rounded-lg border border-white/10 px-3 py-2 text-xs font-semibold text-white/60"><Unplug className="h-4 w-4"/>{busy === key ? "Removing…" : "Disconnect"}</button> : available && status.configured ? <a href={`/api/connections/google/start?service=${key}`} className="rounded-lg bg-blue-600 px-3 py-2 text-xs font-semibold">Connect</a> : <span className="rounded-lg bg-white/[.04] px-3 py-2 text-xs text-white/35">Setup pending</span>}</div></Card>; })}</div><DashboardReevaluation/></div>;
+function LinkedAccounts({ connection, connectionService }) {
+  const [status, setStatus] = useState(null);
+  const [busy, setBusy] = useState("");
+  const [resources, setResources] = useState({});
+  const [resourceErrors, setResourceErrors] = useState({});
+  const [resourceLoading, setResourceLoading] = useState({});
+  const [chosen, setChosen] = useState({});
+
+  async function refresh() {
+    const response = await fetch("/api/connections/google/status", { cache: "no-store" });
+    const payload = await response.json();
+    if (!response.ok) throw new Error(payload.error || "Connections could not be checked.");
+    setStatus(payload);
+    return payload;
+  }
+
+  useEffect(() => { refresh().catch(() => setStatus({ connections: {}, selections: {}, configured: false })); }, []);
+  useEffect(() => {
+    Object.entries(status?.connections || {}).forEach(([service, connected]) => {
+      if (connected && !resources[service] && !resourceLoading[service] && !resourceErrors[service]) loadResources(service);
+    });
+  }, [status]);
+
+  async function loadResources(service) {
+    setResourceLoading((current) => ({ ...current, [service]: true }));
+    setResourceErrors((current) => ({ ...current, [service]: "" }));
+    try {
+      const response = await fetch(`/api/connections/google/resources?service=${encodeURIComponent(service)}`, { cache: "no-store" });
+      const payload = await response.json();
+      if (!response.ok) throw new Error(friendlyGoogleError(payload.error));
+      setResources((current) => ({ ...current, [service]: payload.resources || [] }));
+      setChosen((current) => ({ ...current, [service]: status?.selections?.[service]?.id || payload.resources?.[0]?.id || "" }));
+    } catch (error) {
+      setResourceErrors((current) => ({ ...current, [service]: error.message || "Accounts could not be loaded." }));
+    } finally {
+      setResourceLoading((current) => ({ ...current, [service]: false }));
+    }
+  }
+
+  async function saveSelection(service) {
+    setBusy(`save-${service}`);
+    const response = await fetch("/api/connections/google/resources", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ service, resourceId: chosen[service] }) });
+    const payload = await response.json();
+    if (response.ok) await refresh();
+    else setResourceErrors((current) => ({ ...current, [service]: friendlyGoogleError(payload.error) }));
+    setBusy("");
+  }
+
+  async function disconnect(service) {
+    setBusy(service);
+    await fetch("/api/connections/google/disconnect", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ service }) });
+    setResources((current) => ({ ...current, [service]: null }));
+    setResourceErrors((current) => ({ ...current, [service]: "" }));
+    await refresh();
+    setBusy("");
+  }
+
+  const notice = connectionMessage(connection, connectionService);
+  return <div className="space-y-5">
+    <Heading eyebrow="Data control board" title="Linked Accounts" copy="Connect the exact business properties used to verify report findings. Access is temporary, read-only where supported, and removable at any time."/>
+    {notice && <div className={`rounded-xl border px-4 py-3 text-sm ${connection === "success" ? "border-emerald-400/25 bg-emerald-400/10 text-emerald-100" : "border-amber-400/25 bg-amber-400/10 text-amber-100"}`}>{notice}</div>}
+    <div className="space-y-3">{SOURCES.map(([key, label, purpose]) => {
+      const connected = Boolean(status?.connections?.[key]);
+      const selected = status?.selections?.[key];
+      const available = key !== "meta-ads";
+      return <Card key={key} className="p-5"><div className="grid gap-4 md:grid-cols-[minmax(240px,1fr)_minmax(280px,1.4fr)_auto] md:items-center"><div className="flex items-center gap-3"><span className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-500/10 text-blue-300"><Globe2 className="h-5 w-5"/></span><div><p className="font-semibold">{label}</p><p className={`text-xs ${connected ? "text-emerald-300" : "text-white/35"}`}>{connected ? selected ? `Using ${selected.label}` : "Connected — choose an account below" : available ? "Not connected" : "Integration planned"}</p></div></div><p className="text-sm text-white/45">{purpose}</p><div className="flex justify-end">{!status ? <LoaderCircle className="h-4 w-4 animate-spin"/> : connected ? <button onClick={() => disconnect(key)} disabled={busy === key} className="inline-flex items-center gap-2 rounded-lg border border-white/10 px-3 py-2 text-xs font-semibold text-white/60"><Unplug className="h-4 w-4"/>{busy === key ? "Removing…" : "Disconnect"}</button> : available && status.configured ? <a href={`/api/connections/google/start?service=${key}`} className="rounded-lg bg-blue-600 px-3 py-2 text-xs font-semibold">Connect</a> : <span className="rounded-lg bg-white/[.04] px-3 py-2 text-xs text-white/35">Setup pending</span>}</div></div>
+        {connected && <div className="mt-4 border-t border-white/10 pt-4">{resourceLoading[key] ? <p className="flex items-center gap-2 text-sm text-white/45"><LoaderCircle className="h-4 w-4 animate-spin"/>Loading available accounts…</p> : resourceErrors[key] ? <div className="rounded-xl border border-amber-400/20 bg-amber-400/[.06] p-4 text-sm text-amber-100"><div className="flex gap-2"><CircleAlert className="mt-0.5 h-4 w-4 shrink-0"/><p>{resourceErrors[key]}</p></div><button onClick={() => loadResources(key)} className="mt-3 font-semibold text-blue-300">Try again</button></div> : resources[key]?.length ? <div className="flex flex-col gap-3 lg:flex-row lg:items-end"><label className="flex-1 text-xs font-semibold uppercase tracking-[.14em] text-white/45">Choose the account or property<select value={chosen[key] || ""} onChange={(event) => setChosen((current) => ({ ...current, [key]: event.target.value }))} className="mt-2 h-11 w-full rounded-xl border border-white/10 bg-[#07101d] px-3 text-sm font-normal normal-case tracking-normal text-white">{resources[key].map((resource) => <option key={resource.id} value={resource.id}>{resource.label}{resource.detail ? ` — ${resource.detail}` : ""}</option>)}</select></label><button onClick={() => saveSelection(key)} disabled={!chosen[key] || busy === `save-${key}`} className="h-11 rounded-xl bg-blue-600 px-4 text-sm font-semibold">{busy === `save-${key}` ? "Saving…" : selected?.id === chosen[key] ? "Selection saved" : "Use this account"}</button></div> : <p className="text-sm text-white/45">Google did not return an accessible account or property for this sign-in.</p>}</div>}
+      </Card>;
+    })}</div>
+    <DashboardReevaluation/>
+  </div>;
+}
+
+function connectionMessage(status, service) {
+  const label = SOURCES.find(([key]) => key === service)?.[1] || "Google account";
+  if (status === "success") return `${label} authorized successfully. Choose the exact account or property below to finish connecting it.`;
+  if (status === "cancelled") return "Google authorization was cancelled. Nothing was connected.";
+  if (status === "invalid") return "The Google authorization response could not be verified. Please start the connection again.";
+  if (status === "failed") return "Google did not complete the connection. Please try again or contact support if it continues.";
+  if (status === "setup") return "Google connections are temporarily unavailable while provider setup is completed.";
+  if (status === "unknown") return "That connection type is not supported.";
+  return "";
+}
+
+function friendlyGoogleError(message = "") {
+  const lower = message.toLowerCase();
+  if (lower.includes("insufficient authentication scopes") || lower.includes("insufficient permission")) return "Google did not grant the permission required for this service. Disconnect it, reconnect it, and approve the requested read access.";
+  if (lower.includes("invalid authentication credentials") || lower.includes("expected oauth 2 access token") || lower.includes("invalid credentials")) return "This Google authorization is no longer valid. Disconnect the service and reconnect it.";
+  if (lower.includes("has not been used") || lower.includes("is disabled")) return "This Google service is still activating. Please wait a few minutes, then try again.";
+  return message || "Google could not return the available accounts. Please try again.";
 }
 
 function Orders({ orders }) { return <div className="space-y-5"><Heading eyebrow="Purchases" title="Orders" copy="Stripe payment and report-generation status for every advanced report purchase."/><Card className="overflow-hidden"><div className="divide-y divide-white/10">{orders.length ? orders.map((order) => <div key={order.id} className="grid gap-3 p-5 sm:grid-cols-[minmax(0,1fr)_auto_auto] sm:items-center"><div><p className="font-medium">{REPORT_OFFERS[order.offerCode]?.name || titleCase(order.offerCode)}</p><p className="mt-1 text-xs text-white/40">{date(order.createdAt)}</p></div><span className="rounded-full bg-blue-500/10 px-3 py-1 text-xs text-blue-300">{titleCase(order.status)}</span><span className="text-sm text-white/45">{titleCase(order.generationStatus)}</span></div>) : <p className="p-12 text-center text-sm text-white/45">No purchases yet.</p>}</div></Card></div>; }

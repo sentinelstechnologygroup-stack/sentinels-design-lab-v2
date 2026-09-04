@@ -5,7 +5,7 @@ export default function proxy(request) {
   const protectedPage = path.startsWith("/dashboard") || path.startsWith("/advanced-reports");
   if (protectedPage && !request.cookies.get("__session")?.value) {
     const url = new URL("/sign-in", request.url);
-    url.searchParams.set("next", path);
+    url.searchParams.set("next", `${path}${request.nextUrl.search}`);
     return NextResponse.redirect(url);
   }
   return NextResponse.next();

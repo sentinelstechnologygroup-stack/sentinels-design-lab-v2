@@ -262,7 +262,7 @@ export default function SIS() {
 
               <div className="mt-8 flex flex-wrap gap-4">
                 <Link
-                  href="/advanced-reports"
+                  href="/dashboard?view=accounts"
                   className="inline-flex items-center gap-2 rounded-lg bg-primary px-7 py-3 text-sm font-semibold text-slate-950 transition-all hover:scale-[1.01] hover:shadow-[0_10px_30px_rgba(56,189,248,0.20)]"
                 >
                   View Advanced Reports

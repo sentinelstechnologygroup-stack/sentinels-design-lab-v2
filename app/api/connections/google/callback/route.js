@@ -14,7 +14,8 @@ export const runtime = "nodejs";
 export async function GET(request) {
   const user = await getSessionUser();
   if (!user) return NextResponse.redirect(new URL("/sign-in", request.url));
-  const returnUrl = new URL("/advanced-reports", request.nextUrl.origin);
+  const returnUrl = new URL("/dashboard", request.nextUrl.origin);
+  returnUrl.searchParams.set("view", "accounts");
   const savedState = decryptConnection(request.cookies.get("sis_google_oauth_state")?.value || "");
   const receivedState = request.nextUrl.searchParams.get("state");
   const code = request.nextUrl.searchParams.get("code");
@@ -48,7 +49,11 @@ export async function GET(request) {
     if (!tokenResponse.ok || !tokens.access_token) throw new Error("Google did not return an access token.");
 
     const expiresIn = Math.min(tokens.expires_in || CONNECTION_MAX_AGE_SECONDS, CONNECTION_MAX_AGE_SECONDS);
-    const response = NextResponse.redirect(new URL(`/advanced-reports?connection=success&service=${savedState.service}`, request.nextUrl.origin));
+    const successUrl = new URL("/dashboard", request.nextUrl.origin);
+    successUrl.searchParams.set("view", "accounts");
+    successUrl.searchParams.set("connection", "success");
+    successUrl.searchParams.set("service", savedState.service);
+    const response = NextResponse.redirect(successUrl);
     response.cookies.set(
       tokenCookieName(savedState.service),
       encryptConnection({
