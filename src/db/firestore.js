@@ -100,7 +100,7 @@ export async function findRecentFreeReport(uid, normalizedDomain, since) {
   const cutoff = new Date(since).getTime();
   return snap.docs
     .map(record)
-    .filter((report) => new Date(report.generatedAt || 0).getTime() >= cutoff)
+    .filter((report) => report.status === "complete" && report.storagePath && new Date(report.generatedAt || 0).getTime() >= cutoff)
     .sort((a, b) => new Date(b.generatedAt || 0) - new Date(a.generatedAt || 0))[0] || null;
 }
 export async function updateReport(id, values) {
