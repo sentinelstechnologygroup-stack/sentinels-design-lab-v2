@@ -219,10 +219,10 @@ export default function Home() {
 
               <div className="mb-4 flex flex-wrap gap-4">
                 <Link
-                  href="https://sentinelsdesignlab.com/contact/?type=website-evaluation"
+                  href="/contact?type=website-project"
                   className="inline-flex items-center gap-2 rounded-lg bg-primary px-8 py-3.5 text-sm font-semibold text-slate-950 transition-all hover:scale-[1.01] hover:bg-primary hover:shadow-[0_10px_30px_rgba(56,189,248,0.20)]"
                 >
-                  Get Website Evaluation
+                  Start Your Project
                   <ArrowRight className="h-4 w-4" />
                 </Link>
 
@@ -663,8 +663,8 @@ export default function Home() {
           eyebrow="Start Strong"
           title="If your website no longer reflects the quality of your business, it’s time to fix that."
           description="Tell us about your goals, what you need built, and where your current website or systems are falling short. We’ll review your request and recommend the clearest next step."
-          primaryLabel="Get Website Evaluation"
-          primaryHref="https://sentinelsdesignlab.com/contact/?type=website-evaluation"
+          primaryLabel="Start Your Project"
+          primaryHref="/contact?type=website-project"
           secondaryLabel="View Our Work"
           secondaryHref="/work"
         />
