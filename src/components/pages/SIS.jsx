@@ -98,8 +98,8 @@ export default function SIS() {
         eyebrow="Sentinel Intelligence System"
         title="The system layer that connects your website to your operations"
         description="SIS is SDL's operational framework for connecting websites, forms, CRMs, dashboards, and workflows into one controlled system. Data moves cleanly. Teams get visibility. Manual bridging work disappears."
-        primaryCtaLabel="Get Website Evaluation"
-        primaryCtaHref="https://sentinelsdesignlab.com/contact/?type=website-evaluation"
+        primaryCtaLabel="Let’s Discuss Your Project"
+        primaryCtaHref="https://sentinelsdesignlab.com/contact/"
         secondaryCtaLabel="View Our Work"
         secondaryCtaHref="/work"
         imageSrc="/images/services/custom-apps-hero.webp"
@@ -269,10 +269,10 @@ export default function SIS() {
                   <ArrowRight className="h-4 w-4" />
                 </Link>
                 <Link
-                  href="https://sentinelsdesignlab.com/contact/?type=website-evaluation"
+                  href="https://sentinelsdesignlab.com/contact/"
                   className="inline-flex items-center gap-2 rounded-lg border border-primary/20 bg-sky-400/[0.06] px-7 py-3 text-sm font-semibold text-foreground transition-all hover:border-primary/40 hover:bg-sky-400/[0.10]"
                 >
-                  Get Website Evaluation
+                  Let’s Discuss Your Project
                   <ArrowRight className="h-4 w-4" />
                 </Link>
                 <Link
@@ -335,7 +335,7 @@ export default function SIS() {
       <CTASection
         title="Ready to connect your website to your operations?"
         description="Request a website evaluation and we'll map the clearest path forward."
-        ctaLabel="Get Website Evaluation"
+        ctaLabel="Let’s Discuss Your Project"
       />
     </div>
   );

@@ -227,7 +227,7 @@ export default function ProofCaseCard({
 
           <div className="mt-8 flex flex-wrap items-center gap-4">
             <Link
-              href="https://sentinelsdesignlab.com/contact/?type=website-evaluation"
+              href="https://sentinelsdesignlab.com/contact/"
               className="inline-flex items-center gap-2 text-sm font-medium text-primary transition hover:text-white"
             >
               Request a website evaluation

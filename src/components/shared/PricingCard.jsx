@@ -15,7 +15,7 @@ export default function PricingCard({
   featured,
 }) {
   const contactHref =
-    "https://sentinelsdesignlab.com/contact/?type=website-evaluation";
+    "https://sentinelsdesignlab.com/contact/";
   const showDollarPrice = typeof price === "string" && /^\d[\d,]*$/.test(price);
 
   return (

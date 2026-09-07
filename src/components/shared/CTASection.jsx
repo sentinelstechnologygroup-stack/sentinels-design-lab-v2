@@ -4,7 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { ArrowRight, Phone } from "lucide-react";
 import { BUSINESS } from "@/lib/constants";
-import { websiteEvaluationUrl } from "@/lib/siteData";
+import { projectContactUrl } from "@/lib/siteData";
 
 export default function CTASection({
   eyebrow,
@@ -18,8 +18,8 @@ export default function CTASection({
   ctaHref,
 }) {
   const resolvedPrimaryLabel =
-    primaryLabel || ctaLabel || "Get Website Evaluation";
-  const resolvedPrimaryHref = primaryHref || ctaHref || websiteEvaluationUrl;
+    primaryLabel || ctaLabel || "Let’s Discuss Your Project";
+  const resolvedPrimaryHref = primaryHref || ctaHref || projectContactUrl;
 
   return (
     <section

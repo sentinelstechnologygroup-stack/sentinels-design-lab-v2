@@ -237,8 +237,8 @@ export default function Work() {
         eyebrow="Work"
         title="Real modernization work. Real system proof. No fake case studies."
         description="SDL uses real screenshots, real system anchors, and plain-language delivery summaries instead of invented metrics, fabricated rankings, or decorative portfolio filler."
-        primaryCtaLabel="Get Website Evaluation"
-        primaryCtaHref="https://sentinelsdesignlab.com/contact/?type=website-evaluation"
+        primaryCtaLabel="Let’s Discuss Your Project"
+        primaryCtaHref="https://sentinelsdesignlab.com/contact/"
         secondaryCtaLabel="Contact"
         secondaryCtaHref="/contact"
         imageSrc="/images/hero/work-hero.webp"
@@ -404,7 +404,7 @@ export default function Work() {
         </div>
       </section>
 
-      <CTASection ctaLabel="Get Website Evaluation" />
+      <CTASection ctaLabel="Let’s Discuss Your Project" />
     </div>
   );
 }
