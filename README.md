@@ -9,7 +9,7 @@ Production website for Sentinels Design Lab.
 - Tailwind CSS
 - Framer Motion
 - Radix UI
-- Vercel deployment
+- InMotion/cPanel deployment
 - GitHub source control
 
 ## Local Development
@@ -45,7 +45,7 @@ The `@/*` path alias resolves to `src/*`.
 ## Production Source of Truth
 
 - `main` is the production branch.
-- Vercel production deployments are sourced from GitHub.
+- InMotion production deployments are sourced from the cPanel-managed Git repository.
 - `https://www.sentinelsdesignlab.com` is the production domain.
 - Platform-exported or historical project copies are not the production source of truth.
 
@@ -55,4 +55,4 @@ Current public pricing and managed website-care inclusions are centralized in `s
 
 ## Deployment Notes
 
-Production changes should be validated through a branch/PR, allowed to complete the Vercel preview/build checks, and then merged into `main`.
+Production changes should be validated locally, pushed to GitHub, pulled by cPanel Git Version Control, and deployed through the InMotion application configuration.
