@@ -25,7 +25,9 @@ export default function Footer() {
             {BUSINESS.tagline}
           </p>
           <div className="mt-4 space-y-2 text-sm text-white/70">
-            <div>{BUSINESS.email}</div>
+            <a href={`mailto:${BUSINESS.email}`} className="block transition hover:text-white">
+              {BUSINESS.email}
+            </a>
             <a href={BUSINESS.phoneHref} className="block transition hover:text-white">
               {BUSINESS.phone}
             </a>
