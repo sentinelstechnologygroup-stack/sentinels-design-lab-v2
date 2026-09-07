@@ -90,6 +90,19 @@ export async function createReport(uid, values) {
     .set({ ...values, id, uid, generatedAt: FieldValue.serverTimestamp() });
   return id;
 }
+export async function findRecentFreeReport(uid, normalizedDomain, since) {
+  const snap = await firestore()
+    .collection("reports")
+    .where("uid", "==", uid)
+    .where("normalizedDomain", "==", normalizedDomain)
+    .where("reportType", "==", "free-readiness")
+    .get();
+  const cutoff = new Date(since).getTime();
+  return snap.docs
+    .map(record)
+    .filter((report) => new Date(report.generatedAt || 0).getTime() >= cutoff)
+    .sort((a, b) => new Date(b.generatedAt || 0) - new Date(a.generatedAt || 0))[0] || null;
+}
 export async function updateReport(id, values) {
   await firestore().collection("reports").doc(id).update(values);
 }

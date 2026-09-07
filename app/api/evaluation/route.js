@@ -14,6 +14,7 @@ import { storeReportPdf } from "@/lib/report-storage";
 import { getSessionUser } from "@/lib/session";
 import {
   createReport,
+  findRecentFreeReport,
   getEvaluationSnapshot,
   saveEvaluationSnapshot,
   updateReport,
@@ -107,6 +108,31 @@ export async function POST(request) {
     const normalizedDomain = new URL(url).hostname
       .toLowerCase()
       .replace(/^www\./, "");
+    const email = parsed.data.email.toLowerCase();
+    if (sessionUser.email?.toLowerCase() !== email)
+      return NextResponse.json(
+        { error: "Use the email address connected to your signed-in account." },
+        { status: 403 },
+      );
+    const recentReport = await findRecentFreeReport(
+      sessionUser.uid,
+      normalizedDomain,
+      new Date(now - SNAPSHOT_TTL_MS),
+    );
+    if (recentReport) {
+      return NextResponse.json({
+        ok: true,
+        reused: true,
+        message: "A recent evaluation already exists for this website. We reused it instead of creating a duplicate.",
+        report: {
+          id: recentReport.id,
+          filename: `Sentinels-Design-Lab-Website-Readiness-${parsed.data.businessName.replace(/[^a-z0-9]+/gi, "-")}.pdf`,
+          url: `/api/reports/${recentReport.id}/download`,
+        },
+        delivery: recentReport.emailDelivery || { sent: false, reason: "already_delivered" },
+        nextStep: { label: "Sign in to view reports", href: "/sign-in" },
+      });
+    }
     const domainKey = createHash("sha256")
       .update(normalizedDomain)
       .digest("hex");
@@ -171,12 +197,6 @@ export async function POST(request) {
       }
     }
     const pdf = generateEvaluationPdf(evaluation);
-    const email = parsed.data.email.toLowerCase();
-    if (sessionUser.email?.toLowerCase() !== email)
-      return NextResponse.json(
-        { error: "Use the email address connected to your signed-in account." },
-        { status: 403 },
-      );
     const user = await adminAuth().getUser(sessionUser.uid);
     await upsertProfile(user.uid, {
       email,
