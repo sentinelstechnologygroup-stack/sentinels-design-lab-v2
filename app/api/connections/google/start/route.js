@@ -16,12 +16,19 @@ export async function GET(request) {
   const userId = user.uid;
   const service = request.nextUrl.searchParams.get("service");
   const connection = getConnection(service);
+  const dashboardUrl = (status) => {
+    const url = new URL("/dashboard", request.url);
+    url.searchParams.set("view", "accounts");
+    url.searchParams.set("connection", status);
+    if (service) url.searchParams.set("service", service);
+    return url;
+  };
 
   if (!connection) {
-    return NextResponse.redirect(new URL("/advanced-reports?connection=unknown", request.url));
+    return NextResponse.redirect(dashboardUrl("unknown"));
   }
   if (!isGoogleConfigured()) {
-    return NextResponse.redirect(new URL("/advanced-reports?connection=setup", request.url));
+    return NextResponse.redirect(dashboardUrl("setup"));
   }
 
   const state = crypto.randomBytes(24).toString("base64url");

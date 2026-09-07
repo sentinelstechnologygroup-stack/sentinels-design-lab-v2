@@ -7,7 +7,7 @@ import { REPORT_OFFERS } from "@/lib/report-offers";
 import DashboardCheckout from "@/components/pages/DashboardCheckout";
 import DashboardReevaluation from "@/components/pages/DashboardReevaluation";
 import {
-  BarChart3, Bell, CheckCircle2, ChevronDown, Download, FileText, Globe2,
+  BarChart3, Bell, CheckCircle2, ChevronDown, CircleAlert, Download, FileText, Globe2,
   LayoutDashboard, LifeBuoy, Link2, LoaderCircle, LogOut, Menu, Search,
   Settings, ShieldCheck, ShoppingBag, Sparkles, Unplug, X,
 } from "lucide-react";
@@ -25,6 +25,13 @@ const SOURCES = [
   ["tag-manager", "Google Tag Manager", "Analytics and conversion-tag verification"],
   ["meta-ads", "Meta Ads", "Campaign, audience, spend, and conversion evidence"],
 ];
+const CONCERNS = [
+  ["leads", "Not receiving enough leads"], ["search", "Not appearing in Google"],
+  ["functionality", "Broken links, buttons, or forms"], ["mobile", "Mobile usability"],
+  ["speed", "Website speed"], ["content", "Outdated or inaccurate information"],
+  ["trust", "Customer trust and credibility"], ["security", "Privacy, security, or compliance"],
+  ["local", "Local / Google Business visibility"], ["advertising", "Advertising and landing pages"],
+];
 const titleCase = (value = "") => value.replaceAll("_", " ").replaceAll("-", " ").replace(/\b\w/g, (c) => c.toUpperCase());
 const date = (value) => value ? new Date(value).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : "Date unavailable";
 
@@ -33,9 +40,10 @@ function Brand() {
 }
 
 export default function CustomerDashboard({ initialData }) {
-  const [view, setView] = useState("overview");
+  const [view, setView] = useState(initialData.view || "overview");
   const [mobile, setMobile] = useState(false);
   const [support, setSupport] = useState(false);
+  const [evaluation, setEvaluation] = useState(false);
   const [query, setQuery] = useState("");
   const [customer, setCustomer] = useState(initialData.customer);
   const normalizedQuery = query.trim().toLowerCase();
@@ -50,7 +58,16 @@ export default function CustomerDashboard({ initialData }) {
     window.location.assign("/sign-in");
   }
 
-  const choose = (next) => { setView(next); setMobile(false); window.scrollTo({ top: 0, behavior: "smooth" }); };
+  const choose = (next) => {
+    setView(next);
+    setMobile(false);
+    const url = new URL(window.location.href);
+    if (next === "overview") url.searchParams.delete("view"); else url.searchParams.set("view", next);
+    url.searchParams.delete("connection");
+    url.searchParams.delete("service");
+    window.history.replaceState({}, "", `${url.pathname}${url.search}`);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return <div className="min-h-screen bg-[radial-gradient(circle_at_75%_-10%,rgba(37,99,235,.15),transparent_34%),linear-gradient(180deg,#070b15,#040812)]">
     <aside className={`fixed inset-y-0 left-0 z-50 w-64 border-r border-white/10 bg-[#060b15] p-4 transition lg:translate-x-0 ${mobile ? "translate-x-0" : "-translate-x-full"}`}>
@@ -67,26 +84,113 @@ export default function CustomerDashboard({ initialData }) {
       <header className="sticky top-0 z-30 border-b border-white/10 bg-[#070b15]/90 backdrop-blur-xl"><div className="flex h-16 items-center gap-3 px-4 sm:px-6 lg:px-8"><button className="lg:hidden" onClick={() => setMobile(true)} aria-label="Open navigation"><Menu className="h-5 w-5"/></button><div className="hidden w-full max-w-md items-center md:flex"><Search className="pointer-events-none ml-3 h-4 w-4 text-white/35"/><input value={query} onChange={(event) => setQuery(event.target.value)} onFocus={() => choose("reports")} className="-ml-7 h-10 w-full rounded-xl border border-white/10 bg-white/[.035] pl-10 pr-3 text-sm" placeholder="Search reports and orders"/></div><div className="ml-auto flex items-center gap-2"><button onClick={() => choose("orders")} className="relative rounded-xl p-2.5 text-white/65 hover:bg-white/[.05]" aria-label="View order notifications"><Bell className="h-5 w-5"/>{initialData.orders.some((o) => o.generationStatus === "generating") && <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-blue-400"/>}</button><button onClick={() => choose("settings")} className="flex items-center gap-2 rounded-xl p-1.5 hover:bg-white/[.05]"><span className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-violet-600 text-xs font-bold">{(customer.name || customer.email || "A").split(/\s|@/).slice(0,2).map((v) => v[0]).join("").toUpperCase()}</span><span className="hidden text-sm font-medium sm:block">{customer.name || "Account"}</span><ChevronDown className="hidden h-4 w-4 text-white/35 sm:block"/></button></div></div></header>
       <main className="mx-auto max-w-[1400px] px-4 py-7 sm:px-6 lg:px-8">
         {initialData.notice && <div className="mb-5 rounded-xl border border-blue-400/25 bg-blue-500/10 px-4 py-3 text-sm text-blue-100">{initialData.notice === "success" ? "Payment received. Your order will update after Stripe confirms it." : initialData.notice === "cancelled" ? "Checkout was cancelled. No report was ordered." : "Your evaluation has been saved to this account."}</div>}
-        {view === "overview" && <Overview customer={customer} reports={initialData.reports} orders={initialData.orders} websites={initialData.websites} score={score} latest={latest} choose={choose}/>} 
+        {view === "overview" && <Overview customer={customer} reports={initialData.reports} orders={initialData.orders} websites={initialData.websites} score={score} latest={latest} choose={choose} runEvaluation={() => setEvaluation(true)}/>}
         {view === "reports" && <Reports reports={visibleReports}/>} 
         {view === "order" && <OrderReports websites={initialData.websites}/>} 
-        {view === "accounts" && <LinkedAccounts/>} 
+        {view === "accounts" && <LinkedAccounts connection={initialData.connection} connectionService={initialData.connectionService}/>}
         {view === "orders" && <Orders orders={visibleOrders}/>} 
         {view === "settings" && <AccountSettings customer={customer} setCustomer={setCustomer}/>} 
       </main>
     </div>
     {support && <SupportModal customer={customer} close={() => setSupport(false)}/>} 
+    {evaluation && <FreeEvaluationModal customer={customer} websites={initialData.websites} close={() => setEvaluation(false)}/>}
   </div>;
 }
 
 function Heading({ eyebrow, title, copy }) { return <header><p className="text-xs font-semibold uppercase tracking-[.18em] text-cyan-300">{eyebrow}</p><h1 className="mt-2 text-3xl font-bold tracking-tight">{title}</h1>{copy && <p className="mt-2 max-w-3xl text-sm leading-6 text-white/50">{copy}</p>}</header>; }
 function Card({ children, className = "" }) { return <section className={`rounded-2xl border border-white/10 bg-[#0b1220]/95 shadow-[0_18px_60px_rgba(0,0,0,.2)] ${className}`}>{children}</section>; }
 
-function Overview({ customer, reports, orders, websites, score, latest, choose }) {
-  const paid = orders.filter((o) => o.status === "paid").length;
-  return <div className="space-y-5"><Card className="relative overflow-hidden border-blue-400/20 bg-[linear-gradient(125deg,#102249,#0b1428_52%,#211638)] p-7"><p className="text-xs font-semibold uppercase tracking-[.18em] text-cyan-300">Customer intelligence workspace</p><h1 className="mt-2 text-3xl font-bold">Welcome back{customer.name ? `, ${customer.name.split(" ")[0]}` : ""}.</h1><p className="mt-2 max-w-2xl text-sm leading-6 text-white/60">Your reports, purchases, websites, and authorized data connections are managed here.</p><button onClick={() => choose(latest ? "reports" : "order")} className="mt-5 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold">{latest ? "Open latest report" : "Choose a report"}</button><ShieldCheck className="absolute -bottom-12 right-0 h-56 w-56 text-blue-400/[.06]"/></Card>
-    <div className="grid gap-5 lg:grid-cols-3"><Card className="p-6 lg:col-span-2"><h2 className="font-semibold">Latest evaluation</h2>{latest ? <div className="mt-6 flex flex-col gap-6 sm:flex-row sm:items-center"><div className="flex h-36 w-36 shrink-0 items-center justify-center rounded-full border-[12px] border-blue-500/25 text-center"><div><strong className="text-4xl">{score ?? "—"}</strong><span className="block text-xs text-white/40">{score == null ? "No score" : "out of 100"}</span></div></div><div><h3 className="text-xl font-semibold">{latest.title}</h3><p className="mt-2 text-sm leading-6 text-white/50">{latest.findings?.verdict || latest.findings?.summary || "Your report is ready for review."}</p><a href={`/api/reports/${latest.id}/download`} className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-blue-400">Download private PDF <Download className="h-4 w-4"/></a></div></div> : <p className="mt-6 text-sm text-white/45">No completed reports yet.</p>}</Card><div className="grid gap-5"><Card className="p-5"><p className="text-sm text-white/45">Saved reports</p><p className="mt-2 text-3xl font-bold">{reports.length}</p></Card><Card className="p-5"><p className="text-sm text-white/45">Paid orders</p><p className="mt-2 text-3xl font-bold">{paid}</p></Card><Card className="p-5"><p className="text-sm text-white/45">Websites</p><p className="mt-2 text-3xl font-bold">{websites.length}</p></Card></div></div>
-    <Card className="p-6"><div className="flex items-center justify-between"><h2 className="font-semibold">Recent reports</h2><button onClick={() => choose("reports")} className="text-sm text-blue-400">View all</button></div><div className="mt-3 divide-y divide-white/10">{reports.slice(0,4).map((r) => <ReportRow key={r.id} report={r}/>)}</div></Card>
+function Overview({ customer, reports, orders, websites, score, latest, choose, runEvaluation }) {
+  const generating = reports.filter((report) => report.status === "generating").length;
+  const priorities = (latest?.findings?.priorities || latest?.findings?.recommendations || []).slice(0, 3);
+  const priorityText = (item) => typeof item === "string" ? item : item?.title || item?.recommendation || item?.action;
+  return <div className="space-y-5">
+    <Card className="relative overflow-hidden border-blue-400/25 bg-[linear-gradient(125deg,#102249,#0b1428_52%,#211638)] p-6 sm:p-8"><div className="relative z-10 flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between"><div><p className="text-xs font-semibold uppercase tracking-[.18em] text-cyan-300">Customer intelligence workspace</p><h1 className="mt-1 text-3xl font-bold tracking-tight">Welcome back{customer.name ? `, ${customer.name.split(" ")[0]}` : ""}.</h1><p className="mt-2 max-w-2xl text-sm leading-6 text-white/65">Here is the latest view of {customer.businessName || "your business"}. Run a free evaluation, review your reports, or enrich the evidence with connected accounts.</p></div><div className="flex flex-wrap gap-3"><button onClick={runEvaluation} className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold shadow-lg shadow-blue-950/30"><Sparkles className="h-4 w-4"/>Run Free Evaluation</button><button onClick={() => choose(latest ? "reports" : "order")} className="rounded-xl border border-white/15 bg-white/[.06] px-4 py-3 text-sm font-semibold">{latest ? "Open latest report" : "Order advanced report"}</button></div></div><ShieldCheck className="pointer-events-none absolute -bottom-12 right-8 h-56 w-56 text-blue-400/[.055]"/><div className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-cyan-300/70 to-transparent"/></Card>
+
+    <div className="grid gap-5 lg:grid-cols-3"><div className="space-y-5 lg:col-span-2">
+      <Card className="p-6"><div className="flex items-center justify-between gap-4"><h2 className="font-semibold">Overall evaluation score</h2>{latest && <button onClick={() => choose("reports")} className="text-sm font-medium text-blue-400">Open full report</button>}</div>{latest ? <div className="mt-6 grid gap-7 sm:grid-cols-[170px_1fr] sm:items-center"><div className="mx-auto flex h-40 w-40 items-center justify-center rounded-full p-3" style={{ background: `conic-gradient(#3b82f6 ${Math.max(0, Math.min(100, Number(score) || 0))}%, rgba(59,130,246,.16) 0)` }}><div className="flex h-full w-full items-center justify-center rounded-full bg-[#0b1220] text-center"><div><strong className="text-4xl">{score ?? "—"}</strong><span className="block text-xs text-white/45">out of 100</span></div></div></div><div><h3 className="text-xl font-semibold">{latest.title}</h3><p className="mt-2 text-sm leading-6 text-white/55">{latest.findings?.verdict || latest.findings?.summary || "Your completed evaluation is ready for review."}</p><a href={`/api/reports/${latest.id}/download`} className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-blue-400">Download private PDF <Download className="h-4 w-4"/></a></div></div> : <div className="py-9 text-center"><p className="text-sm text-white/50">No completed evaluations yet.</p><button onClick={runEvaluation} className="mt-4 inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold"><Sparkles className="h-4 w-4"/>Start your free evaluation</button></div>}</Card>
+
+      <Card className="p-6"><div className="flex items-center justify-between"><h2 className="font-semibold">Digital presence map</h2><button onClick={() => choose("accounts")} className="text-sm text-blue-400">Manage sources</button></div><div className="relative mt-6 min-h-64 overflow-hidden rounded-2xl border border-white/10 bg-[radial-gradient(circle_at_center,rgba(37,99,235,.19),transparent_48%),linear-gradient(rgba(255,255,255,.025)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.025)_1px,transparent_1px)] bg-[size:auto,32px_32px,32px_32px]"><div className="absolute left-1/2 top-1/2 z-10 flex h-24 w-24 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full border border-cyan-300/35 bg-[#101b31] shadow-[0_0_45px_rgba(34,211,238,.15)]"><Globe2 className="h-7 w-7 text-cyan-300"/><span className="mt-1 max-w-20 truncate text-xs">{websites[0]?.name || "Website"}</span></div>{[["Search",12,16],["Analytics",76,15],["Business",8,72],["Ads",78,74],["Tags",43,8]].map(([label,left,top]) => <div key={label} className="absolute rounded-xl border border-white/10 bg-[#0b1220] px-3 py-2 text-xs text-white/55" style={{left:`${left}%`,top:`${top}%`}}>{label}</div>)}</div><p className="mt-4 text-xs leading-5 text-white/45">Your website sits at the center. Authorized data sources strengthen report evidence; disconnected sources remain private and inactive.</p></Card>
+
+      <Card className="p-6"><h2 className="font-semibold">Highest-priority opportunities</h2><div className="mt-4 space-y-3">{priorities.length ? priorities.map((item, index) => <div key={index} className="flex gap-3 rounded-xl border border-white/10 bg-white/[.025] p-4"><span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-blue-500/15 text-xs font-bold text-blue-300">{index + 1}</span><p className="text-sm leading-6 text-white/60">{priorityText(item)}</p></div>) : <p className="py-5 text-sm text-white/45">Run your free evaluation to generate prioritized opportunities.</p>}</div></Card>
+
+      <Card className="p-6"><div className="flex items-center justify-between"><h2 className="font-semibold">Recent reports</h2><button onClick={() => choose("reports")} className="text-sm text-blue-400">View all</button></div><div className="mt-3 divide-y divide-white/10">{reports.length ? reports.slice(0, 5).map((report) => <ReportRow key={report.id} report={report}/>) : <p className="py-8 text-center text-sm text-white/45">Your completed reports will appear here.</p>}</div></Card>
+    </div><div className="space-y-5">
+      <Card className="p-5"><h2 className="font-semibold">Data source readiness</h2><div className="mt-4 space-y-3"><div className="flex items-center justify-between text-sm"><span className="text-white/55">Saved websites</span><strong>{websites.length}</strong></div><div className="flex items-center justify-between text-sm"><span className="text-white/55">Reports generating</span><strong>{generating}</strong></div><div className="h-2 overflow-hidden rounded-full bg-white/[.06]"><div className="h-full w-1/5 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500"/></div><button onClick={() => choose("accounts")} className="text-sm font-medium text-blue-400">Connect data sources</button></div></Card>
+      <Card className="border-blue-400/25 p-5"><div className="flex items-center gap-2"><Sparkles className="h-5 w-5 text-cyan-300"/><h2 className="font-semibold">Free evaluation</h2></div><p className="mt-2 text-sm leading-6 text-white/50">Run your website readiness snapshot directly from the dashboard.</p><button onClick={runEvaluation} className="mt-4 inline-flex w-full items-center justify-center rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold">Run Free Evaluation</button></Card>
+      <Card className="p-5"><h2 className="font-semibold">Recent orders</h2><div className="mt-4 space-y-3">{orders.length ? orders.slice(0, 3).map((order) => <div key={order.id} className="rounded-xl border border-white/10 p-3"><p className="text-sm font-medium">{REPORT_OFFERS[order.offerCode]?.name || titleCase(order.offerCode)}</p><p className="mt-1 text-xs text-white/40">{titleCase(order.status)} · {date(order.createdAt)}</p></div>) : <p className="text-sm text-white/45">No advanced report orders yet.</p>}</div><button onClick={() => choose("order")} className="mt-4 w-full rounded-xl border border-white/10 px-4 py-2.5 text-sm font-semibold">Order advanced report</button></Card>
+      {latest && <Card className="p-5"><p className="text-sm text-white/50">Saved reports</p><p className="mt-1 text-3xl font-bold">{reports.length}</p></Card>}
+    </div></div>
+  </div>;
+}
+
+function FreeEvaluationModal({ customer, websites, close }) {
+  const savedWebsites = websites.length ? websites : customer.website ? [{ id: "profile", businessName: customer.businessName, url: customer.website, location: customer.serviceArea }] : [];
+  const [websiteId, setWebsiteId] = useState(savedWebsites[0]?.id || "");
+  const [concerns, setConcerns] = useState([]);
+  const [primaryService, setPrimaryService] = useState(savedWebsites[0]?.primaryService || "");
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState("");
+  const selected = savedWebsites.find((website) => website.id === websiteId) || savedWebsites[0];
+
+  function chooseWebsite(event) {
+    const nextId = event.target.value;
+    const next = savedWebsites.find((website) => website.id === nextId);
+    setWebsiteId(nextId);
+    setPrimaryService(next?.primaryService || "");
+  }
+
+  function toggleConcern(key) {
+    setConcerns((current) => current.includes(key)
+      ? current.filter((item) => item !== key)
+      : current.length < 3 ? [...current, key] : current);
+  }
+
+  async function submit(event) {
+    event.preventDefault();
+    if (!selected) {
+      window.location.assign("/evaluation");
+      return;
+    }
+    setBusy(true);
+    setError("");
+    try {
+      const response = await fetch("/api/evaluation", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: customer.name,
+          email: customer.email,
+          phone: customer.phone || "",
+          businessName: selected.businessName || customer.businessName,
+          website: selected.url || customer.website,
+          primaryService,
+          location: selected.location || customer.serviceArea || "",
+          concerns,
+          company: "",
+        }),
+      });
+      const payload = await response.json();
+      if (!response.ok) throw new Error(payload.error || "The evaluation could not be completed.");
+      const delivery = payload.delivery?.sent ? "sent" : "failed";
+      window.location.assign(`/dashboard?created=1&report=${encodeURIComponent(payload.report.id)}&delivery=${delivery}`);
+    } catch (submissionError) {
+      setError(submissionError.message);
+      setBusy(false);
+    }
+  }
+
+  return <div className="fixed inset-0 z-[70] flex items-center justify-center bg-black/75 p-4 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="evaluation-title">
+    <div className="max-h-[92vh] w-full max-w-2xl overflow-y-auto rounded-2xl border border-blue-400/25 bg-[#0b1220] p-6 shadow-2xl sm:p-7">
+      <div className="flex items-start justify-between gap-4"><div><p className="text-xs font-semibold uppercase tracking-[.18em] text-cyan-300">Website readiness snapshot</p><h2 id="evaluation-title" className="mt-2 text-2xl font-bold">Run Free Evaluation</h2><p className="mt-2 text-sm leading-6 text-white/50">Your saved account details will be used automatically. Optionally choose up to three areas you want prioritized.</p></div><button onClick={close} className="rounded-lg p-2 text-white/50 hover:bg-white/[.06] hover:text-white" aria-label="Close evaluation"><X className="h-5 w-5"/></button></div>
+      {savedWebsites.length ? <form onSubmit={submit} className="mt-6">
+        <label className="text-sm font-medium">Website<select value={websiteId} onChange={chooseWebsite} className="mt-2 h-12 w-full rounded-xl border border-white/10 bg-[#101827] px-4">{savedWebsites.map((website) => <option key={website.id} value={website.id}>{website.businessName || website.url} — {website.url}</option>)}</select></label>
+        <label className="mt-4 block text-sm font-medium">Primary service<input required value={primaryService} onChange={(event) => setPrimaryService(event.target.value)} placeholder="What do customers hire you for?" className="mt-2 h-12 w-full rounded-xl border border-white/10 bg-white/[.04] px-4"/></label>
+        <fieldset className="mt-5"><legend className="text-sm font-medium">What concerns should this report prioritize? <span className="font-normal text-white/40">Optional · select up to three</span></legend><div className="mt-3 grid gap-2 sm:grid-cols-2">{CONCERNS.map(([key, label]) => { const checked = concerns.includes(key); const disabled = !checked && concerns.length >= 3; return <label key={key} className={`flex cursor-pointer gap-3 rounded-xl border px-3 py-3 text-sm ${checked ? "border-blue-400/50 bg-blue-500/10" : "border-white/10 bg-white/[.025]"} ${disabled ? "cursor-not-allowed opacity-40" : ""}`}><input type="checkbox" checked={checked} disabled={disabled} onChange={() => toggleConcern(key)} className="mt-0.5 h-4 w-4 accent-blue-500"/><span>{label}</span></label>; })}</div></fieldset>
+        {error && <p className="mt-5 rounded-xl border border-red-400/30 bg-red-400/10 px-4 py-3 text-sm text-red-200">{error}</p>}
+        <div className="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end"><button type="button" onClick={close} className="rounded-xl border border-white/10 px-5 py-3 text-sm font-semibold">Cancel</button><button disabled={busy} className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-3 text-sm font-semibold disabled:opacity-60">{busy ? <><LoaderCircle className="h-4 w-4 animate-spin"/>Preparing your report</> : <><Sparkles className="h-4 w-4"/>Run evaluation</>}</button></div>
+      </form> : <div className="mt-6 rounded-xl border border-white/10 bg-white/[.025] p-5"><p className="text-sm leading-6 text-white/60">This account does not have a saved website yet. Add the first website once; future evaluations will run directly from this workspace.</p><a href="/evaluation" className="mt-4 inline-flex rounded-xl bg-blue-600 px-5 py-3 text-sm font-semibold">Add website & run evaluation</a></div>}
+    </div>
   </div>;
 }
 
@@ -95,12 +199,96 @@ function Reports({ reports }) { return <div className="space-y-5"><Heading eyebr
 
 function OrderReports({ websites }) { return <div className="space-y-5"><Heading eyebrow="Advanced intelligence" title="Order an Advanced Report" copy="Choose a focused report or combine all three into one cross-channel growth plan. Purchases use the existing secure Stripe checkout."/><div className="grid gap-4 lg:grid-cols-2">{Object.values(REPORT_OFFERS).map((offer) => <Card key={offer.code} className={`flex flex-col p-6 ${offer.code === "complete" ? "border-blue-400/45 ring-1 ring-blue-500/15" : ""}`}><div className="flex items-start justify-between gap-4"><span className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-500/10 text-blue-300"><BarChart3 className="h-5 w-5"/></span>{offer.code === "complete" && <span className="rounded-full bg-blue-500/15 px-3 py-1 text-xs text-blue-300">Best value</span>}</div><h2 className="mt-5 text-xl font-semibold">{offer.name}</h2><p className="mt-2 flex-1 text-sm leading-6 text-white/50">{offer.summary}</p><div className="mt-5 border-t border-white/10 pt-5"><span className="text-3xl font-bold">${offer.amountCents / 100}</span><DashboardCheckout offer={offer} websites={websites}/></div></Card>)}</div></div>; }
 
-function LinkedAccounts() {
-  const [status, setStatus] = useState(null); const [busy, setBusy] = useState("");
-  const refresh = () => fetch("/api/connections/google/status", { cache: "no-store" }).then((r) => r.json()).then(setStatus);
-  useEffect(() => { refresh().catch(() => setStatus({ connections: {}, configured: false })); }, []);
-  async function disconnect(service) { setBusy(service); await fetch("/api/connections/google/disconnect", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ service }) }); await refresh(); setBusy(""); }
-  return <div className="space-y-5"><Heading eyebrow="Data control board" title="Linked Accounts" copy="Connect the exact business properties used to verify report findings. Access is temporary, read-only where supported, and removable at any time."/><div className="space-y-3">{SOURCES.map(([key, label, purpose]) => { const connected = Boolean(status?.connections?.[key]); const available = key !== "meta-ads"; return <Card key={key} className="grid gap-4 p-5 md:grid-cols-[minmax(240px,1fr)_minmax(280px,1.4fr)_auto] md:items-center"><div className="flex items-center gap-3"><span className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-500/10 text-blue-300"><Globe2 className="h-5 w-5"/></span><div><p className="font-semibold">{label}</p><p className="text-xs text-white/35">{connected ? "Connected" : available ? "Not connected" : "Integration planned"}</p></div></div><p className="text-sm text-white/45">{purpose}</p><div className="flex justify-end">{!status ? <LoaderCircle className="h-4 w-4 animate-spin"/> : connected ? <button onClick={() => disconnect(key)} disabled={busy === key} className="inline-flex items-center gap-2 rounded-lg border border-white/10 px-3 py-2 text-xs font-semibold text-white/60"><Unplug className="h-4 w-4"/>{busy === key ? "Removing…" : "Disconnect"}</button> : available && status.configured ? <a href={`/api/connections/google/start?service=${key}`} className="rounded-lg bg-blue-600 px-3 py-2 text-xs font-semibold">Connect</a> : <span className="rounded-lg bg-white/[.04] px-3 py-2 text-xs text-white/35">Setup pending</span>}</div></Card>; })}</div><DashboardReevaluation/></div>;
+function LinkedAccounts({ connection, connectionService }) {
+  const [status, setStatus] = useState(null);
+  const [busy, setBusy] = useState("");
+  const [resources, setResources] = useState({});
+  const [resourceErrors, setResourceErrors] = useState({});
+  const [resourceLoading, setResourceLoading] = useState({});
+  const [chosen, setChosen] = useState({});
+
+  async function refresh() {
+    const response = await fetch("/api/connections/google/status", { cache: "no-store" });
+    const payload = await response.json();
+    if (!response.ok) throw new Error(payload.error || "Connections could not be checked.");
+    setStatus(payload);
+    return payload;
+  }
+
+  useEffect(() => { refresh().catch(() => setStatus({ connections: {}, selections: {}, configured: false })); }, []);
+  useEffect(() => {
+    Object.entries(status?.connections || {}).forEach(([service, connected]) => {
+      if (connected && !resources[service] && !resourceLoading[service] && !resourceErrors[service]) loadResources(service);
+    });
+  }, [status]);
+
+  async function loadResources(service) {
+    setResourceLoading((current) => ({ ...current, [service]: true }));
+    setResourceErrors((current) => ({ ...current, [service]: "" }));
+    try {
+      const response = await fetch(`/api/connections/google/resources?service=${encodeURIComponent(service)}`, { cache: "no-store" });
+      const payload = await response.json();
+      if (!response.ok) throw new Error(friendlyGoogleError(payload.error));
+      setResources((current) => ({ ...current, [service]: payload.resources || [] }));
+      setChosen((current) => ({ ...current, [service]: status?.selections?.[service]?.id || payload.resources?.[0]?.id || "" }));
+    } catch (error) {
+      setResourceErrors((current) => ({ ...current, [service]: error.message || "Accounts could not be loaded." }));
+    } finally {
+      setResourceLoading((current) => ({ ...current, [service]: false }));
+    }
+  }
+
+  async function saveSelection(service) {
+    setBusy(`save-${service}`);
+    const response = await fetch("/api/connections/google/resources", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ service, resourceId: chosen[service] }) });
+    const payload = await response.json();
+    if (response.ok) await refresh();
+    else setResourceErrors((current) => ({ ...current, [service]: friendlyGoogleError(payload.error) }));
+    setBusy("");
+  }
+
+  async function disconnect(service) {
+    setBusy(service);
+    await fetch("/api/connections/google/disconnect", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ service }) });
+    setResources((current) => ({ ...current, [service]: null }));
+    setResourceErrors((current) => ({ ...current, [service]: "" }));
+    await refresh();
+    setBusy("");
+  }
+
+  const notice = connectionMessage(connection, connectionService);
+  return <div className="space-y-5">
+    <Heading eyebrow="Data control board" title="Linked Accounts" copy="Connect the exact business properties used to verify report findings. Access is temporary, read-only where supported, and removable at any time."/>
+    {notice && <div className={`rounded-xl border px-4 py-3 text-sm ${connection === "success" ? "border-emerald-400/25 bg-emerald-400/10 text-emerald-100" : "border-amber-400/25 bg-amber-400/10 text-amber-100"}`}>{notice}</div>}
+    <div className="space-y-3">{SOURCES.map(([key, label, purpose]) => {
+      const connected = Boolean(status?.connections?.[key]);
+      const selected = status?.selections?.[key];
+      const available = key !== "meta-ads";
+      return <Card key={key} className="p-5"><div className="grid gap-4 md:grid-cols-[minmax(240px,1fr)_minmax(280px,1.4fr)_auto] md:items-center"><div className="flex items-center gap-3"><span className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-500/10 text-blue-300"><Globe2 className="h-5 w-5"/></span><div><p className="font-semibold">{label}</p><p className={`text-xs ${connected ? "text-emerald-300" : "text-white/35"}`}>{connected ? selected ? `Using ${selected.label}` : "Connected — choose an account below" : available ? "Not connected" : "Integration planned"}</p></div></div><p className="text-sm text-white/45">{purpose}</p><div className="flex justify-end">{!status ? <LoaderCircle className="h-4 w-4 animate-spin"/> : connected ? <button onClick={() => disconnect(key)} disabled={busy === key} className="inline-flex items-center gap-2 rounded-lg border border-white/10 px-3 py-2 text-xs font-semibold text-white/60"><Unplug className="h-4 w-4"/>{busy === key ? "Removing…" : "Disconnect"}</button> : available && status.configured ? <a href={`/api/connections/google/start?service=${key}`} className="rounded-lg bg-blue-600 px-3 py-2 text-xs font-semibold">Connect</a> : <span className="rounded-lg bg-white/[.04] px-3 py-2 text-xs text-white/35">Setup pending</span>}</div></div>
+        {connected && <div className="mt-4 border-t border-white/10 pt-4">{resourceLoading[key] ? <p className="flex items-center gap-2 text-sm text-white/45"><LoaderCircle className="h-4 w-4 animate-spin"/>Loading available accounts…</p> : resourceErrors[key] ? <div className="rounded-xl border border-amber-400/20 bg-amber-400/[.06] p-4 text-sm text-amber-100"><div className="flex gap-2"><CircleAlert className="mt-0.5 h-4 w-4 shrink-0"/><p>{resourceErrors[key]}</p></div><button onClick={() => loadResources(key)} className="mt-3 font-semibold text-blue-300">Try again</button></div> : resources[key]?.length ? <div className="flex flex-col gap-3 lg:flex-row lg:items-end"><label className="flex-1 text-xs font-semibold uppercase tracking-[.14em] text-white/45">Choose the account or property<select value={chosen[key] || ""} onChange={(event) => setChosen((current) => ({ ...current, [key]: event.target.value }))} className="mt-2 h-11 w-full rounded-xl border border-white/10 bg-[#07101d] px-3 text-sm font-normal normal-case tracking-normal text-white">{resources[key].map((resource) => <option key={resource.id} value={resource.id}>{resource.label}{resource.detail ? ` — ${resource.detail}` : ""}</option>)}</select></label><button onClick={() => saveSelection(key)} disabled={!chosen[key] || busy === `save-${key}`} className="h-11 rounded-xl bg-blue-600 px-4 text-sm font-semibold">{busy === `save-${key}` ? "Saving…" : selected?.id === chosen[key] ? "Selection saved" : "Use this account"}</button></div> : <p className="text-sm text-white/45">Google did not return an accessible account or property for this sign-in.</p>}</div>}
+      </Card>;
+    })}</div>
+    <DashboardReevaluation/>
+  </div>;
+}
+
+function connectionMessage(status, service) {
+  const label = SOURCES.find(([key]) => key === service)?.[1] || "Google account";
+  if (status === "success") return `${label} authorized successfully. Choose the exact account or property below to finish connecting it.`;
+  if (status === "cancelled") return "Google authorization was cancelled. Nothing was connected.";
+  if (status === "invalid") return "The Google authorization response could not be verified. Please start the connection again.";
+  if (status === "failed") return "Google did not complete the connection. Please try again or contact support if it continues.";
+  if (status === "setup") return "Google connections are temporarily unavailable while provider setup is completed.";
+  if (status === "unknown") return "That connection type is not supported.";
+  return "";
+}
+
+function friendlyGoogleError(message = "") {
+  const lower = message.toLowerCase();
+  if (lower.includes("insufficient authentication scopes") || lower.includes("insufficient permission")) return "Google did not grant the permission required for this service. Disconnect it, reconnect it, and approve the requested read access.";
+  if (lower.includes("invalid authentication credentials") || lower.includes("expected oauth 2 access token") || lower.includes("invalid credentials")) return "This Google authorization is no longer valid. Disconnect the service and reconnect it.";
+  if (lower.includes("has not been used") || lower.includes("is disabled")) return "This Google service is still activating. Please wait a few minutes, then try again.";
+  return message || "Google could not return the available accounts. Please try again.";
 }
 
 function Orders({ orders }) { return <div className="space-y-5"><Heading eyebrow="Purchases" title="Orders" copy="Stripe payment and report-generation status for every advanced report purchase."/><Card className="overflow-hidden"><div className="divide-y divide-white/10">{orders.length ? orders.map((order) => <div key={order.id} className="grid gap-3 p-5 sm:grid-cols-[minmax(0,1fr)_auto_auto] sm:items-center"><div><p className="font-medium">{REPORT_OFFERS[order.offerCode]?.name || titleCase(order.offerCode)}</p><p className="mt-1 text-xs text-white/40">{date(order.createdAt)}</p></div><span className="rounded-full bg-blue-500/10 px-3 py-1 text-xs text-blue-300">{titleCase(order.status)}</span><span className="text-sm text-white/45">{titleCase(order.generationStatus)}</span></div>) : <p className="p-12 text-center text-sm text-white/45">No purchases yet.</p>}</div></Card></div>; }
@@ -109,7 +297,8 @@ function AccountSettings({ customer, setCustomer }) {
   const [form, setForm] = useState(customer); const [message, setMessage] = useState(""); const [busy, setBusy] = useState(false);
   async function save(e) { e.preventDefault(); setBusy(true); const r = await fetch("/api/profile", { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify(form) }); const data = await r.json(); setMessage(r.ok ? "Profile and business information saved." : data.error); if (r.ok) setCustomer(form); setBusy(false); }
   async function reset() { setBusy(true); try { await sendPasswordResetEmail(firebaseClientAuth(), customer.email); setMessage("Password reset email sent."); } catch { setMessage("Password reset email could not be sent."); } setBusy(false); }
-  return <div className="space-y-5"><Heading eyebrow="Account settings" title="Profile & Business" copy="Keep the account and business details used for reports and support requests current."/><Card className="p-6"><form onSubmit={save} className="grid gap-5 bg-transparent shadow-none md:grid-cols-2">{[["name","Full name","text"],["phone","Phone number","tel"],["businessName","Business name","text"],["website","Website address","url"],["serviceArea","Service area / location","text"]].map(([key,label,type]) => <label key={key} className="text-sm font-medium">{label}<input type={type} required={key === "name"} value={form[key] || ""} onChange={(e) => setForm({ ...form, [key]: e.target.value })} className="mt-2 h-11 w-full rounded-xl border border-white/10 bg-white/[.04] px-4"/></label>)}<label className="text-sm font-medium">Account email<input disabled value={customer.email} className="mt-2 h-11 w-full rounded-xl border border-white/10 bg-white/[.025] px-4 text-white/40"/><span className="mt-1 block text-xs text-emerald-300">{customer.emailVerified ? "Verified by Firebase" : "Email verification pending"}</span></label><div className="flex items-center gap-3 md:col-span-2"><button disabled={busy} className="rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-semibold">{busy ? "Saving…" : "Save changes"}</button><button type="button" onClick={reset} disabled={busy} className="rounded-xl border border-white/10 px-5 py-2.5 text-sm font-semibold">Reset password</button>{message && <span className="text-sm text-blue-300">{message}</span>}</div></form></Card></div>;
+  async function verify() { setBusy(true); setMessage(""); try { const response = await fetch("/api/auth/verification", { method: "POST" }); const payload = await response.json(); setMessage(response.ok ? payload.alreadyVerified ? "This email is already verified." : "Verification email sent. Check your inbox." : payload.error || "Verification email could not be sent."); } catch { setMessage("Verification email could not be sent."); } setBusy(false); }
+  return <div className="space-y-5"><Heading eyebrow="Account settings" title="Profile & Business" copy="Keep the account and business details used for reports and support requests current."/><Card className="p-6"><form onSubmit={save} className="grid gap-5 bg-transparent shadow-none md:grid-cols-2">{[["name","Full name","text"],["phone","Phone number","tel"],["businessName","Business name","text"],["website","Website address","url"],["serviceArea","Service area / location","text"]].map(([key,label,type]) => <label key={key} className="text-sm font-medium">{label}<input type={type} required={key === "name"} value={form[key] || ""} onChange={(e) => setForm({ ...form, [key]: e.target.value })} className="mt-2 h-11 w-full rounded-xl border border-white/10 bg-white/[.04] px-4"/></label>)}<label className="text-sm font-medium">Account email<input disabled value={customer.email} className="mt-2 h-11 w-full rounded-xl border border-white/10 bg-white/[.025] px-4 text-white/40"/><span className={`mt-1 block text-xs ${customer.emailVerified ? "text-emerald-300" : "text-amber-200"}`}>{customer.emailVerified ? "Verified by Firebase" : "Email verification pending"}</span></label><div className="flex flex-wrap items-center gap-3 md:col-span-2"><button disabled={busy} className="rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-semibold">{busy ? "Working…" : "Save changes"}</button>{!customer.emailVerified && <button type="button" onClick={verify} disabled={busy} className="rounded-xl border border-blue-400/30 bg-blue-500/10 px-5 py-2.5 text-sm font-semibold text-blue-200">Resend verification email</button>}<button type="button" onClick={reset} disabled={busy} className="rounded-xl border border-white/10 px-5 py-2.5 text-sm font-semibold">Reset password</button>{message && <span className="text-sm text-blue-300">{message}</span>}</div></form></Card></div>;
 }
 
 function SupportModal({ customer, close }) {

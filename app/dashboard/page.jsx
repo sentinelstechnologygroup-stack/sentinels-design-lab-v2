@@ -36,5 +36,8 @@ export default async function DashboardPage({ searchParams }) {
     websites,
     orders,
     notice: params?.checkout || params?.created || "",
+    view: ["overview", "reports", "order", "accounts", "orders", "settings"].includes(params?.view) ? params.view : "overview",
+    connection: params?.connection || "",
+    connectionService: params?.service || "",
   })} />;
 }

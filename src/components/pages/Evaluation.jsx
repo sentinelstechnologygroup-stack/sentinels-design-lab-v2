@@ -56,10 +56,31 @@ export default function Evaluation() {
   useEffect(() => {
     fetch("/api/session", { cache: "no-store" })
       .then((response) => response.json())
-      .then((session) => {
+      .then(async (session) => {
         if (session.authenticated) {
           setSignedIn(true);
           setSessionEmail(session.email || "your existing account");
+          const [profileResponse, websitesResponse] = await Promise.all([
+            fetch("/api/profile", { cache: "no-store" }),
+            fetch("/api/websites", { cache: "no-store" }),
+          ]);
+          const profile = profileResponse.ok ? await profileResponse.json() : {};
+          const websitesPayload = websitesResponse.ok
+            ? await websitesResponse.json()
+            : { websites: [] };
+          const website = websitesPayload.websites?.[0] || {};
+          setForm((current) => ({
+            ...current,
+            name: profile.name || current.name,
+            email: profile.email || session.email || current.email,
+            phone: profile.phone || current.phone,
+            businessName:
+              profile.businessName || website.businessName || current.businessName,
+            website: profile.website || website.url || current.website,
+            primaryService: website.primaryService || current.primaryService,
+            location:
+              profile.serviceArea || website.location || current.location,
+          }));
         }
       })
       .catch(() => null);
