@@ -3,23 +3,14 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
-import { BUSINESS, NAV_LINKS, CTA, IMAGES } from "@/lib/constants";
+import { BUSINESS, NAV_LINKS, IMAGES } from "@/lib/constants";
 
 const MAIN_SITE_URL = "https://sentinelsdesignlab.com";
 const REPORTS_URL = "https://reports.sentinelsdesignlab.com";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
-  const pathname = usePathname();
-  const isReportsEvaluation = pathname === "/evaluation";
-  const primaryCtaLabel = isReportsEvaluation
-    ? "Get a Free Website Evaluation"
-    : CTA.primary.label;
-  const primaryCtaClass = isReportsEvaluation
-    ? "nav-evaluation-cta"
-    : "btn-primary";
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-[#050816]/90 backdrop-blur-xl">
@@ -61,10 +52,10 @@ export default function Navbar() {
           </a>
 
           <Link
-            href={CTA.primary.path}
-            className={`${primaryCtaClass} whitespace-nowrap text-sm`}
+            href={`${REPORTS_URL}/evaluation`}
+            className="nav-evaluation-cta whitespace-nowrap text-sm"
           >
-            {primaryCtaLabel}
+            Get a Free Website Evaluation
           </Link>
           <a
             href={`${REPORTS_URL}/dashboard`}
@@ -119,11 +110,11 @@ export default function Navbar() {
             </a>
 
             <Link
-              href={CTA.primary.path}
-              className={`${primaryCtaClass} mt-3 w-full justify-center text-sm sm:w-fit`}
+              href={`${REPORTS_URL}/evaluation`}
+              className="nav-evaluation-cta mt-3 w-full justify-center text-sm sm:w-fit"
               onClick={() => setOpen(false)}
             >
-              {primaryCtaLabel}
+              Get a Free Website Evaluation
             </Link>
             <a
               href={`${REPORTS_URL}/dashboard`}
