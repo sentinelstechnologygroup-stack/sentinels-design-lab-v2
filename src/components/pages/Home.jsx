@@ -658,6 +658,24 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="border-y border-white/10 bg-[#07111f] py-16">
+        <div className="mx-auto grid max-w-5xl gap-10 px-4 sm:px-6 lg:grid-cols-[1fr,1.1fr] lg:px-8">
+          <div>
+            <span className="eyebrow mb-5 inline-flex">Start a Conversation</span>
+            <h2 className="font-heading text-3xl font-bold text-foreground sm:text-4xl">Tell us what needs to work better.</h2>
+            <p className="mt-4 max-w-xl leading-7 text-muted-foreground">Share the basics and we will review your goals, identify the clearest next step, and follow up within one business day.</p>
+            <a href="mailto:Info@SentinelsDesignLab.com" className="mt-6 inline-flex text-sm font-semibold text-primary hover:text-white">Email Info@SentinelsDesignLab.com</a>
+          </div>
+          <form action="https://formspree.io/f/mnjgoknr" method="POST" className="grid gap-4 rounded-2xl border border-white/10 bg-white/[0.04] p-6">
+            <input type="hidden" name="_subject" value="New SDL Homepage Inquiry" />
+            <input name="name" required placeholder="Your name" aria-label="Your name" className="rounded-lg border border-white/10 bg-black/20 px-4 py-3 text-sm text-white outline-none placeholder:text-white/40 focus:border-primary" />
+            <input name="email" required type="email" placeholder="Email address" aria-label="Email address" className="rounded-lg border border-white/10 bg-black/20 px-4 py-3 text-sm text-white outline-none placeholder:text-white/40 focus:border-primary" />
+            <textarea name="message" required placeholder="What would you like to improve?" aria-label="Project message" rows="4" className="rounded-lg border border-white/10 bg-black/20 px-4 py-3 text-sm text-white outline-none placeholder:text-white/40 focus:border-primary" />
+            <button type="submit" className="btn-primary justify-center">Send Project Inquiry <ArrowRight className="h-4 w-4" /></button>
+          </form>
+        </div>
+      </section>
+
       <div className="relative">
         <CTASection
           eyebrow="Start Strong"
