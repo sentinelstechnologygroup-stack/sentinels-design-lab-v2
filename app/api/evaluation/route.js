@@ -14,8 +14,8 @@ import { storeReportPdf } from "@/lib/report-storage";
 import { getSessionUser } from "@/lib/session";
 import {
   createReport,
-  findRecentFreeReport,
   getEvaluationSnapshot,
+  listOwned,
   saveEvaluationSnapshot,
   updateReport,
   upsertWebsiteForDomain,
@@ -114,25 +114,13 @@ export async function POST(request) {
         { error: "Use the email address connected to your signed-in account." },
         { status: 403 },
       );
-    const recentReport = await findRecentFreeReport(
-      sessionUser.uid,
-      normalizedDomain,
-      new Date(now - SNAPSHOT_TTL_MS),
-    );
-    if (recentReport) {
-      return NextResponse.json({
-        ok: true,
-        reused: true,
-        message: "A recent evaluation already exists for this website. We reused it instead of creating a duplicate.",
-        report: {
-          id: recentReport.id,
-          filename: `Sentinels-Design-Lab-Website-Readiness-${parsed.data.businessName.replace(/[^a-z0-9]+/gi, "-")}.pdf`,
-          url: `/api/reports/${recentReport.id}/download`,
-        },
-        delivery: recentReport.emailDelivery || { sent: false, reason: "already_delivered" },
-        nextStep: { label: "Sign in to view reports", href: "/sign-in" },
-      });
-    }
+    const priorReports = await listOwned("reports", sessionUser.uid);
+    const version =
+      priorReports.filter(
+        (report) =>
+          report.reportType === "free-readiness" &&
+          report.normalizedDomain === normalizedDomain,
+      ).length + 1;
     const domainKey = createHash("sha256")
       .update(normalizedDomain)
       .digest("hex");
@@ -140,10 +128,7 @@ export async function POST(request) {
     const snapshotAge = previousSnapshot?.updatedAt
       ? now - new Date(previousSnapshot.updatedAt).getTime()
       : Infinity;
-    const canReuse =
-      previousSnapshot?.engineVersion === EVALUATION_ENGINE_VERSION &&
-      previousSnapshot?.inspection &&
-      snapshotAge < SNAPSHOT_TTL_MS;
+    const canReuse = false;
     const inspection = canReuse
       ? previousSnapshot.inspection
       : await inspectPage(url);
@@ -161,6 +146,7 @@ export async function POST(request) {
     const evaluation = validateEvaluation(
       buildBasicEvaluation(url, inspection, parsed.data),
     );
+    evaluation.reportVersion = version;
     evaluation.consistency = {
       normalizedDomain,
       engineVersion: EVALUATION_ENGINE_VERSION,
@@ -215,7 +201,7 @@ export async function POST(request) {
       normalizedDomain,
       engineVersion: EVALUATION_ENGINE_VERSION,
       reportType: "free-readiness",
-      title: `${parsed.data.businessName} Website Readiness Snapshot`,
+      title: `${parsed.data.businessName} Website Readiness Snapshot v${version}`,
       status: "generating",
       findings: evaluation,
     });
@@ -265,7 +251,7 @@ export async function POST(request) {
       delivery,
       report: {
         id: reportId,
-        filename: `Sentinels-Design-Lab-Website-Readiness-${evaluation.businessName.replace(/[^a-z0-9]+/gi, "-")}.pdf`,
+        filename: `Sentinels-Design-Lab-Website-Readiness-${evaluation.businessName.replace(/[^a-z0-9]+/gi, "-")}-v${evaluation.reportVersion}.pdf`,
         url: `/api/reports/${reportId}/download`,
       },
       nextStep: { label: "Sign in to view reports", href: "/sign-in" },

@@ -524,7 +524,7 @@ export function generateEvaluationPdf(evaluation) {
     footer(doc, page, total);
   }
   doc.setProperties({
-    title: `${evaluation.businessName} Website Readiness Snapshot`,
+    title: `${evaluation.businessName} Website Readiness Snapshot v${evaluation.reportVersion || 1}`,
     subject: "Sentinels Intelligence Suite Free Website Evaluation",
     author: "Sentinels Design Lab",
     creator: "Sentinels Design Lab",
