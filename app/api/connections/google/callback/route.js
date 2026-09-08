@@ -11,6 +11,10 @@ import {
 
 export const runtime = "nodejs";
 
+function productionOrigin() {
+  return new URL(process.env.NEXT_PUBLIC_APP_URL || "https://sentinelsdesignlab.com").origin;
+}
+
 export async function GET(request) {
   const user = await getSessionUser();
   if (!user) return NextResponse.redirect(new URL("/sign-in", request.url));
@@ -31,7 +35,7 @@ export async function GET(request) {
   }
 
   try {
-    const callbackUrl = new URL("/api/connections/google/callback", request.nextUrl.origin);
+    const callbackUrl = new URL("/api/connections/google/callback", productionOrigin());
     const tokenResponse = await fetch("https://oauth2.googleapis.com/token", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
