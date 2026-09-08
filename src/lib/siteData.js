@@ -30,7 +30,7 @@ export const navLinks = [
 export const footerLinks = navLinks;
 
 export const websiteEvaluationUrl =
-  "https://reports.sentinelsdesignlab.com/evaluation";
+  "https://sentinelsdesignlab.com/evaluation";
 
 export const projectContactUrl = "https://sentinelsdesignlab.com/contact/";
 

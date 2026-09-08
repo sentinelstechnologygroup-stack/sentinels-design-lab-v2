@@ -242,7 +242,7 @@ export async function POST(request) {
       blobUrl: null,
       status: "complete",
     });
-    const portalUrl = `${process.env.NEXT_PUBLIC_APP_URL || "https://reports.sentinelsdesignlab.com"}/dashboard`;
+    const portalUrl = `${process.env.NEXT_PUBLIC_APP_URL || "https://sentinelsdesignlab.com"}/dashboard`;
     let delivery = { sent: false, reason: "not_configured" };
     try {
       delivery = await sendEvaluationEmails({

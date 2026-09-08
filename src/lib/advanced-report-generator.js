@@ -6,7 +6,7 @@ import { createReport, findReportsByOrder, getWebsite, updateOrder, updateReport
 import { storeReportPdf } from "@/lib/report-storage";
 import { REPORT_CATALOG_BY_CODE } from "@/lib/report-catalog";
 
-const CONNECT = "https://reports.sentinelsdesignlab.com/dashboard#connections";
+const CONNECT = "https://sentinelsdesignlab.com/dashboard#connections";
 const required = {
   "seo-intelligence": [["Google Search Console", "rankings, queries, clicks, impressions, and indexing"], ["Google Analytics 4", "organic visits, engagement, and conversions"], ["Google Business Profile", "owner-verified local visibility and customer actions"]],
   "ppc-intelligence": [["Google Ads", "campaigns, spend, search terms, and paid conversions"], ["Google Analytics 4", "post-click engagement and conversion paths"], ["Google Tag Manager", "conversion-tag and tracking configuration"]],

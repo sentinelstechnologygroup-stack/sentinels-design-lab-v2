@@ -37,8 +37,8 @@ export async function POST(request) {
         },
       },
     }],
-    success_url: `${process.env.NEXT_PUBLIC_APP_URL || "https://reports.sentinelsdesignlab.com"}/dashboard?checkout=success`,
-    cancel_url: `${process.env.NEXT_PUBLIC_APP_URL || "https://reports.sentinelsdesignlab.com"}/dashboard?checkout=cancelled`,
+    success_url: `${process.env.NEXT_PUBLIC_APP_URL || "https://sentinelsdesignlab.com"}/dashboard?checkout=success`,
+    cancel_url: `${process.env.NEXT_PUBLIC_APP_URL || "https://sentinelsdesignlab.com"}/dashboard?checkout=cancelled`,
     client_reference_id: userId,
     metadata: { firebaseUid: userId, offerCode: offer.code, websiteId, selectedReports: selection.join(",") },
   });
