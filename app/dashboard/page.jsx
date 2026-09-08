@@ -20,6 +20,16 @@ export default async function DashboardPage({ searchParams }) {
     listOwned("websites", session.uid),
     listOwned("orders", session.uid),
   ]);
+  const versionCounts = new Map();
+  const versionedReports = [...reports].reverse().map((report) => {
+    if (report.reportType !== "free-readiness") return report;
+    const key = report.normalizedDomain || report.websiteId || "free-readiness";
+    const version = (versionCounts.get(key) || 0) + 1;
+    versionCounts.set(key, version);
+    return /\sv\d+$/i.test(report.title || "")
+      ? report
+      : { ...report, title: `${report.title || "Website Readiness Snapshot"} v${version}` };
+  }).reverse();
 
   return <CustomerDashboard initialData={serializable({
     customer: {
@@ -32,7 +42,7 @@ export default async function DashboardPage({ searchParams }) {
       website: profile?.website || websites[0]?.url || "",
       serviceArea: profile?.serviceArea || "",
     },
-    reports,
+    reports: versionedReports,
     websites,
     orders,
     notice: params?.checkout || params?.created || "",
