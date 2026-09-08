@@ -1,6 +1,8 @@
 import { getAllPosts } from "@/lib/blog/getAllPosts";
 import { seo } from "@/lib/siteData";
 
+export const dynamic = "force-static";
+
 const STATIC_ROUTES = [
   { path: "/",         changeFrequency: "weekly",  priority: 1.0 },
   { path: "/about",    changeFrequency: "monthly", priority: 0.7 },
