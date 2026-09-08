@@ -1,3 +1,5 @@
+// Legacy/archival helper for InMotion static hosting fallback only.
+// Preserved for emergency recovery; do not run as part of Vercel production workflow.
 import { existsSync, renameSync } from "node:fs";
 import { resolve } from "node:path";
 import { spawnSync } from "node:child_process";
