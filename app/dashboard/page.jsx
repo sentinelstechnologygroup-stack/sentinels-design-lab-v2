@@ -16,8 +16,8 @@ export default async function DashboardPage({ searchParams }) {
   if (!session) redirect("/sign-in");
   const signedInUser = await adminAuth().getUser(session.uid);
   if (signedInUser.email?.toLowerCase() === SUPER_ADMIN_EMAIL) {
-    const allReports = await listAll("reports");
-    return <AdminDashboard initialData={serializable({ reports: allReports })} />;
+    const [allReports, allProfiles, allOrders, allWebsites] = await Promise.all([listAll("reports"), listAll("profiles"), listAll("orders"), listAll("websites")]);
+    return <AdminDashboard initialData={serializable({ reports: allReports, profiles: allProfiles, orders: allOrders, websites: allWebsites, admin: { name: signedInUser.displayName || "Patrick", email: signedInUser.email || "" } })} />;
   }
   const params = await searchParams;
   const [user, profile, reports, websites, orders] = await Promise.all([
