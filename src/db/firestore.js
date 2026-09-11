@@ -178,6 +178,12 @@ export async function listOwned(collection, uid) {
         Number(new Date(a.generatedAt || a.createdAt || 0)),
     );
 }
+export async function listAll(collection) {
+  const snap = await firestore().collection(collection).get();
+  return snap.docs
+    .map(record)
+    .sort((a, b) => Number(new Date(b.generatedAt || b.createdAt || 0)) - Number(new Date(a.generatedAt || a.createdAt || 0)));
+}
 export async function createOrder(uid, values) {
   const id = randomUUID();
   await firestore()

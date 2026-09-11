@@ -1,17 +1,24 @@
 import { redirect } from "next/navigation";
 import { adminAuth } from "@/lib/firebase-admin";
-import { getProfile, listOwned } from "@/db/firestore";
+import { getProfile, listAll, listOwned } from "@/db/firestore";
 import { getSessionUser } from "@/lib/session";
 import CustomerDashboard from "../../components/dashboard/CustomerDashboard";
+import AdminDashboard from "../../components/dashboard/AdminDashboard";
 
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Customer Dashboard | Sentinels Design Lab" };
+const SUPER_ADMIN_EMAIL = "patrick@sentinelsdesignlab.com";
 
 const serializable = (value) => JSON.parse(JSON.stringify(value));
 
 export default async function DashboardPage({ searchParams }) {
   const session = await getSessionUser();
   if (!session) redirect("/sign-in");
+  const signedInUser = await adminAuth().getUser(session.uid);
+  if (signedInUser.email?.toLowerCase() === SUPER_ADMIN_EMAIL) {
+    const allReports = await listAll("reports");
+    return <AdminDashboard initialData={serializable({ reports: allReports })} />;
+  }
   const params = await searchParams;
   const [user, profile, reports, websites, orders] = await Promise.all([
     adminAuth().getUser(session.uid),
