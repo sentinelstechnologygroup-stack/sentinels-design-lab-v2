@@ -15,6 +15,7 @@ import { storeReportPdf } from "@/lib/report-storage";
 import { getSessionUser } from "@/lib/session";
 import {
   createReport,
+  findReportByIdempotencyKey,
   getEvaluationSnapshot,
   listOwned,
   saveEvaluationSnapshot,
@@ -115,6 +116,19 @@ export async function POST(request) {
         { error: "Use the email address connected to your signed-in account." },
         { status: 403 },
       );
+    const idempotencyKey = request.headers.get("x-idempotency-key")?.trim().slice(0, 200) || "";
+    if (idempotencyKey) {
+      const existing = await findReportByIdempotencyKey(sessionUser.uid, idempotencyKey);
+      if (existing) {
+        return NextResponse.json({
+          ok: true,
+          duplicate: true,
+          delivery: existing.emailDelivery || { sent: false, reason: "already_processed" },
+          report: { id: existing.id, filename: existing.filename || existing.title, url: `/api/reports/${existing.id}/download` },
+          nextStep: { label: "Sign in to view reports", href: "/sign-in" },
+        });
+      }
+    }
     const priorReports = await listOwned("reports", sessionUser.uid);
     const version =
       priorReports.filter(
@@ -206,6 +220,7 @@ export async function POST(request) {
       title: `${parsed.data.businessName} Website Readiness Snapshot v${version}`,
       status: "generating",
       findings: { ...evaluation, focusedConcernReview: buildFocusedConcernReview(evaluation, parsed.data.concerns) },
+      idempotencyKey: idempotencyKey || null,
     });
     let storagePath;
     try {

@@ -158,7 +158,7 @@ function FreeEvaluationModal({ customer, websites, close }) {
     try {
       const response = await fetch("/api/evaluation", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "X-Idempotency-Key": crypto.randomUUID() },
         body: JSON.stringify({
           name: customer.name,
           email: customer.email,

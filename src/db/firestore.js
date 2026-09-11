@@ -103,6 +103,16 @@ export async function findRecentFreeReport(uid, normalizedDomain, since) {
     .filter((report) => report.status === "complete" && report.storagePath && new Date(report.generatedAt || 0).getTime() >= cutoff)
     .sort((a, b) => new Date(b.generatedAt || 0) - new Date(a.generatedAt || 0))[0] || null;
 }
+export async function findReportByIdempotencyKey(uid, idempotencyKey) {
+  if (!idempotencyKey) return null;
+  const snap = await firestore()
+    .collection("reports")
+    .where("uid", "==", uid)
+    .where("idempotencyKey", "==", idempotencyKey)
+    .limit(1)
+    .get();
+  return snap.empty ? null : record(snap.docs[0]);
+}
 export async function updateReport(id, values) {
   await firestore().collection("reports").doc(id).update(values);
 }
