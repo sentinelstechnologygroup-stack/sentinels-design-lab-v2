@@ -29,7 +29,7 @@ async function processMessage(message) {
   const id = fingerprint(messageId, raw);
   const ref = db.collection("inboundReportMessages").doc(id);
   const existing = await ref.get();
-  if (existing.exists) return { status: "duplicate", id };
+  if (existing.exists && existing.data().status === "forwarded") return { status: "duplicate", id };
 
   const data = {
     id,
@@ -43,7 +43,7 @@ async function processMessage(message) {
     status: "received",
     createdAt: FieldValue.serverTimestamp(),
   };
-  await ref.create(data);
+  if (!existing.exists) await ref.create(data);
 
   const response = await fetch(ingestUrl.value(), {
     method: "POST",
