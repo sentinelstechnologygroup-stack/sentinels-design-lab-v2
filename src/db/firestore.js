@@ -140,6 +140,11 @@ export async function getReportById(id) {
   const snapshot = await getDb().collection("reports").doc(id).get();
   return snapshot.exists ? snapshot.data() : null;
 }
+
+export async function listDueCommunications(limit = 50) {
+  const snapshot = await getDb().collection("communications").where("status", "==", "queued").where("scheduledFor", "<=", new Date()).limit(limit).get();
+  return snapshot.docs.map((item) => item.data());
+}
 export async function getOwnedReport(uid, id) {
   const snap = await firestore().collection("reports").doc(id).get();
   return snap.exists && snap.data().uid === uid ? record(snap) : null;
