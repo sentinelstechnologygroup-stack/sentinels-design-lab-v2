@@ -1,6 +1,7 @@
 import { sendMail } from "@/lib/smtp";
 import { schedulingUrl } from "@/lib/report-follow-up";
 import { createCommunication } from "@/db/firestore";
+import { buildSafeReportSummary } from "@/lib/report-summary";
 
 function escape(value = "") {
   return String(value).replace(
@@ -65,6 +66,7 @@ export async function sendEvaluationEmails({
   reportId = evaluation.id,
 }) {
   const scheduleUrl = schedulingUrl({ reportId, email: lead.email });
+  const safeSummary = buildSafeReportSummary(evaluation);
   const from =
     process.env.SIS_FROM_EMAIL ||
     "Sentinels Design Lab <reports@sentinelsdesignlab.com>";
@@ -108,10 +110,12 @@ export async function sendEvaluationEmails({
     await createCommunication({
       type: "evaluation-follow-up",
       reportId,
+      idempotencyKey: `evaluation-follow-up:${reportId}:${lead.email.toLowerCase()}`,
       recipient: lead.email,
       internalRecipient: admin,
       status: adminResult.sent ? "delivered" : "customer-delivered-admin-failed",
       schedulingUrl: scheduleUrl,
+      summary: safeSummary,
     });
   } catch (error) {
     console.error("[Sentinels follow-up record]", error);

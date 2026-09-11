@@ -108,7 +108,7 @@ export async function updateReport(id, values) {
 }
 
 export async function createCommunication(values) {
-  const id = crypto.randomUUID();
+  const id = values.idempotencyKey ? crypto.createHash("sha256").update(values.idempotencyKey).digest("hex") : crypto.randomUUID();
   await getDb().collection("communications").doc(id).set({ ...values, id, status: values.status || "queued", createdAt: admin.firestore.FieldValue.serverTimestamp(), updatedAt: admin.firestore.FieldValue.serverTimestamp() });
   return { id, ...values };
 }
