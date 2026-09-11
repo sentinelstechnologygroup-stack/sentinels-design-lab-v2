@@ -1,4 +1,3 @@
-// src/pages/Home.jsx
 "use client";
 
 import React from "react";
@@ -9,119 +8,77 @@ import {
   Globe,
   Search,
   BarChart3,
-  Palette,
   Server,
   CheckCircle2,
   ShieldCheck,
-  Zap,
-  MessageSquareText,
-  Briefcase,
-  Star,
   Sparkles,
   LayoutDashboard,
-  PhoneCall,
-  LineChart,
+  Megaphone,
+  Star,
 } from "lucide-react";
 import CTASection from "@/components/shared/CTASection";
 
-const heroTags = [
-  "Strategy First",
-  "Conversion-Focused",
-  "No Template Builds",
-  "Business-First Execution",
-];
-
-const trustStrip = [
-  "Strategy-First Builds",
-  "Conversion-Focused Design",
-  "Built for Real Businesses",
-  "Fast & Reliable Delivery",
+const pricingLadder = [
+  { name: "Landing Page", price: "$150", suffix: "/month" },
+  { name: "Business Website", price: "$300", suffix: "/month", featured: true },
+  { name: "Growth Website", price: "$500", suffix: "/month" },
+  { name: "Custom Software, CRM, Portals & AI", price: "Let’s Talk", suffix: "" },
 ];
 
 const services = [
   {
     icon: Globe,
-    title: "Website Redesigns & Builds",
-    desc: "Modernize outdated websites or build new ones designed around clarity, trust, and a better path to leads.",
-    path: "/services",
+    title: "Managed Website Plans",
+    desc: "Professional websites from $150/month, with hosting, maintenance, security, backups, monitoring, and support included.",
+    path: "/pricing",
   },
   {
     icon: Search,
-    title: "SEO Foundation",
-    desc: "Set up site structure, metadata, and page hierarchy so the right businesses can find you when they are ready to act.",
+    title: "SEO-Ready at Launch",
+    desc: "Every website is built with clean structure, metadata, sitemap, indexing setup, and practical on-page SEO fundamentals from day one.",
     path: "/services",
   },
   {
     icon: BarChart3,
-    title: "Lead Path Cleanup",
-    desc: "Tighten navigation, offers, forms, and CTA flow so more of your traffic turns into real conversations.",
-    path: "/services",
+    title: "Expanded SEO",
+    desc: "Ongoing keyword strategy, local SEO, content optimization, technical reviews, competitive tracking, and reporting for businesses ready to grow search visibility.",
+    path: "/pricing",
   },
   {
-    icon: Palette,
-    title: "Brand Presentation",
-    desc: "Upgrade how your company looks online so your presentation matches the quality of your work.",
-    path: "/services",
+    icon: Megaphone,
+    title: "PPC & Social Campaigns",
+    desc: "Campaign strategy, setup, management, conversion tracking, and optimization starting at $500/month plus ad spend.",
+    path: "/pricing",
   },
   {
     icon: LayoutDashboard,
-    title: "Portals & Digital Systems",
-    desc: "When a website is not enough — build client portals, internal dashboards, and practical web tools.",
-    path: "/services",
+    title: "Custom Software & Systems",
+    desc: "CRM, portals, dashboards, automations, AI-enabled tools, and custom applications built around how your business actually operates.",
+    path: "/systems/sis",
   },
   {
     icon: Server,
-    title: "Ongoing Support",
-    desc: "Keep your site fast, secure, and current with reliable hosting, maintenance, and ongoing build support.",
+    title: "Managed Support",
+    desc: "Your website does not get handed off and forgotten. SDL manages the technical foundation so you can focus on the business.",
     path: "/services",
-  },
-];
-
-const bestFit = [
-  "Contractors & Trades",
-  "Local Service Businesses",
-  "Growing Brands",
-  "Businesses Outgrowing DIY Sites",
-];
-
-const whyUs = [
-  {
-    icon: LineChart,
-    title: "Built for Conversion",
-    desc: "Every section, layout, and CTA is designed to move visitors closer to action.",
-  },
-  {
-    icon: MessageSquareText,
-    title: "Clear Messaging",
-    desc: "We make sure people understand what you do, why it matters, and why they should trust you.",
-  },
-  {
-    icon: Sparkles,
-    title: "No Templates",
-    desc: "Your site is shaped around your business, not forced into a recycled layout.",
-  },
-  {
-    icon: Briefcase,
-    title: "Business-First Approach",
-    desc: "We focus on leads, trust, positioning, and growth — not design for design’s sake.",
   },
 ];
 
 const processSteps = [
   {
     step: "01",
-    title: "Strategy",
-    desc: "We identify what your business needs to say, show, and prioritize to win more trust.",
+    title: "Evaluate",
+    desc: "We review your current site, goals, messaging, and biggest friction points.",
   },
   {
     step: "02",
     title: "Build",
-    desc: "We design and structure the site around clarity, credibility, and conversion.",
+    desc: "We design and develop the right website or system around the business need.",
   },
   {
     step: "03",
-    title: "Launch & Refine",
-    desc: "We launch cleanly and position the site to support future growth, traffic, and lead flow.",
+    title: "Launch & Manage",
+    desc: "We launch cleanly and continue managing the technical foundation after launch.",
   },
 ];
 
@@ -170,8 +127,8 @@ const heroTiles = [
   },
   {
     src: "/images/home/tile-video.webp",
-    alt: "Video & Animation Performance Visuals",
-    label: "Video & Animation",
+    alt: "Digital marketing and creative work",
+    label: "Growth & Creative",
     className: "col-span-2",
   },
 ];
@@ -179,50 +136,42 @@ const heroTiles = [
 export default function Home() {
   return (
     <div className="relative overflow-hidden text-white">
-      {/* HERO */}
-      <section className="relative bg-transparent pb-8 pt-24 md:pt-28">
+      <section className="relative bg-transparent pb-10 pt-24 md:pt-28">
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid items-center gap-10 lg:grid-cols-2">
             <motion.div
               initial={{ opacity: 0, y: 28 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7 }}
-              className=""
             >
               <span className="eyebrow mb-6">
                 <Sparkles className="h-3.5 w-3.5" />
-                Strategic Website Design for Real Businesses
+                Managed Websites & Digital Systems
               </span>
 
               <h1 className="mb-6 font-heading text-4xl font-bold leading-tight text-foreground sm:text-5xl lg:text-6xl">
-                Websites Built to{" "}
-                <span className="text-primary">Win More Business</span>
+                Websites Built to <span className="text-primary">Win More Business</span>
               </h1>
 
-              <p className="mb-8 max-w-xl text-lg leading-relaxed text-muted-foreground">
-                We design and build high-conversion websites for service
-                businesses that need more leads, stronger trust, and better
-                results from their online presence.
+              <p className="mb-6 max-w-xl text-lg leading-relaxed text-muted-foreground">
+                We make your business look better, make it easier for customers to find and contact you, and take care of the website after launch.
               </p>
 
-              <div className="mb-8 flex flex-wrap gap-2">
-                {heroTags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs text-secondary-foreground shadow-[0_0_0_1px_rgba(255,255,255,0.02)]"
-                  >
-                    <CheckCircle2 className="h-3.5 w-3.5 text-primary" />
-                    {tag}
-                  </span>
-                ))}
+              <div className="mb-7 rounded-2xl border border-primary/20 bg-sky-400/[0.06] px-5 py-4">
+                <div className="font-heading text-lg font-semibold text-foreground">
+                  Websites from $150/month.
+                </div>
+                <div className="mt-1 text-sm text-muted-foreground">
+                  Hosting, maintenance, security, backups, monitoring & support included.
+                </div>
               </div>
 
               <div className="mb-4 flex flex-wrap gap-4">
                 <Link
-                  href="/contact?type=website-project"
-                  className="inline-flex items-center gap-2 rounded-lg bg-primary px-8 py-3.5 text-sm font-semibold text-slate-950 transition-all hover:scale-[1.01] hover:bg-primary hover:shadow-[0_10px_30px_rgba(56,189,248,0.20)]"
+                  href="/pricing"
+                  className="inline-flex items-center gap-2 rounded-lg bg-primary px-8 py-3.5 text-sm font-semibold text-slate-950 transition-all hover:scale-[1.01] hover:shadow-[0_10px_30px_rgba(56,189,248,0.20)]"
                 >
-                  Start Your Project
+                  View Website Plans
                   <ArrowRight className="h-4 w-4" />
                 </Link>
 
@@ -234,25 +183,9 @@ export default function Home() {
                 </Link>
               </div>
 
-              <p className="mb-8 text-xs text-muted-foreground/70">
-                Tell us what you need built. We’ll review your goals and follow
-                up within one business day.
+              <p className="text-xs text-muted-foreground/70">
+                Prefer to purchase outright? Traditional project pricing is also available.
               </p>
-
-              <div className="flex flex-wrap items-center gap-5 text-sm text-muted-foreground">
-                <div className="inline-flex items-center gap-2">
-                  <ShieldCheck className="h-4 w-4 text-primary" />
-                  Built to earn trust fast
-                </div>
-                <div className="inline-flex items-center gap-2">
-                  <Zap className="h-4 w-4 text-primary" />
-                  Structured for conversion
-                </div>
-                <div className="inline-flex items-center gap-2">
-                  <PhoneCall className="h-4 w-4 text-primary" />
-                  Designed to generate action
-                </div>
-              </div>
             </motion.div>
 
             <motion.div
@@ -262,7 +195,6 @@ export default function Home() {
               className="relative hidden lg:block"
             >
               <div className="absolute -inset-4 rounded-[2rem] bg-sky-400/8 blur-2xl" />
-
               <div className="relative grid h-[560px] grid-cols-2 grid-rows-3 gap-3">
                 {heroTiles.map((tile, index) => (
                   <div
@@ -282,53 +214,49 @@ export default function Home() {
                     </div>
                   </div>
                 ))}
-
-                <div className="absolute -right-4 bottom-16 z-10 rounded-xl border border-white/10 bg-[#0b1220]/90 px-4 py-3 shadow-xl backdrop-blur-md">
-                  <div className="inline-flex items-center gap-2">
-                    <div className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-                    <span className="text-xs font-semibold text-white">
-                      Available for New Projects
-                    </span>
-                  </div>
-                </div>
               </div>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* TRUST STRIP */}
-      <section className="relative bg-transparent py-10">
-        <div className="relative mx-auto grid max-w-7xl grid-cols-2 gap-6 px-4 text-center sm:px-6 md:grid-cols-4 lg:px-8">
-          {trustStrip.map((item, i) => (
-            <motion.div
-              key={item}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.08 }}
-              className="rounded-xl border border-white/8 bg-[#0c1322] px-4 py-4 text-sm font-medium text-foreground shadow-[0_8px_30px_rgba(0,0,0,0.14)] backdrop-blur-sm"
-            >
-              {item}
-            </motion.div>
-          ))}
+      <section className="relative bg-transparent pb-12 pt-4">
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            {pricingLadder.map((item, i) => (
+              <motion.div
+                key={item.name}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.06 }}
+                className={`rounded-2xl border p-5 ${item.featured ? "border-primary/40 bg-sky-400/[0.08]" : "border-white/10 bg-[#0c1322]"}`}
+              >
+                <div className="text-sm font-semibold text-foreground">{item.name}</div>
+                <div className="mt-2 font-heading text-2xl font-bold text-primary">
+                  {item.price}
+                  {item.suffix ? <span className="ml-1 text-sm font-medium text-muted-foreground">{item.suffix}</span> : null}
+                </div>
+              </motion.div>
+            ))}
+          </div>
+          <div className="mt-5 text-center">
+            <Link href="/pricing" className="inline-flex items-center gap-2 text-sm font-medium text-primary transition hover:text-white">
+              See plan details and growth add-ons <ArrowRight className="h-3.5 w-3.5" />
+            </Link>
+          </div>
         </div>
       </section>
 
-      {/* SERVICES */}
-      <section
-        className="py-20 border-t border-white/8"
-        style={{ background: "#070d18" }}
-      >
+      <section className="border-t border-white/8 py-20" style={{ background: "#070d18" }}>
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-14 text-center">
             <span className="eyebrow mb-4">What We Do</span>
             <h2 className="mt-3 font-heading text-3xl font-bold text-foreground sm:text-4xl">
-              What We Actually Help You Achieve
+              Websites First. Growth Services When You Need Them.
             </h2>
             <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
-              Every service is designed to improve how your business is seen,
-              trusted, and contacted online.
+              Start with a professionally managed website, then add ongoing SEO, paid campaigns, or custom systems as the business grows.
             </p>
           </div>
 
@@ -339,23 +267,17 @@ export default function Home() {
                 initial={{ opacity: 0, y: 18 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.08 }}
+                transition={{ delay: i * 0.07 }}
               >
                 <Link
                   href={service.path}
-                  className="group block h-full rounded-2xl border border-white/10 bg-[#0b1220] p-7 shadow-[0_16px_50px_rgba(0,0,0,0.22)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-[0_20px_60px_rgba(0,0,0,0.28)]"
+                  className="group block h-full rounded-2xl border border-white/10 bg-[#0b1220] p-7 shadow-[0_16px_50px_rgba(0,0,0,0.22)] transition-all duration-300 hover:-translate-y-1 hover:border-primary/30"
                 >
-                  <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-sky-400/10 ring-1 ring-white/8 transition-all group-hover:bg-sky-400/15">
+                  <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-sky-400/10 ring-1 ring-white/8">
                     <service.icon className="h-6 w-6 text-primary" />
                   </div>
-
-                  <h3 className="mb-2 font-heading text-lg font-semibold text-foreground">
-                    {service.title}
-                  </h3>
-                  <p className="text-sm leading-relaxed text-muted-foreground">
-                    {service.desc}
-                  </p>
-
+                  <h3 className="mb-2 font-heading text-lg font-semibold text-foreground">{service.title}</h3>
+                  <p className="text-sm leading-relaxed text-muted-foreground">{service.desc}</p>
                   <span className="mt-5 inline-flex items-center gap-1 text-sm font-medium text-primary transition-all group-hover:gap-2">
                     Learn More <ArrowRight className="h-3.5 w-3.5" />
                   </span>
@@ -363,188 +285,60 @@ export default function Home() {
               </motion.div>
             ))}
           </div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="mt-6"
-          >
-            <Link
-              href="/systems/sis"
-              className="group flex items-center justify-between rounded-2xl border border-primary/20 bg-sky-400/[0.05] px-7 py-5 transition-all hover:border-primary/40 hover:bg-sky-400/[0.08]"
-            >
-              <div>
-                <div className="text-xs font-semibold uppercase tracking-[0.18em] text-primary mb-1">
-                  Sentinel Intelligence System
-                </div>
-                <p className="font-heading text-lg font-semibold text-foreground">
-                  Connected systems that run your business →{" "}
-                  <span className="text-primary">SIS</span>
-                </p>
-              </div>
-              <ArrowRight className="h-5 w-5 shrink-0 text-primary transition-transform group-hover:translate-x-1" />
-            </Link>
-          </motion.div>
         </div>
       </section>
 
-      {/* BEST FIT */}
-      <section
-        className="py-20 border-t border-white/8"
-        style={{ background: "#07101f" }}
-      >
-        <div className="mx-auto max-w-5xl px-4 text-center sm:px-6 lg:px-8">
-          <span className="eyebrow mb-4">Best Fit</span>
-          <h2 className="mb-5 mt-3 font-heading text-3xl font-bold text-foreground sm:text-4xl">
-            Built for Businesses That Need Real Results
-          </h2>
-          <p className="mx-auto mb-10 max-w-2xl text-muted-foreground">
-            We are best aligned with businesses that need a stronger online
-            presence, clearer positioning, and a website that helps close more
-            opportunities.
-          </p>
-
-          <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4">
-            {bestFit.map((item, i) => (
-              <motion.div
-                key={item}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.08 }}
-                className="rounded-xl border border-white/10 bg-[#0b1220] px-4 py-5 text-sm font-medium text-foreground shadow-[0_10px_30px_rgba(0,0,0,0.16)] backdrop-blur-sm"
-              >
-                {item}
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* WHY SDL + PROCESS */}
       <section className="relative bg-transparent py-20">
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid items-center gap-16 lg:grid-cols-2">
+          <div className="grid gap-12 lg:grid-cols-[0.9fr,1.1fr] lg:items-center">
             <div>
-              <span className="eyebrow mb-4">Why Sentinels</span>
-              <h2 className="mb-8 mt-3 font-heading text-3xl font-bold text-foreground sm:text-4xl">
-                A More Strategic Website Build From Day One
+              <span className="eyebrow mb-4">Simple by Design</span>
+              <h2 className="mt-3 font-heading text-3xl font-bold text-foreground sm:text-4xl">
+                A Better Website Without the Technical Burden
               </h2>
-
-              <div className="grid gap-6 sm:grid-cols-2">
-                {whyUs.map((item, i) => (
-                  <motion.div
-                    key={item.title}
-                    initial={{ opacity: 0, y: 16 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.1 }}
-                    className="flex gap-4"
-                  >
-                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-sky-400/10 ring-1 ring-white/8">
-                      <item.icon className="h-5 w-5 text-primary" />
-                    </div>
-                    <div>
-                      <h4 className="font-heading text-sm font-semibold text-foreground">
-                        {item.title}
-                      </h4>
-                      <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
-                        {item.desc}
-                      </p>
-                    </div>
-                  </motion.div>
+              <p className="mt-5 text-lg leading-relaxed text-muted-foreground">
+                SDL handles the build and the technical care behind it. You get a professional website without having to coordinate separate hosting, maintenance, security, or deployment vendors.
+              </p>
+              <div className="mt-8 space-y-4">
+                {[
+                  "We make your business look better.",
+                  "We make it easier for customers to find and contact you.",
+                  "We take care of the website afterward.",
+                  "Need software, a CRM, portal, automation or AI? We can build that too.",
+                ].map((item) => (
+                  <div key={item} className="flex items-start gap-3 text-sm leading-7 text-muted-foreground">
+                    <CheckCircle2 className="mt-1 h-4 w-4 shrink-0 text-primary" />
+                    <span>{item}</span>
+                  </div>
                 ))}
               </div>
             </div>
 
-            <motion.div
-              initial={{ opacity: 0, x: 28 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="space-y-5"
-            >
-              <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#0c1322] p-7 shadow-[0_18px_55px_rgba(0,0,0,0.22)] backdrop-blur-sm">
-                <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-primary/15 bg-sky-400/[0.07] px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-primary">
-                  <ShieldCheck className="h-3.5 w-3.5" />
-                  Our Process
-                </div>
-
-                <div className="space-y-5">
-                  {processSteps.map((item) => (
-                    <div key={item.step} className="flex items-start gap-4">
-                      <span className="inline-flex shrink-0 rounded-md bg-sky-400/10 px-2.5 py-1 text-xs font-bold text-primary ring-1 ring-primary/15">
-                        {item.step}
-                      </span>
-                      <div>
-                        <h4 className="font-heading text-sm font-semibold text-foreground">
-                          {item.title}
-                        </h4>
-                        <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
-                          {item.desc}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+            <div className="rounded-[1.75rem] border border-white/10 bg-[#0c1322] p-8 shadow-[0_20px_60px_rgba(0,0,0,0.24)]">
+              <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-primary/15 bg-sky-400/[0.07] px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-primary">
+                <ShieldCheck className="h-3.5 w-3.5" />
+                How It Works
               </div>
-
-              <div className="readability-card rounded-2xl p-7">
-                <h3 className="mb-3 font-heading text-xl font-semibold text-foreground">
-                  What a stronger website should do
-                </h3>
-                <div className="grid gap-3 sm:grid-cols-2">
-                  {[
-                    "Make your business look established",
-                    "Explain your offer clearly",
-                    "Reduce hesitation and confusion",
-                    "Make it easier to call or contact you",
-                    "Support referrals, SEO, and ads",
-                    "Help convert traffic into leads",
-                  ].map((item) => (
-                    <div
-                      key={item}
-                      className="inline-flex items-start gap-2 rounded-lg readability-inner px-3 py-3 text-sm text-muted-foreground"
-                    >
-                      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-                      <span>{item}</span>
+              <div className="space-y-6">
+                {processSteps.map((item) => (
+                  <div key={item.step} className="flex items-start gap-4">
+                    <span className="inline-flex shrink-0 rounded-md bg-sky-400/10 px-2.5 py-1 text-xs font-bold text-primary ring-1 ring-primary/15">
+                      {item.step}
+                    </span>
+                    <div>
+                      <h3 className="font-heading text-base font-semibold text-foreground">{item.title}</h3>
+                      <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{item.desc}</p>
                     </div>
-                  ))}
-                </div>
+                  </div>
+                ))}
               </div>
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ROI BRIDGE */}
-      <section
-        className="py-20 border-t border-white/8"
-        style={{ background: "#050b16" }}
-      >
-        <div className="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
-          <span className="eyebrow mb-4">Investment Perspective</span>
-          <h2 className="mb-5 mt-3 font-heading text-3xl font-bold text-foreground sm:text-4xl">
-            A Website Should Do More Than Exist
-          </h2>
-          <p className="mx-auto mb-8 max-w-2xl text-muted-foreground">
-            Your website should help you win more jobs, build trust faster, and
-            support your marketing efforts — not quietly limit what your
-            business could be doing online.
-          </p>
-          <Link
-            href="/pricing"
-            className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 font-semibold text-slate-950 transition-all hover:scale-[1.01] hover:bg-primary hover:shadow-[0_10px_30px_rgba(56,189,248,0.22)]"
-          >
-            View Pricing & Packages
-            <ArrowRight className="h-4 w-4" />
-          </Link>
-        </div>
-      </section>
-
-      {/* TESTIMONIALS */}
-      <section className="relative bg-transparent py-20">
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section className="border-t border-white/8 py-20" style={{ background: "#07101f" }}>
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-14 text-center">
             <span className="eyebrow mb-4">Testimonials</span>
             <h2 className="mt-3 font-heading text-3xl font-bold text-foreground sm:text-4xl">
@@ -564,95 +358,49 @@ export default function Home() {
               >
                 <div className="mb-4 flex gap-0.5">
                   {[...Array(5)].map((_, j) => (
-                    <Star
-                      key={j}
-                      className="h-4 w-4 fill-primary text-primary"
-                    />
+                    <Star key={j} className="h-4 w-4 fill-primary text-primary" />
                   ))}
                 </div>
-
-                <p className="mb-6 text-sm leading-relaxed text-muted-foreground">
-                  “{t.text}”
-                </p>
-
-                <div>
-                  <div className="font-heading text-sm font-semibold text-foreground">
-                    {t.name}
-                  </div>
-                  <div className="text-xs text-muted-foreground">{t.role}</div>
-                </div>
+                <p className="mb-6 text-sm leading-relaxed text-muted-foreground">“{t.text}”</p>
+                <div className="font-heading text-sm font-semibold text-foreground">{t.name}</div>
+                <div className="text-xs text-muted-foreground">{t.role}</div>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* FEATURED INSIGHTS */}
-      <section
-        className="py-20 border-t border-white/8"
-        style={{ background: "#07101f" }}
-      >
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section className="relative bg-transparent py-20">
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-10 text-center">
             <span className="eyebrow mb-4">SDL Insights</span>
-            <h2 className="mt-3 font-heading text-3xl font-bold text-foreground sm:text-4xl">
-              Featured Insights
-            </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
-              Practical guidance for business owners evaluating website
-              modernization, trust, SEO, and long-term digital infrastructure.
-            </p>
+            <h2 className="mt-3 font-heading text-3xl font-bold text-foreground sm:text-4xl">Featured Insights</h2>
           </div>
-
           <div className="grid gap-6 md:grid-cols-2">
             <Link
               href="/blog/why-outdated-websites-cost-local-businesses-leads"
-              className="group block rounded-2xl border border-white/10 bg-[#08101d] p-7 shadow-[0_16px_50px_rgba(0,0,0,0.22)] transition-all hover:border-primary/30 hover:-translate-y-0.5"
+              className="group block rounded-2xl border border-white/10 bg-[#08101d] p-7 transition-all hover:-translate-y-0.5 hover:border-primary/30"
             >
-              <div className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-primary">
-                Local Business Growth
-              </div>
-              <h3 className="font-heading text-xl font-semibold text-foreground leading-snug group-hover:text-primary transition-colors">
+              <div className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-primary">Local Business Growth</div>
+              <h3 className="font-heading text-xl font-semibold leading-snug text-foreground transition-colors group-hover:text-primary">
                 Why Outdated Websites Cost Local Businesses Leads
               </h3>
               <p className="mt-3 text-sm leading-7 text-muted-foreground">
-                Your website is the first employee every potential customer
-                meets. If it's slow, stale, or hard to use on a phone, they're
-                already walking out the door before you ever knew they arrived.
+                Why an outdated site can quietly erode trust, visibility, and lead flow before a prospect ever contacts you.
               </p>
-              <span className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-primary">
-                Read article <ArrowRight className="h-3.5 w-3.5" />
-              </span>
             </Link>
 
             <Link
               href="/blog/rebuild-wordpress-sites"
-              className="group block rounded-2xl border border-white/10 bg-[#08101d] p-7 shadow-[0_16px_50px_rgba(0,0,0,0.22)] transition-all hover:border-primary/30 hover:-translate-y-0.5"
+              className="group block rounded-2xl border border-white/10 bg-[#08101d] p-7 transition-all hover:-translate-y-0.5 hover:border-primary/30"
             >
-              <div className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-primary">
-                Web Development
-              </div>
-              <h3 className="font-heading text-xl font-semibold text-foreground leading-snug group-hover:text-primary transition-colors">
-                Why We Rebuild WordPress Sites Instead of Maintaining Plugin
-                Stacks
+              <div className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-primary">Web Development</div>
+              <h3 className="font-heading text-xl font-semibold leading-snug text-foreground transition-colors group-hover:text-primary">
+                When It Makes More Sense to Rebuild Than Keep Patching
               </h3>
               <p className="mt-3 text-sm leading-7 text-muted-foreground">
-                What starts as a clean WordPress install becomes a dependency
-                maze of conflicting updates, abandoned integrations, and
-                security gaps that no amount of patching can fully close.
+                A practical look at when modernization creates a cleaner long-term foundation than continuing to patch an aging stack.
               </p>
-              <span className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-primary">
-                Read article <ArrowRight className="h-3.5 w-3.5" />
-              </span>
-            </Link>
-          </div>
-
-          <div className="mt-8 text-center">
-            <Link
-              href="/blog"
-              className="inline-flex items-center gap-2 text-sm font-medium text-primary transition hover:text-white"
-            >
-              View all articles <ArrowRight className="h-3.5 w-3.5" />
             </Link>
           </div>
         </div>
@@ -660,13 +408,13 @@ export default function Home() {
 
       <div className="relative">
         <CTASection
-          eyebrow="Start Strong"
-          title="If your website no longer reflects the quality of your business, it’s time to fix that."
-          description="Tell us about your goals, what you need built, and where your current website or systems are falling short. We’ll review your request and recommend the clearest next step."
-          primaryLabel="Start Your Project"
-          primaryHref="/contact?type=website-project"
-          secondaryLabel="View Our Work"
-          secondaryHref="/work"
+          eyebrow="Ready to Start"
+          title="A professional website should be easier to buy — and easier to own."
+          description="Start with a managed website plan from $150/month, or talk with us about a larger website, growth campaign, or custom digital system."
+          primaryLabel="View Website Plans"
+          primaryHref="/pricing"
+          secondaryLabel="Start a Conversation"
+          secondaryHref="/contact?type=website-project"
         />
       </div>
     </div>
