@@ -2,8 +2,8 @@ import Home from "@/components/pages/Home";
 import { pageMetadata } from "@/lib/metadata";
 
 export const metadata = pageMetadata(
-  "Sentinels Design Lab | Custom Websites & Digital Systems",
-  "Sentinels Design Lab builds modern websites, web applications, portals, dashboards, automations, and custom digital systems using lean code, controlled deployments, and managed infrastructure.",
+  "Managed Websites from $150/Month | Sentinels Design Lab",
+  "Sentinels Design Lab builds managed websites from $150/month with hosting, maintenance, security, backups, monitoring, and support included, plus expanded SEO, PPC/social campaigns, and custom software, CRM, portals, automation, and AI.",
   "/",
 );
 
