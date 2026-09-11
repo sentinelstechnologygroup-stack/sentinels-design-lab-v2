@@ -10,6 +10,23 @@ const MAIN_SITE_URL = "https://sentinelsdesignlab.com";
 export default function Footer() {
   return (
     <footer className="border-t border-white/10 bg-[#050816]">
+      <div className="mx-auto max-w-7xl px-6 pt-10">
+        <Link
+          href="/pricing"
+          className="group flex flex-col gap-3 rounded-2xl border border-primary/20 bg-sky-400/[0.05] px-5 py-5 transition hover:border-primary/40 hover:bg-sky-400/[0.08] sm:flex-row sm:items-center sm:justify-between"
+        >
+          <div>
+            <div className="text-sm font-semibold text-white">Managed websites from $150/month</div>
+            <div className="mt-1 text-xs leading-5 text-white/60">
+              Hosting, maintenance, security, backups, monitoring & support included. Traditional project pricing is also available.
+            </div>
+          </div>
+          <span className="shrink-0 text-sm font-semibold text-primary transition group-hover:text-white">
+            View Pricing →
+          </span>
+        </Link>
+      </div>
+
       <div className="mx-auto grid max-w-7xl gap-10 px-6 py-14 md:grid-cols-[1.3fr,1fr]">
         <div>
           <a href={MAIN_SITE_URL} className="inline-flex items-center" aria-label={`${BUSINESS.name} home`}>

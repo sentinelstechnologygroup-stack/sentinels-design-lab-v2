@@ -2,8 +2,8 @@ import Services from "@/components/pages/Services";
 import { pageMetadata } from "@/lib/metadata";
 
 export const metadata = pageMetadata(
-  "Services | Sentinels Design Lab",
-  "Custom websites, redesigns, portals, dashboards, automations, integrations, and ongoing website or system support for businesses that need practical digital infrastructure.",
+  "Website, SEO, PPC & Custom Systems Services | Sentinels Design Lab",
+  "Managed websites from $150/month with SEO-ready launch setup, plus Expanded SEO, PPC and social campaign management, custom software, CRM, portals, automation, integrations, and AI.",
   "/services",
 );
 
