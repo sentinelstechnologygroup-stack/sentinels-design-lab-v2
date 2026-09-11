@@ -135,6 +135,11 @@ export async function getCalendarConnection(uid) {
   const snapshot = await getDb().collection("calendarConnections").doc(uid).get();
   return snapshot.exists ? snapshot.data() : null;
 }
+
+export async function getReportById(id) {
+  const snapshot = await getDb().collection("reports").doc(id).get();
+  return snapshot.exists ? snapshot.data() : null;
+}
 export async function getOwnedReport(uid, id) {
   const snap = await firestore().collection("reports").doc(id).get();
   return snap.exists && snap.data().uid === uid ? record(snap) : null;

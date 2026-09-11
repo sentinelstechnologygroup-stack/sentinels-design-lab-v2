@@ -18,6 +18,7 @@ const NAV = [
   ["orders", "Orders", ShoppingBag], ["settings", "Settings", Settings],
 ];
 const SOURCES = [
+  ["calendar", "Google Calendar", "Owner availability, appointments, and Google Meet links"],
   ["search-console", "Google Search Console", "Queries, clicks, impressions, position, and indexing"],
   ["analytics", "Google Analytics 4", "Traffic, engagement, events, and conversions"],
   ["business-profile", "Google Business Profile", "Local visibility, reviews, and customer actions"],
