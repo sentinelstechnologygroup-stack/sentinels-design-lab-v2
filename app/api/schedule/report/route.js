@@ -2,12 +2,15 @@ import { NextResponse } from "next/server";
 import { readSchedulingToken } from "@/lib/report-follow-up";
 import { createAppointment } from "@/db/firestore";
 import { createGoogleMeetAppointment, findCalendarAvailability } from "@/lib/google-calendar";
+import { resolveCalendarAccessToken } from "@/lib/google-calendar";
+import { getCalendarConnection } from "@/db/firestore";
 import { queueAppointmentReminders } from "@/lib/appointment-reminders";
 
 export async function GET(request) {
   const invite = readSchedulingToken(new URL(request.url).searchParams.get("token"));
   if (!invite) return NextResponse.json({ error: "This scheduling link is invalid or expired." }, { status: 410 });
-  return NextResponse.json({ ok: true, reportId: invite.reportId, email: invite.email, provider: process.env.CALENDAR_PROVIDER || "google-calendar", calendarConnected: Boolean(process.env.GOOGLE_CALENDAR_REFRESH_TOKEN) });
+  const calendarConnection = await getCalendarConnection(process.env.GOOGLE_CALENDAR_OWNER_UID || "");
+  return NextResponse.json({ ok: true, reportId: invite.reportId, email: invite.email, provider: process.env.CALENDAR_PROVIDER || "google-calendar", calendarConnected: Boolean(calendarConnection?.accessToken) });
 }
 
 export async function POST(request) {
@@ -18,7 +21,8 @@ export async function POST(request) {
   const startDate = new Date(start);
   const endDate = new Date(end);
   if (!start || !end || Number.isNaN(startDate.getTime()) || Number.isNaN(endDate.getTime()) || endDate <= startDate || endDate.getTime() - startDate.getTime() > 60 * 60 * 1000) return NextResponse.json({ error: "Choose a valid appointment window of 60 minutes or less." }, { status: 400 });
-  const accessToken = process.env.GOOGLE_CALENDAR_ACCESS_TOKEN;
+  const connection = await getCalendarConnection(process.env.GOOGLE_CALENDAR_OWNER_UID || "");
+  const accessToken = await resolveCalendarAccessToken(connection);
   if (!accessToken) return NextResponse.json({ error: "Calendar booking is not connected yet." }, { status: 503 });
   const calendarId = process.env.GOOGLE_CALENDAR_ID || "primary";
   const busy = await findCalendarAvailability({ accessToken, calendarId, timeMin: startDate.toISOString(), timeMax: endDate.toISOString(), timeZone });

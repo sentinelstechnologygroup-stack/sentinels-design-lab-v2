@@ -44,7 +44,7 @@ export async function GET(request) {
   authorizationUrl.searchParams.set("redirect_uri", callbackUrl.toString());
   authorizationUrl.searchParams.set("response_type", "code");
   authorizationUrl.searchParams.set("scope", `openid email ${connection.scope}`);
-  authorizationUrl.searchParams.set("access_type", "online");
+  authorizationUrl.searchParams.set("access_type", service === "calendar" ? "offline" : "online");
   authorizationUrl.searchParams.set("include_granted_scopes", "true");
   authorizationUrl.searchParams.set("prompt", "consent select_account");
   authorizationUrl.searchParams.set("state", state);

@@ -126,6 +126,15 @@ export async function createAppointment(values) {
 export async function updateAppointment(id, values) {
   await getDb().collection("appointments").doc(id).set({ ...values, updatedAt: admin.firestore.FieldValue.serverTimestamp() }, { merge: true });
 }
+
+export async function saveCalendarConnection(uid, values) {
+  await getDb().collection("calendarConnections").doc(uid).set({ ...values, uid, updatedAt: admin.firestore.FieldValue.serverTimestamp() }, { merge: true });
+}
+
+export async function getCalendarConnection(uid) {
+  const snapshot = await getDb().collection("calendarConnections").doc(uid).get();
+  return snapshot.exists ? snapshot.data() : null;
+}
 export async function getOwnedReport(uid, id) {
   const snap = await firestore().collection("reports").doc(id).get();
   return snap.exists && snap.data().uid === uid ? record(snap) : null;

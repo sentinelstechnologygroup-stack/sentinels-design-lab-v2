@@ -28,6 +28,11 @@ export const GOOGLE_CONNECTIONS = {
     shortLabel: "Tag Manager",
     scope: "https://www.googleapis.com/auth/tagmanager.readonly",
   },
+  calendar: {
+    label: "Google Calendar",
+    shortLabel: "Calendar",
+    scope: "https://www.googleapis.com/auth/calendar.events",
+  },
 };
 
 export const CONNECTION_MAX_AGE_SECONDS = 60 * 60;

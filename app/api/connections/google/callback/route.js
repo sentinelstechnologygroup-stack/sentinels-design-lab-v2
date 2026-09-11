@@ -8,6 +8,7 @@ import {
   getConnection,
   tokenCookieName,
 } from "@/lib/google-connections";
+import { saveCalendarConnection } from "@/db/firestore";
 
 export const runtime = "nodejs";
 
@@ -51,6 +52,13 @@ export async function GET(request) {
     });
     const tokens = await tokenResponse.json();
     if (!tokenResponse.ok || !tokens.access_token) throw new Error("Google did not return an access token.");
+    if (savedState.service === "calendar") {
+      await saveCalendarConnection(user.uid, {
+        accessToken: encryptConnection({ accessToken: tokens.access_token, expiresAt: Date.now() + (tokens.expires_in || 3600) * 1000 }),
+        refreshToken: tokens.refresh_token ? encryptConnection({ refreshToken: tokens.refresh_token }) : undefined,
+        connectedAt: new Date().toISOString(),
+      });
+    }
 
     const expiresIn = Math.min(tokens.expires_in || CONNECTION_MAX_AGE_SECONDS, CONNECTION_MAX_AGE_SECONDS);
     const successUrl = new URL("/dashboard", request.nextUrl.origin);
