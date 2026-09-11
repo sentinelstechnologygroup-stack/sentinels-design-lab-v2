@@ -35,6 +35,7 @@ export const maxDuration = 60;
 const attempts = new Map();
 const WINDOW_MS = 60 * 60 * 1000;
 const MAX_ATTEMPTS = 3;
+const SUPER_ADMIN_EMAIL = (process.env.SUPER_ADMIN_EMAIL || "patrick@sentinelsdesignlab.com").toLowerCase();
 const concernKeys = [
   "leads",
   "search",
@@ -87,11 +88,12 @@ export async function POST(request) {
     const clientId = (request.headers.get("x-forwarded-for") || "unknown")
       .split(",")[0]
       .trim();
+    const isSuperAdmin = sessionUser.email?.toLowerCase() === SUPER_ADMIN_EMAIL;
     const now = Date.now();
     const recent = (attempts.get(clientId) || []).filter(
       (time) => now - time < WINDOW_MS,
     );
-    if (recent.length >= MAX_ATTEMPTS)
+    if (!isSuperAdmin && recent.length >= MAX_ATTEMPTS)
       return NextResponse.json(
         {
           error:
@@ -106,7 +108,7 @@ export async function POST(request) {
         { status: 400 },
       );
     const url = normalizeWebsite(parsed.data.website);
-    attempts.set(clientId, [...recent, now]);
+    if (!isSuperAdmin) attempts.set(clientId, [...recent, now]);
     const normalizedDomain = new URL(url).hostname
       .toLowerCase()
       .replace(/^www\./, "");
@@ -204,6 +206,8 @@ export async function POST(request) {
       email,
       name: parsed.data.name,
       phone: parsed.data.phone,
+      role: isSuperAdmin ? "super-admin" : "customer",
+      reportEntitlement: isSuperAdmin ? "unlimited" : "standard",
     });
     const websiteId = await upsertWebsiteForDomain(user.uid, normalizedDomain, {
       businessName: parsed.data.businessName,
