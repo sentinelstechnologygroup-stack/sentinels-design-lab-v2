@@ -106,6 +106,26 @@ export async function findRecentFreeReport(uid, normalizedDomain, since) {
 export async function updateReport(id, values) {
   await firestore().collection("reports").doc(id).update(values);
 }
+
+export async function createCommunication(values) {
+  const id = crypto.randomUUID();
+  await getDb().collection("communications").doc(id).set({ ...values, id, status: values.status || "queued", createdAt: admin.firestore.FieldValue.serverTimestamp(), updatedAt: admin.firestore.FieldValue.serverTimestamp() });
+  return { id, ...values };
+}
+
+export async function updateCommunication(id, values) {
+  await getDb().collection("communications").doc(id).set({ ...values, updatedAt: admin.firestore.FieldValue.serverTimestamp() }, { merge: true });
+}
+
+export async function createAppointment(values) {
+  const id = crypto.randomUUID();
+  await getDb().collection("appointments").doc(id).set({ ...values, id, status: values.status || "requested", createdAt: admin.firestore.FieldValue.serverTimestamp(), updatedAt: admin.firestore.FieldValue.serverTimestamp() });
+  return { id, ...values };
+}
+
+export async function updateAppointment(id, values) {
+  await getDb().collection("appointments").doc(id).set({ ...values, updatedAt: admin.firestore.FieldValue.serverTimestamp() }, { merge: true });
+}
 export async function getOwnedReport(uid, id) {
   const snap = await firestore().collection("reports").doc(id).get();
   return snap.exists && snap.data().uid === uid ? record(snap) : null;

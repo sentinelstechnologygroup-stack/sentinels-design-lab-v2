@@ -106,6 +106,31 @@ export async function inspectPage(url) {
   };
 }
 
+export function buildFocusedConcernReview(evaluation, concerns = []) {
+  const labels = {
+    leads: "Leads",
+    search: "Search",
+    functionality: "Functionality",
+    mobile: "Mobile",
+    speed: "Speed",
+    content: "Content",
+    trust: "Trust",
+    security: "Security",
+    local: "Local",
+    advertising: "Advertising",
+  };
+  const categoryMap = {
+    leads: ["Conversion Path", "Links & Functionality"], search: ["Search Foundation"], functionality: ["Links & Functionality"], mobile: ["Technical Health"], speed: ["Technical Health"], content: ["Content Accuracy & Freshness"], trust: ["Trust & Compliance"], security: ["Security & Risk", "Trust & Compliance"], local: ["Search Foundation", "Trust & Compliance"], advertising: ["Conversion Path", "Search Foundation"],
+  };
+  return concerns.slice(0, 3).map((key) => {
+    const checks = (evaluation.categories || []).filter((category) => categoryMap[key]?.includes(category.label)).flatMap((category) => category.checks || []).slice(0, 3);
+    const failed = checks.find((item) => item.status === "Verified Fail");
+    const unverified = checks.find((item) => item.status === "Not Verified");
+    const status = failed ? "Verified concern" : unverified ? "Not verified" : checks.length ? "No issue observed in this limited scan" : "Requires deeper paid analysis";
+    return { key, label: labels[key] || key, status, evidence: failed?.evidence || unverified?.evidence || checks[0]?.evidence || "This concern was not measurable from the limited public scan.", limitation: "This focused review does not replace deeper analytics, SEO, local, competitor, backlink, or paid-search analysis." };
+  });
+}
+
 async function inspectVisibleSignals(url) {
   try {
     const parsed = new URL(url);

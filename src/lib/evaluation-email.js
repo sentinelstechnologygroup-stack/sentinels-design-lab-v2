@@ -1,4 +1,6 @@
 import { sendMail } from "@/lib/smtp";
+import { schedulingUrl } from "@/lib/report-follow-up";
+import { createCommunication } from "@/db/firestore";
 
 function escape(value = "") {
   return String(value).replace(
@@ -42,6 +44,11 @@ function priorityList(priorities) {
     .join("");
 }
 
+function focusedSummary(evaluation) {
+  if (!evaluation.focusedConcernReview?.length) return "";
+  return `<h2 style="font-size:17px;margin:28px 0 8px">Focused concern review</h2><table role="presentation" width="100%" style="border-collapse:collapse">${evaluation.focusedConcernReview.map((item) => `<tr><td style="padding:8px 0;color:#334155;font-size:14px"><strong>${escape(item.label)}:</strong> ${escape(item.status)}<br><span style="color:#64748b;font-size:12px">${escape(item.evidence)}</span></td></tr>`).join("")}</table><p style="color:#64748b;font-size:12px">This review changes emphasis, not the objective score, and does not replace deeper paid analysis.</p>`;
+}
+
 export function customerEmailHtml(evaluation, name) {
   return `<!doctype html><html><body style="margin:0;background:#eef2f7;font-family:Arial,sans-serif;color:#0f172a"><div style="display:none">Your Sentinels Design Lab website readiness snapshot is ready.</div><table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td align="center" style="padding:28px 12px"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:620px;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 10px 30px rgba(15,23,42,.08)"><tr><td style="background:#050c1e;padding:30px 34px"><div style="color:#fff;font-size:22px;font-weight:800;letter-spacing:.04em">SENTINELS DESIGN LAB</div><div style="color:#7dd3fc;font-size:11px;letter-spacing:.12em;margin-top:8px">SENTINEL INTELLIGENCE SYSTEM</div></td></tr><tr><td style="padding:34px"><p style="margin:0 0 10px;color:#64748b;font-size:14px">Hello ${escape(name)},</p><h1 style="margin:0;font-size:27px;line-height:1.25">Your website readiness snapshot is ready</h1><p style="color:#475569;line-height:1.7;font-size:15px">We sampled the public website for <strong>${escape(evaluation.businessName)}</strong>. Its readiness result is <strong>${evaluation.score}/100 - ${escape(evaluation.scoreLabel)}</strong>, with <strong>${escape(evaluation.confidence?.label || "unrated")} confidence</strong>.</p><div style="margin:24px 0;padding:18px;background:#fff7ed;border:1px solid #fed7aa;border-radius:12px;color:#9a3412;font-size:14px;line-height:1.6"><strong>Important:</strong> Only affirmatively verified checks earn credit. Public website signals do not prove rankings, traffic, or lead outcomes.</div><h2 style="font-size:17px;margin:26px 0 8px">Measured public readiness</h2><table role="presentation" width="100%" style="border-collapse:collapse">${scoreRows(evaluation.categories)}</table><h2 style="font-size:17px;margin:28px 0 8px">Critical areas still unverified</h2><table role="presentation" width="100%" style="border-collapse:collapse">${unknownRows(evaluation.unverifiedDimensions)}</table><h2 style="font-size:17px;margin:28px 0 8px">Highest-priority actions</h2><table role="presentation" width="100%">${priorityList(evaluation.priorities)}</table><div style="margin-top:28px;padding:18px;background:#050c1e;border-radius:12px;color:#fff"><strong>Complete the evidence picture</strong><p style="margin:8px 0 0;color:#cbd5e1;font-size:13px;line-height:1.6">The comprehensive SEO and PPC reports add rankings, traffic, competitors, backlinks, local visibility, advertising, and conversion evidence.</p></div><p style="margin:26px 0 0;color:#64748b;font-size:12px;line-height:1.6">Your branded PDF report is attached. Reply to this email if you would like help interpreting the findings.</p></td></tr><tr><td style="background:#f8fafc;padding:20px 34px;color:#64748b;font-size:11px">Sentinels Design Lab - Magnolia, Texas - (832) 432-0224 - Info@SentinelsDesignLab.com</td></tr></table></td></tr></table></body></html>`;
 }
@@ -55,7 +62,9 @@ export async function sendEvaluationEmails({
   lead,
   pdf,
   portalUrl,
+  reportId = evaluation.id,
 }) {
+  const scheduleUrl = schedulingUrl({ reportId, email: lead.email });
   const from =
     process.env.SIS_FROM_EMAIL ||
     "Sentinels Design Lab <reports@sentinelsdesignlab.com>";
@@ -74,7 +83,7 @@ export async function sendEvaluationEmails({
     subject: `${evaluation.businessName} website readiness snapshot`,
     html: customerEmailHtml(evaluation, lead.name).replace(
       '</td></tr><tr><td style="background:#f8fafc',
-      `<div style="margin:26px 0;text-align:center"><a href="${escape(portalUrl)}" style="display:inline-block;background:#2f76f6;color:#fff;text-decoration:none;font-weight:700;padding:14px 22px;border-radius:9px">View My Reports &amp; Additional Bundles</a></div></td></tr><tr><td style="background:#f8fafc`,
+      `${focusedSummary(evaluation)}<div style="margin:26px 0;text-align:center"><a href="${escape(portalUrl)}" style="display:inline-block;background:#2f76f6;color:#fff;text-decoration:none;font-weight:700;padding:14px 22px;border-radius:9px">View My Reports &amp; Additional Bundles</a><br><a href="${escape(scheduleUrl)}" style="display:inline-block;margin-top:12px;color:#2f76f6;font-weight:700">Schedule a 30-minute review</a></div></td></tr><tr><td style="background:#f8fafc`,
     ),
     attachments: [attachment],
   };
@@ -95,6 +104,18 @@ export async function sendEvaluationEmails({
     html: adminEmailHtml(evaluation, lead),
     attachments: [attachment],
   });
+  try {
+    await createCommunication({
+      type: "evaluation-follow-up",
+      reportId,
+      recipient: lead.email,
+      internalRecipient: admin,
+      status: adminResult.sent ? "delivered" : "customer-delivered-admin-failed",
+      schedulingUrl: scheduleUrl,
+    });
+  } catch (error) {
+    console.error("[Sentinels follow-up record]", error);
+  }
   return {
     sent: true,
     customerSent: true,

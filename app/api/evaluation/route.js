@@ -3,6 +3,7 @@ import { z } from "zod";
 import { createHash } from "node:crypto";
 import {
   buildBasicEvaluation,
+  buildFocusedConcernReview,
   EVALUATION_ENGINE_VERSION,
   inspectPage,
   validateEvaluation,
@@ -153,6 +154,7 @@ export async function POST(request) {
       snapshotReused: canReuse,
       snapshotWindowHours: 24,
     };
+    evaluation.focusedConcernReview = buildFocusedConcernReview(evaluation, parsed.data.concerns);
     const searchToken = decryptConnection(
       request.cookies.get(tokenCookieName("search-console"))?.value || "",
     );
@@ -203,7 +205,7 @@ export async function POST(request) {
       reportType: "free-readiness",
       title: `${parsed.data.businessName} Website Readiness Snapshot v${version}`,
       status: "generating",
-      findings: evaluation,
+      findings: { ...evaluation, focusedConcernReview: buildFocusedConcernReview(evaluation, parsed.data.concerns) },
     });
     let storagePath;
     try {
@@ -236,6 +238,7 @@ export async function POST(request) {
         lead: { ...parsed.data, email },
         pdf,
         portalUrl,
+        reportId,
       });
     } catch (error) {
       console.error("[Sentinels Intelligence Suite email delivery]", error);
