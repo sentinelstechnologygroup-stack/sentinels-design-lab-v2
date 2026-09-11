@@ -7,11 +7,19 @@ import { getCalendarConnection, getReportById } from "@/db/firestore";
 import { queueAppointmentReminders } from "@/lib/appointment-reminders";
 
 export async function GET(request) {
-  const invite = readSchedulingToken(new URL(request.url).searchParams.get("token"));
+  const url = new URL(request.url);
+  const invite = readSchedulingToken(url.searchParams.get("token"));
   if (!invite) return NextResponse.json({ error: "This scheduling link is invalid or expired." }, { status: 410 });
   const report = await getReportById(invite.reportId);
   const calendarConnection = await getCalendarConnection(report?.uid || process.env.GOOGLE_CALENDAR_OWNER_UID || "");
-  return NextResponse.json({ ok: true, reportId: invite.reportId, email: invite.email, provider: process.env.CALENDAR_PROVIDER || "google-calendar", calendarConnected: Boolean(calendarConnection?.accessToken) });
+  const accessToken = await resolveCalendarAccessToken(calendarConnection);
+  if (url.searchParams.has("start") && url.searchParams.has("end")) {
+    if (!accessToken) return NextResponse.json({ error: "Calendar booking is not connected yet." }, { status: 503 });
+    const calendarId = process.env.GOOGLE_CALENDAR_ID || "primary";
+    const busy = await findCalendarAvailability({ accessToken, calendarId, timeMin: new Date(url.searchParams.get("start")).toISOString(), timeMax: new Date(url.searchParams.get("end")).toISOString(), timeZone: url.searchParams.get("timeZone") || "America/Chicago" });
+    return NextResponse.json({ ok: true, available: !(busy.calendars?.[calendarId]?.busy?.length) });
+  }
+  return NextResponse.json({ ok: true, reportId: invite.reportId, email: invite.email, provider: process.env.CALENDAR_PROVIDER || "google-calendar", calendarConnected: Boolean(accessToken) });
 }
 
 export async function POST(request) {
