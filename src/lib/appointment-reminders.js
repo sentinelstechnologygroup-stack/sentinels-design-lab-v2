@@ -13,6 +13,7 @@ export async function queueAppointmentReminders({ appointmentId, attendeeEmail, 
     recipient: attendeeEmail,
     meetingUrl,
     scheduledFor: reminder.sendAt,
+    idempotencyKey: `appointment-reminder:${appointmentId}:${reminder.kind}`,
     status: "queued",
   })));
 }
