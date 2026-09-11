@@ -127,7 +127,11 @@ function Overview({ customer, reports, orders, websites, score, latest, choose, 
 
 function FreeEvaluationModal({ customer, websites, close }) {
   const savedWebsites = websites.length ? websites : customer.website ? [{ id: "profile", businessName: customer.businessName, url: customer.website, location: customer.serviceArea }] : [];
+  const isSuperAdmin = customer.email?.toLowerCase() === "patrick@sentinelsdesignlab.com";
   const [websiteId, setWebsiteId] = useState(savedWebsites[0]?.id || "");
+  const [customMode, setCustomMode] = useState(isSuperAdmin && savedWebsites.length === 0);
+  const [customWebsite, setCustomWebsite] = useState("");
+  const [customBusinessName, setCustomBusinessName] = useState("");
   const [concerns, setConcerns] = useState([]);
   const [primaryService, setPrimaryService] = useState(savedWebsites[0]?.primaryService || "");
   const [busy, setBusy] = useState(false);
@@ -149,8 +153,14 @@ function FreeEvaluationModal({ customer, websites, close }) {
 
   async function submit(event) {
     event.preventDefault();
-    if (!selected) {
+    if (!selected && !customMode) {
       window.location.assign("/evaluation");
+      return;
+    }
+    const website = customMode ? customWebsite.trim() : selected.url || customer.website;
+    const businessName = customMode ? customBusinessName.trim() : selected.businessName || customer.businessName;
+    if (customMode && (!website || !businessName)) {
+      setError("Enter the business name and public website you want to evaluate.");
       return;
     }
     setBusy(true);
@@ -163,8 +173,8 @@ function FreeEvaluationModal({ customer, websites, close }) {
           name: customer.name,
           email: customer.email,
           phone: customer.phone || "",
-          businessName: selected.businessName || customer.businessName,
-          website: selected.url || customer.website,
+          businessName,
+          website,
           primaryService,
           location: selected.location || customer.serviceArea || "",
           concerns,
@@ -184,8 +194,9 @@ function FreeEvaluationModal({ customer, websites, close }) {
   return <div className="fixed inset-0 z-[70] flex items-center justify-center bg-black/75 p-4 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="evaluation-title">
     <div className="max-h-[92vh] w-full max-w-2xl overflow-y-auto rounded-2xl border border-blue-400/25 bg-[#0b1220] p-6 shadow-2xl sm:p-7">
       <div className="flex items-start justify-between gap-4"><div><p className="text-xs font-semibold uppercase tracking-[.18em] text-cyan-300">Website readiness snapshot</p><h2 id="evaluation-title" className="mt-2 text-2xl font-bold">Run Free Evaluation</h2><p className="mt-2 text-sm leading-6 text-white/50">Your saved account details will be used automatically. Optionally choose up to three areas you want prioritized.</p></div><button onClick={close} className="rounded-lg p-2 text-white/50 hover:bg-white/[.06] hover:text-white" aria-label="Close evaluation"><X className="h-5 w-5"/></button></div>
-      {savedWebsites.length ? <form onSubmit={submit} className="mt-6">
-        <label className="text-sm font-medium">Website<select value={websiteId} onChange={chooseWebsite} className="mt-2 h-12 w-full rounded-xl border border-white/10 bg-[#101827] px-4">{savedWebsites.map((website) => <option key={website.id} value={website.id}>{website.businessName || website.url} — {website.url}</option>)}</select></label>
+      {(savedWebsites.length || isSuperAdmin) ? <form onSubmit={submit} className="mt-6">
+        {isSuperAdmin && <div className="mb-5 rounded-xl border border-cyan-400/25 bg-cyan-400/[.06] p-4"><p className="text-sm font-semibold text-cyan-200">Admin testing mode</p><p className="mt-1 text-xs leading-5 text-white/55">You can run unlimited evaluations for any public website. Each site is archived independently with its next version number.</p><button type="button" onClick={() => setCustomMode((current) => !current)} className="mt-3 rounded-lg border border-cyan-300/30 px-3 py-2 text-xs font-semibold text-cyan-200">{customMode ? "Use a saved website" : "Evaluate another website"}</button></div>}
+        {customMode ? <div className="grid gap-4 sm:grid-cols-2"><label className="text-sm font-medium">Business name<input required value={customBusinessName} onChange={(event) => setCustomBusinessName(event.target.value)} placeholder="Business being evaluated" className="mt-2 h-12 w-full rounded-xl border border-white/10 bg-white/[.04] px-4"/></label><label className="text-sm font-medium">Website address<input required type="url" value={customWebsite} onChange={(event) => setCustomWebsite(event.target.value)} placeholder="https://example.com" className="mt-2 h-12 w-full rounded-xl border border-white/10 bg-white/[.04] px-4"/></label></div> : <label className="text-sm font-medium">Website<select value={websiteId} onChange={chooseWebsite} className="mt-2 h-12 w-full rounded-xl border border-white/10 bg-[#101827] px-4">{savedWebsites.map((website) => <option key={website.id} value={website.id}>{website.businessName || website.url} — {website.url}</option>)}</select></label>}
         <label className="mt-4 block text-sm font-medium">Primary service<input required value={primaryService} onChange={(event) => setPrimaryService(event.target.value)} placeholder="What do customers hire you for?" className="mt-2 h-12 w-full rounded-xl border border-white/10 bg-white/[.04] px-4"/></label>
         <fieldset className="mt-5"><legend className="text-sm font-medium">What concerns should this report prioritize? <span className="font-normal text-white/40">Optional · select up to three</span></legend><div className="mt-3 grid gap-2 sm:grid-cols-2">{CONCERNS.map(([key, label]) => { const checked = concerns.includes(key); const disabled = !checked && concerns.length >= 3; return <label key={key} className={`flex cursor-pointer gap-3 rounded-xl border px-3 py-3 text-sm ${checked ? "border-blue-400/50 bg-blue-500/10" : "border-white/10 bg-white/[.025]"} ${disabled ? "cursor-not-allowed opacity-40" : ""}`}><input type="checkbox" checked={checked} disabled={disabled} onChange={() => toggleConcern(key)} className="mt-0.5 h-4 w-4 accent-blue-500"/><span>{label}</span></label>; })}</div></fieldset>
         {error && <p className="mt-5 rounded-xl border border-red-400/30 bg-red-400/10 px-4 py-3 text-sm text-red-200">{error}</p>}
