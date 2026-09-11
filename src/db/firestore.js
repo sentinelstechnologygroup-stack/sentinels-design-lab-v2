@@ -120,11 +120,13 @@ export async function updateReport(id, values) {
 export async function createCommunication(values) {
   const id = values.idempotencyKey ? createHash("sha256").update(values.idempotencyKey).digest("hex") : randomUUID();
   const ref = firestore().collection("communications").doc(id);
-  const existing = await ref.get();
-  if (existing.exists) return record(existing);
   const data = { ...values, id, status: values.status || "queued", createdAt: FieldValue.serverTimestamp(), updatedAt: FieldValue.serverTimestamp() };
-  await ref.create(data);
-  return { id, ...values, status: data.status };
+  return firestore().runTransaction(async (transaction) => {
+    const existing = await transaction.get(ref);
+    if (existing.exists) return record(existing);
+    transaction.create(ref, data);
+    return { id, ...values, status: data.status };
+  });
 }
 
 export async function updateCommunication(id, values) {
