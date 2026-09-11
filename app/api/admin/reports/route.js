@@ -19,8 +19,8 @@ export async function POST(request) {
   try { parsed = new URL(website.startsWith("http") ? website : `https://${website}`); } catch { return NextResponse.json({ error: "Enter a valid public website URL." }, { status: 400 }); }
   const normalizedDomain = parsed.hostname.toLowerCase().replace(/^www\./, "");
   const websiteId = await upsertWebsiteForDomain(session.uid, normalizedDomain, { businessName, url: parsed.toString(), normalizedDomain });
-  const order = { id: `admin-${Date.now()}`, uid: session.uid, websiteId, selectedReports, offerCode: `admin-${body.level}`, status: "paid", generationStatus: "generating" };
-  await createOrder(session.uid, { ...order, adminRun: true, amountCents: 0, currency: "usd" });
-  try { return NextResponse.json({ ok: true, reportIds: await generateOrderReports(order) }); }
+  const order = { uid: session.uid, websiteId, selectedReports, offerCode: `admin-${body.level}`, status: "paid", generationStatus: "generating" };
+  const orderId = await createOrder(session.uid, { ...order, adminRun: true, amountCents: 0, currency: "usd" });
+  try { return NextResponse.json({ ok: true, reportIds: await generateOrderReports({ ...order, id: orderId }) }); }
   catch (error) { return NextResponse.json({ error: error.message || "The report could not be generated." }, { status: 500 }); }
 }
