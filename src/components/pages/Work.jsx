@@ -262,6 +262,43 @@ export default function Work() {
             </p>
           </div>
 
+          <div className="mt-10" id="golden-cross-realty">
+            <ProofCaseCard
+              name="Golden Cross Realty"
+              industry="Texas Real Estate"
+              projectType="Website Redesign"
+              status="FEATURED PROJECT"
+              allMedia={[
+                {
+                  src: "/images/work/golden-cross-realty-before.png",
+                  alt: "Golden Cross Realty homepage before the redesign, with company information above property listings",
+                  label: "Before",
+                },
+                {
+                  src: "/images/work/golden-cross-realty-after.png",
+                  alt: "Golden Cross Realty redesigned homepage with prominent property search, communities, and team profiles",
+                  label: "After",
+                },
+              ]}
+              liveLink="https://goldencrossrealty.net/"
+              originalStateLabel="Business Needs"
+              whatChangedLabel="What SDL Built"
+              resultLabel="The Outcome"
+              originalState={[
+                "Make property discovery, local expertise, and agent contact easier to find while giving the brokerage a more polished online presence.",
+                "Give buyers, sellers, and clients exploring land and investment opportunities clear starting points for their goals.",
+              ]}
+              whatChanged={[
+                "A search-led homepage with buyer and seller pathways, community highlights, and featured and sold properties.",
+                "A refined black, ivory, and gold presentation with property photography, team profiles, client testimonials, and consultation calls to action.",
+              ]}
+              result={[
+                "A more cohesive real estate experience that brings properties, people, and local knowledge together.",
+                "Better-organized content and clearer next steps from browsing to inquiry create a stronger digital foundation for the brokerage.",
+              ]}
+              note="The redesigned website is temporarily hosted at goldencrossrealty.net."
+            />
+          </div>
           <div className="mt-10 grid gap-8 xl:grid-cols-2">
             {websiteProjects.map((project) => {
               const proof = websiteProof[project.slug];
