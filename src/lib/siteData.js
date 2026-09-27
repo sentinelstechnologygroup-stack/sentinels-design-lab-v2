@@ -327,7 +327,7 @@ export const workProjects = [
         alt: "ELI Land Design SDL rebuild preview — awaiting client launch approval",
       },
     ],
-    liveLink: "",
+    liveLink: "https://elilanddesign.com/",
   },
   {
     slug: "premier-kitchens",
