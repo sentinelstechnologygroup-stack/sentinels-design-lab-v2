@@ -270,12 +270,12 @@ export default function Work() {
               status="FEATURED PROJECT"
               allMedia={[
                 {
-                  src: "/images/work/golden-cross-realty-before.png",
+                  src: "/images/work/golden-cross-realty-before.webp",
                   alt: "Golden Cross Realty homepage before the redesign, with company information above property listings",
                   label: "Before",
                 },
                 {
-                  src: "/images/work/golden-cross-realty-after.png",
+                  src: "/images/work/golden-cross-realty-after.webp",
                   alt: "Golden Cross Realty redesigned homepage with prominent property search, communities, and team profiles",
                   label: "After",
                 },
