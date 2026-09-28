@@ -295,6 +295,46 @@ export const pricingFactors = [
 
 export const workProjects = [
   {
+    slug: "daily-spread",
+    section: "website-work",
+    name: "Daily Spread",
+    industry: "Catering / chef-prepared meals",
+    projectType: "Website Redesign",
+    status: "Redesign preview",
+    media: [
+      {
+        kind: "image",
+        label: "Before — original site",
+        src: "/images/work/daily-spread-before.webp",
+        alt: "Daily Spread original homepage with meal promotions and ordering information",
+      },
+      {
+        kind: "image",
+        label: "After — redesign preview",
+        src: "/images/work/daily-spread-after.webp",
+        alt: "Daily Spread redesigned homepage featuring catering, weekly dinners, and food photography",
+      },
+    ],
+    liveLink: "https://daily-spread.com/",
+  },
+  {
+    slug: "mdx-fuel",
+    section: "website-work",
+    name: "MDX Fuel",
+    industry: "Commercial fuel / petroleum distribution",
+    projectType: "New Build: Website + AI CRM + Inventory",
+    status: "Live website",
+    media: [
+      {
+        kind: "image",
+        label: "Current — live site",
+        src: "/images/work/mdx-fuel-current.webp",
+        alt: "MDX Fuel live homepage with commercial tanker imagery and fuel quote and delivery calls to action",
+      },
+    ],
+    liveLink: "https://mdxfuel.com/",
+  },
+  {
     slug: "eli-land-design",
     section: "website-work",
     name: "ELI Land Design",

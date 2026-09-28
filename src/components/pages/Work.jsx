@@ -7,6 +7,38 @@ import SystemProofCard from "@/components/work/SystemProofCard";
 import { workProjects } from "@/lib/siteData";
 
 const websiteProof = {
+  "daily-spread": {
+    originalState: [
+      "Bring catering and chef-prepared meals into a clearer, more cohesive presentation.",
+      "Make menus, weekly dinner information, and ordering paths easier to find beyond promotional content.",
+    ],
+    whatChanged: [
+      "Reorganized the homepage around catering, the weekly dinner series, menu discovery, and food photography.",
+      "Introduced a refined blue-and-ivory design with clear menu, order, and catering calls to action.",
+    ],
+    result: [
+      "The redesign gives catering and prepared meals distinct, easy-to-scan sections.",
+      "A more polished presentation connects the food offering to clear next steps for diners and event planners.",
+    ],
+    note: "Redesign preview shown alongside the original homepage. The public domain currently displays the original site.",
+  },
+  "mdx-fuel": {
+    isNewBuild: true,
+    originalState: [
+      "Establish a professional website for a Tomball-based commercial fuel business, backed by custom tools for sales and inventory.",
+      "Give customers clear product and delivery information while supporting the team's sales and inventory workflows.",
+    ],
+    whatChanged: [
+      "Built a new website with dedicated product, service, industry, and Greater Houston service-area content.",
+      "Built a custom sales CRM with AI capabilities and MDX-IMS (Inventory Management System), a custom app-based barcode inventory tracing system.",
+      "Added prominent quote requests, delivery contact options, and account-opening navigation to the website.",
+    ],
+    result: [
+      "A custom digital foundation spanning the public website, sales CRM with AI, and barcode-based inventory tracing through MDX-IMS.",
+      "Clear paths for customers to request fuel, alongside purpose-built tools supporting the business behind the website.",
+    ],
+    note: "SDL custom-built the website, sales CRM with AI, and MDX-IMS inventory app. The screenshot shows the public website; internal systems are not pictured.",
+  },
   "eli-land-design": {
     originalState: [
       "Strong visual intent but overextended structure that made the site harder to navigate.",
