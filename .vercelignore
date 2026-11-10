@@ -1,0 +1,5 @@
+out
+coverage
+.next
+node_modules
+*.log

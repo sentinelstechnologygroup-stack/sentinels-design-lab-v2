@@ -74,7 +74,7 @@ export async function collectAdvancedPublicData({ reportCode, website, businessN
   }
 
   const settled = await Promise.allSettled(requests);
-  const completed = settled.filter((item) => item.status === "fulfilled").map((item) => item.value);
+  const completed = settled.filter((item) => item.status === "fulfilled" && item.value?.result?.length).map((item) => item.value);
   if (reportCode === "ppc-intelligence" && !keywords.length) {
     const ranked = completed.find((item) => item.endpoint.includes("ranked_keywords"));
     const discovered = (ranked?.result?.[0]?.items || []).map((item) => item.keyword_data?.keyword).filter(Boolean).slice(0, 1000);

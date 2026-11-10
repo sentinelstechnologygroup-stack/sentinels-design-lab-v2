@@ -5,8 +5,13 @@ import { generateAdvancedReportPdf } from "@/lib/advanced-report-pdf";
 import { createReport, findReportsByOrder, getWebsite, updateOrder, updateReport } from "@/db/firestore";
 import { storeReportPdf } from "@/lib/report-storage";
 import { REPORT_CATALOG_BY_CODE } from "@/lib/report-catalog";
+import { sendMail } from "@/lib/smtp";
+import { schedulingUrl } from "@/lib/report-follow-up";
+import { adminAuth } from "@/lib/firebase-admin";
+import { buildPpcTemplateData, buildSeoTemplateData, buildWebsiteTemplateData } from "@/lib/report-template-data";
 
-const CONNECT = "https://reports.sentinelsdesignlab.com/dashboard#connections";
+const CONNECT = "https://sentinelsdesignlab.com/dashboard#connections";
+const REPORT_TEMPLATE_VERSION = "SDL Report Templates v2";
 const required = {
   "seo-intelligence": [["Google Search Console", "rankings, queries, clicks, impressions, and indexing"], ["Google Analytics 4", "organic visits, engagement, and conversions"], ["Google Business Profile", "owner-verified local visibility and customer actions"]],
   "ppc-intelligence": [["Google Ads", "campaigns, spend, search terms, and paid conversions"], ["Google Analytics 4", "post-click engagement and conversion paths"], ["Google Tag Manager", "conversion-tag and tracking configuration"]],
@@ -64,7 +69,9 @@ async function buildReport(code, website, connectedData = {}) {
   if (code === "website-conversion") [evaluation, crawl] = await Promise.all([inspectPage(website.url).then((inspection) => buildBasicEvaluation(website.url, inspection, website)), crawlSite(website.url, 50)]);
   else publicData = await collectAdvancedPublicData({ reportCode: code, website: website.url, businessName: website.businessName });
   const sections = [...publicSections(code, publicData, evaluation, crawl), ...pendingSections(code, connectedData)];
-  return { reportType: code, title: catalog.name, businessName: website.businessName, website: website.url, generatedAt: new Date().toISOString(), summary: `This ${catalog.name} combines current public evidence with explicit customer-data boundaries. ${sections.filter((item) => item.status === "pending_access").length} customer-owned source section(s) remain pending access and are not interpreted as poor performance.`, sections, actionPlan: actionPlan(code), sources: ["DataForSEO API v3", ...(code === "website-conversion" ? ["Live website inspection"] : []), ...required[code].map(([name]) => `${name} - pending access`)] };
+  const generatedAt = new Date().toISOString();
+  const templateData = code === "seo-intelligence" ? buildSeoTemplateData({ website: website.url, businessName: website.businessName, generatedAt, collection: publicData }) : code === "ppc-intelligence" ? buildPpcTemplateData({ website: website.url, businessName: website.businessName, generatedAt, collection: publicData }) : buildWebsiteTemplateData({ website: website.url, businessName: website.businessName, generatedAt, crawl });
+  return { reportType: code, templateVersion: REPORT_TEMPLATE_VERSION, title: catalog.name, businessName: website.businessName, website: website.url, generatedAt, summary: `This ${catalog.name} follows the ${REPORT_TEMPLATE_VERSION} data contract and combines current public evidence with explicit customer-data boundaries. ${sections.filter((item) => item.status === "pending_access").length} customer-owned source section(s) remain pending access and are not interpreted as poor performance.`, sections, actionPlan: actionPlan(code), sources: [REPORT_TEMPLATE_VERSION, "DataForSEO API v3", ...(code === "website-conversion" ? ["Live website inspection"] : []), ...required[code].map(([name]) => `${name} - pending access`)], templateData };
 }
 
 export async function generateOrderReports(order, { force = false, connectedData = {} } = {}) {
@@ -74,7 +81,27 @@ export async function generateOrderReports(order, { force = false, connectedData
   if (!website || website.uid !== order.uid) throw new Error("The purchased website could not be found.");
   await updateOrder(order.id, { generationStatus: "generating", generationStartedAt: new Date() });
   const generated = [];
+  const generatedContents = [];
   const failures = [];
+  let customerEmail = order.customerEmail || order.email || "";
+  if (!customerEmail && order.uid) {
+    try { customerEmail = (await adminAuth().getUser(order.uid)).email || ""; } catch { /* The report remains available in the portal if identity lookup is unavailable. */ }
+  }
+  async function notifyCustomer(content, pdf, reportId) {
+    if (!customerEmail) return { sent: false, reason: "customer_email_unavailable" };
+    const from = process.env.SIS_FROM_EMAIL || "Sentinels Design Lab <reports@sentinelsdesignlab.com>";
+    const admin = process.env.SIS_NOTIFICATION_EMAIL || "reports@sentinelsdesignlab.com";
+    const schedule = schedulingUrl({ reportId, email: customerEmail });
+    return sendMail({
+      from,
+      to: customerEmail,
+      cc: admin,
+      replyTo: admin,
+      subject: `${content.businessName} - ${content.title} is ready`,
+      html: `<div style="font-family:Arial,sans-serif;color:#172033;line-height:1.6"><h2 style="color:#0b1220">Your ${content.title} is ready</h2><p>Your report for <strong>${content.businessName}</strong> has finished generating and is attached to this email.</p><p><a href="${schedule}" style="display:inline-block;background:#2f76f6;color:#fff;padding:12px 18px;border-radius:8px;text-decoration:none;font-weight:700">Schedule a 30-minute review</a></p><p style="color:#64748b;font-size:13px">Use the scheduling link to select an available Google Meet time. If calendar booking is temporarily unavailable, reply to this email and we will arrange a time directly.</p></div>`,
+      attachments: [{ filename: `${content.businessName}-${content.title}.pdf`.replace(/[^a-z0-9.]+/gi, "-"), content: Buffer.from(pdf), contentType: "application/pdf" }],
+    });
+  }
   try {
     for (const code of order.selectedReports || []) {
       if (completedTypes.has(code)) continue;
@@ -86,17 +113,24 @@ export async function generateOrderReports(order, { force = false, connectedData
       }
       const reportId = await createReport(order.uid, { orderId: order.id, websiteId: website.id, reportType: code, title: `${website.businessName} - ${content.title}${force ? " Reevaluation" : ""}`, status: "generating", reevaluation: force, findings: { summary: content.summary, pendingAccess: content.sections.some((item) => item.status === "pending_access") } });
       try {
-        const storagePath = await storeReportPdf({ uid: order.uid, reportId, pdf: generateAdvancedReportPdf(content) });
-        await updateReport(reportId, { storagePath, status: "complete", completedAt: new Date() }); generated.push(reportId);
+        const pdf = generateAdvancedReportPdf(content);
+        const storagePath = await storeReportPdf({ uid: order.uid, reportId, pdf });
+        const delivery = await notifyCustomer(content, pdf, reportId);
+        await updateReport(reportId, { storagePath, status: "complete", completedAt: new Date(), deliveryStatus: delivery.sent ? "emailed" : "portal_only", deliveryReason: delivery.reason || null }); generated.push(reportId); generatedContents.push({ code, content });
+        if (!delivery.sent) failures.push(`${code} email: ${delivery.reason || "not sent"}`);
       } catch (error) { await updateReport(reportId, { status: "failed", error: error.message }); failures.push(`${code} PDF: ${error.message}`); }
     }
     if ((order.selectedReports || []).length > 1 && !completedTypes.has("executive-rollup")) {
-      const content = { reportType: "executive-rollup", title: "Complete Growth Intelligence Executive Rollup", businessName: website.businessName, website: website.url, generatedAt: new Date().toISOString(), summary: "This executive rollup unifies the SEO, PPC, and website-conversion analyses into one decision sequence while preserving every source limitation and pending-access requirement.", sections: order.selectedReports.map((code) => ({ title: REPORT_CATALOG_BY_CODE[code].name, status: "included", detail: "A separate, complete PDF for this analysis has been generated and saved in the customer portal.", action: `Open the ${REPORT_CATALOG_BY_CODE[code].name} for evidence and detailed recommendations.` })), actionPlan: actionPlan("website-conversion"), sources: ["SEO Intelligence PDF", "PPC Intelligence PDF", "Website & Conversion Deep Dive PDF"] };
+      const content = { reportType: "executive-rollup", title: "Complete Growth Intelligence Executive Rollup", businessName: website.businessName, website: website.url, generatedAt: new Date().toISOString(), summary: "This executive rollup contains the complete SEO, PPC, and website-conversion evidence in one report while preserving every source limitation and pending-access requirement.", sections: generatedContents.flatMap(({ code, content }) => [{ title: REPORT_CATALOG_BY_CODE[code].name, status: "included", detail: content.summary, action: `See the detailed ${REPORT_CATALOG_BY_CODE[code].name} findings below.` }, ...(content.sections || []).map((item) => ({ ...item, title: `${REPORT_CATALOG_BY_CODE[code].name}: ${item.title}` }))]), actionPlan: actionPlan("website-conversion"), sources: ["SEO Intelligence PDF", "PPC Intelligence PDF", "Website & Conversion Deep Dive PDF"], templateData: { client: { name: website.businessName, url: website.url, generatedAt: new Date().toISOString() }, scores: { overall: 0, seo: 0, ppc: 0, website: 0 }, narrative: "Combined report generated from the underlying approved report data objects.", topPriority: { title: "Connect customer-owned data sources", body: "Google and Meta-dependent evidence is currently unavailable until the customer authorizes the appropriate accounts." }, connections: [], priorities: [], seoSnapshot: {}, ppcSnapshot: {}, websiteSnapshot: {}, plan: actionPlan("website-conversion"), sources: "DataForSEO API v3 • Google and Meta customer sources currently unavailable" } };
       const reportId = await createReport(order.uid, { orderId: order.id, websiteId: website.id, reportType: "executive-rollup", title: `${website.businessName} - ${content.title}`, status: "generating", findings: { summary: content.summary } });
-      const storagePath = await storeReportPdf({ uid: order.uid, reportId, pdf: generateAdvancedReportPdf(content) });
-      await updateReport(reportId, { storagePath, status: "complete", completedAt: new Date() }); generated.push(reportId);
+      const pdf = generateAdvancedReportPdf(content);
+      const storagePath = await storeReportPdf({ uid: order.uid, reportId, pdf });
+      const delivery = await notifyCustomer(content, pdf, reportId);
+      await updateReport(reportId, { storagePath, status: "complete", completedAt: new Date(), deliveryStatus: delivery.sent ? "emailed" : "portal_only", deliveryReason: delivery.reason || null }); generated.push(reportId);
+      if (!delivery.sent) failures.push(`executive-rollup email: ${delivery.reason || "not sent"}`);
     }
     await updateOrder(order.id, { generationStatus: failures.length ? "complete_with_warnings" : "complete", generatedReportIds: generated, generationWarnings: failures, generationCompletedAt: new Date() });
     return generated;
   } catch (error) { await updateOrder(order.id, { generationStatus: "failed", generationError: error.message }); throw error; }
 }
+

@@ -7,16 +7,18 @@ import {
   selectionCookieName,
   tokenCookieName,
 } from "@/lib/google-connections";
+import { getCalendarConnection } from "@/db/firestore";
 
 export const dynamic = "force-dynamic";
 
 export async function GET(request) {
   const user = await getSessionUser();
   if (!user) return NextResponse.json({ error: "Authentication required." }, { status: 401 });
+  const calendarConnection = await getCalendarConnection(user.uid);
   const connections = Object.fromEntries(
     Object.keys(GOOGLE_CONNECTIONS).map((service) => {
       const token = decryptConnection(request.cookies.get(tokenCookieName(service))?.value || "");
-      return [service, Boolean(token?.accessToken && token.expiresAt > Date.now())];
+      return [service, service === "calendar" ? Boolean(calendarConnection?.accessToken) : Boolean(token?.accessToken && token.expiresAt > Date.now())];
     }),
   );
   const selections = Object.fromEntries(

@@ -7,7 +7,7 @@ import { Menu, X } from "lucide-react";
 import { BUSINESS, NAV_LINKS, IMAGES } from "@/lib/constants";
 
 const MAIN_SITE_URL = "https://sentinelsdesignlab.com";
-const REPORTS_URL = "https://reports.sentinelsdesignlab.com";
+const REPORTS_URL = "https://sentinelsdesignlab.com";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);

@@ -10,6 +10,10 @@ import {
 
 export const runtime = "nodejs";
 
+function productionOrigin() {
+  return new URL(process.env.NEXT_PUBLIC_APP_URL || "https://sentinelsdesignlab.com").origin;
+}
+
 export async function GET(request) {
   const user = await getSessionUser();
   if (!user) return NextResponse.json({ error: "Authentication required." }, { status: 401 });
@@ -34,13 +38,13 @@ export async function GET(request) {
   const state = crypto.randomBytes(24).toString("base64url");
   const codeVerifier = crypto.randomBytes(48).toString("base64url");
   const codeChallenge = crypto.createHash("sha256").update(codeVerifier).digest("base64url");
-  const callbackUrl = new URL("/api/connections/google/callback", request.nextUrl.origin);
+  const callbackUrl = new URL("/api/connections/google/callback", productionOrigin());
   const authorizationUrl = new URL("https://accounts.google.com/o/oauth2/v2/auth");
   authorizationUrl.searchParams.set("client_id", process.env.GOOGLE_OAUTH_CLIENT_ID);
   authorizationUrl.searchParams.set("redirect_uri", callbackUrl.toString());
   authorizationUrl.searchParams.set("response_type", "code");
   authorizationUrl.searchParams.set("scope", `openid email ${connection.scope}`);
-  authorizationUrl.searchParams.set("access_type", "online");
+  authorizationUrl.searchParams.set("access_type", service === "calendar" ? "offline" : "online");
   authorizationUrl.searchParams.set("include_granted_scopes", "true");
   authorizationUrl.searchParams.set("prompt", "consent select_account");
   authorizationUrl.searchParams.set("state", state);

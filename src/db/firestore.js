@@ -103,8 +103,63 @@ export async function findRecentFreeReport(uid, normalizedDomain, since) {
     .filter((report) => report.status === "complete" && report.storagePath && new Date(report.generatedAt || 0).getTime() >= cutoff)
     .sort((a, b) => new Date(b.generatedAt || 0) - new Date(a.generatedAt || 0))[0] || null;
 }
+export async function findReportByIdempotencyKey(uid, idempotencyKey) {
+  if (!idempotencyKey) return null;
+  const snap = await firestore()
+    .collection("reports")
+    .where("uid", "==", uid)
+    .where("idempotencyKey", "==", idempotencyKey)
+    .limit(1)
+    .get();
+  return snap.empty ? null : record(snap.docs[0]);
+}
 export async function updateReport(id, values) {
   await firestore().collection("reports").doc(id).update(values);
+}
+
+export async function createCommunication(values) {
+  const id = values.idempotencyKey ? createHash("sha256").update(values.idempotencyKey).digest("hex") : randomUUID();
+  const ref = firestore().collection("communications").doc(id);
+  const data = { ...values, id, status: values.status || "queued", createdAt: FieldValue.serverTimestamp(), updatedAt: FieldValue.serverTimestamp() };
+  return firestore().runTransaction(async (transaction) => {
+    const existing = await transaction.get(ref);
+    if (existing.exists) return record(existing);
+    transaction.create(ref, data);
+    return { id, ...values, status: data.status };
+  });
+}
+
+export async function updateCommunication(id, values) {
+  await firestore().collection("communications").doc(id).set({ ...values, updatedAt: FieldValue.serverTimestamp() }, { merge: true });
+}
+
+export async function createAppointment(values) {
+  const id = randomUUID();
+  await firestore().collection("appointments").doc(id).set({ ...values, id, status: values.status || "requested", createdAt: FieldValue.serverTimestamp(), updatedAt: FieldValue.serverTimestamp() });
+  return { id, ...values };
+}
+
+export async function updateAppointment(id, values) {
+  await firestore().collection("appointments").doc(id).set({ ...values, updatedAt: FieldValue.serverTimestamp() }, { merge: true });
+}
+
+export async function saveCalendarConnection(uid, values) {
+  await firestore().collection("calendarConnections").doc(uid).set({ ...values, uid, updatedAt: FieldValue.serverTimestamp() }, { merge: true });
+}
+
+export async function getCalendarConnection(uid) {
+  const snapshot = await firestore().collection("calendarConnections").doc(uid).get();
+  return snapshot.exists ? snapshot.data() : null;
+}
+
+export async function getReportById(id) {
+  const snapshot = await firestore().collection("reports").doc(id).get();
+  return snapshot.exists ? snapshot.data() : null;
+}
+
+export async function listDueCommunications(limit = 50) {
+  const snapshot = await firestore().collection("communications").where("status", "==", "queued").where("scheduledFor", "<=", new Date()).limit(limit).get();
+  return snapshot.docs.map((item) => item.data());
 }
 export async function getOwnedReport(uid, id) {
   const snap = await firestore().collection("reports").doc(id).get();
@@ -122,6 +177,12 @@ export async function listOwned(collection, uid) {
         Number(new Date(b.generatedAt || b.createdAt || 0)) -
         Number(new Date(a.generatedAt || a.createdAt || 0)),
     );
+}
+export async function listAll(collection) {
+  const snap = await firestore().collection(collection).get();
+  return snap.docs
+    .map(record)
+    .sort((a, b) => Number(new Date(b.generatedAt || b.createdAt || 0)) - Number(new Date(a.generatedAt || a.createdAt || 0)));
 }
 export async function createOrder(uid, values) {
   const id = randomUUID();

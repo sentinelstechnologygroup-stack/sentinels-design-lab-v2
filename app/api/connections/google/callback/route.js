@@ -8,8 +8,13 @@ import {
   getConnection,
   tokenCookieName,
 } from "@/lib/google-connections";
+import { saveCalendarConnection } from "@/db/firestore";
 
 export const runtime = "nodejs";
+
+function productionOrigin() {
+  return new URL(process.env.NEXT_PUBLIC_APP_URL || "https://sentinelsdesignlab.com").origin;
+}
 
 export async function GET(request) {
   const user = await getSessionUser();
@@ -31,7 +36,7 @@ export async function GET(request) {
   }
 
   try {
-    const callbackUrl = new URL("/api/connections/google/callback", request.nextUrl.origin);
+    const callbackUrl = new URL("/api/connections/google/callback", productionOrigin());
     const tokenResponse = await fetch("https://oauth2.googleapis.com/token", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -47,6 +52,13 @@ export async function GET(request) {
     });
     const tokens = await tokenResponse.json();
     if (!tokenResponse.ok || !tokens.access_token) throw new Error("Google did not return an access token.");
+    if (savedState.service === "calendar") {
+      await saveCalendarConnection(user.uid, {
+        accessToken: encryptConnection({ accessToken: tokens.access_token, expiresAt: Date.now() + (tokens.expires_in || 3600) * 1000 }),
+        refreshToken: tokens.refresh_token ? encryptConnection({ refreshToken: tokens.refresh_token }) : undefined,
+        connectedAt: new Date().toISOString(),
+      });
+    }
 
     const expiresIn = Math.min(tokens.expires_in || CONNECTION_MAX_AGE_SECONDS, CONNECTION_MAX_AGE_SECONDS);
     const successUrl = new URL("/dashboard", request.nextUrl.origin);
