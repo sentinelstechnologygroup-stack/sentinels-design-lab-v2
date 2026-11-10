@@ -138,6 +138,7 @@ const digitalSystems = [
   {
     slug: "shared-grocery-list",
     name: "Shared Grocery List",
+    demoUrl: "https://grocery.sentinelsdesignlab.com",
     industry: "Household Utility System",
     projectType: "Utility App",
     status: "ACTIVE BUILD",
@@ -347,6 +348,7 @@ export default function Work() {
                 systemRole={system.systemRole}
                 proofNotes={system.proofNotes}
                 confidentialityNote={system.confidentialityNote}
+                demoUrl={system.demoUrl}
               />
             ))}
           </div>

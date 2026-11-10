@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ExternalLink } from "lucide-react";
 
 function statusBadgeClass(status) {
   if (status === "LIVE SYSTEM")
@@ -38,6 +38,7 @@ export default function SystemProofCard({
   visualAlt,
   proofNotes = [],
   confidentialityNote,
+  demoUrl,
   status,
   projectType,
   industry,
@@ -88,6 +89,18 @@ export default function SystemProofCard({
         </div>
 
         <div className="mt-8 flex flex-wrap items-center gap-4">
+          {demoUrl ? (
+            <a
+              href={demoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Explore Live Demo: ${name} (opens in a new tab)`}
+              className="inline-flex min-h-11 items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-5 py-2.5 text-sm font-semibold text-primary transition hover:bg-primary/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+            >
+              Explore Live Demo
+              <ExternalLink className="h-4 w-4" aria-hidden="true" />
+            </a>
+          ) : null}
           <Link
             href="https://sentinelsdesignlab.com/contact/"
             className="inline-flex items-center gap-2 text-sm font-medium text-primary transition hover:text-white"
