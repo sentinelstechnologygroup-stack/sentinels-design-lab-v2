@@ -7,6 +7,38 @@ import SystemProofCard from "@/components/work/SystemProofCard";
 import { workProjects } from "@/lib/siteData";
 
 const websiteProof = {
+  "daily-spread": {
+    originalState: [
+      "Bring catering and chef-prepared meals into a clearer, more cohesive presentation.",
+      "Make menus, weekly dinner information, and ordering paths easier to find beyond promotional content.",
+    ],
+    whatChanged: [
+      "Reorganized the homepage around catering, the weekly dinner series, menu discovery, and food photography.",
+      "Introduced a refined blue-and-ivory design with clear menu, order, and catering calls to action.",
+    ],
+    result: [
+      "The redesign gives catering and prepared meals distinct, easy-to-scan sections.",
+      "A more polished presentation connects the food offering to clear next steps for diners and event planners.",
+    ],
+    note: "Redesign preview shown alongside the original homepage. The public domain currently displays the original site.",
+  },
+  "mdx-fuel": {
+    isNewBuild: true,
+    originalState: [
+      "Establish a professional website for a Tomball-based commercial fuel business, backed by custom tools for sales and inventory.",
+      "Give customers clear product and delivery information while supporting the team's sales and inventory workflows.",
+    ],
+    whatChanged: [
+      "Built a new website with dedicated product, service, industry, and Greater Houston service-area content.",
+      "Built a custom sales CRM with AI capabilities and MDX-IMS (Inventory Management System), a custom app-based barcode inventory tracing system.",
+      "Added prominent quote requests, delivery contact options, and account-opening navigation to the website.",
+    ],
+    result: [
+      "A custom digital foundation spanning the public website, sales CRM with AI, and barcode-based inventory tracing through MDX-IMS.",
+      "Clear paths for customers to request fuel, alongside purpose-built tools supporting the business behind the website.",
+    ],
+    note: "SDL custom-built the website, sales CRM with AI, and MDX-IMS inventory app. The screenshot shows the public website; internal systems are not pictured.",
+  },
   "eli-land-design": {
     originalState: [
       "Strong visual intent but overextended structure that made the site harder to navigate.",
@@ -23,7 +55,6 @@ const websiteProof = {
       "SDL can show the original-state proof honestly while clarifying the modernization direction.",
       "The case study reflects real work without inventing an after-state that is not yet live.",
     ],
-    note: "Shown as an in-progress modernization. Both the original site and SDL's current rebuild preview are displayed. Final client launch approval is pending.",
   },
   "premier-kitchens": {
     originalState: [
@@ -138,6 +169,7 @@ const digitalSystems = [
   {
     slug: "shared-grocery-list",
     name: "Shared Grocery List",
+    demoUrl: "https://grocery.sentinelsdesignlab.com",
     industry: "Household Utility System",
     projectType: "Utility App",
     status: "ACTIVE BUILD",
@@ -262,6 +294,43 @@ export default function Work() {
             </p>
           </div>
 
+          <div className="mt-10" id="golden-cross-realty">
+            <ProofCaseCard
+              name="Golden Cross Realty"
+              industry="Texas Real Estate"
+              projectType="Website Redesign"
+              status="FEATURED PROJECT"
+              allMedia={[
+                {
+                  src: "/images/work/golden-cross-realty-before.webp",
+                  alt: "Golden Cross Realty homepage before the redesign, with company information above property listings",
+                  label: "Before",
+                },
+                {
+                  src: "/images/work/golden-cross-realty-after.webp",
+                  alt: "Golden Cross Realty redesigned homepage with prominent property search, communities, and team profiles",
+                  label: "After",
+                },
+              ]}
+              liveLink="https://goldencrossrealty.net/"
+              originalStateLabel="Business Needs"
+              whatChangedLabel="What SDL Built"
+              resultLabel="The Outcome"
+              originalState={[
+                "Make property discovery, local expertise, and agent contact easier to find while giving the brokerage a more polished online presence.",
+                "Give buyers, sellers, and clients exploring land and investment opportunities clear starting points for their goals.",
+              ]}
+              whatChanged={[
+                "A search-led homepage with buyer and seller pathways, community highlights, and featured and sold properties.",
+                "A refined black, ivory, and gold presentation with property photography, team profiles, client testimonials, and consultation calls to action.",
+              ]}
+              result={[
+                "A more cohesive real estate experience that brings properties, people, and local knowledge together.",
+                "Better-organized content and clearer next steps from browsing to inquiry create a stronger digital foundation for the brokerage.",
+              ]}
+              note="The redesigned website is temporarily hosted at goldencrossrealty.net."
+            />
+          </div>
           <div className="mt-10 grid gap-8 xl:grid-cols-2">
             {websiteProjects.map((project) => {
               const proof = websiteProof[project.slug];
@@ -347,6 +416,7 @@ export default function Work() {
                 systemRole={system.systemRole}
                 proofNotes={system.proofNotes}
                 confidentialityNote={system.confidentialityNote}
+                demoUrl={system.demoUrl}
               />
             ))}
           </div>

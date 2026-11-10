@@ -1,0 +1,12 @@
+{
+  "name": "sdl-inmotion-mail-worker",
+  "private": true,
+  "engines": { "node": "22" },
+  "main": "index.js",
+  "dependencies": {
+    "firebase-admin": "^13.6.0",
+    "firebase-functions": "^6.4.0",
+    "imapflow": "^1.0.181",
+    "mailparser": "^3.7.4"
+  }
+}

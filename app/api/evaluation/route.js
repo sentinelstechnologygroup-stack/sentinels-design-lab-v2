@@ -3,6 +3,7 @@ import { z } from "zod";
 import { createHash } from "node:crypto";
 import {
   buildBasicEvaluation,
+  buildFocusedConcernReview,
   EVALUATION_ENGINE_VERSION,
   inspectPage,
   validateEvaluation,
@@ -14,8 +15,9 @@ import { storeReportPdf } from "@/lib/report-storage";
 import { getSessionUser } from "@/lib/session";
 import {
   createReport,
-  findRecentFreeReport,
+  findReportByIdempotencyKey,
   getEvaluationSnapshot,
+  listOwned,
   saveEvaluationSnapshot,
   updateReport,
   upsertWebsiteForDomain,
@@ -33,6 +35,7 @@ export const maxDuration = 60;
 const attempts = new Map();
 const WINDOW_MS = 60 * 60 * 1000;
 const MAX_ATTEMPTS = 3;
+const SUPER_ADMIN_EMAIL = (process.env.SUPER_ADMIN_EMAIL || "patrick@sentinelsdesignlab.com").toLowerCase();
 const concernKeys = [
   "leads",
   "search",
@@ -51,7 +54,7 @@ const requestSchema = z.object({
   phone: z.string().trim().max(40).optional().default(""),
   businessName: z.string().trim().min(2).max(150),
   website: z.string().trim().max(500),
-  primaryService: z.string().trim().min(2).max(160),
+  primaryService: z.string().trim().max(160).optional().default("Website evaluation"),
   location: z.string().trim().max(160).optional().default(""),
   concerns: z.array(z.enum(concernKeys)).max(3).optional().default([]),
   company: z.string().max(0).optional().default(""),
@@ -85,11 +88,12 @@ export async function POST(request) {
     const clientId = (request.headers.get("x-forwarded-for") || "unknown")
       .split(",")[0]
       .trim();
+    const isSuperAdmin = sessionUser.email?.toLowerCase() === SUPER_ADMIN_EMAIL;
     const now = Date.now();
     const recent = (attempts.get(clientId) || []).filter(
       (time) => now - time < WINDOW_MS,
     );
-    if (recent.length >= MAX_ATTEMPTS)
+    if (!isSuperAdmin && recent.length >= MAX_ATTEMPTS)
       return NextResponse.json(
         {
           error:
@@ -104,7 +108,7 @@ export async function POST(request) {
         { status: 400 },
       );
     const url = normalizeWebsite(parsed.data.website);
-    attempts.set(clientId, [...recent, now]);
+    if (!isSuperAdmin) attempts.set(clientId, [...recent, now]);
     const normalizedDomain = new URL(url).hostname
       .toLowerCase()
       .replace(/^www\./, "");
@@ -114,25 +118,26 @@ export async function POST(request) {
         { error: "Use the email address connected to your signed-in account." },
         { status: 403 },
       );
-    const recentReport = await findRecentFreeReport(
-      sessionUser.uid,
-      normalizedDomain,
-      new Date(now - SNAPSHOT_TTL_MS),
-    );
-    if (recentReport) {
-      return NextResponse.json({
-        ok: true,
-        reused: true,
-        message: "A recent evaluation already exists for this website. We reused it instead of creating a duplicate.",
-        report: {
-          id: recentReport.id,
-          filename: `Sentinels-Design-Lab-Website-Readiness-${parsed.data.businessName.replace(/[^a-z0-9]+/gi, "-")}.pdf`,
-          url: `/api/reports/${recentReport.id}/download`,
-        },
-        delivery: recentReport.emailDelivery || { sent: false, reason: "already_delivered" },
-        nextStep: { label: "Sign in to view reports", href: "/sign-in" },
-      });
+    const idempotencyKey = request.headers.get("x-idempotency-key")?.trim().slice(0, 200) || "";
+    if (idempotencyKey) {
+      const existing = await findReportByIdempotencyKey(sessionUser.uid, idempotencyKey);
+      if (existing) {
+        return NextResponse.json({
+          ok: true,
+          duplicate: true,
+          delivery: existing.emailDelivery || { sent: false, reason: "already_processed" },
+          report: { id: existing.id, filename: existing.filename || existing.title, url: `/api/reports/${existing.id}/download` },
+          nextStep: { label: "Sign in to view reports", href: "/sign-in" },
+        });
+      }
     }
+    const priorReports = await listOwned("reports", sessionUser.uid);
+    const version =
+      priorReports.filter(
+        (report) =>
+          report.reportType === "free-readiness" &&
+          report.normalizedDomain === normalizedDomain,
+      ).length + 1;
     const domainKey = createHash("sha256")
       .update(normalizedDomain)
       .digest("hex");
@@ -140,10 +145,7 @@ export async function POST(request) {
     const snapshotAge = previousSnapshot?.updatedAt
       ? now - new Date(previousSnapshot.updatedAt).getTime()
       : Infinity;
-    const canReuse =
-      previousSnapshot?.engineVersion === EVALUATION_ENGINE_VERSION &&
-      previousSnapshot?.inspection &&
-      snapshotAge < SNAPSHOT_TTL_MS;
+    const canReuse = false;
     const inspection = canReuse
       ? previousSnapshot.inspection
       : await inspectPage(url);
@@ -161,12 +163,14 @@ export async function POST(request) {
     const evaluation = validateEvaluation(
       buildBasicEvaluation(url, inspection, parsed.data),
     );
+    evaluation.reportVersion = version;
     evaluation.consistency = {
       normalizedDomain,
       engineVersion: EVALUATION_ENGINE_VERSION,
       snapshotReused: canReuse,
       snapshotWindowHours: 24,
     };
+    evaluation.focusedConcernReview = buildFocusedConcernReview(evaluation, parsed.data.concerns);
     const searchToken = decryptConnection(
       request.cookies.get(tokenCookieName("search-console"))?.value || "",
     );
@@ -202,6 +206,8 @@ export async function POST(request) {
       email,
       name: parsed.data.name,
       phone: parsed.data.phone,
+      role: isSuperAdmin ? "super-admin" : "customer",
+      reportEntitlement: isSuperAdmin ? "unlimited" : "standard",
     });
     const websiteId = await upsertWebsiteForDomain(user.uid, normalizedDomain, {
       businessName: parsed.data.businessName,
@@ -215,9 +221,10 @@ export async function POST(request) {
       normalizedDomain,
       engineVersion: EVALUATION_ENGINE_VERSION,
       reportType: "free-readiness",
-      title: `${parsed.data.businessName} Website Readiness Snapshot`,
+      title: `${parsed.data.businessName} Website Readiness Snapshot v${version}`,
       status: "generating",
-      findings: evaluation,
+      findings: { ...evaluation, focusedConcernReview: buildFocusedConcernReview(evaluation, parsed.data.concerns) },
+      idempotencyKey: idempotencyKey || null,
     });
     let storagePath;
     try {
@@ -242,7 +249,7 @@ export async function POST(request) {
       blobUrl: null,
       status: "complete",
     });
-    const portalUrl = `${process.env.NEXT_PUBLIC_APP_URL || "https://reports.sentinelsdesignlab.com"}/dashboard`;
+    const portalUrl = `${process.env.NEXT_PUBLIC_APP_URL || "https://sentinelsdesignlab.com"}/dashboard`;
     let delivery = { sent: false, reason: "not_configured" };
     try {
       delivery = await sendEvaluationEmails({
@@ -250,6 +257,7 @@ export async function POST(request) {
         lead: { ...parsed.data, email },
         pdf,
         portalUrl,
+        reportId,
       });
     } catch (error) {
       console.error("[Sentinels Intelligence Suite email delivery]", error);
@@ -265,7 +273,7 @@ export async function POST(request) {
       delivery,
       report: {
         id: reportId,
-        filename: `Sentinels-Design-Lab-Website-Readiness-${evaluation.businessName.replace(/[^a-z0-9]+/gi, "-")}.pdf`,
+        filename: `Sentinels-Design-Lab-Website-Readiness-${evaluation.businessName.replace(/[^a-z0-9]+/gi, "-")}-v${evaluation.reportVersion}.pdf`,
         url: `/api/reports/${reportId}/download`,
       },
       nextStep: { label: "Sign in to view reports", href: "/sign-in" },
@@ -281,3 +289,4 @@ export async function POST(request) {
     );
   }
 }
+

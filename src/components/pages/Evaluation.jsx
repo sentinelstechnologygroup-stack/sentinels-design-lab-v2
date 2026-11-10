@@ -122,7 +122,7 @@ export default function Evaluation() {
   async function generateReport() {
     const response = await fetch("/api/evaluation", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "X-Idempotency-Key": crypto.randomUUID() },
       body: JSON.stringify(form),
     });
     const payload = await response.json();

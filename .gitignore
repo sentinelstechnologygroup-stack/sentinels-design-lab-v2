@@ -15,3 +15,5 @@ _route-backup
 output/
 tmp/
 skills-lock.json
+
+.vercel

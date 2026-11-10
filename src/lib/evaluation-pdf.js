@@ -60,7 +60,7 @@ function brandBand(doc) {
     color: C.white,
     style: "bold",
   });
-  setText(doc, "SENTINELS INTELLIGENCE SUITE", PAGE.right - 10, 54, {
+  setText(doc, "SENTINELS INTELLIGENCE SUITE | REPORT TEMPLATES V2", PAGE.right - 10, 54, {
     size: 6.5,
     color: C.cyan,
     style: "bold",
@@ -376,7 +376,7 @@ export function generateEvaluationPdf(evaluation) {
         });
         y = 120;
       }
-      setText(doc, `${item.category}: ${item.label}`, PAGE.left, y, {
+      setText(doc, `${item.category}: ${item.failTitle || item.label}`, PAGE.left, y, {
         size: 8,
         style: "bold",
         maxWidth: 510,
@@ -499,6 +499,17 @@ export function generateEvaluationPdf(evaluation) {
     { size: 7.5, maxWidth: 510 },
   );
   y += 48;
+  if (evaluation.focusedConcernReview?.length) {
+    setText(doc, "FOCUSED CONCERN REVIEW", PAGE.left, y, { size: 8, color: C.midnight, style: "bold" });
+    y += 16;
+    evaluation.focusedConcernReview.forEach((item) => {
+      const text = `${item.label}: ${item.status} - ${item.evidence}`;
+      setText(doc, text, PAGE.left, y, { size: 7.2, color: item.status === "Verified concern" ? C.red : C.charcoal, maxWidth: 510 });
+      y += Math.max(22, doc.splitTextToSize(text, 510).length * 8 + 8);
+    });
+    setText(doc, "This section changes report emphasis, not the objective score. Deeper paid analysis may be required.", PAGE.left, y, { size: 6.8, color: C.slate, maxWidth: 510 });
+    y += 22;
+  }
   setText(doc, "PUBLIC PAGES SAMPLED", PAGE.left, y, {
     size: 8,
     color: C.midnight,
@@ -524,7 +535,7 @@ export function generateEvaluationPdf(evaluation) {
     footer(doc, page, total);
   }
   doc.setProperties({
-    title: `${evaluation.businessName} Website Readiness Snapshot`,
+    title: `${evaluation.businessName} Website Readiness Snapshot v${evaluation.reportVersion || 1}`,
     subject: "Sentinels Intelligence Suite Free Website Evaluation",
     author: "Sentinels Design Lab",
     creator: "Sentinels Design Lab",

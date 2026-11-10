@@ -20,7 +20,7 @@ export async function POST() {
   if (!user.email) return NextResponse.json({ error: "This account does not have an email address." }, { status: 400 });
   if (user.emailVerified) return NextResponse.json({ ok: true, alreadyVerified: true });
 
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL || "https://reports.sentinelsdesignlab.com";
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL || "https://sentinelsdesignlab.com";
   const firebaseLink = new URL(await adminAuth().generateEmailVerificationLink(user.email, { url: `${appUrl}/dashboard` }));
   const verificationUrl = new URL("/verify-email", appUrl);
   ["mode", "oobCode", "apiKey", "continueUrl", "lang"].forEach((key) => {

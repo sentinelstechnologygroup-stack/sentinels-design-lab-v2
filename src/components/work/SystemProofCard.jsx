@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ExternalLink } from "lucide-react";
 
 function statusBadgeClass(status) {
   if (status === "LIVE SYSTEM")
@@ -38,13 +38,14 @@ export default function SystemProofCard({
   visualAlt,
   proofNotes = [],
   confidentialityNote,
+  demoUrl,
   status,
   projectType,
   industry,
 }) {
   return (
-    <article className="overflow-hidden rounded-[28px] border border-white/10 bg-[#08101d] shadow-[0_26px_70px_rgba(0,0,0,0.3)]">
-      <div className="relative aspect-[16/10] border-b border-white/10 bg-[#09111f]">
+    <article className="flex h-full flex-col overflow-hidden rounded-[28px] border border-white/10 bg-[#08101d] shadow-[0_26px_70px_rgba(0,0,0,0.3)]">
+      <div className="relative shrink-0 aspect-[16/10] border-b border-white/10 bg-[#09111f]">
         <Image
           src={visualSrc}
           alt={visualAlt || name}
@@ -53,7 +54,7 @@ export default function SystemProofCard({
           sizes="(min-width: 1280px) 42vw, 100vw"
         />
       </div>
-      <div className="p-6 md:p-8">
+      <div className="flex flex-1 flex-col p-6 md:p-8">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
             <div className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">
@@ -87,7 +88,19 @@ export default function SystemProofCard({
           <ListBlock title="Proof" items={proofNotes} />
         </div>
 
-        <div className="mt-8 flex flex-wrap items-center gap-4">
+        <div className="mt-auto flex flex-wrap items-center gap-4 pt-8">
+          {demoUrl ? (
+            <a
+              href={demoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Explore Live Demo: ${name} (opens in a new tab)`}
+              className="inline-flex min-h-11 items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-primary/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+            >
+              Explore Live Demo
+              <ExternalLink className="h-4 w-4" aria-hidden="true" />
+            </a>
+          ) : null}
           <Link
             href="https://sentinelsdesignlab.com/contact/"
             className="inline-flex items-center gap-2 text-sm font-medium text-primary transition hover:text-white"

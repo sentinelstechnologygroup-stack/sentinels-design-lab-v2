@@ -146,7 +146,7 @@ export default function ProofCaseCard({
         />
       )}
 
-      <article className="overflow-hidden rounded-[28px] border border-white/10 bg-[#08101d] shadow-[0_26px_70px_rgba(0,0,0,0.3)]">
+      <article className="flex h-full flex-col overflow-hidden rounded-[28px] border border-white/10 bg-[#08101d] shadow-[0_26px_70px_rgba(0,0,0,0.3)]">
         {isBeforeAfter ? (
           <div className="border-b border-white/10 bg-[#09111f] p-4">
             <div className="mb-3 text-center text-xs font-semibold uppercase tracking-[0.18em] text-white/35">
@@ -193,7 +193,7 @@ export default function ProofCaseCard({
           </button>
         ) : null}
 
-        <div className="p-6 md:p-8">
+        <div className="flex flex-1 flex-col p-6 md:p-8">
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
               <div className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">
@@ -225,7 +225,7 @@ export default function ProofCaseCard({
             <EvidenceList title={resultLabel} items={result} />
           </div>
 
-          <div className="mt-8 flex flex-wrap items-center gap-4">
+          <div className="mt-auto flex flex-wrap items-center gap-4 pt-8">
             <Link
               href="https://sentinelsdesignlab.com/contact/"
               className="inline-flex items-center gap-2 text-sm font-medium text-primary transition hover:text-white"

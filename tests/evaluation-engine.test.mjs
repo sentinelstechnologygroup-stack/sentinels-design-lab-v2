@@ -93,7 +93,19 @@ test("unknown measurements never produce perfect technical health", () => {
   assert.ok(technical.checks.some((item) => item.status === "Not Verified"));
 });
 
-test("challenge or conflicting source identity triggers low confidence", () => {
+function assertTransparentScore(result) {
+  const weights = {
+    technical: 1.4, functionality: 1.3, security: 1, search: 1,
+    freshness: 0.8, conversion: 1.4, trust: 1.4,
+  };
+  const totalWeight = result.categories.reduce((sum, item) => sum + weights[item.key], 0);
+  const measuredScore = Math.round(result.categories.reduce(
+    (sum, item) => sum + item.score * weights[item.key], 0,
+  ) / totalWeight);
+  assert.equal(result.score, measuredScore, "headline must reconcile with measured category scores");
+}
+
+test("challenge or conflicting source identity retains low confidence and a critical verdict", () => {
   const data = inspection(
     { challengeDetected: true, sourceIntegrity: false },
     {
@@ -108,8 +120,11 @@ test("challenge or conflicting source identity triggers low confidence", () => {
     businessName: "Example",
   });
   assert.equal(result.confidence.label, "Low");
-  assert.ok(result.score <= 35);
-  assert.match(result.scoreLabel, /High Risk|Critical Failure/);
+  assertTransparentScore(result);
+  assert.ok(result.criticalFailures.includes("The inspected source could not be reliably verified"));
+  assert.equal(result.scoreLabel, "Material Problems");
+  assert.match(result.verdict, /Critical gate/);
+  assert.doesNotThrow(() => validateEvaluation(result));
 });
 
 test("dead alternate business domain prevents a favorable result", () => {
@@ -122,9 +137,31 @@ test("dead alternate business domain prevents a favorable result", () => {
   const result = buildBasicEvaluation("https://example.com/", data, {
     businessName: "Example",
   });
-  assert.ok(result.score <= 39);
-  assert.notEqual(result.scoreLabel, "Customer Ready");
+  assertTransparentScore(result);
+  assert.ok(result.criticalFailures.includes("A customer-facing business domain is unreachable or conflicting"));
+  assert.equal(result.scoreLabel, "Material Problems");
+  assert.doesNotThrow(() => validateEvaluation(result));
 });
+
+test("high measured scores with policy failures remain valid nonfavorable evaluations", () => {
+  const result = buildBasicEvaluation("https://example.com/", inspection({ policyLinksWork: false }), {
+    businessName: "Example",
+  });
+  assert.ok(result.score >= 80, "fixture must exercise the former numeric-validator rejection");
+  assertTransparentScore(result);
+  assert.equal(result.scoreLabel, "Material Problems");
+  assert.ok(result.criticalFailures.includes("Customer-facing policy pages were missing or did not open"));
+  assert.doesNotThrow(() => validateEvaluation(result));
+});
+
+for (const scoreLabel of ["Customer Ready", "Improvements Required"]) {
+  test(`critical failures cannot be relabeled ${scoreLabel}`, () => {
+    const result = buildBasicEvaluation("https://example.com/", inspection({ businessDomainLinksHealthy: false }), {
+      businessName: "Example",
+    });
+    assert.throws(() => validateEvaluation({ ...result, scoreLabel }), /favorable rating cannot coexist with a critical gate/);
+  });
+}
 
 test("customer concerns do not alter the objective score", () => {
   const data = inspection();

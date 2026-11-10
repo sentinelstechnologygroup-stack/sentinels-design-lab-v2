@@ -14,7 +14,7 @@ function text(doc, value, x, y, options = {}) {
 function header(doc, report, continued = false) {
   doc.setFillColor(...COLORS.navy); doc.rect(0, 0, P.width, 64, "F");
   text(doc, "SENTINELS DESIGN LAB", P.left, 31, { size: 11, color: [255,255,255], bold: true });
-  text(doc, "SENTINELS INTELLIGENCE SUITE", P.right, 31, { size: 7, color: COLORS.cyan, bold: true, align: "right" });
+  text(doc, "SENTINELS INTELLIGENCE SUITE | REPORT TEMPLATES V2", P.right, 31, { size: 7, color: COLORS.cyan, bold: true, align: "right" });
   text(doc, continued ? `${report.title} - continued` : report.title, P.left, 52, { size: 7.5, color: [203,213,225], bold: true });
 }
 

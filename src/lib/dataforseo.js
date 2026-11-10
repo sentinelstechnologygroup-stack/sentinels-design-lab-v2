@@ -68,6 +68,7 @@ function credentials() {
 }
 
 export async function inspectPage(url) {
+  const dataForSeoUrl = new URL(url).origin;
   const customJs = `result={};links=Array.from(document.querySelectorAll('a'));buttons=Array.from(document.querySelectorAll('button'));text=(document.body&&document.body.innerText)||'';result.forms=document.forms.length;result.tel_links=links.filter(function(el){return (el.getAttribute('href')||'').indexOf('tel:')===0;}).length;result.mailto_links=links.filter(function(el){return (el.getAttribute('href')||'').indexOf('mailto:')===0;}).length;result.ctas=Array.from(document.querySelectorAll('a,button')).filter(function(el){return /contact|quote|book|call|estimate|get started|schedule|consult/i.test(el.innerText||'');}).length;result.dead_controls=Array.from(document.querySelectorAll('a,button')).filter(function(el){href=el.getAttribute('href');return (el.tagName==='A'&&(!href||href==='#'||/^javascript:/i.test(href)))||(el.tagName==='BUTTON'&&el.disabled);}).slice(0,10).map(function(el){return (el.innerText||el.getAttribute('aria-label')||el.outerHTML).trim().slice(0,120);});result.images_without_alt=Array.from(document.images).filter(function(img){return !img.alt;}).length;result.has_viewport=Boolean(document.querySelector('meta[name="viewport"]'));result.mixed_content=Array.from(document.querySelectorAll('[src],[href]')).filter(function(el){value=el.getAttribute('src')||el.getAttribute('href')||'';return location.protocol==='https:'&&/^http:\/\//i.test(value);}).slice(0,10).map(function(el){return el.getAttribute('src')||el.getAttribute('href');});result.insecure_forms=Array.from(document.forms).filter(function(form){action=form.action||location.href;return location.protocol==='https:'&&/^http:\/\//i.test(action);}).map(function(form){return form.action;});result.privacy_links=links.filter(function(el){return /privacy/i.test((el.innerText||'')+' '+(el.href||''));}).length;result.terms_links=links.filter(function(el){return /terms|conditions/i.test((el.innerText||'')+' '+(el.href||''));}).length;result.expired_timer=Array.from(document.querySelectorAll('[class*="countdown"],[id*="countdown"],[class*="timer"],[id*="timer"]')).filter(function(el){return /(^|\D)0{1,2}\s*:\s*0{1,2}(\s*:\s*0{1,2})?(\D|$)|expired|ended/i.test(el.innerText||'');}).slice(0,5).map(function(el){return (el.innerText||'').trim().slice(0,160);});result.promo_text=(text.match(/.{0,70}(sale ends|offer ends|limited time|ends on|expires|promotion).{0,100}/ig)||[]).slice(0,5);years=text.match(/\b20\d{2}\b/g)||[];result.oldest_visible_year=years.length?Math.min.apply(null,years.map(Number)):null;result.has_current_year=years.indexOf(String(new Date().getFullYear()))>=0;result;`;
   const freshnessJs = String.raw`result.expired_timer=Array.from(document.querySelectorAll('[class*="countdown"],[id*="countdown"],[class*="timer"],[id*="timer"]')).filter(function(el){return /(^|\D)0{1,2}\s*:\s*0{1,2}(\s*:\s*0{1,2})?(\D|$)|expired|ended/i.test(el.innerText||'');}).slice(0,5).map(function(el){return (el.innerText||'').trim().slice(0,160);});years=text.match(/\b20\d{2}\b/g)||[];result.oldest_visible_year=years.length?Math.min.apply(null,years.map(Number)):null;result.has_current_year=years.indexOf(String(new Date().getFullYear()))>=0;`;
   const finalCustomJs = customJs.replace(/result;$/, `${freshnessJs}result;`);
@@ -80,7 +81,7 @@ export async function inspectPage(url) {
     },
     body: JSON.stringify([
       {
-        url,
+        url: dataForSeoUrl,
         enable_javascript: true,
         load_resources: true,
         check_spell: true,
@@ -104,6 +105,31 @@ export async function inspectPage(url) {
     cost: Number(task.cost || payload.cost || 0),
     visibleSignals: await inspectVisibleSignals(url),
   };
+}
+
+export function buildFocusedConcernReview(evaluation, concerns = []) {
+  const labels = {
+    leads: "Leads",
+    search: "Search",
+    functionality: "Functionality",
+    mobile: "Mobile",
+    speed: "Speed",
+    content: "Content",
+    trust: "Trust",
+    security: "Security",
+    local: "Local",
+    advertising: "Advertising",
+  };
+  const categoryMap = {
+    leads: ["Conversion Path", "Links & Functionality"], search: ["Search Foundation"], functionality: ["Links & Functionality"], mobile: ["Technical Health"], speed: ["Technical Health"], content: ["Content Accuracy & Freshness"], trust: ["Trust & Compliance"], security: ["Security & Risk", "Trust & Compliance"], local: ["Search Foundation", "Trust & Compliance"], advertising: ["Conversion Path", "Search Foundation"],
+  };
+  return concerns.slice(0, 3).map((key) => {
+    const checks = (evaluation.categories || []).filter((category) => categoryMap[key]?.includes(category.label)).flatMap((category) => category.checks || []).slice(0, 3);
+    const failed = checks.find((item) => item.status === "Verified Fail");
+    const unverified = checks.find((item) => item.status === "Not Verified");
+    const status = failed ? "Verified concern" : unverified ? "Not verified" : checks.length ? "No issue observed in this limited scan" : "Requires deeper paid analysis";
+    return { key, label: labels[key] || key, status, evidence: failed?.evidence || unverified?.evidence || checks[0]?.evidence || "This concern was not measurable from the limited public scan.", limitation: "This focused review does not replace deeper analytics, SEO, local, competitor, backlink, or paid-search analysis." };
+  });
 }
 
 async function inspectVisibleSignals(url) {
@@ -449,17 +475,11 @@ async function inspectVisibleSignals(url) {
 }
 
 function scoreChecks(checks) {
-  const earned = checks.reduce(
-    (sum, item) =>
-      sum + (item.status === "Verified Pass" ? item.weight || 1 : 0),
-    0,
-  );
-  const possible = checks.reduce(
-    (sum, item) =>
-      sum + (item.status === "Not Applicable" ? 0 : item.weight || 1),
-    0,
-  );
-  return Math.round((earned / Math.max(1, possible)) * 100);
+  const measurable = checks.filter((item) => !["Not Applicable", "Not Verified"].includes(item.status));
+  const earned = measurable.reduce((sum, item) => sum + (item.status === "Verified Pass" ? item.weight || 1 : 0), 0);
+  const possible = measurable.reduce((sum, item) => sum + (item.weight || 1), 0);
+  const measuredScore = Math.round((earned / Math.max(1, possible)) * 100);
+  return checks.some((item) => item.status === "Not Verified") ? Math.min(85, measuredScore) : measuredScore;
 }
 
 export function buildBasicEvaluation(url, inspection, business = {}) {
@@ -1297,18 +1317,28 @@ export function buildBasicEvaluation(url, inspection, business = {}) {
       59,
       "Required Texas real estate disclosures were not confirmed",
     );
+  // Verified trust and security failures must constrain the headline score.
+  // They are not double-counted as category penalties; this cap prevents a
+  // strong technical/conversion profile from masking material customer risk.
   addGate(
-    custom.policyLinksWork !== true,
-    69,
-    "Essential public policy pages were not confirmed",
+    custom.policyLinksWork === false,
+    65,
+    "Customer-facing policy pages were missing or did not open",
   );
-  const gateCap = criticalCaps.length
-    ? Math.max(
-        15,
-        Math.min(...criticalCaps) - Math.max(0, criticalCaps.length - 1) * 4,
-      )
-    : 100;
-  const overallScore = Math.min(averageScore, gateCap, 100);
+  addGate(
+    custom.security_headers?.contentSecurityPolicy === false,
+    68,
+    "A Content-Security-Policy header was not detected",
+  );
+  addGate(
+    custom.security_headers?.frameProtection === false,
+    70,
+    "Clickjacking protection was not detected",
+  );
+  // The headline score must reconcile with the displayed category scores.
+  // Verified risks remain visible through criticalFailures and the verdict;
+  // they must not silently replace the measured category calculation.
+  const overallScore = Math.min(averageScore, 100);
   const verifiedCount = categories.reduce(
     (sum, item) => sum + item.verifiedChecks,
     0,
@@ -1441,23 +1471,20 @@ export function buildBasicEvaluation(url, inspection, business = {}) {
   };
 }
 
-export const EVALUATION_ENGINE_VERSION = "2026-09-gated-v2";
+export const EVALUATION_ENGINE_VERSION = "2026-09-transparent-score-v6";
 
 export function validateEvaluation(evaluation) {
   const errors = [];
   const allChecks = (evaluation.categories || []).flatMap(
     (category) => category.checks || [],
   );
-  if (evaluation.score >= 80 && evaluation.criticalFailures?.length)
-    errors.push("A favorable rating cannot coexist with a critical gate.");
+  // Transparent scores describe measured checks; the readiness label carries
+  // the critical-risk verdict independently of that numeric result.
   if (
-    (evaluation.categories || []).some(
-      (category) =>
-        category.score === 100 &&
-        (category.checks || []).some((item) => item.status === "Not Verified"),
-    )
+    ["Customer Ready", "Improvements Required"].includes(evaluation.scoreLabel) &&
+    evaluation.criticalFailures?.length
   )
-    errors.push("A category with unverified required checks cannot score 100.");
+    errors.push("A favorable rating cannot coexist with a critical gate.");
   if (
     evaluation.observedContent?.pageTitle?.match(
       /robot challenge|captcha|access denied/i,

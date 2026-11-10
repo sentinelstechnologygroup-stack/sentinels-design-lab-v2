@@ -7,7 +7,7 @@ runConfig:
 
 env:
   - variable: NEXT_PUBLIC_APP_URL
-    value: https://reports.sentinelsdesignlab.com
+    value: https://sentinelsdesignlab.com
     availability: [BUILD, RUNTIME]
   - variable: NEXT_PUBLIC_FIREBASE_PROJECT_ID
     value: sdl-website-a5f2d
