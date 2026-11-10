@@ -1478,7 +1478,12 @@ export function validateEvaluation(evaluation) {
   const allChecks = (evaluation.categories || []).flatMap(
     (category) => category.checks || [],
   );
-  if (evaluation.score >= 80 && evaluation.criticalFailures?.length)
+  // Transparent scores describe measured checks; the readiness label carries
+  // the critical-risk verdict independently of that numeric result.
+  if (
+    ["Customer Ready", "Improvements Required"].includes(evaluation.scoreLabel) &&
+    evaluation.criticalFailures?.length
+  )
     errors.push("A favorable rating cannot coexist with a critical gate.");
   if (
     evaluation.observedContent?.pageTitle?.match(
